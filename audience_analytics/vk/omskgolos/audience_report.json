@@ -1,30 +1,30 @@
 {
-  "generated_at": "2026-10-06T17:26:00+00:00",
+  "generated_at": "2026-10-06T17:30:16+00:00",
   "posts_analyzed": 2000,
   "content_types": {
     "news": {
-      "posts": 821,
-      "avg_virality": 48.98,
-      "avg_approval": 51.37,
-      "avg_potential": 49.94,
-      "avg_reposts": 10.05,
-      "avg_likes": 37.84,
-      "avg_comments": 7.02,
-      "avg_views": 9193.0
+      "posts": 799,
+      "avg_virality": 48.52,
+      "avg_approval": 51.09,
+      "avg_potential": 49.55,
+      "avg_reposts": 10.02,
+      "avg_likes": 37.46,
+      "avg_comments": 7.08,
+      "avg_views": 9148.15
     },
     "social_story": {
-      "posts": 385,
-      "avg_virality": 50.33,
-      "avg_approval": 51.45,
-      "avg_potential": 50.78,
-      "avg_reposts": 12.04,
-      "avg_likes": 51.78,
-      "avg_comments": 10.32,
-      "avg_views": 13028.27
+      "posts": 407,
+      "avg_virality": 51.15,
+      "avg_approval": 52.0,
+      "avg_potential": 51.49,
+      "avg_reposts": 11.99,
+      "avg_likes": 51.77,
+      "avg_comments": 10.04,
+      "avg_views": 12909.01
     },
     "complaint": {
       "posts": 185,
-      "avg_virality": 50.06,
+      "avg_virality": 50.07,
       "avg_approval": 47.57,
       "avg_potential": 49.07,
       "avg_reposts": 15.81,
@@ -54,7 +54,7 @@
     },
     "advertising": {
       "posts": 91,
-      "avg_virality": 48.5,
+      "avg_virality": 48.51,
       "avg_approval": 39.96,
       "avg_potential": 45.09,
       "avg_reposts": 13.85,
@@ -75,14 +75,14 @@
   },
   "mechanisms": {
     "animal": {
-      "posts": 94,
-      "avg_virality": 63.56,
-      "avg_approval": 69.15,
-      "avg_potential": 65.8,
-      "avg_confidence_adjusted_potential": 42.25,
-      "avg_views": 15586.18,
-      "avg_reposts": 17.79,
-      "avg_likes": 99.79
+      "posts": 131,
+      "avg_virality": 63.05,
+      "avg_approval": 67.06,
+      "avg_potential": 64.65,
+      "avg_confidence_adjusted_potential": 40.65,
+      "avg_views": 14436.76,
+      "avg_reposts": 17.0,
+      "avg_likes": 87.09
     },
     "shock": {
       "posts": 431,
@@ -135,14 +135,14 @@
       "avg_likes": 72.62
     },
     "weather": {
-      "posts": 130,
-      "avg_virality": 55.41,
-      "avg_approval": 49.52,
-      "avg_potential": 53.05,
-      "avg_confidence_adjusted_potential": 33.78,
-      "avg_views": 14853.78,
-      "avg_reposts": 25.35,
-      "avg_likes": 52.48
+      "posts": 139,
+      "avg_virality": 54.69,
+      "avg_approval": 49.74,
+      "avg_potential": 52.71,
+      "avg_confidence_adjusted_potential": 33.8,
+      "avg_views": 14721.61,
+      "avg_reposts": 24.71,
+      "avg_likes": 55.65
     },
     "human_story": {
       "posts": 780,
@@ -249,16 +249,71 @@
     {
       "combination": [
         "animal",
-        "human_story",
-        "usefulness"
+        "media",
+        "unusual"
+      ],
+      "posts_count": 25,
+      "avg_virality": 73.92,
+      "avg_approval": 77.46,
+      "avg_potential": 75.34,
+      "avg_confidence_adjusted_potential": 39.66,
+      "expected_potential_from_parts": 57.01,
+      "lift": 18.33
+    },
+    {
+      "combination": [
+        "animal",
+        "emoji_hook",
+        "unusual"
+      ],
+      "posts_count": 20,
+      "avg_virality": 75.02,
+      "avg_approval": 77.48,
+      "avg_potential": 76.01,
+      "avg_confidence_adjusted_potential": 40.79,
+      "expected_potential_from_parts": 57.73,
+      "lift": 18.28
+    },
+    {
+      "combination": [
+        "animal",
+        "unusual"
+      ],
+      "posts_count": 25,
+      "avg_virality": 73.92,
+      "avg_approval": 77.46,
+      "avg_potential": 75.34,
+      "avg_confidence_adjusted_potential": 39.66,
+      "expected_potential_from_parts": 60.32,
+      "lift": 15.02
+    },
+    {
+      "combination": [
+        "animal",
+        "media",
+        "visual_hook"
+      ],
+      "posts_count": 32,
+      "avg_virality": 66.84,
+      "avg_approval": 76.27,
+      "avg_potential": 70.61,
+      "avg_confidence_adjusted_potential": 35.79,
+      "expected_potential_from_parts": 56.77,
+      "lift": 13.84
+    },
+    {
+      "combination": [
+        "animal",
+        "fear",
+        "human_story"
       ],
       "posts_count": 24,
-      "avg_virality": 69.28,
-      "avg_approval": 72.74,
-      "avg_potential": 70.66,
-      "avg_confidence_adjusted_potential": 54.29,
-      "expected_potential_from_parts": 55.29,
-      "lift": 15.37
+      "avg_virality": 64.21,
+      "avg_approval": 74.07,
+      "avg_potential": 68.15,
+      "avg_confidence_adjusted_potential": 49.63,
+      "expected_potential_from_parts": 55.39,
+      "lift": 12.76
     },
     {
       "combination": [
@@ -277,30 +332,16 @@
     {
       "combination": [
         "animal",
-        "human_story",
-        "shock"
-      ],
-      "posts_count": 27,
-      "avg_virality": 66.09,
-      "avg_approval": 72.5,
-      "avg_potential": 68.65,
-      "avg_confidence_adjusted_potential": 50.43,
-      "expected_potential_from_parts": 55.94,
-      "lift": 12.71
-    },
-    {
-      "combination": [
-        "animal",
-        "media",
+        "emoji_hook",
         "visual_hook"
       ],
-      "posts_count": 21,
-      "avg_virality": 65.95,
-      "avg_approval": 74.15,
-      "avg_potential": 69.23,
-      "avg_confidence_adjusted_potential": 38.26,
-      "expected_potential_from_parts": 57.15,
-      "lift": 12.08
+      "posts_count": 28,
+      "avg_virality": 66.14,
+      "avg_approval": 75.6,
+      "avg_potential": 69.92,
+      "avg_confidence_adjusted_potential": 33.37,
+      "expected_potential_from_parts": 57.48,
+      "lift": 12.44
     },
     {
       "combination": [
@@ -319,30 +360,16 @@
     {
       "combination": [
         "animal",
-        "media",
-        "shock"
-      ],
-      "posts_count": 33,
-      "avg_virality": 66.01,
-      "avg_approval": 71.29,
-      "avg_potential": 68.12,
-      "avg_confidence_adjusted_potential": 49.75,
-      "expected_potential_from_parts": 56.17,
-      "lift": 11.95
-    },
-    {
-      "combination": [
-        "animal",
         "human_story",
-        "media"
+        "usefulness"
       ],
-      "posts_count": 44,
-      "avg_virality": 65.1,
-      "avg_approval": 70.11,
-      "avg_potential": 67.11,
-      "avg_confidence_adjusted_potential": 45.72,
-      "expected_potential_from_parts": 55.29,
-      "lift": 11.81
+      "posts_count": 32,
+      "avg_virality": 65.4,
+      "avg_approval": 68.3,
+      "avg_potential": 66.56,
+      "avg_confidence_adjusted_potential": 50.51,
+      "expected_potential_from_parts": 54.91,
+      "lift": 11.65
     },
     {
       "combination": [
@@ -375,30 +402,30 @@
     {
       "combination": [
         "animal",
-        "locality",
+        "human_story",
         "shock"
       ],
-      "posts_count": 21,
-      "avg_virality": 62.68,
-      "avg_approval": 75.22,
-      "avg_potential": 67.7,
-      "avg_confidence_adjusted_potential": 49.53,
-      "expected_potential_from_parts": 56.42,
-      "lift": 11.28
+      "posts_count": 33,
+      "avg_virality": 64.58,
+      "avg_approval": 70.17,
+      "avg_potential": 66.82,
+      "avg_confidence_adjusted_potential": 49.7,
+      "expected_potential_from_parts": 55.56,
+      "lift": 11.26
     },
     {
       "combination": [
         "animal",
-        "shock",
-        "usefulness"
+        "locality",
+        "visual_hook"
       ],
-      "posts_count": 22,
-      "avg_virality": 66.75,
-      "avg_approval": 68.31,
-      "avg_potential": 67.38,
-      "avg_confidence_adjusted_potential": 54.01,
-      "expected_potential_from_parts": 56.17,
-      "lift": 11.21
+      "posts_count": 21,
+      "avg_virality": 62.53,
+      "avg_approval": 76.51,
+      "avg_potential": 68.13,
+      "avg_confidence_adjusted_potential": 35.26,
+      "expected_potential_from_parts": 57.02,
+      "lift": 11.11
     },
     {
       "combination": [
@@ -430,6 +457,33 @@
     },
     {
       "combination": [
+        "incident",
+        "locality",
+        "weather"
+      ],
+      "posts_count": 28,
+      "avg_virality": 68.56,
+      "avg_approval": 53.58,
+      "avg_potential": 62.57,
+      "avg_confidence_adjusted_potential": 51.17,
+      "expected_potential_from_parts": 51.75,
+      "lift": 10.82
+    },
+    {
+      "combination": [
+        "animal",
+        "visual_hook"
+      ],
+      "posts_count": 32,
+      "avg_virality": 66.84,
+      "avg_approval": 76.27,
+      "avg_potential": 70.61,
+      "avg_confidence_adjusted_potential": 35.79,
+      "expected_potential_from_parts": 59.96,
+      "lift": 10.65
+    },
+    {
+      "combination": [
         "emoji_hook",
         "unusual",
         "visual_hook"
@@ -445,6 +499,34 @@
     {
       "combination": [
         "emoji_hook",
+        "incident",
+        "weather"
+      ],
+      "posts_count": 27,
+      "avg_virality": 68.06,
+      "avg_approval": 54.6,
+      "avg_potential": 62.68,
+      "avg_confidence_adjusted_potential": 50.82,
+      "expected_potential_from_parts": 52.22,
+      "lift": 10.46
+    },
+    {
+      "combination": [
+        "animal",
+        "human_story",
+        "incident"
+      ],
+      "posts_count": 21,
+      "avg_virality": 65.67,
+      "avg_approval": 65.57,
+      "avg_potential": 65.63,
+      "avg_confidence_adjusted_potential": 50.22,
+      "expected_potential_from_parts": 55.25,
+      "lift": 10.37
+    },
+    {
+      "combination": [
+        "emoji_hook",
         "positive_emotion",
         "unusual"
       ],
@@ -454,21 +536,21 @@
       "avg_potential": 64.88,
       "avg_confidence_adjusted_potential": 35.08,
       "expected_potential_from_parts": 54.78,
-      "lift": 10.09
+      "lift": 10.1
     },
     {
       "combination": [
         "animal",
         "human_story",
-        "locality"
+        "media"
       ],
-      "posts_count": 29,
-      "avg_virality": 62.08,
-      "avg_approval": 70.76,
-      "avg_potential": 65.55,
-      "avg_confidence_adjusted_potential": 48.14,
-      "expected_potential_from_parts": 55.54,
-      "lift": 10.01
+      "posts_count": 57,
+      "avg_virality": 62.75,
+      "avg_approval": 68.2,
+      "avg_potential": 64.93,
+      "avg_confidence_adjusted_potential": 44.01,
+      "expected_potential_from_parts": 54.91,
+      "lift": 10.02
     },
     {
       "combination": [
@@ -483,34 +565,6 @@
       "avg_confidence_adjusted_potential": 28.83,
       "expected_potential_from_parts": 53.88,
       "lift": 10.0
-    },
-    {
-      "combination": [
-        "animal",
-        "emoji_hook",
-        "media"
-      ],
-      "posts_count": 64,
-      "avg_virality": 63.91,
-      "avg_approval": 69.69,
-      "avg_potential": 66.22,
-      "avg_confidence_adjusted_potential": 42.31,
-      "expected_potential_from_parts": 56.24,
-      "lift": 9.98
-    },
-    {
-      "combination": [
-        "animal",
-        "emoji_hook",
-        "shock"
-      ],
-      "posts_count": 25,
-      "avg_virality": 64.51,
-      "avg_approval": 70.22,
-      "avg_potential": 66.79,
-      "avg_confidence_adjusted_potential": 47.31,
-      "expected_potential_from_parts": 56.89,
-      "lift": 9.91
     },
     {
       "combination": [
@@ -530,29 +584,15 @@
       "combination": [
         "animal",
         "emoji_hook",
-        "usefulness"
-      ],
-      "posts_count": 29,
-      "avg_virality": 65.31,
-      "avg_approval": 67.35,
-      "avg_potential": 66.13,
-      "avg_confidence_adjusted_potential": 50.31,
-      "expected_potential_from_parts": 56.24,
-      "lift": 9.89
-    },
-    {
-      "combination": [
-        "animal",
-        "emoji_hook",
-        "human_story"
+        "fear"
       ],
       "posts_count": 33,
-      "avg_virality": 64.74,
-      "avg_approval": 67.58,
-      "avg_potential": 65.88,
-      "avg_confidence_adjusted_potential": 45.31,
-      "expected_potential_from_parts": 56.01,
-      "lift": 9.87
+      "avg_virality": 65.72,
+      "avg_approval": 67.03,
+      "avg_potential": 66.24,
+      "avg_confidence_adjusted_potential": 41.75,
+      "expected_potential_from_parts": 56.34,
+      "lift": 9.9
     },
     {
       "combination": [
@@ -570,31 +610,59 @@
     },
     {
       "combination": [
+        "incident",
+        "media",
+        "weather"
+      ],
+      "posts_count": 32,
+      "avg_virality": 66.29,
+      "avg_approval": 53.93,
+      "avg_potential": 61.35,
+      "avg_confidence_adjusted_potential": 47.45,
+      "expected_potential_from_parts": 51.5,
+      "lift": 9.84
+    },
+    {
+      "combination": [
         "animal",
         "fear",
-        "shock"
+        "locality"
       ],
-      "posts_count": 20,
-      "avg_virality": 62.47,
-      "avg_approval": 72.33,
-      "avg_potential": 66.41,
-      "avg_confidence_adjusted_potential": 48.99,
-      "expected_potential_from_parts": 56.65,
+      "posts_count": 31,
+      "avg_virality": 63.3,
+      "avg_approval": 69.13,
+      "avg_potential": 65.63,
+      "avg_confidence_adjusted_potential": 40.3,
+      "expected_potential_from_parts": 55.87,
       "lift": 9.76
     },
     {
       "combination": [
-        "incident",
-        "locality",
-        "weather"
+        "animal",
+        "media",
+        "shock"
       ],
-      "posts_count": 27,
-      "avg_virality": 67.82,
-      "avg_approval": 52.01,
-      "avg_potential": 61.5,
-      "avg_confidence_adjusted_potential": 49.73,
-      "expected_potential_from_parts": 51.86,
-      "lift": 9.64
+      "posts_count": 48,
+      "avg_virality": 65.59,
+      "avg_approval": 65.25,
+      "avg_potential": 65.45,
+      "avg_confidence_adjusted_potential": 47.28,
+      "expected_potential_from_parts": 55.79,
+      "lift": 9.66
+    },
+    {
+      "combination": [
+        "animal",
+        "incident",
+        "shock"
+      ],
+      "posts_count": 23,
+      "avg_virality": 65.97,
+      "avg_approval": 65.07,
+      "avg_potential": 65.61,
+      "avg_confidence_adjusted_potential": 50.21,
+      "expected_potential_from_parts": 56.13,
+      "lift": 9.48
     },
     {
       "combination": [
@@ -602,41 +670,54 @@
         "fear",
         "media"
       ],
-      "posts_count": 23,
-      "avg_virality": 61.53,
-      "avg_approval": 71.35,
-      "avg_potential": 65.46,
-      "avg_confidence_adjusted_potential": 48.59,
-      "expected_potential_from_parts": 56.01,
-      "lift": 9.45
+      "posts_count": 38,
+      "avg_virality": 63.72,
+      "avg_approval": 66.88,
+      "avg_potential": 64.98,
+      "avg_confidence_adjusted_potential": 42.09,
+      "expected_potential_from_parts": 55.63,
+      "lift": 9.36
     },
     {
       "combination": [
-        "emoji_hook",
         "incident",
         "weather"
       ],
-      "posts_count": 26,
-      "avg_virality": 67.28,
-      "avg_approval": 53.01,
-      "avg_potential": 61.57,
-      "avg_confidence_adjusted_potential": 49.31,
-      "expected_potential_from_parts": 52.33,
-      "lift": 9.24
+      "posts_count": 32,
+      "avg_virality": 66.29,
+      "avg_approval": 53.93,
+      "avg_potential": 61.35,
+      "avg_confidence_adjusted_potential": 47.45,
+      "expected_potential_from_parts": 52.06,
+      "lift": 9.29
     },
     {
       "combination": [
         "animal",
-        "media",
-        "usefulness"
+        "incident",
+        "media"
       ],
-      "posts_count": 37,
-      "avg_virality": 64.15,
-      "avg_approval": 65.53,
-      "avg_potential": 64.7,
-      "avg_confidence_adjusted_potential": 47.94,
-      "expected_potential_from_parts": 55.52,
-      "lift": 9.18
+      "posts_count": 28,
+      "avg_virality": 65.47,
+      "avg_approval": 63.67,
+      "avg_potential": 64.75,
+      "avg_confidence_adjusted_potential": 48.39,
+      "expected_potential_from_parts": 55.48,
+      "lift": 9.27
+    },
+    {
+      "combination": [
+        "emoji_hook",
+        "unusual",
+        "weather"
+      ],
+      "posts_count": 20,
+      "avg_virality": 66.45,
+      "avg_approval": 57.75,
+      "avg_potential": 62.97,
+      "avg_confidence_adjusted_potential": 38.7,
+      "expected_potential_from_parts": 53.75,
+      "lift": 9.22
     },
     {
       "combination": [
@@ -650,21 +731,7 @@
       "avg_potential": 61.6,
       "avg_confidence_adjusted_potential": 35.2,
       "expected_potential_from_parts": 52.43,
-      "lift": 9.17
-    },
-    {
-      "combination": [
-        "emoji_hook",
-        "unusual",
-        "weather"
-      ],
-      "posts_count": 20,
-      "avg_virality": 66.45,
-      "avg_approval": 57.75,
-      "avg_potential": 62.97,
-      "avg_confidence_adjusted_potential": 38.7,
-      "expected_potential_from_parts": 53.86,
-      "lift": 9.11
+      "lift": 9.18
     },
     {
       "combination": [
@@ -676,75 +743,65 @@
       "avg_virality": 63.41,
       "avg_approval": 60.32,
       "avg_potential": 62.17,
-      "avg_confidence_adjusted_potential": 32.64,
+      "avg_confidence_adjusted_potential": 32.65,
       "expected_potential_from_parts": 53.21,
       "lift": 8.96
     },
     {
       "combination": [
         "animal",
-        "human_story"
-      ],
-      "posts_count": 49,
-      "avg_virality": 64.87,
-      "avg_approval": 69.05,
-      "avg_potential": 66.54,
-      "avg_confidence_adjusted_potential": 45.63,
-      "expected_potential_from_parts": 57.75,
-      "lift": 8.8
-    },
-    {
-      "combination": [
-        "animal",
-        "shock"
-      ],
-      "posts_count": 35,
-      "avg_virality": 65.37,
-      "avg_approval": 71.51,
-      "avg_potential": 67.83,
-      "avg_confidence_adjusted_potential": 50.22,
-      "expected_potential_from_parts": 59.06,
-      "lift": 8.77
-    },
-    {
-      "combination": [
-        "incident",
-        "media",
-        "weather"
-      ],
-      "posts_count": 31,
-      "avg_virality": 65.57,
-      "avg_approval": 52.57,
-      "avg_potential": 60.37,
-      "avg_confidence_adjusted_potential": 46.07,
-      "expected_potential_from_parts": 51.62,
-      "lift": 8.76
-    },
-    {
-      "combination": [
-        "animal",
-        "visual_hook"
-      ],
-      "posts_count": 21,
-      "avg_virality": 65.95,
-      "avg_approval": 74.15,
-      "avg_potential": 69.23,
-      "avg_confidence_adjusted_potential": 38.26,
-      "expected_potential_from_parts": 60.53,
-      "lift": 8.7
-    },
-    {
-      "combination": [
-        "animal",
+        "emoji_hook",
         "media"
       ],
-      "posts_count": 86,
-      "avg_virality": 64.22,
-      "avg_approval": 70.62,
-      "avg_potential": 66.78,
-      "avg_confidence_adjusted_potential": 42.66,
-      "expected_potential_from_parts": 58.09,
-      "lift": 8.69
+      "posts_count": 93,
+      "avg_virality": 63.58,
+      "avg_approval": 66.66,
+      "avg_potential": 64.81,
+      "avg_confidence_adjusted_potential": 39.8,
+      "expected_potential_from_parts": 55.86,
+      "lift": 8.95
+    },
+    {
+      "combination": [
+        "animal",
+        "human_story",
+        "locality"
+      ],
+      "posts_count": 40,
+      "avg_virality": 61.16,
+      "avg_approval": 68.44,
+      "avg_potential": 64.07,
+      "avg_confidence_adjusted_potential": 46.7,
+      "expected_potential_from_parts": 55.16,
+      "lift": 8.91
+    },
+    {
+      "combination": [
+        "animal",
+        "locality",
+        "shock"
+      ],
+      "posts_count": 36,
+      "avg_virality": 63.96,
+      "avg_approval": 65.92,
+      "avg_potential": 64.75,
+      "avg_confidence_adjusted_potential": 47.37,
+      "expected_potential_from_parts": 56.04,
+      "lift": 8.71
+    },
+    {
+      "combination": [
+        "animal",
+        "emoji_hook",
+        "human_story"
+      ],
+      "posts_count": 43,
+      "avg_virality": 63.37,
+      "avg_approval": 65.67,
+      "avg_potential": 64.29,
+      "avg_confidence_adjusted_potential": 44.42,
+      "expected_potential_from_parts": 55.63,
+      "lift": 8.66
     },
     {
       "combination": [
@@ -783,7 +840,7 @@
       "posts_count": 45,
       "avg_virality": 60.94,
       "avg_approval": 60.41,
-      "avg_potential": 60.72,
+      "avg_potential": 60.73,
       "avg_confidence_adjusted_potential": 32.44,
       "expected_potential_from_parts": 52.26,
       "lift": 8.46
@@ -812,7 +869,7 @@
       "avg_virality": 63.26,
       "avg_approval": 59.59,
       "avg_potential": 61.79,
-      "avg_confidence_adjusted_potential": 36.22,
+      "avg_confidence_adjusted_potential": 36.23,
       "expected_potential_from_parts": 53.37,
       "lift": 8.42
     },
@@ -845,19 +902,6 @@
     },
     {
       "combination": [
-        "incident",
-        "weather"
-      ],
-      "posts_count": 31,
-      "avg_virality": 65.57,
-      "avg_approval": 52.57,
-      "avg_potential": 60.37,
-      "avg_confidence_adjusted_potential": 46.07,
-      "expected_potential_from_parts": 52.23,
-      "lift": 8.14
-    },
-    {
-      "combination": [
         "media",
         "unusual",
         "weather"
@@ -867,8 +911,22 @@
       "avg_approval": 55.68,
       "avg_potential": 61.22,
       "avg_confidence_adjusted_potential": 39.12,
-      "expected_potential_from_parts": 53.15,
-      "lift": 8.08
+      "expected_potential_from_parts": 53.03,
+      "lift": 8.19
+    },
+    {
+      "combination": [
+        "animal",
+        "shock",
+        "usefulness"
+      ],
+      "posts_count": 34,
+      "avg_virality": 66.17,
+      "avg_approval": 60.59,
+      "avg_potential": 63.94,
+      "avg_confidence_adjusted_potential": 50.01,
+      "expected_potential_from_parts": 55.79,
+      "lift": 8.15
     },
     {
       "combination": [
@@ -886,6 +944,20 @@
     },
     {
       "combination": [
+        "animal",
+        "emoji_hook",
+        "shock"
+      ],
+      "posts_count": 41,
+      "avg_virality": 65.12,
+      "avg_approval": 63.77,
+      "avg_potential": 64.58,
+      "avg_confidence_adjusted_potential": 45.6,
+      "expected_potential_from_parts": 56.51,
+      "lift": 8.07
+    },
+    {
+      "combination": [
         "positive_emotion",
         "unusual"
       ],
@@ -895,21 +967,7 @@
       "avg_potential": 63.93,
       "avg_confidence_adjusted_potential": 34.73,
       "expected_potential_from_parts": 55.91,
-      "lift": 8.02
-    },
-    {
-      "combination": [
-        "animal",
-        "locality",
-        "media"
-      ],
-      "posts_count": 46,
-      "avg_virality": 59.45,
-      "avg_approval": 70.18,
-      "avg_potential": 63.74,
-      "avg_confidence_adjusted_potential": 43.77,
-      "expected_potential_from_parts": 55.77,
-      "lift": 7.97
+      "lift": 8.03
     },
     {
       "combination": [
@@ -924,6 +982,20 @@
       "avg_confidence_adjusted_potential": 35.64,
       "expected_potential_from_parts": 52.66,
       "lift": 7.92
+    },
+    {
+      "combination": [
+        "animal",
+        "media",
+        "usefulness"
+      ],
+      "posts_count": 57,
+      "avg_virality": 63.9,
+      "avg_approval": 61.65,
+      "avg_potential": 63.0,
+      "avg_confidence_adjusted_potential": 44.44,
+      "expected_potential_from_parts": 55.14,
+      "lift": 7.86
     },
     {
       "combination": [
@@ -970,16 +1042,43 @@
     {
       "combination": [
         "animal",
-        "incident",
         "media"
       ],
-      "posts_count": 23,
-      "avg_virality": 62.97,
-      "avg_approval": 64.21,
-      "avg_potential": 63.47,
-      "avg_confidence_adjusted_potential": 46.28,
+      "posts_count": 122,
+      "avg_virality": 63.28,
+      "avg_approval": 67.86,
+      "avg_potential": 65.11,
+      "avg_confidence_adjusted_potential": 40.68,
+      "expected_potential_from_parts": 57.52,
+      "lift": 7.59
+    },
+    {
+      "combination": [
+        "animal",
+        "locality",
+        "media"
+      ],
+      "posts_count": 73,
+      "avg_virality": 60.79,
+      "avg_approval": 66.19,
+      "avg_potential": 62.95,
+      "avg_confidence_adjusted_potential": 42.56,
+      "expected_potential_from_parts": 55.39,
+      "lift": 7.56
+    },
+    {
+      "combination": [
+        "animal",
+        "emoji_hook",
+        "usefulness"
+      ],
+      "posts_count": 46,
+      "avg_virality": 64.84,
+      "avg_approval": 61.15,
+      "avg_potential": 63.37,
+      "avg_confidence_adjusted_potential": 45.74,
       "expected_potential_from_parts": 55.86,
-      "lift": 7.6
+      "lift": 7.51
     },
     {
       "combination": [
@@ -994,6 +1093,19 @@
       "avg_confidence_adjusted_potential": 33.8,
       "expected_potential_from_parts": 52.51,
       "lift": 7.49
+    },
+    {
+      "combination": [
+        "animal",
+        "human_story"
+      ],
+      "posts_count": 62,
+      "avg_virality": 62.75,
+      "avg_approval": 67.51,
+      "avg_potential": 64.66,
+      "avg_confidence_adjusted_potential": 44.08,
+      "expected_potential_from_parts": 57.17,
+      "lift": 7.48
     },
     {
       "combination": [
@@ -1024,6 +1136,33 @@
     },
     {
       "combination": [
+        "animal",
+        "fear"
+      ],
+      "posts_count": 41,
+      "avg_virality": 64.19,
+      "avg_approval": 67.64,
+      "avg_potential": 65.57,
+      "avg_confidence_adjusted_potential": 42.7,
+      "expected_potential_from_parts": 58.24,
+      "lift": 7.33
+    },
+    {
+      "combination": [
+        "animal",
+        "fear",
+        "shock"
+      ],
+      "posts_count": 32,
+      "avg_virality": 63.18,
+      "avg_approval": 64.19,
+      "avg_potential": 63.59,
+      "avg_confidence_adjusted_potential": 45.08,
+      "expected_potential_from_parts": 56.27,
+      "lift": 7.32
+    },
+    {
+      "combination": [
         "emoji_hook",
         "locality",
         "visual_hook"
@@ -1048,6 +1187,19 @@
       "avg_confidence_adjusted_potential": 38.92,
       "expected_potential_from_parts": 53.92,
       "lift": 7.25
+    },
+    {
+      "combination": [
+        "animal",
+        "shock"
+      ],
+      "posts_count": 51,
+      "avg_virality": 65.59,
+      "avg_approval": 65.92,
+      "avg_potential": 65.72,
+      "avg_confidence_adjusted_potential": 47.93,
+      "expected_potential_from_parts": 58.49,
+      "lift": 7.23
     },
     {
       "combination": [
@@ -1093,6 +1245,20 @@
     },
     {
       "combination": [
+        "emoji_hook",
+        "usefulness",
+        "weather"
+      ],
+      "posts_count": 45,
+      "avg_virality": 63.64,
+      "avg_approval": 52.14,
+      "avg_potential": 59.04,
+      "avg_confidence_adjusted_potential": 43.25,
+      "expected_potential_from_parts": 51.87,
+      "lift": 7.17
+    },
+    {
+      "combination": [
         "fear",
         "incident",
         "visual_hook"
@@ -1104,33 +1270,6 @@
       "avg_confidence_adjusted_potential": 30.48,
       "expected_potential_from_parts": 52.83,
       "lift": 7.16
-    },
-    {
-      "combination": [
-        "animal",
-        "emoji_hook"
-      ],
-      "posts_count": 64,
-      "avg_virality": 63.91,
-      "avg_approval": 69.69,
-      "avg_potential": 66.22,
-      "avg_confidence_adjusted_potential": 42.31,
-      "expected_potential_from_parts": 59.17,
-      "lift": 7.05
-    },
-    {
-      "combination": [
-        "animal",
-        "locality",
-        "usefulness"
-      ],
-      "posts_count": 24,
-      "avg_virality": 60.12,
-      "avg_approval": 66.83,
-      "avg_potential": 62.8,
-      "avg_confidence_adjusted_potential": 45.98,
-      "expected_potential_from_parts": 55.77,
-      "lift": 7.03
     },
     {
       "combination": [
@@ -1176,6 +1315,19 @@
     },
     {
       "combination": [
+        "animal",
+        "incident"
+      ],
+      "posts_count": 29,
+      "avg_virality": 65.21,
+      "avg_approval": 64.5,
+      "avg_potential": 64.93,
+      "avg_confidence_adjusted_potential": 49.12,
+      "expected_potential_from_parts": 58.03,
+      "lift": 6.9
+    },
+    {
+      "combination": [
         "fear",
         "shock",
         "visual_hook"
@@ -1190,16 +1342,16 @@
     },
     {
       "combination": [
-        "animal",
-        "fear"
+        "unusual",
+        "weather"
       ],
-      "posts_count": 25,
-      "avg_virality": 61.54,
-      "avg_approval": 71.74,
-      "avg_potential": 65.62,
-      "avg_confidence_adjusted_potential": 48.38,
-      "expected_potential_from_parts": 58.82,
-      "lift": 6.8
+      "posts_count": 26,
+      "avg_virality": 64.5,
+      "avg_approval": 56.19,
+      "avg_potential": 61.18,
+      "avg_confidence_adjusted_potential": 38.07,
+      "expected_potential_from_parts": 54.35,
+      "lift": 6.82
     },
     {
       "combination": [
@@ -1244,19 +1396,6 @@
     },
     {
       "combination": [
-        "unusual",
-        "weather"
-      ],
-      "posts_count": 26,
-      "avg_virality": 64.5,
-      "avg_approval": 56.19,
-      "avg_potential": 61.18,
-      "avg_confidence_adjusted_potential": 38.07,
-      "expected_potential_from_parts": 54.52,
-      "lift": 6.65
-    },
-    {
-      "combination": [
         "locality",
         "question_cta",
         "shock"
@@ -1268,6 +1407,33 @@
       "avg_confidence_adjusted_potential": 43.42,
       "expected_potential_from_parts": 50.6,
       "lift": 6.57
+    },
+    {
+      "combination": [
+        "animal",
+        "emoji_hook"
+      ],
+      "posts_count": 94,
+      "avg_virality": 63.83,
+      "avg_approval": 66.79,
+      "avg_potential": 65.02,
+      "avg_confidence_adjusted_potential": 40.01,
+      "expected_potential_from_parts": 58.59,
+      "lift": 6.42
+    },
+    {
+      "combination": [
+        "animal",
+        "fear",
+        "usefulness"
+      ],
+      "posts_count": 26,
+      "avg_virality": 63.54,
+      "avg_approval": 59.78,
+      "avg_potential": 62.04,
+      "avg_confidence_adjusted_potential": 43.03,
+      "expected_potential_from_parts": 55.62,
+      "lift": 6.41
     },
     {
       "combination": [
@@ -1285,19 +1451,6 @@
     },
     {
       "combination": [
-        "animal",
-        "usefulness"
-      ],
-      "posts_count": 41,
-      "avg_virality": 64.24,
-      "avg_approval": 64.75,
-      "avg_potential": 64.45,
-      "avg_confidence_adjusted_potential": 48.03,
-      "expected_potential_from_parts": 58.09,
-      "lift": 6.36
-    },
-    {
-      "combination": [
         "conflict",
         "shock",
         "usefulness"
@@ -1309,6 +1462,34 @@
       "avg_confidence_adjusted_potential": 41.39,
       "expected_potential_from_parts": 51.0,
       "lift": 6.33
+    },
+    {
+      "combination": [
+        "animal",
+        "emoji_hook",
+        "incident"
+      ],
+      "posts_count": 22,
+      "avg_virality": 63.36,
+      "avg_approval": 61.04,
+      "avg_potential": 62.43,
+      "avg_confidence_adjusted_potential": 49.29,
+      "expected_potential_from_parts": 56.2,
+      "lift": 6.23
+    },
+    {
+      "combination": [
+        "emoji_hook",
+        "media",
+        "weather"
+      ],
+      "posts_count": 88,
+      "avg_virality": 60.08,
+      "avg_approval": 55.12,
+      "avg_potential": 58.1,
+      "avg_confidence_adjusted_potential": 36.18,
+      "expected_potential_from_parts": 51.88,
+      "lift": 6.22
     },
     {
       "combination": [
@@ -1438,198 +1619,17 @@
     },
     {
       "combination": [
-        "emoji_hook",
-        "usefulness",
-        "weather"
-      ],
-      "posts_count": 43,
-      "avg_virality": 62.68,
-      "avg_approval": 50.33,
-      "avg_potential": 57.74,
-      "avg_confidence_adjusted_potential": 41.24,
-      "expected_potential_from_parts": 51.99,
-      "lift": 5.75
-    },
-    {
-      "combination": [
-        "emoji_hook",
-        "media",
-        "weather"
-      ],
-      "posts_count": 85,
-      "avg_virality": 59.85,
-      "avg_approval": 54.51,
-      "avg_potential": 57.71,
-      "avg_confidence_adjusted_potential": 35.25,
-      "expected_potential_from_parts": 51.99,
-      "lift": 5.72
-    },
-    {
-      "combination": [
-        "conflict",
-        "emoji_hook",
-        "shock"
-      ],
-      "posts_count": 83,
-      "avg_virality": 60.43,
-      "avg_approval": 52.84,
-      "avg_potential": 57.4,
-      "avg_confidence_adjusted_potential": 40.69,
-      "expected_potential_from_parts": 51.71,
-      "lift": 5.68
-    },
-    {
-      "combination": [
-        "incident",
-        "media",
-        "visual_hook"
-      ],
-      "posts_count": 65,
-      "avg_virality": 61.32,
-      "avg_approval": 53.1,
-      "avg_potential": 58.03,
-      "avg_confidence_adjusted_potential": 34.44,
-      "expected_potential_from_parts": 52.35,
-      "lift": 5.68
-    },
-    {
-      "combination": [
-        "shock",
-        "unusual",
-        "usefulness"
-      ],
-      "posts_count": 49,
-      "avg_virality": 61.27,
-      "avg_approval": 54.47,
-      "avg_potential": 58.55,
-      "avg_confidence_adjusted_potential": 41.21,
-      "expected_potential_from_parts": 52.9,
-      "lift": 5.65
-    },
-    {
-      "combination": [
-        "fear",
-        "incident",
-        "unusual"
-      ],
-      "posts_count": 25,
-      "avg_virality": 63.88,
-      "avg_approval": 50.79,
-      "avg_potential": 58.64,
-      "avg_confidence_adjusted_potential": 38.74,
-      "expected_potential_from_parts": 53.08,
-      "lift": 5.56
-    },
-    {
-      "combination": [
-        "conflict",
-        "incident",
-        "media"
-      ],
-      "posts_count": 73,
-      "avg_virality": 58.42,
-      "avg_approval": 52.9,
-      "avg_potential": 56.21,
-      "avg_confidence_adjusted_potential": 38.86,
-      "expected_potential_from_parts": 50.69,
-      "lift": 5.52
-    },
-    {
-      "combination": [
-        "conflict",
-        "locality",
-        "shock"
-      ],
-      "posts_count": 63,
-      "avg_virality": 58.53,
-      "avg_approval": 54.06,
-      "avg_potential": 56.74,
-      "avg_confidence_adjusted_potential": 40.44,
-      "expected_potential_from_parts": 51.25,
-      "lift": 5.5
-    },
-    {
-      "combination": [
         "animal",
         "emoji_hook",
         "locality"
       ],
-      "posts_count": 33,
-      "avg_virality": 57.77,
-      "avg_approval": 68.14,
-      "avg_potential": 61.92,
-      "avg_confidence_adjusted_potential": 42.66,
-      "expected_potential_from_parts": 56.49,
-      "lift": 5.43
-    },
-    {
-      "combination": [
-        "conflict",
-        "emoji_hook",
-        "incident"
-      ],
-      "posts_count": 64,
-      "avg_virality": 58.97,
-      "avg_approval": 53.58,
-      "avg_potential": 56.81,
-      "avg_confidence_adjusted_potential": 39.54,
-      "expected_potential_from_parts": 51.41,
-      "lift": 5.41
-    },
-    {
-      "combination": [
-        "conflict",
-        "media",
-        "shock"
-      ],
-      "posts_count": 101,
-      "avg_virality": 58.65,
-      "avg_approval": 52.82,
-      "avg_potential": 56.32,
-      "avg_confidence_adjusted_potential": 40.75,
-      "expected_potential_from_parts": 51.0,
-      "lift": 5.32
-    },
-    {
-      "combination": [
-        "conflict",
-        "incident"
-      ],
-      "posts_count": 75,
-      "avg_virality": 57.93,
-      "avg_approval": 53.35,
-      "avg_potential": 56.1,
-      "avg_confidence_adjusted_potential": 39.07,
-      "expected_potential_from_parts": 50.84,
-      "lift": 5.25
-    },
-    {
-      "combination": [
-        "emoji_hook",
-        "media",
-        "unusual"
-      ],
-      "posts_count": 212,
-      "avg_virality": 58.88,
-      "avg_approval": 57.23,
-      "avg_potential": 58.22,
-      "avg_confidence_adjusted_potential": 33.8,
-      "expected_potential_from_parts": 52.97,
-      "lift": 5.25
-    },
-    {
-      "combination": [
-        "emoji_hook",
-        "media",
-        "visual_hook"
-      ],
-      "posts_count": 259,
-      "avg_virality": 56.92,
-      "avg_approval": 59.52,
-      "avg_potential": 57.96,
-      "avg_confidence_adjusted_potential": 29.49,
-      "expected_potential_from_parts": 52.73,
-      "lift": 5.23
+      "posts_count": 57,
+      "avg_virality": 60.47,
+      "avg_approval": 63.95,
+      "avg_potential": 61.86,
+      "avg_confidence_adjusted_potential": 41.07,
+      "expected_potential_from_parts": 56.11,
+      "lift": 5.76
     }
   ],
   "stable_mechanism_combinations": [
@@ -1663,6 +1663,20 @@
     },
     {
       "combination": [
+        "animal",
+        "human_story",
+        "media"
+      ],
+      "posts_count": 57,
+      "avg_virality": 62.75,
+      "avg_approval": 68.2,
+      "avg_potential": 64.93,
+      "avg_confidence_adjusted_potential": 44.01,
+      "expected_potential_from_parts": 54.91,
+      "lift": 10.02
+    },
+    {
+      "combination": [
         "media",
         "unusual",
         "visual_hook"
@@ -1677,20 +1691,6 @@
     },
     {
       "combination": [
-        "animal",
-        "emoji_hook",
-        "media"
-      ],
-      "posts_count": 64,
-      "avg_virality": 63.91,
-      "avg_approval": 69.69,
-      "avg_potential": 66.22,
-      "avg_confidence_adjusted_potential": 42.31,
-      "expected_potential_from_parts": 56.24,
-      "lift": 9.98
-    },
-    {
-      "combination": [
         "emoji_hook",
         "fear",
         "visual_hook"
@@ -1699,22 +1699,23 @@
       "avg_virality": 63.41,
       "avg_approval": 60.32,
       "avg_potential": 62.17,
-      "avg_confidence_adjusted_potential": 32.64,
+      "avg_confidence_adjusted_potential": 32.65,
       "expected_potential_from_parts": 53.21,
       "lift": 8.96
     },
     {
       "combination": [
         "animal",
+        "emoji_hook",
         "media"
       ],
-      "posts_count": 86,
-      "avg_virality": 64.22,
-      "avg_approval": 70.62,
-      "avg_potential": 66.78,
-      "avg_confidence_adjusted_potential": 42.66,
-      "expected_potential_from_parts": 58.09,
-      "lift": 8.69
+      "posts_count": 93,
+      "avg_virality": 63.58,
+      "avg_approval": 66.66,
+      "avg_potential": 64.81,
+      "avg_confidence_adjusted_potential": 39.8,
+      "expected_potential_from_parts": 55.86,
+      "lift": 8.95
     },
     {
       "combination": [
@@ -1768,7 +1769,7 @@
       "avg_virality": 63.26,
       "avg_approval": 59.59,
       "avg_potential": 61.79,
-      "avg_confidence_adjusted_potential": 36.22,
+      "avg_confidence_adjusted_potential": 36.23,
       "expected_potential_from_parts": 53.37,
       "lift": 8.42
     },
@@ -1815,6 +1816,20 @@
     },
     {
       "combination": [
+        "animal",
+        "media",
+        "usefulness"
+      ],
+      "posts_count": 57,
+      "avg_virality": 63.9,
+      "avg_approval": 61.65,
+      "avg_potential": 63.0,
+      "avg_confidence_adjusted_potential": 44.44,
+      "expected_potential_from_parts": 55.14,
+      "lift": 7.86
+    },
+    {
+      "combination": [
         "conflict",
         "incident",
         "usefulness"
@@ -1826,6 +1841,46 @@
       "avg_confidence_adjusted_potential": 41.23,
       "expected_potential_from_parts": 50.69,
       "lift": 7.7
+    },
+    {
+      "combination": [
+        "animal",
+        "media"
+      ],
+      "posts_count": 122,
+      "avg_virality": 63.28,
+      "avg_approval": 67.86,
+      "avg_potential": 65.11,
+      "avg_confidence_adjusted_potential": 40.68,
+      "expected_potential_from_parts": 57.52,
+      "lift": 7.59
+    },
+    {
+      "combination": [
+        "animal",
+        "locality",
+        "media"
+      ],
+      "posts_count": 73,
+      "avg_virality": 60.79,
+      "avg_approval": 66.19,
+      "avg_potential": 62.95,
+      "avg_confidence_adjusted_potential": 42.56,
+      "expected_potential_from_parts": 55.39,
+      "lift": 7.56
+    },
+    {
+      "combination": [
+        "animal",
+        "human_story"
+      ],
+      "posts_count": 62,
+      "avg_virality": 62.75,
+      "avg_approval": 67.51,
+      "avg_potential": 64.66,
+      "avg_confidence_adjusted_potential": 44.08,
+      "expected_potential_from_parts": 57.17,
+      "lift": 7.48
     },
     {
       "combination": [
@@ -1869,6 +1924,19 @@
     },
     {
       "combination": [
+        "animal",
+        "shock"
+      ],
+      "posts_count": 51,
+      "avg_virality": 65.59,
+      "avg_approval": 65.92,
+      "avg_potential": 65.72,
+      "avg_confidence_adjusted_potential": 47.93,
+      "expected_potential_from_parts": 58.49,
+      "lift": 7.23
+    },
+    {
+      "combination": [
         "human_story",
         "locality",
         "visual_hook"
@@ -1894,19 +1962,6 @@
       "avg_confidence_adjusted_potential": 40.42,
       "expected_potential_from_parts": 51.34,
       "lift": 7.19
-    },
-    {
-      "combination": [
-        "animal",
-        "emoji_hook"
-      ],
-      "posts_count": 64,
-      "avg_virality": 63.91,
-      "avg_approval": 69.69,
-      "avg_potential": 66.22,
-      "avg_confidence_adjusted_potential": 42.31,
-      "expected_potential_from_parts": 59.17,
-      "lift": 7.05
     },
     {
       "combination": [
@@ -1937,6 +1992,19 @@
     },
     {
       "combination": [
+        "animal",
+        "emoji_hook"
+      ],
+      "posts_count": 94,
+      "avg_virality": 63.83,
+      "avg_approval": 66.79,
+      "avg_potential": 65.02,
+      "avg_confidence_adjusted_potential": 40.01,
+      "expected_potential_from_parts": 58.59,
+      "lift": 6.42
+    },
+    {
+      "combination": [
         "conflict",
         "shock",
         "usefulness"
@@ -1948,6 +2016,20 @@
       "avg_confidence_adjusted_potential": 41.39,
       "expected_potential_from_parts": 51.0,
       "lift": 6.33
+    },
+    {
+      "combination": [
+        "emoji_hook",
+        "media",
+        "weather"
+      ],
+      "posts_count": 88,
+      "avg_virality": 60.08,
+      "avg_approval": 55.12,
+      "avg_potential": 58.1,
+      "avg_confidence_adjusted_potential": 36.18,
+      "expected_potential_from_parts": 51.88,
+      "lift": 6.22
     },
     {
       "combination": [
@@ -2035,17 +2117,31 @@
     },
     {
       "combination": [
+        "animal",
         "emoji_hook",
-        "media",
+        "locality"
+      ],
+      "posts_count": 57,
+      "avg_virality": 60.47,
+      "avg_approval": 63.95,
+      "avg_potential": 61.86,
+      "avg_confidence_adjusted_potential": 41.07,
+      "expected_potential_from_parts": 56.11,
+      "lift": 5.76
+    },
+    {
+      "combination": [
+        "emoji_hook",
+        "locality",
         "weather"
       ],
-      "posts_count": 85,
-      "avg_virality": 59.85,
-      "avg_approval": 54.51,
-      "avg_potential": 57.71,
-      "avg_confidence_adjusted_potential": 35.25,
-      "expected_potential_from_parts": 51.99,
-      "lift": 5.72
+      "posts_count": 66,
+      "avg_virality": 60.49,
+      "avg_approval": 53.93,
+      "avg_potential": 57.87,
+      "avg_confidence_adjusted_potential": 37.9,
+      "expected_potential_from_parts": 52.12,
+      "lift": 5.74
     },
     {
       "combination": [
@@ -2102,6 +2198,19 @@
       "avg_confidence_adjusted_potential": 40.44,
       "expected_potential_from_parts": 51.25,
       "lift": 5.5
+    },
+    {
+      "combination": [
+        "animal",
+        "usefulness"
+      ],
+      "posts_count": 61,
+      "avg_virality": 63.98,
+      "avg_approval": 61.38,
+      "avg_potential": 62.94,
+      "avg_confidence_adjusted_potential": 44.73,
+      "expected_potential_from_parts": 57.52,
+      "lift": 5.42
     },
     {
       "combination": [
@@ -2189,16 +2298,15 @@
     {
       "combination": [
         "emoji_hook",
-        "locality",
         "weather"
       ],
-      "posts_count": 65,
-      "avg_virality": 60.06,
-      "avg_approval": 53.29,
-      "avg_potential": 57.35,
-      "avg_confidence_adjusted_potential": 37.1,
-      "expected_potential_from_parts": 52.24,
-      "lift": 5.11
+      "posts_count": 90,
+      "avg_virality": 59.87,
+      "avg_approval": 54.4,
+      "avg_potential": 57.68,
+      "avg_confidence_adjusted_potential": 36.08,
+      "expected_potential_from_parts": 52.62,
+      "lift": 5.06
     },
     {
       "combination": [
@@ -2271,6 +2379,19 @@
     },
     {
       "combination": [
+        "animal",
+        "locality"
+      ],
+      "posts_count": 79,
+      "avg_virality": 60.57,
+      "avg_approval": 65.8,
+      "avg_potential": 62.66,
+      "avg_confidence_adjusted_potential": 42.49,
+      "expected_potential_from_parts": 57.89,
+      "lift": 4.77
+    },
+    {
+      "combination": [
         "emoji_hook",
         "locality",
         "unusual"
@@ -2293,7 +2414,7 @@
       "avg_approval": 53.1,
       "avg_potential": 58.03,
       "avg_confidence_adjusted_potential": 34.44,
-      "expected_potential_from_parts": 53.34,
+      "expected_potential_from_parts": 53.33,
       "lift": 4.69
     },
     {
@@ -2325,19 +2446,6 @@
     },
     {
       "combination": [
-        "emoji_hook",
-        "weather"
-      ],
-      "posts_count": 87,
-      "avg_virality": 59.64,
-      "avg_approval": 53.78,
-      "avg_potential": 57.29,
-      "avg_confidence_adjusted_potential": 35.16,
-      "expected_potential_from_parts": 52.79,
-      "lift": 4.5
-    },
-    {
-      "combination": [
         "conflict",
         "shock"
       ],
@@ -2362,19 +2470,6 @@
       "avg_confidence_adjusted_potential": 41.92,
       "expected_potential_from_parts": 51.37,
       "lift": 4.35
-    },
-    {
-      "combination": [
-        "animal",
-        "locality"
-      ],
-      "posts_count": 51,
-      "avg_virality": 58.71,
-      "avg_approval": 68.93,
-      "avg_potential": 62.8,
-      "avg_confidence_adjusted_potential": 43.21,
-      "expected_potential_from_parts": 58.46,
-      "lift": 4.33
     },
     {
       "combination": [
@@ -2610,6 +2705,20 @@
     },
     {
       "combination": [
+        "media",
+        "shock",
+        "unusual"
+      ],
+      "posts_count": 67,
+      "avg_virality": 58.08,
+      "avg_approval": 53.78,
+      "avg_potential": 56.36,
+      "avg_confidence_adjusted_potential": 38.15,
+      "expected_potential_from_parts": 52.9,
+      "lift": 3.46
+    },
+    {
+      "combination": [
         "emoji_hook",
         "usefulness",
         "visual_hook"
@@ -2621,20 +2730,6 @@
       "avg_confidence_adjusted_potential": 31.15,
       "expected_potential_from_parts": 52.73,
       "lift": 3.46
-    },
-    {
-      "combination": [
-        "media",
-        "shock",
-        "unusual"
-      ],
-      "posts_count": 67,
-      "avg_virality": 58.08,
-      "avg_approval": 53.78,
-      "avg_potential": 56.36,
-      "avg_confidence_adjusted_potential": 38.15,
-      "expected_potential_from_parts": 52.9,
-      "lift": 3.45
     },
     {
       "combination": [
@@ -2801,6 +2896,20 @@
     },
     {
       "combination": [
+        "locality",
+        "media",
+        "weather"
+      ],
+      "posts_count": 90,
+      "avg_virality": 56.55,
+      "avg_approval": 49.97,
+      "avg_potential": 53.92,
+      "avg_confidence_adjusted_potential": 36.32,
+      "expected_potential_from_parts": 51.41,
+      "lift": 2.51
+    },
+    {
+      "combination": [
         "shock",
         "usefulness"
       ],
@@ -2895,114 +3004,6 @@
       "avg_confidence_adjusted_potential": 38.04,
       "expected_potential_from_parts": 51.07,
       "lift": 2.33
-    },
-    {
-      "combination": [
-        "emoji_hook",
-        "humor"
-      ],
-      "posts_count": 73,
-      "avg_virality": 55.2,
-      "avg_approval": 60.21,
-      "avg_potential": 57.2,
-      "avg_confidence_adjusted_potential": 25.71,
-      "expected_potential_from_parts": 54.87,
-      "lift": 2.33
-    },
-    {
-      "combination": [
-        "emoji_hook",
-        "locality",
-        "usefulness"
-      ],
-      "posts_count": 389,
-      "avg_virality": 56.39,
-      "avg_approval": 49.43,
-      "avg_potential": 53.61,
-      "avg_confidence_adjusted_potential": 37.66,
-      "expected_potential_from_parts": 51.35,
-      "lift": 2.26
-    },
-    {
-      "combination": [
-        "locality",
-        "unusual"
-      ],
-      "posts_count": 159,
-      "avg_virality": 56.8,
-      "avg_approval": 54.29,
-      "avg_potential": 55.8,
-      "avg_confidence_adjusted_potential": 33.73,
-      "expected_potential_from_parts": 53.56,
-      "lift": 2.23
-    },
-    {
-      "combination": [
-        "human_story",
-        "media",
-        "unusual"
-      ],
-      "posts_count": 109,
-      "avg_virality": 56.55,
-      "avg_approval": 50.8,
-      "avg_potential": 54.25,
-      "avg_confidence_adjusted_potential": 33.68,
-      "expected_potential_from_parts": 52.03,
-      "lift": 2.23
-    },
-    {
-      "combination": [
-        "emoji_hook",
-        "media",
-        "shock"
-      ],
-      "posts_count": 348,
-      "avg_virality": 56.93,
-      "avg_approval": 49.46,
-      "avg_potential": 53.94,
-      "avg_confidence_adjusted_potential": 39.5,
-      "expected_potential_from_parts": 51.75,
-      "lift": 2.19
-    },
-    {
-      "combination": [
-        "conflict",
-        "human_story"
-      ],
-      "posts_count": 178,
-      "avg_virality": 53.6,
-      "avg_approval": 50.03,
-      "avg_potential": 52.17,
-      "avg_confidence_adjusted_potential": 36.89,
-      "expected_potential_from_parts": 49.99,
-      "lift": 2.18
-    },
-    {
-      "combination": [
-        "fear",
-        "media",
-        "usefulness"
-      ],
-      "posts_count": 199,
-      "avg_virality": 57.47,
-      "avg_approval": 46.3,
-      "avg_potential": 53.0,
-      "avg_confidence_adjusted_potential": 38.1,
-      "expected_potential_from_parts": 50.87,
-      "lift": 2.13
-    },
-    {
-      "combination": [
-        "shock",
-        "unusual"
-      ],
-      "posts_count": 68,
-      "avg_virality": 57.87,
-      "avg_approval": 53.81,
-      "avg_potential": 56.25,
-      "avg_confidence_adjusted_potential": 38.27,
-      "expected_potential_from_parts": 54.16,
-      "lift": 2.09
     }
   ],
   "temporal_stability": {
@@ -3019,6 +3020,74 @@
         "start_date": "2026-03-28T22:59:53+00:00",
         "end_date": "2026-05-10T12:24:41+00:00",
         "top_combinations": [
+          {
+            "combination": [
+              "animal",
+              "media",
+              "shock"
+            ],
+            "posts_count": 20,
+            "avg_virality": 72.87,
+            "avg_approval": 67.8,
+            "avg_potential": 70.84,
+            "avg_confidence_adjusted_potential": 67.55,
+            "expected_potential_from_parts": 54.97,
+            "lift": 15.87
+          },
+          {
+            "combination": [
+              "animal",
+              "shock"
+            ],
+            "posts_count": 22,
+            "avg_virality": 71.22,
+            "avg_approval": 68.47,
+            "avg_potential": 70.12,
+            "avg_confidence_adjusted_potential": 66.67,
+            "expected_potential_from_parts": 58.06,
+            "lift": 12.06
+          },
+          {
+            "combination": [
+              "animal",
+              "media",
+              "usefulness"
+            ],
+            "posts_count": 21,
+            "avg_virality": 66.43,
+            "avg_approval": 57.16,
+            "avg_potential": 62.72,
+            "avg_confidence_adjusted_potential": 59.06,
+            "expected_potential_from_parts": 53.14,
+            "lift": 9.58
+          },
+          {
+            "combination": [
+              "animal",
+              "human_story"
+            ],
+            "posts_count": 20,
+            "avg_virality": 66.69,
+            "avg_approval": 61.54,
+            "avg_potential": 64.63,
+            "avg_confidence_adjusted_potential": 60.21,
+            "expected_potential_from_parts": 55.1,
+            "lift": 9.53
+          },
+          {
+            "combination": [
+              "animal",
+              "emoji_hook",
+              "media"
+            ],
+            "posts_count": 29,
+            "avg_virality": 63.76,
+            "avg_approval": 61.73,
+            "avg_potential": 62.95,
+            "avg_confidence_adjusted_potential": 55.75,
+            "expected_potential_from_parts": 53.55,
+            "lift": 9.4
+          },
           {
             "combination": [
               "conflict",
@@ -3046,6 +3115,19 @@
             "avg_confidence_adjusted_potential": 55.53,
             "expected_potential_from_parts": 51.41,
             "lift": 8.44
+          },
+          {
+            "combination": [
+              "animal",
+              "usefulness"
+            ],
+            "posts_count": 23,
+            "avg_virality": 66.77,
+            "avg_approval": 58.43,
+            "avg_potential": 63.43,
+            "avg_confidence_adjusted_potential": 59.78,
+            "expected_potential_from_parts": 55.31,
+            "lift": 8.12
           },
           {
             "combination": [
@@ -3104,19 +3186,6 @@
           },
           {
             "combination": [
-              "animal",
-              "media"
-            ],
-            "posts_count": 26,
-            "avg_virality": 61.47,
-            "avg_approval": 64.4,
-            "avg_potential": 62.64,
-            "avg_confidence_adjusted_potential": 53.99,
-            "expected_potential_from_parts": 55.3,
-            "lift": 7.35
-          },
-          {
-            "combination": [
               "incident",
               "shock",
               "usefulness"
@@ -3145,6 +3214,32 @@
           },
           {
             "combination": [
+              "animal",
+              "emoji_hook"
+            ],
+            "posts_count": 29,
+            "avg_virality": 63.76,
+            "avg_approval": 61.73,
+            "avg_potential": 62.95,
+            "avg_confidence_adjusted_potential": 55.75,
+            "expected_potential_from_parts": 55.93,
+            "lift": 7.02
+          },
+          {
+            "combination": [
+              "animal",
+              "media"
+            ],
+            "posts_count": 36,
+            "avg_virality": 62.59,
+            "avg_approval": 61.35,
+            "avg_potential": 62.09,
+            "avg_confidence_adjusted_potential": 54.63,
+            "expected_potential_from_parts": 55.16,
+            "lift": 6.94
+          },
+          {
+            "combination": [
               "locality",
               "media",
               "weather"
@@ -3154,8 +3249,8 @@
             "avg_approval": 53.88,
             "avg_potential": 58.01,
             "avg_confidence_adjusted_potential": 52.53,
-            "expected_potential_from_parts": 51.41,
-            "lift": 6.6
+            "expected_potential_from_parts": 51.15,
+            "lift": 6.87
           },
           {
             "combination": [
@@ -3187,113 +3282,17 @@
           },
           {
             "combination": [
-              "media",
-              "shock",
-              "usefulness"
-            ],
-            "posts_count": 71,
-            "avg_virality": 61.39,
-            "avg_approval": 49.73,
-            "avg_potential": 56.73,
-            "avg_confidence_adjusted_potential": 51.35,
-            "expected_potential_from_parts": 50.84,
-            "lift": 5.89
-          },
-          {
-            "combination": [
-              "conflict",
-              "incident"
-            ],
-            "posts_count": 20,
-            "avg_virality": 61.02,
-            "avg_approval": 48.46,
-            "avg_potential": 56.0,
-            "avg_confidence_adjusted_potential": 51.53,
-            "expected_potential_from_parts": 50.24,
-            "lift": 5.76
-          },
-          {
-            "combination": [
-              "emoji_hook",
-              "media",
-              "unusual"
-            ],
-            "posts_count": 52,
-            "avg_virality": 56.67,
-            "avg_approval": 58.43,
-            "avg_potential": 57.38,
-            "avg_confidence_adjusted_potential": 47.81,
-            "expected_potential_from_parts": 51.64,
-            "lift": 5.74
-          },
-          {
-            "combination": [
-              "conflict",
-              "fear",
-              "shock"
-            ],
-            "posts_count": 20,
-            "avg_virality": 63.0,
-            "avg_approval": 53.0,
-            "avg_potential": 59.0,
-            "avg_confidence_adjusted_potential": 55.13,
-            "expected_potential_from_parts": 53.39,
-            "lift": 5.61
-          },
-          {
-            "combination": [
-              "emoji_hook",
-              "shock",
-              "usefulness"
-            ],
-            "posts_count": 63,
-            "avg_virality": 62.2,
-            "avg_approval": 49.05,
-            "avg_potential": 56.94,
-            "avg_confidence_adjusted_potential": 50.98,
-            "expected_potential_from_parts": 51.36,
-            "lift": 5.58
-          },
-          {
-            "combination": [
-              "emoji_hook",
-              "fear",
-              "usefulness"
-            ],
-            "posts_count": 41,
-            "avg_virality": 63.48,
-            "avg_approval": 46.91,
-            "avg_potential": 56.85,
-            "avg_confidence_adjusted_potential": 52.5,
-            "expected_potential_from_parts": 51.4,
-            "lift": 5.45
-          },
-          {
-            "combination": [
-              "emoji_hook",
+              "animal",
               "locality",
-              "shock"
+              "media"
             ],
-            "posts_count": 71,
-            "avg_virality": 60.07,
-            "avg_approval": 51.84,
-            "avg_potential": 56.78,
-            "avg_confidence_adjusted_potential": 51.72,
-            "expected_potential_from_parts": 51.5,
-            "lift": 5.28
-          },
-          {
-            "combination": [
-              "shock",
-              "unusual"
-            ],
-            "posts_count": 20,
-            "avg_virality": 65.05,
-            "avg_approval": 53.48,
-            "avg_potential": 60.42,
-            "avg_confidence_adjusted_potential": 56.93,
-            "expected_potential_from_parts": 55.19,
-            "lift": 5.24
+            "posts_count": 24,
+            "avg_virality": 59.42,
+            "avg_approval": 59.76,
+            "avg_potential": 59.56,
+            "avg_confidence_adjusted_potential": 53.07,
+            "expected_potential_from_parts": 53.29,
+            "lift": 6.27
           }
         ]
       },
@@ -3471,6 +3470,19 @@
           },
           {
             "combination": [
+              "animal",
+              "media"
+            ],
+            "posts_count": 32,
+            "avg_virality": 63.58,
+            "avg_approval": 66.19,
+            "avg_potential": 64.62,
+            "avg_confidence_adjusted_potential": 39.32,
+            "expected_potential_from_parts": 56.75,
+            "lift": 7.87
+          },
+          {
+            "combination": [
               "fear",
               "visual_hook"
             ],
@@ -3481,6 +3493,20 @@
             "avg_confidence_adjusted_potential": 23.94,
             "expected_potential_from_parts": 53.41,
             "lift": 7.83
+          },
+          {
+            "combination": [
+              "animal",
+              "emoji_hook",
+              "media"
+            ],
+            "posts_count": 25,
+            "avg_virality": 63.04,
+            "avg_approval": 62.96,
+            "avg_potential": 63.01,
+            "avg_confidence_adjusted_potential": 39.7,
+            "expected_potential_from_parts": 55.3,
+            "lift": 7.71
           },
           {
             "combination": [
@@ -3495,6 +3521,33 @@
             "avg_confidence_adjusted_potential": 28.16,
             "expected_potential_from_parts": 53.31,
             "lift": 7.61
+          },
+          {
+            "combination": [
+              "emoji_hook",
+              "media",
+              "weather"
+            ],
+            "posts_count": 21,
+            "avg_virality": 64.4,
+            "avg_approval": 49.56,
+            "avg_potential": 58.46,
+            "avg_confidence_adjusted_potential": 50.39,
+            "expected_potential_from_parts": 50.89,
+            "lift": 7.58
+          },
+          {
+            "combination": [
+              "emoji_hook",
+              "weather"
+            ],
+            "posts_count": 22,
+            "avg_virality": 65.41,
+            "avg_approval": 49.27,
+            "avg_potential": 58.95,
+            "avg_confidence_adjusted_potential": 50.8,
+            "expected_potential_from_parts": 51.46,
+            "lift": 7.49
           },
           {
             "combination": [
@@ -3522,61 +3575,6 @@
             "avg_confidence_adjusted_potential": 33.59,
             "expected_potential_from_parts": 51.68,
             "lift": 7.01
-          },
-          {
-            "combination": [
-              "incident",
-              "media",
-              "visual_hook"
-            ],
-            "posts_count": 28,
-            "avg_virality": 61.02,
-            "avg_approval": 54.68,
-            "avg_potential": 58.48,
-            "avg_confidence_adjusted_potential": 29.71,
-            "expected_potential_from_parts": 52.17,
-            "lift": 6.31
-          },
-          {
-            "combination": [
-              "emoji_hook",
-              "locality",
-              "unusual"
-            ],
-            "posts_count": 35,
-            "avg_virality": 59.31,
-            "avg_approval": 55.67,
-            "avg_potential": 57.85,
-            "avg_confidence_adjusted_potential": 32.92,
-            "expected_potential_from_parts": 51.8,
-            "lift": 6.06
-          },
-          {
-            "combination": [
-              "emoji_hook",
-              "weather"
-            ],
-            "posts_count": 20,
-            "avg_virality": 63.52,
-            "avg_approval": 45.1,
-            "avg_potential": 56.15,
-            "avg_confidence_adjusted_potential": 47.24,
-            "expected_potential_from_parts": 50.46,
-            "lift": 5.69
-          },
-          {
-            "combination": [
-              "emoji_hook",
-              "media",
-              "visual_hook"
-            ],
-            "posts_count": 64,
-            "avg_virality": 58.65,
-            "avg_approval": 56.87,
-            "avg_potential": 57.94,
-            "avg_confidence_adjusted_potential": 28.05,
-            "expected_potential_from_parts": 52.41,
-            "lift": 5.54
           }
         ]
       },
@@ -3710,6 +3708,19 @@
             "avg_confidence_adjusted_potential": 34.87,
             "expected_potential_from_parts": 53.94,
             "lift": 8.77
+          },
+          {
+            "combination": [
+              "animal",
+              "media"
+            ],
+            "posts_count": 20,
+            "avg_virality": 64.05,
+            "avg_approval": 73.17,
+            "avg_potential": 67.7,
+            "avg_confidence_adjusted_potential": 39.97,
+            "expected_potential_from_parts": 59.11,
+            "lift": 8.58
           },
           {
             "combination": [
@@ -3847,20 +3858,6 @@
             "avg_confidence_adjusted_potential": 39.21,
             "expected_potential_from_parts": 50.84,
             "lift": 6.81
-          },
-          {
-            "combination": [
-              "emoji_hook",
-              "locality",
-              "visual_hook"
-            ],
-            "posts_count": 41,
-            "avg_virality": 59.6,
-            "avg_approval": 62.8,
-            "avg_potential": 60.88,
-            "avg_confidence_adjusted_potential": 26.03,
-            "expected_potential_from_parts": 54.14,
-            "lift": 6.73
           }
         ]
       },
@@ -3879,10 +3876,24 @@
             "posts_count": 26,
             "avg_virality": 67.48,
             "avg_approval": 67.59,
-            "avg_potential": 67.53,
+            "avg_potential": 67.52,
             "avg_confidence_adjusted_potential": 25.28,
             "expected_potential_from_parts": 55.45,
             "lift": 12.08
+          },
+          {
+            "combination": [
+              "animal",
+              "emoji_hook",
+              "media"
+            ],
+            "posts_count": 25,
+            "avg_virality": 65.38,
+            "avg_approval": 75.59,
+            "avg_potential": 69.47,
+            "avg_confidence_adjusted_potential": 25.59,
+            "expected_potential_from_parts": 57.99,
+            "lift": 11.48
           },
           {
             "combination": [
@@ -3901,15 +3912,15 @@
           {
             "combination": [
               "animal",
-              "media"
+              "emoji_hook"
             ],
-            "posts_count": 25,
-            "avg_virality": 65.85,
-            "avg_approval": 74.98,
-            "avg_potential": 69.5,
-            "avg_confidence_adjusted_potential": 31.25,
-            "expected_potential_from_parts": 60.52,
-            "lift": 8.98
+            "posts_count": 26,
+            "avg_virality": 66.23,
+            "avg_approval": 75.74,
+            "avg_potential": 70.03,
+            "avg_confidence_adjusted_potential": 26.89,
+            "expected_potential_from_parts": 60.67,
+            "lift": 9.36
           },
           {
             "combination": [
@@ -3963,8 +3974,21 @@
             "avg_approval": 62.37,
             "avg_potential": 64.43,
             "avg_confidence_adjusted_potential": 21.52,
-            "expected_potential_from_parts": 56.43,
+            "expected_potential_from_parts": 56.42,
             "lift": 8.01
+          },
+          {
+            "combination": [
+              "animal",
+              "media"
+            ],
+            "posts_count": 34,
+            "avg_virality": 63.28,
+            "avg_approval": 73.21,
+            "avg_potential": 67.25,
+            "avg_confidence_adjusted_potential": 27.6,
+            "expected_potential_from_parts": 59.83,
+            "lift": 7.42
           },
           {
             "combination": [
@@ -4116,34 +4140,6 @@
             "avg_confidence_adjusted_potential": 21.83,
             "expected_potential_from_parts": 55.42,
             "lift": 4.94
-          },
-          {
-            "combination": [
-              "emoji_hook",
-              "media",
-              "positive_emotion"
-            ],
-            "posts_count": 77,
-            "avg_virality": 56.2,
-            "avg_approval": 65.82,
-            "avg_potential": 60.05,
-            "avg_confidence_adjusted_potential": 20.07,
-            "expected_potential_from_parts": 55.13,
-            "lift": 4.92
-          },
-          {
-            "combination": [
-              "emoji_hook",
-              "incident",
-              "media"
-            ],
-            "posts_count": 20,
-            "avg_virality": 59.66,
-            "avg_approval": 56.59,
-            "avg_potential": 58.43,
-            "avg_confidence_adjusted_potential": 28.35,
-            "expected_potential_from_parts": 53.77,
-            "lift": 4.66
           }
         ]
       }
@@ -4151,49 +4147,106 @@
     "stable_combinations": [
       {
         "combination": [
-          "emoji_hook",
-          "locality",
-          "visual_hook"
+          "animal",
+          "media"
         ],
-        "periods_present": 3,
-        "stability_share": 0.75,
-        "avg_rank": 9.33,
-        "avg_posts_count": 45.33,
-        "avg_lift": 8.18,
-        "avg_virality": 61.6,
-        "avg_approval": 63.19,
-        "avg_potential": 62.23,
-        "avg_confidence_adjusted_potential": 27.08,
+        "periods_present": 4,
+        "stability_share": 1.0,
+        "avg_rank": 12.0,
+        "avg_posts_count": 30.5,
+        "avg_lift": 7.7,
+        "avg_virality": 63.38,
+        "avg_approval": 68.48,
+        "avg_potential": 65.42,
+        "avg_confidence_adjusted_potential": 40.38,
         "periods": [
           {
+            "period": 1,
+            "rank": 16,
+            "posts_count": 36,
+            "lift": 6.94,
+            "avg_virality": 62.59,
+            "avg_approval": 61.35,
+            "avg_potential": 62.09,
+            "avg_confidence_adjusted_potential": 54.63
+          },
+          {
             "period": 2,
-            "rank": 2,
-            "posts_count": 49,
-            "lift": 9.75,
-            "avg_virality": 63.92,
-            "avg_approval": 60.86,
-            "avg_potential": 62.69,
-            "avg_confidence_adjusted_potential": 30.29
+            "rank": 13,
+            "posts_count": 32,
+            "lift": 7.87,
+            "avg_virality": 63.58,
+            "avg_approval": 66.19,
+            "avg_potential": 64.62,
+            "avg_confidence_adjusted_potential": 39.32
           },
           {
             "period": 3,
-            "rank": 20,
-            "posts_count": 41,
-            "lift": 6.73,
-            "avg_virality": 59.6,
-            "avg_approval": 62.8,
-            "avg_potential": 60.88,
-            "avg_confidence_adjusted_potential": 26.03
+            "rank": 10,
+            "posts_count": 20,
+            "lift": 8.58,
+            "avg_virality": 64.05,
+            "avg_approval": 73.17,
+            "avg_potential": 67.7,
+            "avg_confidence_adjusted_potential": 39.97
           },
           {
             "period": 4,
-            "rank": 6,
-            "posts_count": 46,
-            "lift": 8.05,
-            "avg_virality": 61.29,
-            "avg_approval": 65.9,
-            "avg_potential": 63.13,
-            "avg_confidence_adjusted_potential": 24.92
+            "rank": 9,
+            "posts_count": 34,
+            "lift": 7.42,
+            "avg_virality": 63.28,
+            "avg_approval": 73.21,
+            "avg_potential": 67.25,
+            "avg_confidence_adjusted_potential": 27.6
+          }
+        ]
+      },
+      {
+        "combination": [
+          "animal",
+          "emoji_hook",
+          "media"
+        ],
+        "periods_present": 3,
+        "stability_share": 0.75,
+        "avg_rank": 7.33,
+        "avg_posts_count": 26.33,
+        "avg_lift": 9.53,
+        "avg_virality": 64.06,
+        "avg_approval": 66.76,
+        "avg_potential": 65.14,
+        "avg_confidence_adjusted_potential": 40.35,
+        "periods": [
+          {
+            "period": 1,
+            "rank": 5,
+            "posts_count": 29,
+            "lift": 9.4,
+            "avg_virality": 63.76,
+            "avg_approval": 61.73,
+            "avg_potential": 62.95,
+            "avg_confidence_adjusted_potential": 55.75
+          },
+          {
+            "period": 2,
+            "rank": 15,
+            "posts_count": 25,
+            "lift": 7.71,
+            "avg_virality": 63.04,
+            "avg_approval": 62.96,
+            "avg_potential": 63.01,
+            "avg_confidence_adjusted_potential": 39.7
+          },
+          {
+            "period": 4,
+            "rank": 2,
+            "posts_count": 25,
+            "lift": 11.48,
+            "avg_virality": 65.38,
+            "avg_approval": 75.59,
+            "avg_potential": 69.47,
+            "avg_confidence_adjusted_potential": 25.59
           }
         ]
       },
@@ -4201,47 +4254,37 @@
         "combination": [
           "emoji_hook",
           "media",
-          "visual_hook"
+          "weather"
         ],
-        "periods_present": 3,
-        "stability_share": 0.75,
-        "avg_rank": 15.67,
-        "avg_posts_count": 68.0,
-        "avg_lift": 6.34,
-        "avg_virality": 59.3,
-        "avg_approval": 61.32,
-        "avg_potential": 60.11,
-        "avg_confidence_adjusted_potential": 26.54,
+        "periods_present": 2,
+        "stability_share": 0.5,
+        "avg_rank": 9.0,
+        "avg_posts_count": 23.5,
+        "avg_lift": 9.83,
+        "avg_virality": 65.94,
+        "avg_approval": 58.58,
+        "avg_potential": 62.99,
+        "avg_confidence_adjusted_potential": 37.84,
         "periods": [
           {
             "period": 2,
-            "rank": 20,
-            "posts_count": 64,
-            "lift": 5.54,
-            "avg_virality": 58.65,
-            "avg_approval": 56.87,
-            "avg_potential": 57.94,
-            "avg_confidence_adjusted_potential": 28.05
-          },
-          {
-            "period": 3,
-            "rank": 10,
-            "posts_count": 62,
-            "lift": 8.5,
-            "avg_virality": 62.27,
-            "avg_approval": 63.16,
-            "avg_potential": 62.62,
-            "avg_confidence_adjusted_potential": 29.72
+            "rank": 17,
+            "posts_count": 21,
+            "lift": 7.58,
+            "avg_virality": 64.4,
+            "avg_approval": 49.56,
+            "avg_potential": 58.46,
+            "avg_confidence_adjusted_potential": 50.39
           },
           {
             "period": 4,
-            "rank": 17,
-            "posts_count": 78,
-            "lift": 4.97,
-            "avg_virality": 56.99,
-            "avg_approval": 63.93,
-            "avg_potential": 59.76,
-            "avg_confidence_adjusted_potential": 21.85
+            "rank": 1,
+            "posts_count": 26,
+            "lift": 12.08,
+            "avg_virality": 67.48,
+            "avg_approval": 67.59,
+            "avg_potential": 67.52,
+            "avg_confidence_adjusted_potential": 25.28
           }
         ]
       },
@@ -4253,7 +4296,7 @@
         ],
         "periods_present": 2,
         "stability_share": 0.5,
-        "avg_rank": 4.5,
+        "avg_rank": 5.5,
         "avg_posts_count": 27.0,
         "avg_lift": 9.5,
         "avg_virality": 62.65,
@@ -4273,7 +4316,7 @@
           },
           {
             "period": 4,
-            "rank": 8,
+            "rank": 10,
             "posts_count": 26,
             "lift": 6.43,
             "avg_virality": 60.26,
@@ -4291,7 +4334,7 @@
         ],
         "periods_present": 2,
         "stability_share": 0.5,
-        "avg_rank": 5.0,
+        "avg_rank": 5.5,
         "avg_posts_count": 31.0,
         "avg_lift": 9.23,
         "avg_virality": 62.75,
@@ -4311,7 +4354,7 @@
           },
           {
             "period": 4,
-            "rank": 2,
+            "rank": 3,
             "posts_count": 24,
             "lift": 10.08,
             "avg_virality": 64.03,
@@ -4323,13 +4366,51 @@
       },
       {
         "combination": [
+          "emoji_hook",
+          "locality",
+          "visual_hook"
+        ],
+        "periods_present": 2,
+        "stability_share": 0.5,
+        "avg_rank": 4.5,
+        "avg_posts_count": 47.5,
+        "avg_lift": 8.9,
+        "avg_virality": 62.61,
+        "avg_approval": 63.38,
+        "avg_potential": 62.91,
+        "avg_confidence_adjusted_potential": 27.61,
+        "periods": [
+          {
+            "period": 2,
+            "rank": 2,
+            "posts_count": 49,
+            "lift": 9.75,
+            "avg_virality": 63.92,
+            "avg_approval": 60.86,
+            "avg_potential": 62.69,
+            "avg_confidence_adjusted_potential": 30.29
+          },
+          {
+            "period": 4,
+            "rank": 7,
+            "posts_count": 46,
+            "lift": 8.05,
+            "avg_virality": 61.29,
+            "avg_approval": 65.9,
+            "avg_potential": 63.13,
+            "avg_confidence_adjusted_potential": 24.92
+          }
+        ]
+      },
+      {
+        "combination": [
           "conflict",
           "shock",
           "usefulness"
         ],
         "periods_present": 2,
         "stability_share": 0.5,
-        "avg_rank": 8.5,
+        "avg_rank": 13.0,
         "avg_posts_count": 21.5,
         "avg_lift": 8.2,
         "avg_virality": 64.31,
@@ -4339,7 +4420,7 @@
         "periods": [
           {
             "period": 1,
-            "rank": 1,
+            "rank": 6,
             "posts_count": 21,
             "lift": 9.38,
             "avg_virality": 66.89,
@@ -4349,7 +4430,7 @@
           },
           {
             "period": 2,
-            "rank": 16,
+            "rank": 20,
             "posts_count": 22,
             "lift": 7.01,
             "avg_virality": 61.74,
@@ -4362,37 +4443,74 @@
       {
         "combination": [
           "animal",
-          "media"
+          "emoji_hook"
         ],
         "periods_present": 2,
         "stability_share": 0.5,
-        "avg_rank": 5.0,
-        "avg_posts_count": 25.5,
-        "avg_lift": 8.16,
-        "avg_virality": 63.66,
-        "avg_approval": 69.69,
-        "avg_potential": 66.07,
-        "avg_confidence_adjusted_potential": 42.62,
+        "avg_rank": 9.5,
+        "avg_posts_count": 27.5,
+        "avg_lift": 8.19,
+        "avg_virality": 65.0,
+        "avg_approval": 68.73,
+        "avg_potential": 66.49,
+        "avg_confidence_adjusted_potential": 41.32,
         "periods": [
           {
             "period": 1,
-            "rank": 7,
-            "posts_count": 26,
-            "lift": 7.35,
-            "avg_virality": 61.47,
-            "avg_approval": 64.4,
-            "avg_potential": 62.64,
-            "avg_confidence_adjusted_potential": 53.99
+            "rank": 15,
+            "posts_count": 29,
+            "lift": 7.02,
+            "avg_virality": 63.76,
+            "avg_approval": 61.73,
+            "avg_potential": 62.95,
+            "avg_confidence_adjusted_potential": 55.75
           },
           {
             "period": 4,
-            "rank": 3,
-            "posts_count": 25,
-            "lift": 8.98,
-            "avg_virality": 65.85,
-            "avg_approval": 74.98,
-            "avg_potential": 69.5,
-            "avg_confidence_adjusted_potential": 31.25
+            "rank": 4,
+            "posts_count": 26,
+            "lift": 9.36,
+            "avg_virality": 66.23,
+            "avg_approval": 75.74,
+            "avg_potential": 70.03,
+            "avg_confidence_adjusted_potential": 26.89
+          }
+        ]
+      },
+      {
+        "combination": [
+          "emoji_hook",
+          "weather"
+        ],
+        "periods_present": 2,
+        "stability_share": 0.5,
+        "avg_rank": 11.5,
+        "avg_posts_count": 24.5,
+        "avg_lift": 8.0,
+        "avg_virality": 65.46,
+        "avg_approval": 57.23,
+        "avg_potential": 62.16,
+        "avg_confidence_adjusted_potential": 37.63,
+        "periods": [
+          {
+            "period": 2,
+            "rank": 18,
+            "posts_count": 22,
+            "lift": 7.49,
+            "avg_virality": 65.41,
+            "avg_approval": 49.27,
+            "avg_potential": 58.95,
+            "avg_confidence_adjusted_potential": 50.8
+          },
+          {
+            "period": 4,
+            "rank": 5,
+            "posts_count": 27,
+            "lift": 8.51,
+            "avg_virality": 65.51,
+            "avg_approval": 65.18,
+            "avg_potential": 65.38,
+            "avg_confidence_adjusted_potential": 24.47
           }
         ]
       },
@@ -4404,7 +4522,7 @@
         ],
         "periods_present": 2,
         "stability_share": 0.5,
-        "avg_rank": 7.5,
+        "avg_rank": 8.5,
         "avg_posts_count": 33.0,
         "avg_lift": 7.79,
         "avg_virality": 60.33,
@@ -4424,7 +4542,7 @@
           },
           {
             "period": 4,
-            "rank": 11,
+            "rank": 13,
             "posts_count": 33,
             "lift": 6.04,
             "avg_virality": 58.61,
@@ -4436,87 +4554,13 @@
       },
       {
         "combination": [
-          "conflict",
-          "incident"
-        ],
-        "periods_present": 2,
-        "stability_share": 0.5,
-        "avg_rank": 10.5,
-        "avg_posts_count": 21.0,
-        "avg_lift": 7.46,
-        "avg_virality": 59.06,
-        "avg_approval": 56.04,
-        "avg_potential": 57.86,
-        "avg_confidence_adjusted_potential": 44.4,
-        "periods": [
-          {
-            "period": 1,
-            "rank": 14,
-            "posts_count": 20,
-            "lift": 5.76,
-            "avg_virality": 61.02,
-            "avg_approval": 48.46,
-            "avg_potential": 56.0,
-            "avg_confidence_adjusted_potential": 51.53
-          },
-          {
-            "period": 3,
-            "rank": 7,
-            "posts_count": 22,
-            "lift": 9.16,
-            "avg_virality": 57.1,
-            "avg_approval": 63.62,
-            "avg_potential": 59.71,
-            "avg_confidence_adjusted_potential": 37.27
-          }
-        ]
-      },
-      {
-        "combination": [
-          "emoji_hook",
-          "weather"
-        ],
-        "periods_present": 2,
-        "stability_share": 0.5,
-        "avg_rank": 11.5,
-        "avg_posts_count": 23.5,
-        "avg_lift": 7.1,
-        "avg_virality": 64.52,
-        "avg_approval": 55.14,
-        "avg_potential": 60.77,
-        "avg_confidence_adjusted_potential": 35.86,
-        "periods": [
-          {
-            "period": 2,
-            "rank": 19,
-            "posts_count": 20,
-            "lift": 5.69,
-            "avg_virality": 63.52,
-            "avg_approval": 45.1,
-            "avg_potential": 56.15,
-            "avg_confidence_adjusted_potential": 47.24
-          },
-          {
-            "period": 4,
-            "rank": 4,
-            "posts_count": 27,
-            "lift": 8.51,
-            "avg_virality": 65.51,
-            "avg_approval": 65.18,
-            "avg_potential": 65.38,
-            "avg_confidence_adjusted_potential": 24.47
-          }
-        ]
-      },
-      {
-        "combination": [
           "incident",
           "shock",
           "usefulness"
         ],
         "periods_present": 2,
         "stability_share": 0.5,
-        "avg_rank": 13.5,
+        "avg_rank": 16.5,
         "avg_posts_count": 31.0,
         "avg_lift": 7.08,
         "avg_virality": 62.99,
@@ -4526,7 +4570,7 @@
         "periods": [
           {
             "period": 1,
-            "rank": 8,
+            "rank": 13,
             "posts_count": 32,
             "lift": 7.35,
             "avg_virality": 64.45,
@@ -4536,7 +4580,7 @@
           },
           {
             "period": 3,
-            "rank": 19,
+            "rank": 20,
             "posts_count": 30,
             "lift": 6.81,
             "avg_virality": 61.53,
@@ -4554,7 +4598,7 @@
         ],
         "periods_present": 2,
         "stability_share": 0.5,
-        "avg_rank": 10.5,
+        "avg_rank": 11.5,
         "avg_posts_count": 57.0,
         "avg_lift": 7.02,
         "avg_virality": 59.98,
@@ -4574,7 +4618,7 @@
           },
           {
             "period": 4,
-            "rank": 14,
+            "rank": 16,
             "posts_count": 56,
             "lift": 5.52,
             "avg_virality": 58.32,
@@ -4586,12 +4630,50 @@
       },
       {
         "combination": [
+          "emoji_hook",
+          "media",
+          "visual_hook"
+        ],
+        "periods_present": 2,
+        "stability_share": 0.5,
+        "avg_rank": 15.0,
+        "avg_posts_count": 70.0,
+        "avg_lift": 6.73,
+        "avg_virality": 59.63,
+        "avg_approval": 63.55,
+        "avg_potential": 61.19,
+        "avg_confidence_adjusted_potential": 25.79,
+        "periods": [
+          {
+            "period": 3,
+            "rank": 11,
+            "posts_count": 62,
+            "lift": 8.5,
+            "avg_virality": 62.27,
+            "avg_approval": 63.16,
+            "avg_potential": 62.62,
+            "avg_confidence_adjusted_potential": 29.72
+          },
+          {
+            "period": 4,
+            "rank": 19,
+            "posts_count": 78,
+            "lift": 4.97,
+            "avg_virality": 56.99,
+            "avg_approval": 63.93,
+            "avg_potential": 59.76,
+            "avg_confidence_adjusted_potential": 21.85
+          }
+        ]
+      },
+      {
+        "combination": [
           "human_story",
           "visual_hook"
         ],
         "periods_present": 2,
         "stability_share": 0.5,
-        "avg_rank": 14.0,
+        "avg_rank": 15.5,
         "avg_posts_count": 33.0,
         "avg_lift": 6.7,
         "avg_virality": 60.33,
@@ -4601,7 +4683,7 @@
         "periods": [
           {
             "period": 3,
-            "rank": 13,
+            "rank": 14,
             "posts_count": 33,
             "lift": 7.96,
             "avg_virality": 62.05,
@@ -4611,7 +4693,7 @@
           },
           {
             "period": 4,
-            "rank": 15,
+            "rank": 17,
             "posts_count": 33,
             "lift": 5.43,
             "avg_virality": 58.61,
@@ -4629,7 +4711,7 @@
         ],
         "periods_present": 2,
         "stability_share": 0.5,
-        "avg_rank": 15.0,
+        "avg_rank": 16.5,
         "avg_posts_count": 30.5,
         "avg_lift": 6.65,
         "avg_virality": 57.95,
@@ -4639,7 +4721,7 @@
         "periods": [
           {
             "period": 3,
-            "rank": 12,
+            "rank": 13,
             "posts_count": 27,
             "lift": 8.37,
             "avg_virality": 58.55,
@@ -4649,7 +4731,7 @@
           },
           {
             "period": 4,
-            "rank": 18,
+            "rank": 20,
             "posts_count": 34,
             "lift": 4.94,
             "avg_virality": 57.35,
@@ -4661,53 +4743,15 @@
       },
       {
         "combination": [
-          "emoji_hook",
-          "locality",
-          "unusual"
-        ],
-        "periods_present": 2,
-        "stability_share": 0.5,
-        "avg_rank": 13.5,
-        "avg_posts_count": 28.5,
-        "avg_lift": 6.15,
-        "avg_virality": 61.8,
-        "avg_approval": 57.0,
-        "avg_potential": 59.88,
-        "avg_confidence_adjusted_potential": 29.85,
-        "periods": [
-          {
-            "period": 2,
-            "rank": 18,
-            "posts_count": 35,
-            "lift": 6.06,
-            "avg_virality": 59.31,
-            "avg_approval": 55.67,
-            "avg_potential": 57.85,
-            "avg_confidence_adjusted_potential": 32.92
-          },
-          {
-            "period": 4,
-            "rank": 9,
-            "posts_count": 22,
-            "lift": 6.25,
-            "avg_virality": 64.29,
-            "avg_approval": 58.32,
-            "avg_potential": 61.9,
-            "avg_confidence_adjusted_potential": 26.78
-          }
-        ]
-      },
-      {
-        "combination": [
           "locality",
           "media",
           "weather"
         ],
         "periods_present": 2,
         "stability_share": 0.5,
-        "avg_rank": 13.0,
+        "avg_rank": 17.5,
         "avg_posts_count": 23.0,
-        "avg_lift": 5.88,
+        "avg_lift": 6.02,
         "avg_virality": 60.22,
         "avg_approval": 57.62,
         "avg_potential": 59.18,
@@ -4715,9 +4759,9 @@
         "periods": [
           {
             "period": 1,
-            "rank": 10,
+            "rank": 17,
             "posts_count": 22,
-            "lift": 6.6,
+            "lift": 6.87,
             "avg_virality": 60.77,
             "avg_approval": 53.88,
             "avg_potential": 58.01,
@@ -4725,51 +4769,13 @@
           },
           {
             "period": 4,
-            "rank": 16,
+            "rank": 18,
             "posts_count": 24,
             "lift": 5.17,
             "avg_virality": 59.67,
             "avg_approval": 61.36,
             "avg_potential": 60.35,
             "avg_confidence_adjusted_potential": 23.66
-          }
-        ]
-      },
-      {
-        "combination": [
-          "emoji_hook",
-          "media",
-          "unusual"
-        ],
-        "periods_present": 2,
-        "stability_share": 0.5,
-        "avg_rank": 14.0,
-        "avg_posts_count": 48.0,
-        "avg_lift": 5.75,
-        "avg_virality": 59.14,
-        "avg_approval": 59.4,
-        "avg_potential": 59.25,
-        "avg_confidence_adjusted_potential": 34.91,
-        "periods": [
-          {
-            "period": 1,
-            "rank": 15,
-            "posts_count": 52,
-            "lift": 5.74,
-            "avg_virality": 56.67,
-            "avg_approval": 58.43,
-            "avg_potential": 57.38,
-            "avg_confidence_adjusted_potential": 47.81
-          },
-          {
-            "period": 4,
-            "rank": 13,
-            "posts_count": 44,
-            "lift": 5.75,
-            "avg_virality": 61.61,
-            "avg_approval": 60.37,
-            "avg_potential": 61.11,
-            "avg_confidence_adjusted_potential": 22.0
           }
         ]
       }
@@ -5326,7 +5332,8 @@
         "media",
         "shock",
         "usefulness",
-        "visual_hook"
+        "visual_hook",
+        "weather"
       ],
       "metric_confidence": 0.986,
       "confidence_adjusted_potential": 90.18,
@@ -5880,8 +5887,9 @@
       "virality": 85.94,
       "approval": 95.52,
       "potential": 89.77,
-      "content_type": "news",
+      "content_type": "social_story",
       "mechanisms": [
+        "animal",
         "emoji_hook",
         "fear",
         "media",
@@ -6226,29 +6234,6 @@
       "url": "https://vk.ru/wall-133335843_567314"
     },
     {
-      "post_id": 568236,
-      "date": "2026-10-06T08:00:46+00:00",
-      "text": "❄️ Тем временем в Омске пошёл снег\n\nОктябрь решил окончательно напомнить, что зима уже близко. Снег сегодня заметили в разных районах города. И, судя по прогнозу, это ещё не конец — омичей ждут мокрый снег и дальнейшее похолодание.\n\n❓А у вас уже снег пошёл",
-      "views": 226,
-      "reposts": 1,
-      "likes": 1,
-      "comments": 0,
-      "virality": 95.29,
-      "approval": 70.67,
-      "potential": 85.44,
-      "content_type": "news",
-      "mechanisms": [
-        "emoji_hook",
-        "locality",
-        "media",
-        "unusual",
-        "weather"
-      ],
-      "metric_confidence": 0.044,
-      "confidence_adjusted_potential": 3.76,
-      "url": "https://vk.ru/wall-133335843_568236"
-    },
-    {
       "post_id": 554046,
       "date": "2026-05-27T06:11:22+00:00",
       "text": "🚫 Конец параллельного импорта: в Россию запретили ввозить технику Acer, Asus, HP и Samsung\n\nС сегодняшнего дня в стране начал действовать официальный запрет на ввоз компьютеров, ноутбуков и другой популярной электроники по схеме параллельного импорта.\n\nПод новые ограничения попала продукция крупнейших мировых брендов, среди которых Acer, Asus, HP, Samsung, Intel, Toshiba, IBM и ADATA. Что примечательно, из списка исключений убрали не только гаджеты, но и привычные электрические зубные щетки Oral",
@@ -6294,6 +6279,29 @@
       "url": "https://vk.ru/wall-133335843_565445"
     },
     {
+      "post_id": 568236,
+      "date": "2026-10-06T08:00:46+00:00",
+      "text": "❄️ Тем временем в Омске пошёл снег\n\nОктябрь решил окончательно напомнить, что зима уже близко. Снег сегодня заметили в разных районах города. И, судя по прогнозу, это ещё не конец — омичей ждут мокрый снег и дальнейшее похолодание.\n\n❓А у вас уже снег пошёл",
+      "views": 226,
+      "reposts": 1,
+      "likes": 1,
+      "comments": 0,
+      "virality": 95.26,
+      "approval": 70.67,
+      "potential": 85.43,
+      "content_type": "news",
+      "mechanisms": [
+        "emoji_hook",
+        "locality",
+        "media",
+        "unusual",
+        "weather"
+      ],
+      "metric_confidence": 0.044,
+      "confidence_adjusted_potential": 3.76,
+      "url": "https://vk.ru/wall-133335843_568236"
+    },
+    {
       "post_id": 546788,
       "date": "2026-04-18T05:00:27+00:00",
       "text": "‼ Трагедия в Бессарабке: 11-летний мальчик скончался от бешенства после царапины щенка\n\nШокирующий случай произошел в Русско-Полянском районе. Ребенок играл с соседским щенком и получил небольшую царапину. Родители не придали этому значения, обработав рану зеленкой, и не обратились за медицинской помощью.\n\nКогда у мальчика появились первые симптомы, их приняли за обычную простуду. Однако состояние стремительно ухудшалось, и ребенка экстренно доставили в реанимацию Омска. К сожалению, 15 апреля м",
@@ -6306,6 +6314,7 @@
       "potential": 87.8,
       "content_type": "incident",
       "mechanisms": [
+        "animal",
         "emoji_hook",
         "fear",
         "human_story",
@@ -6733,7 +6742,7 @@
       "reposts": 153,
       "likes": 123,
       "comments": 10,
-      "virality": 91.9,
+      "virality": 91.91,
       "approval": 54.71,
       "potential": 77.03,
       "content_type": "news",
@@ -7645,6 +7654,7 @@
       "potential": 86.57,
       "content_type": "social_story",
       "mechanisms": [
+        "animal",
         "emoji_hook",
         "fear",
         "human_story",
@@ -8149,9 +8159,9 @@
       "reposts": 2,
       "likes": 108,
       "comments": 14,
-      "virality": 58.5,
+      "virality": 58.51,
       "approval": 97.0,
-      "potential": 73.9,
+      "potential": 73.91,
       "content_type": "complaint",
       "mechanisms": [
         "animal",
