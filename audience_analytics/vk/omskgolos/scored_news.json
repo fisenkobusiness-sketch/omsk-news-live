@@ -1,93 +1,20 @@
 [
   {
     "version": "1.0",
-    "virality_score": 52.25,
-    "approval_score": 51.21,
-    "potential_score": 59.49,
-    "editorial_status": "РЕЗЕРВ",
-    "classification": {
-      "content_type": "social_story",
-      "classification_confidence": 0.65,
-      "mechanisms": [
-        "animal",
-        "emoji_hook",
-        "human_story",
-        "locality",
-        "visual_hook"
-      ],
-      "mechanism_strength": {
-        "locality": 0.7,
-        "human_story": 0.4,
-        "animal": 0.55,
-        "visual_hook": 0.55
-      },
-      "official_attribution": false,
-      "help_request": false,
-      "complaint_signal": false,
-      "advertising_signal": false,
-      "opinion_signal": false,
-      "question_cta": false,
-      "emoji_count": 1,
-      "text_length": 72,
-      "has_media": false
-    },
-    "mechanisms_used": [
-      "animal",
-      "emoji_hook",
-      "human_story",
-      "locality",
-      "visual_hook"
-    ],
-    "matched_combinations": [
-      {
-        "combination": [
-          "animal",
-          "emoji_hook",
-          "visual_hook"
-        ],
-        "reliability": "promising",
-        "editorial_bonus": 7.66,
-        "avg_lift": 7.7
-      },
-      {
-        "combination": [
-          "animal",
-          "locality",
-          "visual_hook"
-        ],
-        "reliability": "promising",
-        "editorial_bonus": 7.62,
-        "avg_lift": 7.62
-      }
-    ],
-    "combination_bonus": 7.66,
-    "reasons": [
-      "устойчивая комбинация animal + emoji_hook + visual_hook (бонус +7.7)",
-      "устойчивая комбинация animal + locality + visual_hook (бонус +7.6)"
-    ],
-    "risks": [],
-    "text": "🐻 Медведь вышел прямо к домам в омской деревне. Животное сняли на видео.",
-    "url": ""
-  },
-  {
-    "version": "1.0",
-    "virality_score": 53.02,
-    "approval_score": 51.62,
-    "potential_score": 52.46,
+    "virality_score": 51.6,
+    "approval_score": 51.73,
+    "potential_score": 51.65,
     "editorial_status": "ПРОПУСК",
     "classification": {
       "content_type": "news",
-      "classification_confidence": 0.5,
+      "classification_confidence": 0.55,
       "mechanisms": [
-        "emoji_hook",
-        "locality",
-        "unusual",
-        "weather"
+        "positive_emotion",
+        "usefulness"
       ],
       "mechanism_strength": {
-        "locality": 0.7,
-        "weather": 0.55,
-        "unusual": 0.4
+        "positive_emotion": 0.4,
+        "usefulness": 0.4
       },
       "official_attribution": false,
       "help_request": false,
@@ -95,15 +22,13 @@
       "advertising_signal": false,
       "opinion_signal": false,
       "question_cta": false,
-      "emoji_count": 1,
-      "text_length": 63,
+      "emoji_count": 0,
+      "text_length": 82,
       "has_media": false
     },
     "mechanisms_used": [
-      "emoji_hook",
-      "locality",
-      "unusual",
-      "weather"
+      "positive_emotion",
+      "usefulness"
     ],
     "matched_combinations": [],
     "combination_bonus": 0.0,
@@ -111,7 +36,720 @@
     "risks": [
       "низкая уверенность классификации"
     ],
-    "text": "❄️ В Омской области ожидается первый снег и резкое похолодание.",
-    "url": ""
+    "text": "В городе планируют запретить продажу табака и вейпов в радиусе 100 метров от школ.",
+    "url": "https://ngs55.ru/text/2026/10/"
+  },
+  {
+    "version": "1.0",
+    "virality_score": 52.95,
+    "approval_score": 49.02,
+    "potential_score": 51.38,
+    "editorial_status": "ПРОПУСК",
+    "classification": {
+      "content_type": "incident",
+      "classification_confidence": 0.7,
+      "mechanisms": [
+        "human_story",
+        "incident",
+        "shock"
+      ],
+      "mechanism_strength": {
+        "incident": 0.55,
+        "human_story": 0.4,
+        "shock": 0.55
+      },
+      "official_attribution": false,
+      "help_request": false,
+      "complaint_signal": false,
+      "advertising_signal": false,
+      "opinion_signal": false,
+      "question_cta": false,
+      "emoji_count": 0,
+      "text_length": 158,
+      "has_media": false
+    },
+    "mechanisms_used": [
+      "human_story",
+      "incident",
+      "shock"
+    ],
+    "matched_combinations": [],
+    "combination_bonus": 0.0,
+    "reasons": [],
+    "risks": [],
+    "text": "Ильяр Мамлюкаев пропал в ночь с 26 на 27 сентября. 6 октября его нашли погибшим; обстоятельства смерти правоохранители на момент публикации не комментировали.",
+    "url": "https://ngs55.ru/text/incidents/2026/10/06/76680675/"
+  },
+  {
+    "version": "1.0",
+    "virality_score": 52.13,
+    "approval_score": 50.05,
+    "potential_score": 51.3,
+    "editorial_status": "ПРОПУСК",
+    "classification": {
+      "content_type": "incident",
+      "classification_confidence": 0.6,
+      "mechanisms": [
+        "incident"
+      ],
+      "mechanism_strength": {
+        "incident": 0.4
+      },
+      "official_attribution": false,
+      "help_request": false,
+      "complaint_signal": false,
+      "advertising_signal": false,
+      "opinion_signal": false,
+      "question_cta": false,
+      "emoji_count": 0,
+      "text_length": 150,
+      "has_media": false
+    },
+    "mechanisms_used": [
+      "incident"
+    ],
+    "matched_combinations": [],
+    "combination_bonus": 0.0,
+    "reasons": [],
+    "risks": [
+      "низкая уверенность классификации"
+    ],
+    "text": "ДТП произошло на Пушкинском тракте. По предварительным данным регионального УМВД, девочка переходила дорогу по пешеходному переходу и получила травмы.",
+    "url": "https://ngs55.ru/text/incidents/2026/10/06/76682894/"
+  },
+  {
+    "version": "1.0",
+    "virality_score": 52.19,
+    "approval_score": 49.47,
+    "potential_score": 51.1,
+    "editorial_status": "ПРОПУСК",
+    "classification": {
+      "content_type": "incident",
+      "classification_confidence": 0.65,
+      "mechanisms": [
+        "animal",
+        "incident"
+      ],
+      "mechanism_strength": {
+        "incident": 0.4,
+        "animal": 0.4
+      },
+      "official_attribution": false,
+      "help_request": false,
+      "complaint_signal": false,
+      "advertising_signal": false,
+      "opinion_signal": false,
+      "question_cta": false,
+      "emoji_count": 0,
+      "text_length": 98,
+      "has_media": false
+    },
+    "mechanisms_used": [
+      "animal",
+      "incident"
+    ],
+    "matched_combinations": [],
+    "combination_bonus": 0.0,
+    "reasons": [],
+    "risks": [],
+    "text": "Проверка систем оповещения пройдет 9 октября с 10:35 до 10:43; 7 октября сирены включать не будут.",
+    "url": "https://www.om1.ru/news/society/436582-proverku_siren_v_omskojj_oblasti_perenesli_kogda_ona_projjdet/"
+  },
+  {
+    "version": "1.0",
+    "virality_score": 52.32,
+    "approval_score": 49.2,
+    "potential_score": 51.07,
+    "editorial_status": "ПРОПУСК",
+    "classification": {
+      "content_type": "incident",
+      "classification_confidence": 0.8,
+      "mechanisms": [
+        "animal",
+        "human_story",
+        "incident",
+        "locality",
+        "shock"
+      ],
+      "mechanism_strength": {
+        "locality": 0.55,
+        "incident": 0.4,
+        "human_story": 0.4,
+        "animal": 0.4,
+        "shock": 0.4
+      },
+      "official_attribution": false,
+      "help_request": false,
+      "complaint_signal": false,
+      "advertising_signal": false,
+      "opinion_signal": false,
+      "question_cta": false,
+      "emoji_count": 0,
+      "text_length": 175,
+      "has_media": false
+    },
+    "mechanisms_used": [
+      "animal",
+      "human_story",
+      "incident",
+      "locality",
+      "shock"
+    ],
+    "matched_combinations": [],
+    "combination_bonus": 0.0,
+    "reasons": [],
+    "risks": [],
+    "text": "На 32-м километре автодороги Омск—Красноярка столкнулись Toyota и Lada Granta. Погибли оба водителя и пассажир Lada; еще одна пассажирка госпитализирована в тяжелом состоянии.",
+    "url": "https://t.me/s/omsk_police?before=4286"
+  },
+  {
+    "version": "1.0",
+    "virality_score": 52.24,
+    "approval_score": 48.89,
+    "potential_score": 50.9,
+    "editorial_status": "ПРОПУСК",
+    "classification": {
+      "content_type": "social_story",
+      "classification_confidence": 0.6,
+      "mechanisms": [
+        "animal"
+      ],
+      "mechanism_strength": {
+        "animal": 0.4
+      },
+      "official_attribution": false,
+      "help_request": false,
+      "complaint_signal": false,
+      "advertising_signal": false,
+      "opinion_signal": false,
+      "question_cta": false,
+      "emoji_count": 0,
+      "text_length": 83,
+      "has_media": false
+    },
+    "mechanisms_used": [
+      "animal"
+    ],
+    "matched_combinations": [],
+    "combination_bonus": 0.0,
+    "reasons": [],
+    "risks": [
+      "низкая уверенность классификации"
+    ],
+    "text": "Суд вынес решение по делу участника схемы хищений у продавцов на сайтах объявлений.",
+    "url": "https://now55.ru/news/archive"
+  },
+  {
+    "version": "1.0",
+    "virality_score": 51.57,
+    "approval_score": 49.8,
+    "potential_score": 50.86,
+    "editorial_status": "ПРОПУСК",
+    "classification": {
+      "content_type": "incident",
+      "classification_confidence": 0.7,
+      "mechanisms": [
+        "incident",
+        "locality",
+        "weather"
+      ],
+      "mechanism_strength": {
+        "locality": 0.4,
+        "incident": 0.4,
+        "weather": 0.4
+      },
+      "official_attribution": false,
+      "help_request": false,
+      "complaint_signal": false,
+      "advertising_signal": false,
+      "opinion_signal": false,
+      "question_cta": false,
+      "emoji_count": 0,
+      "text_length": 84,
+      "has_media": false
+    },
+    "mechanisms_used": [
+      "incident",
+      "locality",
+      "weather"
+    ],
+    "matched_combinations": [],
+    "combination_bonus": 0.0,
+    "reasons": [],
+    "risks": [],
+    "text": "В двухквартирном доме в Таврическом районе произошел пожар; пострадали два человека.",
+    "url": "https://now55.ru/news/archive"
+  },
+  {
+    "version": "1.0",
+    "virality_score": 51.8,
+    "approval_score": 48.61,
+    "potential_score": 50.53,
+    "editorial_status": "ПРОПУСК",
+    "classification": {
+      "content_type": "social_story",
+      "classification_confidence": 0.65,
+      "mechanisms": [
+        "animal",
+        "human_story"
+      ],
+      "mechanism_strength": {
+        "human_story": 0.4,
+        "animal": 0.4
+      },
+      "official_attribution": false,
+      "help_request": false,
+      "complaint_signal": false,
+      "advertising_signal": false,
+      "opinion_signal": false,
+      "question_cta": false,
+      "emoji_count": 0,
+      "text_length": 159,
+      "has_media": false
+    },
+    "mechanisms_used": [
+      "animal",
+      "human_story"
+    ],
+    "matched_combinations": [],
+    "combination_bonus": 0.0,
+    "reasons": [],
+    "risks": [],
+    "text": "В регионе создана специальная комиссия, которая будет устанавливать связь между гибелью или вредом здоровью волонтеров и их работой в приграничных территориях.",
+    "url": "https://omsk.top24.news/obshestvo/v-omskoj-oblasti-nachala-rabotu-komissiya-po-ustanovleniyu-faktov-gibeli-volonterov-v-prigraniche/"
+  },
+  {
+    "version": "1.0",
+    "virality_score": 50.49,
+    "approval_score": 50.06,
+    "potential_score": 50.32,
+    "editorial_status": "ПРОПУСК",
+    "classification": {
+      "content_type": "news",
+      "classification_confidence": 0.5,
+      "mechanisms": [
+        "locality"
+      ],
+      "mechanism_strength": {
+        "locality": 0.85
+      },
+      "official_attribution": false,
+      "help_request": false,
+      "complaint_signal": false,
+      "advertising_signal": false,
+      "opinion_signal": false,
+      "question_cta": false,
+      "emoji_count": 0,
+      "text_length": 170,
+      "has_media": false
+    },
+    "mechanisms_used": [
+      "locality"
+    ],
+    "matched_combinations": [],
+    "combination_bonus": 0.0,
+    "reasons": [],
+    "risks": [
+      "низкая уверенность классификации"
+    ],
+    "text": "В районе ниже Омска, у поселка Береговой, зафиксирован высокий уровень загрязнения воды ртутью; по данным Обь-Иртышского УГМС, концентрация превышала ПДК в несколько раз.",
+    "url": "https://superomsk.ru/news/166676-v_omskom_irtyshe_pdk_rtuti_prevyshena_v_neskolko_raz/"
+  },
+  {
+    "version": "1.0",
+    "virality_score": 50.49,
+    "approval_score": 50.06,
+    "potential_score": 50.32,
+    "editorial_status": "ПРОПУСК",
+    "classification": {
+      "content_type": "news",
+      "classification_confidence": 0.5,
+      "mechanisms": [
+        "locality"
+      ],
+      "mechanism_strength": {
+        "locality": 0.85
+      },
+      "official_attribution": false,
+      "help_request": false,
+      "complaint_signal": false,
+      "advertising_signal": false,
+      "opinion_signal": false,
+      "question_cta": false,
+      "emoji_count": 0,
+      "text_length": 100,
+      "has_media": false
+    },
+    "mechanisms_used": [
+      "locality"
+    ],
+    "matched_combinations": [],
+    "combination_bonus": 0.0,
+    "reasons": [],
+    "risks": [
+      "низкая уверенность классификации"
+    ],
+    "text": "В двух районах Омской области обнаружены очаги заболевания; на территориях введены карантинные меры.",
+    "url": "https://ngs55.ru/text/2026/10/"
+  },
+  {
+    "version": "1.0",
+    "virality_score": 50.43,
+    "approval_score": 50.17,
+    "potential_score": 50.32,
+    "editorial_status": "ПРОПУСК",
+    "classification": {
+      "content_type": "complaint",
+      "classification_confidence": 0.7,
+      "mechanisms": [
+        "conflict",
+        "locality",
+        "positive_emotion"
+      ],
+      "mechanism_strength": {
+        "locality": 0.55,
+        "conflict": 0.4,
+        "positive_emotion": 0.4
+      },
+      "official_attribution": false,
+      "help_request": false,
+      "complaint_signal": true,
+      "advertising_signal": false,
+      "opinion_signal": false,
+      "question_cta": false,
+      "emoji_count": 0,
+      "text_length": 114,
+      "has_media": false
+    },
+    "mechanisms_used": [
+      "conflict",
+      "locality",
+      "positive_emotion"
+    ],
+    "matched_combinations": [],
+    "combination_bonus": 0.0,
+    "reasons": [],
+    "risks": [],
+    "text": "На объекте «Держава» в центре Омска снимают транспортировочное покрытие; завершить работы планируют до 11 октября.",
+    "url": "https://ngs55.ru/text/2026/10/"
+  },
+  {
+    "version": "1.0",
+    "virality_score": 50.49,
+    "approval_score": 50.06,
+    "potential_score": 50.32,
+    "editorial_status": "ПРОПУСК",
+    "classification": {
+      "content_type": "advertising",
+      "classification_confidence": 0.6,
+      "mechanisms": [
+        "locality"
+      ],
+      "mechanism_strength": {
+        "locality": 0.55
+      },
+      "official_attribution": false,
+      "help_request": false,
+      "complaint_signal": false,
+      "advertising_signal": true,
+      "opinion_signal": false,
+      "question_cta": false,
+      "emoji_count": 0,
+      "text_length": 113,
+      "has_media": false
+    },
+    "mechanisms_used": [
+      "locality"
+    ],
+    "matched_combinations": [],
+    "combination_bonus": 0.0,
+    "reasons": [],
+    "risks": [
+      "низкая уверенность классификации"
+    ],
+    "text": "Известный магазин техники прекратил работу в омском торговом центре; в городе остаются четыре точки этого бренда.",
+    "url": "https://ngs55.ru/text/2026/10/"
+  },
+  {
+    "version": "1.0",
+    "virality_score": 50.49,
+    "approval_score": 50.06,
+    "potential_score": 50.32,
+    "editorial_status": "ПРОПУСК",
+    "classification": {
+      "content_type": "news",
+      "classification_confidence": 0.35,
+      "mechanisms": [
+        "locality"
+      ],
+      "mechanism_strength": {
+        "locality": 0.7
+      },
+      "official_attribution": false,
+      "help_request": false,
+      "complaint_signal": false,
+      "advertising_signal": false,
+      "opinion_signal": false,
+      "question_cta": false,
+      "emoji_count": 0,
+      "text_length": 73,
+      "has_media": false
+    },
+    "mechanisms_used": [
+      "locality"
+    ],
+    "matched_combinations": [],
+    "combination_bonus": 0.0,
+    "reasons": [],
+    "risks": [
+      "низкая уверенность классификации"
+    ],
+    "text": "На поддержку молодых семей в Омской области направят 78 миллионов рублей.",
+    "url": "https://omskinform.ru/"
+  },
+  {
+    "version": "1.0",
+    "virality_score": 50.49,
+    "approval_score": 50.06,
+    "potential_score": 50.32,
+    "editorial_status": "ПРОПУСК",
+    "classification": {
+      "content_type": "news",
+      "classification_confidence": 0.5,
+      "mechanisms": [
+        "locality"
+      ],
+      "mechanism_strength": {
+        "locality": 0.55
+      },
+      "official_attribution": false,
+      "help_request": false,
+      "complaint_signal": false,
+      "advertising_signal": false,
+      "opinion_signal": false,
+      "question_cta": false,
+      "emoji_count": 0,
+      "text_length": 111,
+      "has_media": false
+    },
+    "mechanisms_used": [
+      "locality"
+    ],
+    "matched_combinations": [],
+    "combination_bonus": 0.0,
+    "reasons": [],
+    "risks": [
+      "низкая уверенность классификации"
+    ],
+    "text": "На омском предприятии усовершенствовали бронемашину; информация опубликована в региональной новостной повестке.",
+    "url": "https://omskinform.ru/"
+  },
+  {
+    "version": "1.0",
+    "virality_score": 50.91,
+    "approval_score": 49.07,
+    "potential_score": 50.17,
+    "editorial_status": "ПРОПУСК",
+    "classification": {
+      "content_type": "news",
+      "classification_confidence": 0.55,
+      "mechanisms": [
+        "locality",
+        "usefulness"
+      ],
+      "mechanism_strength": {
+        "locality": 0.55,
+        "usefulness": 0.55
+      },
+      "official_attribution": false,
+      "help_request": false,
+      "complaint_signal": false,
+      "advertising_signal": false,
+      "opinion_signal": false,
+      "question_cta": false,
+      "emoji_count": 0,
+      "text_length": 90,
+      "has_media": false
+    },
+    "mechanisms_used": [
+      "locality",
+      "usefulness"
+    ],
+    "matched_combinations": [],
+    "combination_bonus": 0.0,
+    "reasons": [],
+    "risks": [
+      "низкая уверенность классификации"
+    ],
+    "text": "В расписании омского аэропорта появился новый рейс в Ташкент; доступны три тарифа билетов.",
+    "url": "https://ngs55.ru/text/2026/10/"
+  },
+  {
+    "version": "1.0",
+    "virality_score": 50.0,
+    "approval_score": 50.0,
+    "potential_score": 50.0,
+    "editorial_status": "ПРОПУСК",
+    "classification": {
+      "content_type": "news",
+      "classification_confidence": 0.3,
+      "mechanisms": [],
+      "mechanism_strength": {},
+      "official_attribution": false,
+      "help_request": false,
+      "complaint_signal": false,
+      "advertising_signal": false,
+      "opinion_signal": false,
+      "question_cta": false,
+      "emoji_count": 0,
+      "text_length": 73,
+      "has_media": false
+    },
+    "mechanisms_used": [],
+    "matched_combinations": [],
+    "combination_bonus": 0.0,
+    "reasons": [],
+    "risks": [
+      "низкая уверенность классификации",
+      "не определены механизмы"
+    ],
+    "text": "Из-за ухудшения погодных условий в городе временно отключили аттракционы.",
+    "url": "https://news55.ru/society/2026/10/06/36098.html"
+  },
+  {
+    "version": "1.0",
+    "virality_score": 50.0,
+    "approval_score": 50.0,
+    "potential_score": 50.0,
+    "editorial_status": "ПРОПУСК",
+    "classification": {
+      "content_type": "news",
+      "classification_confidence": 0.45,
+      "mechanisms": [],
+      "mechanism_strength": {},
+      "official_attribution": false,
+      "help_request": false,
+      "complaint_signal": false,
+      "advertising_signal": false,
+      "opinion_signal": false,
+      "question_cta": false,
+      "emoji_count": 0,
+      "text_length": 81,
+      "has_media": false
+    },
+    "mechanisms_used": [],
+    "matched_combinations": [],
+    "combination_bonus": 0.0,
+    "reasons": [],
+    "risks": [
+      "низкая уверенность классификации",
+      "не определены механизмы"
+    ],
+    "text": "В городе открылась новая база отдыха; строительство объекта началось в 2022 году.",
+    "url": "https://ngs55.ru/text/2026/10/"
+  },
+  {
+    "version": "1.0",
+    "virality_score": 50.0,
+    "approval_score": 50.0,
+    "potential_score": 50.0,
+    "editorial_status": "ПРОПУСК",
+    "classification": {
+      "content_type": "news",
+      "classification_confidence": 0.3,
+      "mechanisms": [],
+      "mechanism_strength": {},
+      "official_attribution": false,
+      "help_request": false,
+      "complaint_signal": false,
+      "advertising_signal": false,
+      "opinion_signal": false,
+      "question_cta": false,
+      "emoji_count": 0,
+      "text_length": 61,
+      "has_media": false
+    },
+    "mechanisms_used": [],
+    "matched_combinations": [],
+    "combination_bonus": 0.0,
+    "reasons": [],
+    "risks": [
+      "низкая уверенность классификации",
+      "не определены механизмы"
+    ],
+    "text": "В регионе ожидается повышение величины прожиточного минимума.",
+    "url": "https://omskinform.ru/"
+  },
+  {
+    "version": "1.0",
+    "virality_score": 50.0,
+    "approval_score": 50.0,
+    "potential_score": 50.0,
+    "editorial_status": "ПРОПУСК",
+    "classification": {
+      "content_type": "news",
+      "classification_confidence": 0.45,
+      "mechanisms": [],
+      "mechanism_strength": {},
+      "official_attribution": false,
+      "help_request": false,
+      "complaint_signal": false,
+      "advertising_signal": false,
+      "opinion_signal": false,
+      "question_cta": false,
+      "emoji_count": 0,
+      "text_length": 90,
+      "has_media": false
+    },
+    "mechanisms_used": [],
+    "matched_combinations": [],
+    "combination_bonus": 0.0,
+    "reasons": [],
+    "risks": [
+      "низкая уверенность классификации",
+      "не определены механизмы"
+    ],
+    "text": "На развитие дорожной инфраструктуры муниципалитетов региона предусмотрено 45,5 млн рублей.",
+    "url": "https://now55.ru/news/archive"
+  },
+  {
+    "version": "1.0",
+    "virality_score": 49.7,
+    "approval_score": 47.56,
+    "potential_score": 48.84,
+    "editorial_status": "ПРОПУСК",
+    "classification": {
+      "content_type": "complaint",
+      "classification_confidence": 0.5,
+      "mechanisms": [
+        "conflict",
+        "locality"
+      ],
+      "mechanism_strength": {
+        "locality": 0.55,
+        "conflict": 0.4
+      },
+      "official_attribution": false,
+      "help_request": false,
+      "complaint_signal": true,
+      "advertising_signal": false,
+      "opinion_signal": false,
+      "question_cta": false,
+      "emoji_count": 0,
+      "text_length": 79,
+      "has_media": false
+    },
+    "mechanisms_used": [
+      "conflict",
+      "locality"
+    ],
+    "matched_combinations": [],
+    "combination_bonus": 0.0,
+    "reasons": [],
+    "risks": [
+      "низкая уверенность классификации"
+    ],
+    "text": "В Омске обсуждаются меры против безбилетного проезда в общественном транспорте.",
+    "url": "https://news55.ru/society/2026/10/06/36098.html"
   }
 ]
