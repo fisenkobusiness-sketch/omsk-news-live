@@ -95,6 +95,15 @@
         "confidence_adjusted_potential": 33.12
       },
       {
+        "mechanism": "weather",
+        "posts": 250,
+        "sample_confidence": 0.913,
+        "virality": 53.21,
+        "approval": 50.06,
+        "potential": 51.95,
+        "confidence_adjusted_potential": 32.72
+      },
+      {
         "mechanism": "conflict",
         "posts": 451,
         "sample_confidence": 1.0,
@@ -111,15 +120,6 @@
         "approval": 51.34,
         "potential": 48.35,
         "confidence_adjusted_potential": 32.6
-      },
-      {
-        "mechanism": "weather",
-        "posts": 309,
-        "sample_confidence": 1.0,
-        "virality": 52.1,
-        "approval": 49.29,
-        "potential": 50.98,
-        "confidence_adjusted_potential": 32.4
       },
       {
         "mechanism": "emoji_hook",
@@ -264,22 +264,6 @@
       },
       {
         "combination": [
-          "positive_emotion",
-          "unusual"
-        ],
-        "periods_present": 2,
-        "stability_share": 0.5,
-        "avg_posts_count": 20.0,
-        "avg_lift": 10.06,
-        "avg_virality": 63.86,
-        "avg_approval": 68.25,
-        "avg_potential": 65.62,
-        "avg_confidence_adjusted_potential": 40.48,
-        "reliability": "promising",
-        "editorial_bonus": 8.79
-      },
-      {
-        "combination": [
           "unusual",
           "visual_hook"
         ],
@@ -331,35 +315,19 @@
       {
         "combination": [
           "emoji_hook",
-          "positive_emotion",
-          "shock"
+          "media",
+          "visual_hook"
         ],
         "periods_present": 2,
         "stability_share": 0.5,
-        "avg_posts_count": 21.0,
-        "avg_lift": 8.18,
-        "avg_virality": 62.7,
-        "avg_approval": 57.08,
-        "avg_potential": 60.45,
-        "avg_confidence_adjusted_potential": 37.4,
+        "avg_posts_count": 72.0,
+        "avg_lift": 6.75,
+        "avg_virality": 59.39,
+        "avg_approval": 63.81,
+        "avg_potential": 61.16,
+        "avg_confidence_adjusted_potential": 25.8,
         "reliability": "promising",
-        "editorial_bonus": 7.77
-      },
-      {
-        "combination": [
-          "fear",
-          "unusual"
-        ],
-        "periods_present": 2,
-        "stability_share": 0.5,
-        "avg_posts_count": 21.5,
-        "avg_lift": 7.44,
-        "avg_virality": 59.3,
-        "avg_approval": 60.55,
-        "avg_potential": 59.8,
-        "avg_confidence_adjusted_potential": 33.27,
-        "reliability": "promising",
-        "editorial_bonus": 7.37
+        "editorial_bonus": 7.29
       }
     ],
     "editorial_rules": [
@@ -444,15 +412,6 @@
           "reliability": "promising",
           "editorial_bonus": 9.69,
           "avg_lift": 11.68
-        },
-        {
-          "combination": [
-            "positive_emotion",
-            "unusual"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 8.79,
-          "avg_lift": 10.06
         }
       ]
     },
@@ -481,15 +440,6 @@
           "reliability": "promising",
           "editorial_bonus": 9.69,
           "avg_lift": 11.68
-        },
-        {
-          "combination": [
-            "positive_emotion",
-            "unusual"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 8.79,
-          "avg_lift": 10.06
         }
       ]
     },
@@ -553,21 +503,22 @@
         },
         {
           "combination": [
-            "positive_emotion",
-            "unusual"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 8.79,
-          "avg_lift": 10.06
-        },
-        {
-          "combination": [
             "unusual",
             "visual_hook"
           ],
           "reliability": "promising",
           "editorial_bonus": 8.22,
           "avg_lift": 9.02
+        },
+        {
+          "combination": [
+            "emoji_hook",
+            "media",
+            "visual_hook"
+          ],
+          "reliability": "promising",
+          "editorial_bonus": 7.29,
+          "avg_lift": 6.75
         }
       ]
     },
@@ -631,21 +582,22 @@
         },
         {
           "combination": [
-            "positive_emotion",
-            "unusual"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 8.79,
-          "avg_lift": 10.06
-        },
-        {
-          "combination": [
             "unusual",
             "visual_hook"
           ],
           "reliability": "promising",
           "editorial_bonus": 8.22,
           "avg_lift": 9.02
+        },
+        {
+          "combination": [
+            "emoji_hook",
+            "media",
+            "visual_hook"
+          ],
+          "reliability": "promising",
+          "editorial_bonus": 7.29,
+          "avg_lift": 6.75
         }
       ]
     },
@@ -690,21 +642,22 @@
         },
         {
           "combination": [
-            "positive_emotion",
-            "unusual"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 8.79,
-          "avg_lift": 10.06
-        },
-        {
-          "combination": [
             "unusual",
             "visual_hook"
           ],
           "reliability": "promising",
           "editorial_bonus": 8.22,
           "avg_lift": 9.02
+        },
+        {
+          "combination": [
+            "emoji_hook",
+            "media",
+            "visual_hook"
+          ],
+          "reliability": "promising",
+          "editorial_bonus": 7.29,
+          "avg_lift": 6.75
         }
       ]
     },
@@ -744,6 +697,16 @@
           "reliability": "promising",
           "editorial_bonus": 8.22,
           "avg_lift": 9.02
+        },
+        {
+          "combination": [
+            "emoji_hook",
+            "media",
+            "visual_hook"
+          ],
+          "reliability": "promising",
+          "editorial_bonus": 7.29,
+          "avg_lift": 6.75
         }
       ]
     },
@@ -782,6 +745,16 @@
           "reliability": "promising",
           "editorial_bonus": 8.22,
           "avg_lift": 9.02
+        },
+        {
+          "combination": [
+            "emoji_hook",
+            "media",
+            "visual_hook"
+          ],
+          "reliability": "promising",
+          "editorial_bonus": 7.29,
+          "avg_lift": 6.75
         }
       ]
     },
@@ -820,6 +793,16 @@
           "reliability": "promising",
           "editorial_bonus": 8.22,
           "avg_lift": 9.02
+        },
+        {
+          "combination": [
+            "emoji_hook",
+            "media",
+            "visual_hook"
+          ],
+          "reliability": "promising",
+          "editorial_bonus": 7.29,
+          "avg_lift": 6.75
         }
       ]
     },
@@ -849,15 +832,6 @@
           "reliability": "promising",
           "editorial_bonus": 9.69,
           "avg_lift": 11.68
-        },
-        {
-          "combination": [
-            "positive_emotion",
-            "unusual"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 8.79,
-          "avg_lift": 10.06
         }
       ]
     },
@@ -922,21 +896,22 @@
         },
         {
           "combination": [
-            "positive_emotion",
-            "unusual"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 8.79,
-          "avg_lift": 10.06
-        },
-        {
-          "combination": [
             "unusual",
             "visual_hook"
           ],
           "reliability": "promising",
           "editorial_bonus": 8.22,
           "avg_lift": 9.02
+        },
+        {
+          "combination": [
+            "emoji_hook",
+            "media",
+            "visual_hook"
+          ],
+          "reliability": "promising",
+          "editorial_bonus": 7.29,
+          "avg_lift": 6.75
         }
       ]
     },
@@ -981,21 +956,22 @@
         },
         {
           "combination": [
-            "positive_emotion",
-            "unusual"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 8.79,
-          "avg_lift": 10.06
-        },
-        {
-          "combination": [
             "unusual",
             "visual_hook"
           ],
           "reliability": "promising",
           "editorial_bonus": 8.22,
           "avg_lift": 9.02
+        },
+        {
+          "combination": [
+            "emoji_hook",
+            "media",
+            "visual_hook"
+          ],
+          "reliability": "promising",
+          "editorial_bonus": 7.29,
+          "avg_lift": 6.75
         }
       ]
     },
@@ -1040,21 +1016,22 @@
         },
         {
           "combination": [
-            "positive_emotion",
-            "unusual"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 8.79,
-          "avg_lift": 10.06
-        },
-        {
-          "combination": [
             "unusual",
             "visual_hook"
           ],
           "reliability": "promising",
           "editorial_bonus": 8.22,
           "avg_lift": 9.02
+        },
+        {
+          "combination": [
+            "emoji_hook",
+            "media",
+            "visual_hook"
+          ],
+          "reliability": "promising",
+          "editorial_bonus": 7.29,
+          "avg_lift": 6.75
         }
       ]
     },
@@ -1099,21 +1076,22 @@
         },
         {
           "combination": [
-            "positive_emotion",
-            "unusual"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 8.79,
-          "avg_lift": 10.06
-        },
-        {
-          "combination": [
             "unusual",
             "visual_hook"
           ],
           "reliability": "promising",
           "editorial_bonus": 8.22,
           "avg_lift": 9.02
+        },
+        {
+          "combination": [
+            "emoji_hook",
+            "media",
+            "visual_hook"
+          ],
+          "reliability": "promising",
+          "editorial_bonus": 7.29,
+          "avg_lift": 6.75
         }
       ]
     },
@@ -1158,21 +1136,22 @@
         },
         {
           "combination": [
-            "positive_emotion",
-            "unusual"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 8.79,
-          "avg_lift": 10.06
-        },
-        {
-          "combination": [
             "unusual",
             "visual_hook"
           ],
           "reliability": "promising",
           "editorial_bonus": 8.22,
           "avg_lift": 9.02
+        },
+        {
+          "combination": [
+            "emoji_hook",
+            "media",
+            "visual_hook"
+          ],
+          "reliability": "promising",
+          "editorial_bonus": 7.29,
+          "avg_lift": 6.75
         }
       ]
     },
@@ -1217,21 +1196,22 @@
         },
         {
           "combination": [
-            "positive_emotion",
-            "unusual"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 8.79,
-          "avg_lift": 10.06
-        },
-        {
-          "combination": [
             "unusual",
             "visual_hook"
           ],
           "reliability": "promising",
           "editorial_bonus": 8.22,
           "avg_lift": 9.02
+        },
+        {
+          "combination": [
+            "emoji_hook",
+            "media",
+            "visual_hook"
+          ],
+          "reliability": "promising",
+          "editorial_bonus": 7.29,
+          "avg_lift": 6.75
         }
       ]
     },
@@ -1261,15 +1241,6 @@
           "reliability": "promising",
           "editorial_bonus": 9.69,
           "avg_lift": 11.68
-        },
-        {
-          "combination": [
-            "positive_emotion",
-            "unusual"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 8.79,
-          "avg_lift": 10.06
         }
       ]
     },
@@ -1299,15 +1270,6 @@
           "reliability": "promising",
           "editorial_bonus": 9.69,
           "avg_lift": 11.68
-        },
-        {
-          "combination": [
-            "positive_emotion",
-            "unusual"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 8.79,
-          "avg_lift": 10.06
         }
       ]
     },
@@ -1337,15 +1299,6 @@
           "reliability": "promising",
           "editorial_bonus": 9.69,
           "avg_lift": 11.68
-        },
-        {
-          "combination": [
-            "positive_emotion",
-            "unusual"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 8.79,
-          "avg_lift": 10.06
         }
       ]
     },
@@ -1391,21 +1344,22 @@
         },
         {
           "combination": [
-            "positive_emotion",
-            "unusual"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 8.79,
-          "avg_lift": 10.06
-        },
-        {
-          "combination": [
             "unusual",
             "visual_hook"
           ],
           "reliability": "promising",
           "editorial_bonus": 8.22,
           "avg_lift": 9.02
+        },
+        {
+          "combination": [
+            "emoji_hook",
+            "media",
+            "visual_hook"
+          ],
+          "reliability": "promising",
+          "editorial_bonus": 7.29,
+          "avg_lift": 6.75
         }
       ]
     },
@@ -1434,15 +1388,6 @@
           "reliability": "promising",
           "editorial_bonus": 9.69,
           "avg_lift": 11.68
-        },
-        {
-          "combination": [
-            "positive_emotion",
-            "unusual"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 8.79,
-          "avg_lift": 10.06
         }
       ]
     },
@@ -1483,6 +1428,16 @@
           "reliability": "promising",
           "editorial_bonus": 8.22,
           "avg_lift": 9.02
+        },
+        {
+          "combination": [
+            "emoji_hook",
+            "media",
+            "visual_hook"
+          ],
+          "reliability": "promising",
+          "editorial_bonus": 7.29,
+          "avg_lift": 6.75
         }
       ]
     },
@@ -1512,15 +1467,6 @@
           "reliability": "promising",
           "editorial_bonus": 9.69,
           "avg_lift": 11.68
-        },
-        {
-          "combination": [
-            "positive_emotion",
-            "unusual"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 8.79,
-          "avg_lift": 10.06
         }
       ]
     },
@@ -1550,15 +1496,6 @@
           "reliability": "promising",
           "editorial_bonus": 9.69,
           "avg_lift": 11.68
-        },
-        {
-          "combination": [
-            "positive_emotion",
-            "unusual"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 8.79,
-          "avg_lift": 10.06
         }
       ]
     },
@@ -1644,12 +1581,13 @@
         },
         {
           "combination": [
-            "fear",
-            "unusual"
+            "emoji_hook",
+            "media",
+            "visual_hook"
           ],
           "reliability": "promising",
-          "editorial_bonus": 7.37,
-          "avg_lift": 7.44
+          "editorial_bonus": 7.29,
+          "avg_lift": 6.75
         }
       ]
     },
@@ -1695,21 +1633,52 @@
         },
         {
           "combination": [
-            "positive_emotion",
-            "unusual"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 8.79,
-          "avg_lift": 10.06
-        },
-        {
-          "combination": [
             "unusual",
             "visual_hook"
           ],
           "reliability": "promising",
           "editorial_bonus": 8.22,
           "avg_lift": 9.02
+        },
+        {
+          "combination": [
+            "emoji_hook",
+            "media",
+            "visual_hook"
+          ],
+          "reliability": "promising",
+          "editorial_bonus": 7.29,
+          "avg_lift": 6.75
+        }
+      ]
+    },
+    {
+      "post_id": 549759,
+      "date": "2026-04-30T11:00:20+00:00",
+      "text": "🌫 Набережная в тумане: омский способ «уборки» дорог\n\nПока одни города закупают современные пылесосы, в Омске на Иртышской набережной используют проверенную временем технологию «пыль в глаза». Трактор с щеткой просто поднимает огромные столбы грязи в воздух, щедро делясь ими с прохожими и автомобилистами.\n\nВидимо, расчет на то, что ветер с Иртыша сам разберется с экологической обстановкой.\n\n❓А вы уже успели вдохнуть «свежего» весеннего воздуха после такой уборки",
+      "historical_potential": 54.84,
+      "editorial_potential": 62.08,
+      "editorial_status": "РЕЗЕРВ",
+      "editorial_virality": 52.51,
+      "editorial_approval": 52.22,
+      "mechanisms": [
+        "emoji_hook",
+        "locality",
+        "media",
+        "positive_emotion",
+        "unusual",
+        "weather"
+      ],
+      "matched_combinations": [
+        {
+          "combination": [
+            "media",
+            "positive_emotion",
+            "unusual"
+          ],
+          "reliability": "promising",
+          "editorial_bonus": 9.69,
+          "avg_lift": 11.68
         }
       ]
     },
@@ -1769,6 +1738,45 @@
           "reliability": "promising",
           "editorial_bonus": 8.22,
           "avg_lift": 9.02
+        },
+        {
+          "combination": [
+            "emoji_hook",
+            "media",
+            "visual_hook"
+          ],
+          "reliability": "promising",
+          "editorial_bonus": 7.29,
+          "avg_lift": 6.75
+        }
+      ]
+    },
+    {
+      "post_id": 567314,
+      "date": "2026-09-14T07:27:52+00:00",
+      "text": "Синоптики прогнозируют первый снег с дождем в Омске 11 октября — на день позже, чем в прошлом году.",
+      "historical_potential": 96.8,
+      "editorial_potential": 62.05,
+      "editorial_status": "РЕЗЕРВ",
+      "editorial_virality": 52.4,
+      "editorial_approval": 52.31,
+      "mechanisms": [
+        "locality",
+        "media",
+        "positive_emotion",
+        "unusual",
+        "weather"
+      ],
+      "matched_combinations": [
+        {
+          "combination": [
+            "media",
+            "positive_emotion",
+            "unusual"
+          ],
+          "reliability": "promising",
+          "editorial_bonus": 9.69,
+          "avg_lift": 11.68
         }
       ]
     },
@@ -1815,12 +1823,84 @@
         },
         {
           "combination": [
+            "unusual",
+            "visual_hook"
+          ],
+          "reliability": "promising",
+          "editorial_bonus": 8.22,
+          "avg_lift": 9.02
+        },
+        {
+          "combination": [
+            "emoji_hook",
+            "media",
+            "visual_hook"
+          ],
+          "reliability": "promising",
+          "editorial_bonus": 7.29,
+          "avg_lift": 6.75
+        }
+      ]
+    },
+    {
+      "post_id": 565047,
+      "date": "2026-07-26T15:29:41+00:00",
+      "text": "🎨 В омcком дендрологическом саду имени Гензе — буйство красок\n\nСейчас там царствуют колеусы. Эти удивительные растения украшают сад до самых заморозков. Каждый кустик — как маленький шедевр.",
+      "historical_potential": 47.05,
+      "editorial_potential": 62.03,
+      "editorial_status": "РЕЗЕРВ",
+      "editorial_virality": 52.65,
+      "editorial_approval": 51.88,
+      "mechanisms": [
+        "emoji_hook",
+        "media",
+        "positive_emotion",
+        "unusual",
+        "usefulness",
+        "weather"
+      ],
+      "matched_combinations": [
+        {
+          "combination": [
+            "media",
             "positive_emotion",
             "unusual"
           ],
           "reliability": "promising",
-          "editorial_bonus": 8.79,
-          "avg_lift": 10.06
+          "editorial_bonus": 9.69,
+          "avg_lift": 11.68
+        }
+      ]
+    },
+    {
+      "post_id": 563959,
+      "date": "2026-07-18T03:00:04+00:00",
+      "text": "☁️ Апокалиптический пейзаж: омичей напугало и восхитило гигантское облако в форме «ядерного гриба»\n\nНеобычное природное явление горожане заметили в небе вчера вечером. Огромное облако-наковальня не на шутку переполошило соцсети своим грозным видом. Метеорологи поспешили успокоить жителей: это всего лишь разновидность мощных кучево-дождевых облаков. Подобную форму они принимают, когда вертикальный поток воздуха упирается в стратосферу и начинает растекаться по сторонам.\n\n❓Успели сфотографировать этого атмосферного гиганта со своего ракурса",
+      "historical_potential": 83.56,
+      "editorial_potential": 61.99,
+      "editorial_status": "РЕЗЕРВ",
+      "editorial_virality": 52.7,
+      "editorial_approval": 52.13,
+      "mechanisms": [
+        "emoji_hook",
+        "human_story",
+        "humor",
+        "locality",
+        "media",
+        "unusual",
+        "visual_hook",
+        "weather"
+      ],
+      "matched_combinations": [
+        {
+          "combination": [
+            "media",
+            "unusual",
+            "visual_hook"
+          ],
+          "reliability": "strong",
+          "editorial_bonus": 9.52,
+          "avg_lift": 9.07
         },
         {
           "combination": [
@@ -1830,6 +1910,16 @@
           "reliability": "promising",
           "editorial_bonus": 8.22,
           "avg_lift": 9.02
+        },
+        {
+          "combination": [
+            "emoji_hook",
+            "media",
+            "visual_hook"
+          ],
+          "reliability": "promising",
+          "editorial_bonus": 7.29,
+          "avg_lift": 6.75
         }
       ]
     },
@@ -1906,15 +1996,6 @@
         },
         {
           "combination": [
-            "positive_emotion",
-            "unusual"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 8.79,
-          "avg_lift": 10.06
-        },
-        {
-          "combination": [
             "unusual",
             "visual_hook"
           ],
@@ -1934,12 +2015,13 @@
         },
         {
           "combination": [
-            "fear",
-            "unusual"
+            "emoji_hook",
+            "media",
+            "visual_hook"
           ],
           "reliability": "promising",
-          "editorial_bonus": 7.37,
-          "avg_lift": 7.44
+          "editorial_bonus": 7.29,
+          "avg_lift": 6.75
         }
       ]
     },
@@ -2023,12 +2105,13 @@
         },
         {
           "combination": [
-            "fear",
-            "unusual"
+            "emoji_hook",
+            "media",
+            "visual_hook"
           ],
           "reliability": "promising",
-          "editorial_bonus": 7.37,
-          "avg_lift": 7.44
+          "editorial_bonus": 7.29,
+          "avg_lift": 6.75
         }
       ]
     },
@@ -2068,6 +2151,16 @@
           "reliability": "promising",
           "editorial_bonus": 8.22,
           "avg_lift": 9.02
+        },
+        {
+          "combination": [
+            "emoji_hook",
+            "media",
+            "visual_hook"
+          ],
+          "reliability": "promising",
+          "editorial_bonus": 7.29,
+          "avg_lift": 6.75
         }
       ]
     },
@@ -2144,15 +2237,6 @@
         },
         {
           "combination": [
-            "positive_emotion",
-            "unusual"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 8.79,
-          "avg_lift": 10.06
-        },
-        {
-          "combination": [
             "unusual",
             "visual_hook"
           ],
@@ -2172,12 +2256,13 @@
         },
         {
           "combination": [
-            "fear",
-            "unusual"
+            "emoji_hook",
+            "media",
+            "visual_hook"
           ],
           "reliability": "promising",
-          "editorial_bonus": 7.37,
-          "avg_lift": 7.44
+          "editorial_bonus": 7.29,
+          "avg_lift": 6.75
         }
       ]
     },
@@ -2217,6 +2302,16 @@
           "reliability": "promising",
           "editorial_bonus": 8.22,
           "avg_lift": 9.02
+        },
+        {
+          "combination": [
+            "emoji_hook",
+            "media",
+            "visual_hook"
+          ],
+          "reliability": "promising",
+          "editorial_bonus": 7.29,
+          "avg_lift": 6.75
         }
       ]
     },
@@ -2256,6 +2351,98 @@
           "reliability": "promising",
           "editorial_bonus": 8.22,
           "avg_lift": 9.02
+        },
+        {
+          "combination": [
+            "emoji_hook",
+            "media",
+            "visual_hook"
+          ],
+          "reliability": "promising",
+          "editorial_bonus": 7.29,
+          "avg_lift": 6.75
+        }
+      ]
+    },
+    {
+      "post_id": 558931,
+      "date": "2026-06-24T14:07:04+00:00",
+      "text": "🦌 Неожиданная встреча: омичи засняли лося, переплывающего Иртыш\n\nВ объектив камеры попал лесной гость: на видео запечатлен лось, который уверенно преодолевает водную преграду. Животное благополучно добралось до берега и скрылось в густых зарослях.\n\n❓ Вам часто доводилось видеть диких животных в черте города или в пригородных зонах",
+      "historical_potential": 80.29,
+      "editorial_potential": 61.96,
+      "editorial_status": "РЕЗЕРВ",
+      "editorial_virality": 52.48,
+      "editorial_approval": 51.96,
+      "mechanisms": [
+        "animal",
+        "emoji_hook",
+        "human_story",
+        "locality",
+        "media",
+        "positive_emotion",
+        "unusual",
+        "visual_hook",
+        "weather"
+      ],
+      "matched_combinations": [
+        {
+          "combination": [
+            "media",
+            "unusual",
+            "visual_hook"
+          ],
+          "reliability": "strong",
+          "editorial_bonus": 9.52,
+          "avg_lift": 9.07
+        },
+        {
+          "combination": [
+            "media",
+            "positive_emotion",
+            "unusual"
+          ],
+          "reliability": "promising",
+          "editorial_bonus": 9.69,
+          "avg_lift": 11.68
+        },
+        {
+          "combination": [
+            "animal",
+            "media",
+            "unusual"
+          ],
+          "reliability": "promising",
+          "editorial_bonus": 9.15,
+          "avg_lift": 10.61
+        },
+        {
+          "combination": [
+            "animal",
+            "emoji_hook",
+            "unusual"
+          ],
+          "reliability": "promising",
+          "editorial_bonus": 8.95,
+          "avg_lift": 10.32
+        },
+        {
+          "combination": [
+            "unusual",
+            "visual_hook"
+          ],
+          "reliability": "promising",
+          "editorial_bonus": 8.22,
+          "avg_lift": 9.02
+        },
+        {
+          "combination": [
+            "emoji_hook",
+            "media",
+            "visual_hook"
+          ],
+          "reliability": "promising",
+          "editorial_bonus": 7.29,
+          "avg_lift": 6.75
         }
       ]
     },
@@ -2321,12 +2508,97 @@
         },
         {
           "combination": [
+            "unusual",
+            "visual_hook"
+          ],
+          "reliability": "promising",
+          "editorial_bonus": 8.22,
+          "avg_lift": 9.02
+        },
+        {
+          "combination": [
+            "emoji_hook",
+            "media",
+            "visual_hook"
+          ],
+          "reliability": "promising",
+          "editorial_bonus": 7.29,
+          "avg_lift": 6.75
+        }
+      ]
+    },
+    {
+      "post_id": 551516,
+      "date": "2026-05-09T15:00:19+00:00",
+      "text": "🌪 На Омскую область могут обрушиться торнадо\n\nСервис визуализации погоды Ventusky зафиксировал в регионе аномально высокие значения индекса STP, который используется для оценки потенциала формирования торнадо. По прогнозам синоптиков, опасные природные явления возможны уже сегодня, 9 мая.\n\nДля Омской области подобные вихри не являются уникальным событием. Например, в июне 2024 года мощный смерч наблюдали в районе разъезда Петрушенко в Дружинском сельском поселении. Тогда очевидцам удалось заснять редкое явление на видео.\n\nСитуация усугубляется общим штормовым предупреждением на праздничный день: в регионе также ожидаются сильный ветер, грозы и град.\n\n❓А вы уже заметили признаки ухудшения погоды в вашем районе",
+      "historical_potential": 77.03,
+      "editorial_potential": 61.96,
+      "editorial_status": "РЕЗЕРВ",
+      "editorial_virality": 53.03,
+      "editorial_approval": 51.12,
+      "mechanisms": [
+        "animal",
+        "emoji_hook",
+        "fear",
+        "locality",
+        "media",
+        "positive_emotion",
+        "shock",
+        "unusual",
+        "usefulness",
+        "visual_hook",
+        "weather"
+      ],
+      "matched_combinations": [
+        {
+          "combination": [
+            "media",
+            "unusual",
+            "visual_hook"
+          ],
+          "reliability": "strong",
+          "editorial_bonus": 9.52,
+          "avg_lift": 9.07
+        },
+        {
+          "combination": [
+            "fear",
+            "media",
+            "unusual"
+          ],
+          "reliability": "strong",
+          "editorial_bonus": 9.24,
+          "avg_lift": 8.58
+        },
+        {
+          "combination": [
+            "media",
             "positive_emotion",
             "unusual"
           ],
           "reliability": "promising",
-          "editorial_bonus": 8.79,
-          "avg_lift": 10.06
+          "editorial_bonus": 9.69,
+          "avg_lift": 11.68
+        },
+        {
+          "combination": [
+            "animal",
+            "media",
+            "unusual"
+          ],
+          "reliability": "promising",
+          "editorial_bonus": 9.15,
+          "avg_lift": 10.61
+        },
+        {
+          "combination": [
+            "animal",
+            "emoji_hook",
+            "unusual"
+          ],
+          "reliability": "promising",
+          "editorial_bonus": 8.95,
+          "avg_lift": 10.32
         },
         {
           "combination": [
@@ -2336,6 +2608,36 @@
           "reliability": "promising",
           "editorial_bonus": 8.22,
           "avg_lift": 9.02
+        },
+        {
+          "combination": [
+            "positive_emotion",
+            "shock",
+            "usefulness"
+          ],
+          "reliability": "promising",
+          "editorial_bonus": 8.12,
+          "avg_lift": 8.82
+        },
+        {
+          "combination": [
+            "emoji_hook",
+            "fear",
+            "unusual"
+          ],
+          "reliability": "promising",
+          "editorial_bonus": 7.85,
+          "avg_lift": 8.34
+        },
+        {
+          "combination": [
+            "emoji_hook",
+            "media",
+            "visual_hook"
+          ],
+          "reliability": "promising",
+          "editorial_bonus": 7.29,
+          "avg_lift": 6.75
         }
       ]
     },
@@ -2374,45 +2676,6 @@
           "reliability": "promising",
           "editorial_bonus": 8.22,
           "avg_lift": 9.02
-        }
-      ]
-    },
-    {
-      "post_id": 549759,
-      "date": "2026-04-30T11:00:20+00:00",
-      "text": "🌫 Набережная в тумане: омский способ «уборки» дорог\n\nПока одни города закупают современные пылесосы, в Омске на Иртышской набережной используют проверенную временем технологию «пыль в глаза». Трактор с щеткой просто поднимает огромные столбы грязи в воздух, щедро делясь ими с прохожими и автомобилистами.\n\nВидимо, расчет на то, что ветер с Иртыша сам разберется с экологической обстановкой.\n\n❓А вы уже успели вдохнуть «свежего» весеннего воздуха после такой уборки",
-      "historical_potential": 54.84,
-      "editorial_potential": 61.94,
-      "editorial_status": "РЕЗЕРВ",
-      "editorial_virality": 52.38,
-      "editorial_approval": 52.06,
-      "mechanisms": [
-        "emoji_hook",
-        "locality",
-        "media",
-        "positive_emotion",
-        "unusual",
-        "weather"
-      ],
-      "matched_combinations": [
-        {
-          "combination": [
-            "media",
-            "positive_emotion",
-            "unusual"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 9.69,
-          "avg_lift": 11.68
-        },
-        {
-          "combination": [
-            "positive_emotion",
-            "unusual"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 8.79,
-          "avg_lift": 10.06
         }
       ]
     },
@@ -2458,21 +2721,22 @@
         },
         {
           "combination": [
-            "positive_emotion",
-            "unusual"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 8.79,
-          "avg_lift": 10.06
-        },
-        {
-          "combination": [
             "unusual",
             "visual_hook"
           ],
           "reliability": "promising",
           "editorial_bonus": 8.22,
           "avg_lift": 9.02
+        },
+        {
+          "combination": [
+            "emoji_hook",
+            "media",
+            "visual_hook"
+          ],
+          "reliability": "promising",
+          "editorial_bonus": 7.29,
+          "avg_lift": 6.75
         }
       ]
     },
@@ -2511,45 +2775,6 @@
           "reliability": "promising",
           "editorial_bonus": 8.22,
           "avg_lift": 9.02
-        }
-      ]
-    },
-    {
-      "post_id": 565047,
-      "date": "2026-07-26T15:29:41+00:00",
-      "text": "🎨 В омcком дендрологическом саду имени Гензе — буйство красок\n\nСейчас там царствуют колеусы. Эти удивительные растения украшают сад до самых заморозков. Каждый кустик — как маленький шедевр.",
-      "historical_potential": 47.05,
-      "editorial_potential": 61.89,
-      "editorial_status": "РЕЗЕРВ",
-      "editorial_virality": 52.52,
-      "editorial_approval": 51.73,
-      "mechanisms": [
-        "emoji_hook",
-        "media",
-        "positive_emotion",
-        "unusual",
-        "usefulness",
-        "weather"
-      ],
-      "matched_combinations": [
-        {
-          "combination": [
-            "media",
-            "positive_emotion",
-            "unusual"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 9.69,
-          "avg_lift": 11.68
-        },
-        {
-          "combination": [
-            "positive_emotion",
-            "unusual"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 8.79,
-          "avg_lift": 10.06
         }
       ]
     },
@@ -2600,69 +2825,21 @@
           "reliability": "promising",
           "editorial_bonus": 8.95,
           "avg_lift": 10.32
-        },
-        {
-          "combination": [
-            "positive_emotion",
-            "unusual"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 8.79,
-          "avg_lift": 10.06
         }
       ]
     },
     {
-      "post_id": 567314,
-      "date": "2026-09-14T07:27:52+00:00",
-      "text": "Синоптики прогнозируют первый снег с дождем в Омске 11 октября — на день позже, чем в прошлом году.",
-      "historical_potential": 96.8,
-      "editorial_potential": 61.88,
+      "post_id": 568257,
+      "date": "2026-10-06T15:00:21+00:00",
+      "text": "🌌 В Саргатском районе снова поймали в кадр северное сияние\n\nНебо над Саргатским районом этой ночью украсило северное сияние. Редкое для наших широт явление снова удалось снять на камеру — кадры появились в омских соцсетях.\n\nПохоже, этой осенью омичам всё чаще приходится смотреть не только под ноги из-за первого снега, но и вверх.\n\n❓Кто успел увидеть сияние своими глазами",
+      "historical_potential": 44.14,
+      "editorial_potential": 61.87,
       "editorial_status": "РЕЗЕРВ",
-      "editorial_virality": 52.24,
-      "editorial_approval": 52.12,
-      "mechanisms": [
-        "locality",
-        "media",
-        "positive_emotion",
-        "unusual",
-        "weather"
-      ],
-      "matched_combinations": [
-        {
-          "combination": [
-            "media",
-            "positive_emotion",
-            "unusual"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 9.69,
-          "avg_lift": 11.68
-        },
-        {
-          "combination": [
-            "positive_emotion",
-            "unusual"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 8.79,
-          "avg_lift": 10.06
-        }
-      ]
-    },
-    {
-      "post_id": 563959,
-      "date": "2026-07-18T03:00:04+00:00",
-      "text": "☁️ Апокалиптический пейзаж: омичей напугало и восхитило гигантское облако в форме «ядерного гриба»\n\nНеобычное природное явление горожане заметили в небе вчера вечером. Огромное облако-наковальня не на шутку переполошило соцсети своим грозным видом. Метеорологи поспешили успокоить жителей: это всего лишь разновидность мощных кучево-дождевых облаков. Подобную форму они принимают, когда вертикальный поток воздуха упирается в стратосферу и начинает растекаться по сторонам.\n\n❓Успели сфотографировать этого атмосферного гиганта со своего ракурса",
-      "historical_potential": 83.56,
-      "editorial_potential": 61.88,
-      "editorial_status": "РЕЗЕРВ",
-      "editorial_virality": 52.59,
-      "editorial_approval": 52.01,
+      "editorial_virality": 52.66,
+      "editorial_approval": 51.89,
       "mechanisms": [
         "emoji_hook",
         "human_story",
-        "humor",
         "locality",
         "media",
         "unusual",
@@ -2688,26 +2865,82 @@
           "reliability": "promising",
           "editorial_bonus": 8.22,
           "avg_lift": 9.02
+        },
+        {
+          "combination": [
+            "emoji_hook",
+            "media",
+            "visual_hook"
+          ],
+          "reliability": "promising",
+          "editorial_bonus": 7.29,
+          "avg_lift": 6.75
         }
       ]
     },
     {
-      "post_id": 551516,
-      "date": "2026-05-09T15:00:19+00:00",
-      "text": "🌪 На Омскую область могут обрушиться торнадо\n\nСервис визуализации погоды Ventusky зафиксировал в регионе аномально высокие значения индекса STP, который используется для оценки потенциала формирования торнадо. По прогнозам синоптиков, опасные природные явления возможны уже сегодня, 9 мая.\n\nДля Омской области подобные вихри не являются уникальным событием. Например, в июне 2024 года мощный смерч наблюдали в районе разъезда Петрушенко в Дружинском сельском поселении. Тогда очевидцам удалось заснять редкое явление на видео.\n\nСитуация усугубляется общим штормовым предупреждением на праздничный день: в регионе также ожидаются сильный ветер, грозы и град.\n\n❓А вы уже заметили признаки ухудшения погоды в вашем районе",
-      "historical_potential": 77.03,
-      "editorial_potential": 61.88,
+      "post_id": 558007,
+      "date": "2026-06-20T11:24:34+00:00",
+      "text": "🔥 Омичи стоят в огромных очередях, чтобы попасть на платные пляжи\n\nСегодня в Омске воздух прогрелся до +34 градусов, и горожане массово ринулись к воде. У одного из популярных платных пляжей очередь выстроилась еще с 11 утра. Людям с детьми приходится около 15 минут стоять под палящим солнцем, чтобы просто зайти на территорию.\n\nНесмотря на жару и ожидание, поток желающих занять шезлонг не иссякает.\n\nФото: Om1\n\n❓Готовы ли вы платить деньги и стоять в очередях ради комфортного отдыха у воды",
+      "historical_potential": 63.29,
+      "editorial_potential": 61.87,
       "editorial_status": "РЕЗЕРВ",
-      "editorial_virality": 52.96,
-      "editorial_approval": 51.04,
+      "editorial_virality": 52.66,
+      "editorial_approval": 51.89,
       "mechanisms": [
-        "animal",
         "emoji_hook",
-        "fear",
+        "human_story",
         "locality",
         "media",
-        "positive_emotion",
-        "shock",
+        "unusual",
+        "visual_hook",
+        "weather"
+      ],
+      "matched_combinations": [
+        {
+          "combination": [
+            "media",
+            "unusual",
+            "visual_hook"
+          ],
+          "reliability": "strong",
+          "editorial_bonus": 9.52,
+          "avg_lift": 9.07
+        },
+        {
+          "combination": [
+            "unusual",
+            "visual_hook"
+          ],
+          "reliability": "promising",
+          "editorial_bonus": 8.22,
+          "avg_lift": 9.02
+        },
+        {
+          "combination": [
+            "emoji_hook",
+            "media",
+            "visual_hook"
+          ],
+          "reliability": "promising",
+          "editorial_bonus": 7.29,
+          "avg_lift": 6.75
+        }
+      ]
+    },
+    {
+      "post_id": 563241,
+      "date": "2026-07-10T14:27:58+00:00",
+      "text": "🌧 Смыло духоту: на Омск внезапно обрушился мощный ливень\n\nНебесная канцелярия решила не дожидаться выходных и резко изменила декорации в Омске. После изнуряющей жары город мгновенно накрыло грозовыми тучами, и на улицы хлынул сильный поток воды. Ливень застал горожан врасплох, но вместе с сыростью принес и долгожданную прохладу, облегчив жизнь после аномальной духоты.\n\nВидео: Открытка из Омска\n\n❓Успеет ли городская ливневка справиться с таким потопом — рассуждаем в комментариях, а пока делитесь видео дождя",
+      "historical_potential": 76.42,
+      "editorial_potential": 61.86,
+      "editorial_status": "РЕЗЕРВ",
+      "editorial_virality": 52.66,
+      "editorial_approval": 51.86,
+      "mechanisms": [
+        "emoji_hook",
+        "locality",
+        "media",
         "unusual",
         "usefulness",
         "visual_hook",
@@ -2726,55 +2959,6 @@
         },
         {
           "combination": [
-            "fear",
-            "media",
-            "unusual"
-          ],
-          "reliability": "strong",
-          "editorial_bonus": 9.24,
-          "avg_lift": 8.58
-        },
-        {
-          "combination": [
-            "media",
-            "positive_emotion",
-            "unusual"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 9.69,
-          "avg_lift": 11.68
-        },
-        {
-          "combination": [
-            "animal",
-            "media",
-            "unusual"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 9.15,
-          "avg_lift": 10.61
-        },
-        {
-          "combination": [
-            "animal",
-            "emoji_hook",
-            "unusual"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 8.95,
-          "avg_lift": 10.32
-        },
-        {
-          "combination": [
-            "positive_emotion",
-            "unusual"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 8.79,
-          "avg_lift": 10.06
-        },
-        {
-          "combination": [
             "unusual",
             "visual_hook"
           ],
@@ -2784,123 +2968,13 @@
         },
         {
           "combination": [
-            "positive_emotion",
-            "shock",
-            "usefulness"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 8.12,
-          "avg_lift": 8.82
-        },
-        {
-          "combination": [
             "emoji_hook",
-            "fear",
-            "unusual"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 7.85,
-          "avg_lift": 8.34
-        },
-        {
-          "combination": [
-            "emoji_hook",
-            "positive_emotion",
-            "shock"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 7.77,
-          "avg_lift": 8.18
-        },
-        {
-          "combination": [
-            "fear",
-            "unusual"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 7.37,
-          "avg_lift": 7.44
-        }
-      ]
-    },
-    {
-      "post_id": 558931,
-      "date": "2026-06-24T14:07:04+00:00",
-      "text": "🦌 Неожиданная встреча: омичи засняли лося, переплывающего Иртыш\n\nВ объектив камеры попал лесной гость: на видео запечатлен лось, который уверенно преодолевает водную преграду. Животное благополучно добралось до берега и скрылось в густых зарослях.\n\n❓ Вам часто доводилось видеть диких животных в черте города или в пригородных зонах",
-      "historical_potential": 80.29,
-      "editorial_potential": 61.87,
-      "editorial_status": "РЕЗЕРВ",
-      "editorial_virality": 52.39,
-      "editorial_approval": 51.85,
-      "mechanisms": [
-        "animal",
-        "emoji_hook",
-        "human_story",
-        "locality",
-        "media",
-        "positive_emotion",
-        "unusual",
-        "visual_hook",
-        "weather"
-      ],
-      "matched_combinations": [
-        {
-          "combination": [
             "media",
-            "unusual",
-            "visual_hook"
-          ],
-          "reliability": "strong",
-          "editorial_bonus": 9.52,
-          "avg_lift": 9.07
-        },
-        {
-          "combination": [
-            "media",
-            "positive_emotion",
-            "unusual"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 9.69,
-          "avg_lift": 11.68
-        },
-        {
-          "combination": [
-            "animal",
-            "media",
-            "unusual"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 9.15,
-          "avg_lift": 10.61
-        },
-        {
-          "combination": [
-            "animal",
-            "emoji_hook",
-            "unusual"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 8.95,
-          "avg_lift": 10.32
-        },
-        {
-          "combination": [
-            "positive_emotion",
-            "unusual"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 8.79,
-          "avg_lift": 10.06
-        },
-        {
-          "combination": [
-            "unusual",
             "visual_hook"
           ],
           "reliability": "promising",
-          "editorial_bonus": 8.22,
-          "avg_lift": 9.02
+          "editorial_bonus": 7.29,
+          "avg_lift": 6.75
         }
       ]
     },
@@ -2947,15 +3021,6 @@
         {
           "combination": [
             "positive_emotion",
-            "unusual"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 8.79,
-          "avg_lift": 10.06
-        },
-        {
-          "combination": [
-            "positive_emotion",
             "shock",
             "usefulness"
           ],
@@ -2972,25 +3037,6 @@
           "reliability": "promising",
           "editorial_bonus": 7.85,
           "avg_lift": 8.34
-        },
-        {
-          "combination": [
-            "emoji_hook",
-            "positive_emotion",
-            "shock"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 7.77,
-          "avg_lift": 8.18
-        },
-        {
-          "combination": [
-            "fear",
-            "unusual"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 7.37,
-          "avg_lift": 7.44
         }
       ]
     },
@@ -3037,15 +3083,6 @@
         {
           "combination": [
             "positive_emotion",
-            "unusual"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 8.79,
-          "avg_lift": 10.06
-        },
-        {
-          "combination": [
-            "positive_emotion",
             "shock",
             "usefulness"
           ],
@@ -3062,25 +3099,6 @@
           "reliability": "promising",
           "editorial_bonus": 7.85,
           "avg_lift": 8.34
-        },
-        {
-          "combination": [
-            "emoji_hook",
-            "positive_emotion",
-            "shock"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 7.77,
-          "avg_lift": 8.18
-        },
-        {
-          "combination": [
-            "fear",
-            "unusual"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 7.37,
-          "avg_lift": 7.44
         }
       ]
     },
@@ -3146,132 +3164,16 @@
         },
         {
           "combination": [
-            "fear",
-            "unusual"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 7.37,
-          "avg_lift": 7.44
-        }
-      ]
-    },
-    {
-      "post_id": 566526,
-      "date": "2026-08-28T16:32:06+00:00",
-      "text": "🌊 Настоящий ажиотаж: сотни омичей выстроились в огромные очереди на открытие нового фонтана в Омской крепости\n\nДолгожданный запуск нового сухой фонтана в Омской крепости собрал небывалый аншлаг. Чтобы первыми увидеть световое шоу и прогуляться по обновлённому пространству, горожане начали собираться задолго до начала программы. Очереди из желающих попасть на территорию растянулись на сотни метров вдоль улицы. Несмотря на плотный поток гостей, атмосфера на площадке праздничная.\n\n❓А вы планируете посмотреть на новую локацию в эти выходные",
-      "historical_potential": 81.96,
-      "editorial_potential": 61.8,
-      "editorial_status": "РЕЗЕРВ",
-      "editorial_virality": 52.26,
-      "editorial_approval": 51.9,
-      "mechanisms": [
-        "emoji_hook",
-        "human_story",
-        "locality",
-        "media",
-        "positive_emotion",
-        "unusual"
-      ],
-      "matched_combinations": [
-        {
-          "combination": [
+            "emoji_hook",
             "media",
-            "positive_emotion",
-            "unusual"
+            "visual_hook"
           ],
           "reliability": "promising",
-          "editorial_bonus": 9.69,
-          "avg_lift": 11.68
-        },
-        {
-          "combination": [
-            "positive_emotion",
-            "unusual"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 8.79,
-          "avg_lift": 10.06
-        }
-      ]
-    },
-    {
-      "post_id": 564915,
-      "date": "2026-07-25T03:00:16+00:00",
-      "text": "🛫 Врата в небо: омичам впервые продемонстрировали детальный макет нового аэропорта Омск-Фёдоровка\n\nНа площадке исторического парка «Россия — Моя история» в рамках XXII Форума межрегионального сотрудничества презентовали наглядную концепцию будущей главной воздушной гавани региона. Сдать долгожданный авиаузел планируют в 2028 году.\n\n❓Верите, что новый аэропорт действительно достроят к 2028 году",
-      "historical_potential": 31.3,
-      "editorial_potential": 61.8,
-      "editorial_status": "РЕЗЕРВ",
-      "editorial_virality": 52.26,
-      "editorial_approval": 51.9,
-      "mechanisms": [
-        "emoji_hook",
-        "human_story",
-        "locality",
-        "media",
-        "positive_emotion",
-        "unusual"
-      ],
-      "matched_combinations": [
-        {
-          "combination": [
-            "media",
-            "positive_emotion",
-            "unusual"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 9.69,
-          "avg_lift": 11.68
-        },
-        {
-          "combination": [
-            "positive_emotion",
-            "unusual"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 8.79,
-          "avg_lift": 10.06
-        }
-      ]
-    },
-    {
-      "post_id": 553768,
-      "date": "2026-05-24T09:00:01+00:00",
-      "text": "👍 Омичи своими силами очистили пляж на Кемеровской\n\nОни убрали с берега мусор и огромные коряги. Пляж заметно преобразился.",
-      "historical_potential": 69.7,
-      "editorial_potential": 61.8,
-      "editorial_status": "РЕЗЕРВ",
-      "editorial_virality": 52.26,
-      "editorial_approval": 51.9,
-      "mechanisms": [
-        "emoji_hook",
-        "human_story",
-        "locality",
-        "media",
-        "positive_emotion",
-        "unusual"
-      ],
-      "matched_combinations": [
-        {
-          "combination": [
-            "media",
-            "positive_emotion",
-            "unusual"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 9.69,
-          "avg_lift": 11.68
-        },
-        {
-          "combination": [
-            "positive_emotion",
-            "unusual"
-          ],
-          "reliability": "promising",
-          "editorial_bonus": 8.79,
-          "avg_lift": 10.06
+          "editorial_bonus": 7.29,
+          "avg_lift": 6.75
         }
       ]
     }
   ],
-  "generated_at": "2026-10-06T16:48:56+00:00"
+  "generated_at": "2026-10-06T16:51:48+00:00"
 }
