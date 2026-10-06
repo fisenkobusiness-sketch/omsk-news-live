@@ -1,18 +1,20 @@
 [
   {
     "version": "1.0",
-    "virality_score": 50.0,
-    "approval_score": 50.0,
-    "potential_score": 50.0,
+    "virality_score": 53.8,
+    "approval_score": 48.98,
+    "potential_score": 51.87,
     "editorial_status": "ПРОПУСК",
     "classification": {
-      "content_type": "news",
-      "classification_confidence": 0.5,
+      "content_type": "incident",
+      "classification_confidence": 0.65,
       "mechanisms": [
-        "locality"
+        "incident",
+        "shock"
       ],
       "mechanism_strength": {
-        "locality": 0.85
+        "incident": 0.55,
+        "shock": 0.55
       },
       "official_attribution": false,
       "help_request": false,
@@ -21,52 +23,63 @@
       "opinion_signal": false,
       "question_cta": false,
       "emoji_count": 0,
-      "text_length": 170,
+      "text_length": 158,
       "has_media": false
     },
     "mechanisms_used": [
-      "locality"
+      "incident",
+      "shock"
     ],
-    "mechanism_details": [],
+    "mechanism_details": [
+      {
+        "mechanism": "incident",
+        "sample_confidence": 1.0,
+        "virality": 52.61,
+        "approval": 49.6
+      },
+      {
+        "mechanism": "shock",
+        "sample_confidence": 1.0,
+        "virality": 54.98,
+        "approval": 48.35
+      }
+    ],
     "matched_combinations": [],
     "combination_bonus": 0.0,
     "matched_editorial_rules": [],
     "reasons": [
-      "potential: 50.00/100",
-      "absolute_editorial_score: 50.00/100"
+      "mechanism incident: V=52.61, A=49.60",
+      "mechanism shock: V=54.98, A=48.35",
+      "potential: 51.87/100",
+      "absolute_editorial_score: 51.87/100"
     ],
-    "risks": [
-      "низкая уверенность классификации"
-    ],
-    "id": "oms_20261006_001",
-    "title": "В Иртыше ниже Омска выявили превышение ПДК ртути в несколько раз",
-    "text": "В районе ниже Омска, у поселка Береговой, зафиксирован высокий уровень загрязнения воды ртутью; по данным Обь-Иртышского УГМС, концентрация превышала ПДК в несколько раз.",
-    "url": "https://superomsk.ru/news/166676-v_omskom_irtyshe_pdk_rtuti_prevyshena_v_neskolko_raz/",
-    "source": "СуперОмск",
+    "risks": [],
+    "id": "oms_20261006_006",
+    "title": "В Омске нашли погибшим пропавшего у Телецентра 22-летнего студента",
+    "text": "Ильяр Мамлюкаев пропал в ночь с 26 на 27 сентября. 6 октября его нашли погибшим; обстоятельства смерти правоохранители на момент публикации не комментировали.",
+    "url": "https://ngs55.ru/text/incidents/2026/10/06/76680675/",
+    "source": "НГС55",
     "source_type": "regional_media",
-    "published_at": "2026-10-06T16:33:00+03:00",
-    "verified": true,
-    "verification_note": "Источник публикации ссылается на официальный отчет Обь-Иртышского УГМС.",
-    "editorial_score_absolute": 50.0,
-    "fresh_rank_score": 50.0,
-    "editorial_rank": 1
+    "published_at": "2026-10-06T09:52:00+03:00",
+    "verified": false,
+    "verification_note": "Информацию сообщила мать погибшего; полиция на момент публикации не подтвердила и не опровергла ее.",
+    "editorial_score_absolute": 51.87,
+    "fresh_rank_score": 51.87
   },
   {
     "version": "1.0",
-    "virality_score": 50.0,
-    "approval_score": 50.0,
-    "potential_score": 50.0,
+    "virality_score": 52.61,
+    "approval_score": 49.6,
+    "potential_score": 51.41,
     "editorial_status": "ПРОПУСК",
     "classification": {
       "content_type": "incident",
-      "classification_confidence": 0.65,
+      "classification_confidence": 0.6,
       "mechanisms": [
-        "animal",
         "incident"
       ],
       "mechanism_strength": {
-        "incident": 0.4,
-        "animal": 0.4
+        "incident": 0.4
       },
       "official_attribution": false,
       "help_request": false,
@@ -79,18 +92,27 @@
       "has_media": false
     },
     "mechanisms_used": [
-      "animal",
       "incident"
     ],
-    "mechanism_details": [],
+    "mechanism_details": [
+      {
+        "mechanism": "incident",
+        "sample_confidence": 1.0,
+        "virality": 52.61,
+        "approval": 49.6
+      }
+    ],
     "matched_combinations": [],
     "combination_bonus": 0.0,
     "matched_editorial_rules": [],
     "reasons": [
-      "potential: 50.00/100",
-      "absolute_editorial_score: 50.00/100"
+      "mechanism incident: V=52.61, A=49.60",
+      "potential: 51.41/100",
+      "absolute_editorial_score: 51.41/100"
     ],
-    "risks": [],
+    "risks": [
+      "низкая уверенность классификации"
+    ],
     "id": "oms_20261006_002",
     "title": "Проверку сирен в Омской области перенесли с 7 на 9 октября",
     "text": "Проверка систем оповещения пройдет 9 октября с 10:35 до 10:43; 7 октября сирены включать не будут.",
@@ -100,15 +122,14 @@
     "published_at": "2026-10-06T13:04:00+03:00",
     "verified": true,
     "verification_note": "Om1 ссылается на пресс-службу Министерства региональной безопасности Омской области; информация также опубликована ГТРК Иртыш.",
-    "editorial_score_absolute": 50.0,
-    "fresh_rank_score": 50.0,
-    "editorial_rank": 2
+    "editorial_score_absolute": 51.41,
+    "fresh_rank_score": 51.41
   },
   {
     "version": "1.0",
-    "virality_score": 50.0,
-    "approval_score": 50.0,
-    "potential_score": 50.0,
+    "virality_score": 52.61,
+    "approval_score": 49.6,
+    "potential_score": 51.41,
     "editorial_status": "ПРОПУСК",
     "classification": {
       "content_type": "incident",
@@ -132,13 +153,21 @@
     "mechanisms_used": [
       "incident"
     ],
-    "mechanism_details": [],
+    "mechanism_details": [
+      {
+        "mechanism": "incident",
+        "sample_confidence": 1.0,
+        "virality": 52.61,
+        "approval": 49.6
+      }
+    ],
     "matched_combinations": [],
     "combination_bonus": 0.0,
     "matched_editorial_rules": [],
     "reasons": [
-      "potential: 50.00/100",
-      "absolute_editorial_score: 50.00/100"
+      "mechanism incident: V=52.61, A=49.60",
+      "potential: 51.41/100",
+      "absolute_editorial_score: 51.41/100"
     ],
     "risks": [
       "низкая уверенность классификации"
@@ -152,90 +181,25 @@
     "published_at": "2026-10-06T18:43:00+03:00",
     "verified": true,
     "verification_note": "В публикации приведены данные пресс-службы УМВД России по Омской области.",
-    "editorial_score_absolute": 50.0,
-    "fresh_rank_score": 50.0,
-    "editorial_rank": 3
+    "editorial_score_absolute": 51.41,
+    "fresh_rank_score": 51.41
   },
   {
     "version": "1.0",
-    "virality_score": 50.0,
-    "approval_score": 50.0,
-    "potential_score": 50.0,
+    "virality_score": 51.93,
+    "approval_score": 50.28,
+    "potential_score": 51.27,
     "editorial_status": "ПРОПУСК",
     "classification": {
       "content_type": "incident",
-      "classification_confidence": 0.8,
-      "mechanisms": [
-        "animal",
-        "human_story",
-        "incident",
-        "locality",
-        "shock"
-      ],
-      "mechanism_strength": {
-        "locality": 0.55,
-        "incident": 0.4,
-        "human_story": 0.4,
-        "animal": 0.4,
-        "shock": 0.4
-      },
-      "official_attribution": false,
-      "help_request": false,
-      "complaint_signal": false,
-      "advertising_signal": false,
-      "opinion_signal": false,
-      "question_cta": false,
-      "emoji_count": 0,
-      "text_length": 175,
-      "has_media": false
-    },
-    "mechanisms_used": [
-      "animal",
-      "human_story",
-      "incident",
-      "locality",
-      "shock"
-    ],
-    "mechanism_details": [],
-    "matched_combinations": [],
-    "combination_bonus": 0.0,
-    "matched_editorial_rules": [],
-    "reasons": [
-      "potential: 50.00/100",
-      "absolute_editorial_score: 50.00/100"
-    ],
-    "risks": [],
-    "id": "oms_20261006_004",
-    "title": "На трассе Омск—Красноярка погибли три человека в ДТП",
-    "text": "На 32-м километре автодороги Омск—Красноярка столкнулись Toyota и Lada Granta. Погибли оба водителя и пассажир Lada; еще одна пассажирка госпитализирована в тяжелом состоянии.",
-    "url": "https://t.me/s/omsk_police?before=4286",
-    "source": "Омская полиция",
-    "source_type": "official_social",
-    "published_at": "2026-10-06",
-    "verified": true,
-    "verification_note": "Сообщение региональной полиции; приведена обновленная информация с установленными данными участников.",
-    "editorial_score_absolute": 50.0,
-    "fresh_rank_score": 50.0,
-    "editorial_rank": 4
-  },
-  {
-    "version": "1.0",
-    "virality_score": 50.0,
-    "approval_score": 50.0,
-    "potential_score": 50.0,
-    "editorial_status": "ПРОПУСК",
-    "classification": {
-      "content_type": "incident",
-      "classification_confidence": 0.7,
+      "classification_confidence": 0.65,
       "mechanisms": [
         "incident",
-        "locality",
-        "weather"
+        "locality"
       ],
       "mechanism_strength": {
         "locality": 0.4,
-        "incident": 0.4,
-        "weather": 0.4
+        "incident": 0.4
       },
       "official_attribution": false,
       "help_request": false,
@@ -249,16 +213,30 @@
     },
     "mechanisms_used": [
       "incident",
-      "locality",
-      "weather"
+      "locality"
     ],
-    "mechanism_details": [],
+    "mechanism_details": [
+      {
+        "mechanism": "incident",
+        "sample_confidence": 1.0,
+        "virality": 52.61,
+        "approval": 49.6
+      },
+      {
+        "mechanism": "locality",
+        "sample_confidence": 1.0,
+        "virality": 51.25,
+        "approval": 50.95
+      }
+    ],
     "matched_combinations": [],
     "combination_bonus": 0.0,
     "matched_editorial_rules": [],
     "reasons": [
-      "potential: 50.00/100",
-      "absolute_editorial_score: 50.00/100"
+      "mechanism incident: V=52.61, A=49.60",
+      "mechanism locality: V=51.25, A=50.95",
+      "potential: 51.27/100",
+      "absolute_editorial_score: 51.27/100"
     ],
     "risks": [],
     "id": "oms_20261006_005",
@@ -270,28 +248,29 @@
     "published_at": "2026-10-06T09:08:00+03:00",
     "verified": true,
     "verification_note": "Публикация присутствует в архиве регионального СМИ за 6 октября.",
-    "editorial_score_absolute": 50.0,
-    "fresh_rank_score": 50.0,
-    "editorial_rank": 5
+    "editorial_score_absolute": 51.27,
+    "fresh_rank_score": 51.27
   },
   {
     "version": "1.0",
-    "virality_score": 50.0,
-    "approval_score": 50.0,
-    "potential_score": 50.0,
+    "virality_score": 52.45,
+    "approval_score": 49.18,
+    "potential_score": 51.14,
     "editorial_status": "ПРОПУСК",
     "classification": {
       "content_type": "incident",
-      "classification_confidence": 0.7,
+      "classification_confidence": 0.75,
       "mechanisms": [
         "human_story",
         "incident",
+        "locality",
         "shock"
       ],
       "mechanism_strength": {
-        "incident": 0.55,
+        "locality": 0.55,
+        "incident": 0.4,
         "human_story": 0.4,
-        "shock": 0.55
+        "shock": 0.4
       },
       "official_attribution": false,
       "help_request": false,
@@ -300,94 +279,70 @@
       "opinion_signal": false,
       "question_cta": false,
       "emoji_count": 0,
-      "text_length": 158,
+      "text_length": 175,
       "has_media": false
     },
     "mechanisms_used": [
       "human_story",
       "incident",
+      "locality",
       "shock"
     ],
-    "mechanism_details": [],
-    "matched_combinations": [],
-    "combination_bonus": 0.0,
-    "matched_editorial_rules": [],
-    "reasons": [
-      "potential: 50.00/100",
-      "absolute_editorial_score: 50.00/100"
-    ],
-    "risks": [],
-    "id": "oms_20261006_006",
-    "title": "В Омске нашли погибшим пропавшего у Телецентра 22-летнего студента",
-    "text": "Ильяр Мамлюкаев пропал в ночь с 26 на 27 сентября. 6 октября его нашли погибшим; обстоятельства смерти правоохранители на момент публикации не комментировали.",
-    "url": "https://ngs55.ru/text/incidents/2026/10/06/76680675/",
-    "source": "НГС55",
-    "source_type": "regional_media",
-    "published_at": "2026-10-06T09:52:00+03:00",
-    "verified": false,
-    "verification_note": "Информацию сообщила мать погибшего; полиция на момент публикации не подтвердила и не опровергла ее.",
-    "editorial_score_absolute": 50.0,
-    "fresh_rank_score": 50.0,
-    "editorial_rank": 6
-  },
-  {
-    "version": "1.0",
-    "virality_score": 50.0,
-    "approval_score": 50.0,
-    "potential_score": 50.0,
-    "editorial_status": "ПРОПУСК",
-    "classification": {
-      "content_type": "social_story",
-      "classification_confidence": 0.65,
-      "mechanisms": [
-        "animal",
-        "human_story"
-      ],
-      "mechanism_strength": {
-        "human_story": 0.4,
-        "animal": 0.4
+    "mechanism_details": [
+      {
+        "mechanism": "human_story",
+        "sample_confidence": 1.0,
+        "virality": 50.95,
+        "approval": 47.81
       },
-      "official_attribution": false,
-      "help_request": false,
-      "complaint_signal": false,
-      "advertising_signal": false,
-      "opinion_signal": false,
-      "question_cta": false,
-      "emoji_count": 0,
-      "text_length": 159,
-      "has_media": false
-    },
-    "mechanisms_used": [
-      "animal",
-      "human_story"
+      {
+        "mechanism": "incident",
+        "sample_confidence": 1.0,
+        "virality": 52.61,
+        "approval": 49.6
+      },
+      {
+        "mechanism": "locality",
+        "sample_confidence": 1.0,
+        "virality": 51.25,
+        "approval": 50.95
+      },
+      {
+        "mechanism": "shock",
+        "sample_confidence": 1.0,
+        "virality": 54.98,
+        "approval": 48.35
+      }
     ],
-    "mechanism_details": [],
     "matched_combinations": [],
     "combination_bonus": 0.0,
     "matched_editorial_rules": [],
     "reasons": [
-      "potential: 50.00/100",
-      "absolute_editorial_score: 50.00/100"
+      "mechanism human_story: V=50.95, A=47.81",
+      "mechanism incident: V=52.61, A=49.60",
+      "mechanism locality: V=51.25, A=50.95",
+      "mechanism shock: V=54.98, A=48.35",
+      "potential: 51.14/100",
+      "absolute_editorial_score: 51.14/100"
     ],
     "risks": [],
-    "id": "oms_20261006_007",
-    "title": "В Омской области начали работу над комиссией по гибели и травмам волонтеров",
-    "text": "В регионе создана специальная комиссия, которая будет устанавливать связь между гибелью или вредом здоровью волонтеров и их работой в приграничных территориях.",
-    "url": "https://omsk.top24.news/obshestvo/v-omskoj-oblasti-nachala-rabotu-komissiya-po-ustanovleniyu-faktov-gibeli-volonterov-v-prigraniche/",
-    "source": "TOP24",
-    "source_type": "regional_media",
-    "published_at": "2026-10-06T14:30:00+03:00",
+    "id": "oms_20261006_004",
+    "title": "На трассе Омск—Красноярка погибли три человека в ДТП",
+    "text": "На 32-м километре автодороги Омск—Красноярка столкнулись Toyota и Lada Granta. Погибли оба водителя и пассажир Lada; еще одна пассажирка госпитализирована в тяжелом состоянии.",
+    "url": "https://t.me/s/omsk_police?before=4286",
+    "source": "Омская полиция",
+    "source_type": "official_social",
+    "published_at": "2026-10-06",
     "verified": true,
-    "verification_note": "Публикация указывает на указ губернатора Виталия Хоценко.",
-    "editorial_score_absolute": 50.0,
-    "fresh_rank_score": 50.0,
-    "editorial_rank": 7
+    "verification_note": "Сообщение региональной полиции; приведена обновленная информация с установленными данными участников.",
+    "editorial_score_absolute": 51.14,
+    "fresh_rank_score": 51.14
   },
   {
     "version": "1.0",
-    "virality_score": 50.0,
-    "approval_score": 50.0,
-    "potential_score": 50.0,
+    "virality_score": 51.25,
+    "approval_score": 50.95,
+    "potential_score": 51.13,
     "editorial_status": "ПРОПУСК",
     "classification": {
       "content_type": "news",
@@ -396,7 +351,66 @@
         "locality"
       ],
       "mechanism_strength": {
-        "locality": 0.85
+        "locality": 0.55
+      },
+      "official_attribution": false,
+      "help_request": false,
+      "complaint_signal": false,
+      "advertising_signal": false,
+      "opinion_signal": false,
+      "question_cta": false,
+      "emoji_count": 0,
+      "text_length": 170,
+      "has_media": false
+    },
+    "mechanisms_used": [
+      "locality"
+    ],
+    "mechanism_details": [
+      {
+        "mechanism": "locality",
+        "sample_confidence": 1.0,
+        "virality": 51.25,
+        "approval": 50.95
+      }
+    ],
+    "matched_combinations": [],
+    "combination_bonus": 0.0,
+    "matched_editorial_rules": [],
+    "reasons": [
+      "mechanism locality: V=51.25, A=50.95",
+      "potential: 51.13/100",
+      "absolute_editorial_score: 51.13/100"
+    ],
+    "risks": [
+      "низкая уверенность классификации"
+    ],
+    "id": "oms_20261006_001",
+    "title": "В Иртыше ниже Омска выявили превышение ПДК ртути в несколько раз",
+    "text": "В районе ниже Омска, у поселка Береговой, зафиксирован высокий уровень загрязнения воды ртутью; по данным Обь-Иртышского УГМС, концентрация превышала ПДК в несколько раз.",
+    "url": "https://superomsk.ru/news/166676-v_omskom_irtyshe_pdk_rtuti_prevyshena_v_neskolko_raz/",
+    "source": "СуперОмск",
+    "source_type": "regional_media",
+    "published_at": "2026-10-06T16:33:00+03:00",
+    "verified": true,
+    "verification_note": "Источник публикации ссылается на официальный отчет Обь-Иртышского УГМС.",
+    "editorial_score_absolute": 51.13,
+    "fresh_rank_score": 51.13
+  },
+  {
+    "version": "1.0",
+    "virality_score": 51.25,
+    "approval_score": 50.95,
+    "potential_score": 51.13,
+    "editorial_status": "ПРОПУСК",
+    "classification": {
+      "content_type": "news",
+      "classification_confidence": 0.5,
+      "mechanisms": [
+        "locality"
+      ],
+      "mechanism_strength": {
+        "locality": 0.55
       },
       "official_attribution": false,
       "help_request": false,
@@ -411,13 +425,21 @@
     "mechanisms_used": [
       "locality"
     ],
-    "mechanism_details": [],
+    "mechanism_details": [
+      {
+        "mechanism": "locality",
+        "sample_confidence": 1.0,
+        "virality": 51.25,
+        "approval": 50.95
+      }
+    ],
     "matched_combinations": [],
     "combination_bonus": 0.0,
     "matched_editorial_rules": [],
     "reasons": [
-      "potential: 50.00/100",
-      "absolute_editorial_score: 50.00/100"
+      "mechanism locality: V=51.25, A=50.95",
+      "potential: 51.13/100",
+      "absolute_editorial_score: 51.13/100"
     ],
     "risks": [
       "низкая уверенность классификации"
@@ -431,9 +453,185 @@
     "published_at": "2026-10-06T14:23:00+03:00",
     "verified": true,
     "verification_note": "Тема опубликована НГС55 со ссылкой на ситуацию с опасной болезнью животных и карантином.",
-    "editorial_score_absolute": 50.0,
-    "fresh_rank_score": 50.0,
-    "editorial_rank": 8
+    "editorial_score_absolute": 51.13,
+    "fresh_rank_score": 51.13
+  },
+  {
+    "version": "1.0",
+    "virality_score": 51.25,
+    "approval_score": 50.95,
+    "potential_score": 51.13,
+    "editorial_status": "ПРОПУСК",
+    "classification": {
+      "content_type": "news",
+      "classification_confidence": 0.35,
+      "mechanisms": [
+        "locality"
+      ],
+      "mechanism_strength": {
+        "locality": 0.4
+      },
+      "official_attribution": false,
+      "help_request": false,
+      "complaint_signal": false,
+      "advertising_signal": false,
+      "opinion_signal": false,
+      "question_cta": false,
+      "emoji_count": 0,
+      "text_length": 73,
+      "has_media": false
+    },
+    "mechanisms_used": [
+      "locality"
+    ],
+    "mechanism_details": [
+      {
+        "mechanism": "locality",
+        "sample_confidence": 1.0,
+        "virality": 51.25,
+        "approval": 50.95
+      }
+    ],
+    "matched_combinations": [],
+    "combination_bonus": 0.0,
+    "matched_editorial_rules": [],
+    "reasons": [
+      "mechanism locality: V=51.25, A=50.95",
+      "potential: 51.13/100",
+      "absolute_editorial_score: 51.13/100"
+    ],
+    "risks": [
+      "низкая уверенность классификации"
+    ],
+    "id": "oms_20261006_014",
+    "title": "Молодые омские семьи получат 78 миллионов рублей на жилье",
+    "text": "На поддержку молодых семей в Омской области направят 78 миллионов рублей.",
+    "url": "https://omskinform.ru/",
+    "source": "Омск-информ",
+    "source_type": "regional_media",
+    "published_at": "2026-10-06T13:35:00+03:00",
+    "verified": true,
+    "verification_note": "Новость опубликована региональным информационным агентством.",
+    "editorial_score_absolute": 51.13,
+    "fresh_rank_score": 51.13
+  },
+  {
+    "version": "1.0",
+    "virality_score": 51.92,
+    "approval_score": 48.08,
+    "potential_score": 50.38,
+    "editorial_status": "ПРОПУСК",
+    "classification": {
+      "content_type": "news",
+      "classification_confidence": 0.5,
+      "mechanisms": [
+        "usefulness"
+      ],
+      "mechanism_strength": {
+        "usefulness": 0.55
+      },
+      "official_attribution": false,
+      "help_request": false,
+      "complaint_signal": false,
+      "advertising_signal": false,
+      "opinion_signal": false,
+      "question_cta": false,
+      "emoji_count": 0,
+      "text_length": 90,
+      "has_media": false
+    },
+    "mechanisms_used": [
+      "usefulness"
+    ],
+    "mechanism_details": [
+      {
+        "mechanism": "usefulness",
+        "sample_confidence": 1.0,
+        "virality": 51.92,
+        "approval": 48.08
+      }
+    ],
+    "matched_combinations": [],
+    "combination_bonus": 0.0,
+    "matched_editorial_rules": [],
+    "reasons": [
+      "mechanism usefulness: V=51.92, A=48.08",
+      "potential: 50.38/100",
+      "absolute_editorial_score: 50.38/100"
+    ],
+    "risks": [
+      "низкая уверенность классификации"
+    ],
+    "id": "oms_20261006_013",
+    "title": "Из Омска в Ташкент появился новый рейс",
+    "text": "В расписании омского аэропорта появился новый рейс в Ташкент; доступны три тарифа билетов.",
+    "url": "https://ngs55.ru/text/2026/10/",
+    "source": "НГС55",
+    "source_type": "regional_media",
+    "published_at": "2026-10-06T10:13:00+03:00",
+    "verified": true,
+    "verification_note": "Информация опубликована НГС55.",
+    "editorial_score_absolute": 50.38,
+    "fresh_rank_score": 50.38
+  },
+  {
+    "version": "1.0",
+    "virality_score": 51.92,
+    "approval_score": 48.08,
+    "potential_score": 50.38,
+    "editorial_status": "ПРОПУСК",
+    "classification": {
+      "content_type": "news",
+      "classification_confidence": 0.5,
+      "mechanisms": [
+        "usefulness"
+      ],
+      "mechanism_strength": {
+        "usefulness": 0.4
+      },
+      "official_attribution": false,
+      "help_request": false,
+      "complaint_signal": false,
+      "advertising_signal": false,
+      "opinion_signal": false,
+      "question_cta": false,
+      "emoji_count": 0,
+      "text_length": 82,
+      "has_media": false
+    },
+    "mechanisms_used": [
+      "usefulness"
+    ],
+    "mechanism_details": [
+      {
+        "mechanism": "usefulness",
+        "sample_confidence": 1.0,
+        "virality": 51.92,
+        "approval": 48.08
+      }
+    ],
+    "matched_combinations": [],
+    "combination_bonus": 0.0,
+    "matched_editorial_rules": [],
+    "reasons": [
+      "mechanism usefulness: V=51.92, A=48.08",
+      "potential: 50.38/100",
+      "absolute_editorial_score: 50.38/100"
+    ],
+    "risks": [
+      "низкая уверенность классификации"
+    ],
+    "id": "oms_20261006_018",
+    "title": "В Омске рядом со школами запретят продавать табак и вейпы",
+    "text": "В городе планируют запретить продажу табака и вейпов в радиусе 100 метров от школ.",
+    "url": "https://ngs55.ru/text/2026/10/",
+    "source": "НГС55",
+    "source_type": "regional_media",
+    "published_at": "2026-10-06T13:10:00+03:00",
+    "verified": true,
+    "verification_note": "Тема опубликована НГС55; для публикации в реальном новостном потоке потребуется отдельная проверка статуса решения.",
+    "editorial_score_absolute": 50.38,
+    "fresh_rank_score": 50.38
   },
   {
     "version": "1.0",
@@ -479,8 +677,7 @@
     "verified": true,
     "verification_note": "Тема вошла в дневной региональный дайджест 6 октября.",
     "editorial_score_absolute": 50.0,
-    "fresh_rank_score": 50.0,
-    "editorial_rank": 9
+    "fresh_rank_score": 50.0
   },
   {
     "version": "1.0",
@@ -489,21 +686,13 @@
     "potential_score": 50.0,
     "editorial_status": "ПРОПУСК",
     "classification": {
-      "content_type": "complaint",
-      "classification_confidence": 0.7,
-      "mechanisms": [
-        "conflict",
-        "locality",
-        "positive_emotion"
-      ],
-      "mechanism_strength": {
-        "locality": 0.55,
-        "conflict": 0.4,
-        "positive_emotion": 0.4
-      },
+      "content_type": "news",
+      "classification_confidence": 0.45,
+      "mechanisms": [],
+      "mechanism_strength": {},
       "official_attribution": false,
       "help_request": false,
-      "complaint_signal": true,
+      "complaint_signal": false,
       "advertising_signal": false,
       "opinion_signal": false,
       "question_cta": false,
@@ -511,11 +700,7 @@
       "text_length": 114,
       "has_media": false
     },
-    "mechanisms_used": [
-      "conflict",
-      "locality",
-      "positive_emotion"
-    ],
+    "mechanisms_used": [],
     "mechanism_details": [],
     "matched_combinations": [],
     "combination_bonus": 0.0,
@@ -524,7 +709,10 @@
       "potential: 50.00/100",
       "absolute_editorial_score: 50.00/100"
     ],
-    "risks": [],
+    "risks": [
+      "низкая уверенность классификации",
+      "не определены механизмы"
+    ],
     "id": "oms_20261006_010",
     "title": "С омского шара «Держава» снимают краску — работы завершат до 11 октября",
     "text": "На объекте «Держава» в центре Омска снимают транспортировочное покрытие; завершить работы планируют до 11 октября.",
@@ -535,8 +723,7 @@
     "verified": true,
     "verification_note": "Публикация регионального СМИ; тему также комментировал мэр Омска.",
     "editorial_score_absolute": 50.0,
-    "fresh_rank_score": 50.0,
-    "editorial_rank": 10
+    "fresh_rank_score": 50.0
   },
   {
     "version": "1.0",
@@ -546,13 +733,9 @@
     "editorial_status": "ПРОПУСК",
     "classification": {
       "content_type": "advertising",
-      "classification_confidence": 0.6,
-      "mechanisms": [
-        "locality"
-      ],
-      "mechanism_strength": {
-        "locality": 0.55
-      },
+      "classification_confidence": 0.55,
+      "mechanisms": [],
+      "mechanism_strength": {},
       "official_attribution": false,
       "help_request": false,
       "complaint_signal": false,
@@ -563,9 +746,7 @@
       "text_length": 113,
       "has_media": false
     },
-    "mechanisms_used": [
-      "locality"
-    ],
+    "mechanisms_used": [],
     "mechanism_details": [],
     "matched_combinations": [],
     "combination_bonus": 0.0,
@@ -575,7 +756,8 @@
       "absolute_editorial_score: 50.00/100"
     ],
     "risks": [
-      "низкая уверенность классификации"
+      "низкая уверенность классификации",
+      "не определены механизмы"
     ],
     "id": "oms_20261006_011",
     "title": "Омский магазин техники закрылся в «МЕГЕ»",
@@ -587,8 +769,7 @@
     "verified": true,
     "verification_note": "Информация опубликована НГС55.",
     "editorial_score_absolute": 50.0,
-    "fresh_rank_score": 50.0,
-    "editorial_rank": 11
+    "fresh_rank_score": 50.0
   },
   {
     "version": "1.0",
@@ -634,115 +815,7 @@
     "verified": true,
     "verification_note": "Информация опубликована НГС55.",
     "editorial_score_absolute": 50.0,
-    "fresh_rank_score": 50.0,
-    "editorial_rank": 12
-  },
-  {
-    "version": "1.0",
-    "virality_score": 50.0,
-    "approval_score": 50.0,
-    "potential_score": 50.0,
-    "editorial_status": "ПРОПУСК",
-    "classification": {
-      "content_type": "news",
-      "classification_confidence": 0.55,
-      "mechanisms": [
-        "locality",
-        "usefulness"
-      ],
-      "mechanism_strength": {
-        "locality": 0.55,
-        "usefulness": 0.55
-      },
-      "official_attribution": false,
-      "help_request": false,
-      "complaint_signal": false,
-      "advertising_signal": false,
-      "opinion_signal": false,
-      "question_cta": false,
-      "emoji_count": 0,
-      "text_length": 90,
-      "has_media": false
-    },
-    "mechanisms_used": [
-      "locality",
-      "usefulness"
-    ],
-    "mechanism_details": [],
-    "matched_combinations": [],
-    "combination_bonus": 0.0,
-    "matched_editorial_rules": [],
-    "reasons": [
-      "potential: 50.00/100",
-      "absolute_editorial_score: 50.00/100"
-    ],
-    "risks": [
-      "низкая уверенность классификации"
-    ],
-    "id": "oms_20261006_013",
-    "title": "Из Омска в Ташкент появился новый рейс",
-    "text": "В расписании омского аэропорта появился новый рейс в Ташкент; доступны три тарифа билетов.",
-    "url": "https://ngs55.ru/text/2026/10/",
-    "source": "НГС55",
-    "source_type": "regional_media",
-    "published_at": "2026-10-06T10:13:00+03:00",
-    "verified": true,
-    "verification_note": "Информация опубликована НГС55.",
-    "editorial_score_absolute": 50.0,
-    "fresh_rank_score": 50.0,
-    "editorial_rank": 13
-  },
-  {
-    "version": "1.0",
-    "virality_score": 50.0,
-    "approval_score": 50.0,
-    "potential_score": 50.0,
-    "editorial_status": "ПРОПУСК",
-    "classification": {
-      "content_type": "news",
-      "classification_confidence": 0.35,
-      "mechanisms": [
-        "locality"
-      ],
-      "mechanism_strength": {
-        "locality": 0.7
-      },
-      "official_attribution": false,
-      "help_request": false,
-      "complaint_signal": false,
-      "advertising_signal": false,
-      "opinion_signal": false,
-      "question_cta": false,
-      "emoji_count": 0,
-      "text_length": 73,
-      "has_media": false
-    },
-    "mechanisms_used": [
-      "locality"
-    ],
-    "mechanism_details": [],
-    "matched_combinations": [],
-    "combination_bonus": 0.0,
-    "matched_editorial_rules": [],
-    "reasons": [
-      "potential: 50.00/100",
-      "absolute_editorial_score: 50.00/100"
-    ],
-    "risks": [
-      "низкая уверенность классификации"
-    ],
-    "id": "oms_20261006_014",
-    "title": "Молодые омские семьи получат 78 миллионов рублей на жилье",
-    "text": "На поддержку молодых семей в Омской области направят 78 миллионов рублей.",
-    "url": "https://omskinform.ru/",
-    "source": "Омск-информ",
-    "source_type": "regional_media",
-    "published_at": "2026-10-06T13:35:00+03:00",
-    "verified": true,
-    "verification_note": "Новость опубликована региональным информационным агентством.",
-    "editorial_score_absolute": 50.0,
-    "fresh_rank_score": 50.0,
-    "editorial_rank": 14
+    "fresh_rank_score": 50.0
   },
   {
     "version": "1.0",
@@ -788,8 +861,7 @@
     "verified": true,
     "verification_note": "Новость опубликована региональным информационным агентством.",
     "editorial_score_absolute": 50.0,
-    "fresh_rank_score": 50.0,
-    "editorial_rank": 15
+    "fresh_rank_score": 50.0
   },
   {
     "version": "1.0",
@@ -835,8 +907,7 @@
     "verified": true,
     "verification_note": "Новость опубликована в архиве регионального СМИ.",
     "editorial_score_absolute": 50.0,
-    "fresh_rank_score": 50.0,
-    "editorial_rank": 16
+    "fresh_rank_score": 50.0
   },
   {
     "version": "1.0",
@@ -845,14 +916,10 @@
     "potential_score": 50.0,
     "editorial_status": "ПРОПУСК",
     "classification": {
-      "content_type": "social_story",
-      "classification_confidence": 0.6,
-      "mechanisms": [
-        "animal"
-      ],
-      "mechanism_strength": {
-        "animal": 0.4
-      },
+      "content_type": "news",
+      "classification_confidence": 0.45,
+      "mechanisms": [],
+      "mechanism_strength": {},
       "official_attribution": false,
       "help_request": false,
       "complaint_signal": false,
@@ -863,9 +930,7 @@
       "text_length": 83,
       "has_media": false
     },
-    "mechanisms_used": [
-      "animal"
-    ],
+    "mechanisms_used": [],
     "mechanism_details": [],
     "matched_combinations": [],
     "combination_bonus": 0.0,
@@ -875,7 +940,8 @@
       "absolute_editorial_score: 50.00/100"
     ],
     "risks": [
-      "низкая уверенность классификации"
+      "низкая уверенность классификации",
+      "не определены механизмы"
     ],
     "id": "oms_20261006_017",
     "title": "В Омске осудили участника схемы хищений у продавцов на сайтах объявлений",
@@ -887,8 +953,7 @@
     "verified": true,
     "verification_note": "Новость опубликована в архиве регионального СМИ.",
     "editorial_score_absolute": 50.0,
-    "fresh_rank_score": 50.0,
-    "editorial_rank": 17
+    "fresh_rank_score": 50.0
   },
   {
     "version": "1.0",
@@ -898,15 +963,9 @@
     "editorial_status": "ПРОПУСК",
     "classification": {
       "content_type": "news",
-      "classification_confidence": 0.55,
-      "mechanisms": [
-        "positive_emotion",
-        "usefulness"
-      ],
-      "mechanism_strength": {
-        "positive_emotion": 0.4,
-        "usefulness": 0.4
-      },
+      "classification_confidence": 0.3,
+      "mechanisms": [],
+      "mechanism_strength": {},
       "official_attribution": false,
       "help_request": false,
       "complaint_signal": false,
@@ -914,68 +973,10 @@
       "opinion_signal": false,
       "question_cta": false,
       "emoji_count": 0,
-      "text_length": 82,
-      "has_media": false
-    },
-    "mechanisms_used": [
-      "positive_emotion",
-      "usefulness"
-    ],
-    "mechanism_details": [],
-    "matched_combinations": [],
-    "combination_bonus": 0.0,
-    "matched_editorial_rules": [],
-    "reasons": [
-      "potential: 50.00/100",
-      "absolute_editorial_score: 50.00/100"
-    ],
-    "risks": [
-      "низкая уверенность классификации"
-    ],
-    "id": "oms_20261006_018",
-    "title": "В Омске рядом со школами запретят продавать табак и вейпы",
-    "text": "В городе планируют запретить продажу табака и вейпов в радиусе 100 метров от школ.",
-    "url": "https://ngs55.ru/text/2026/10/",
-    "source": "НГС55",
-    "source_type": "regional_media",
-    "published_at": "2026-10-06T13:10:00+03:00",
-    "verified": true,
-    "verification_note": "Тема опубликована НГС55; для публикации в реальном новостном потоке потребуется отдельная проверка статуса решения.",
-    "editorial_score_absolute": 50.0,
-    "fresh_rank_score": 50.0,
-    "editorial_rank": 18
-  },
-  {
-    "version": "1.0",
-    "virality_score": 50.0,
-    "approval_score": 50.0,
-    "potential_score": 50.0,
-    "editorial_status": "ПРОПУСК",
-    "classification": {
-      "content_type": "complaint",
-      "classification_confidence": 0.5,
-      "mechanisms": [
-        "conflict",
-        "locality"
-      ],
-      "mechanism_strength": {
-        "locality": 0.55,
-        "conflict": 0.4
-      },
-      "official_attribution": false,
-      "help_request": false,
-      "complaint_signal": true,
-      "advertising_signal": false,
-      "opinion_signal": false,
-      "question_cta": false,
-      "emoji_count": 0,
       "text_length": 79,
       "has_media": false
     },
-    "mechanisms_used": [
-      "conflict",
-      "locality"
-    ],
+    "mechanisms_used": [],
     "mechanism_details": [],
     "matched_combinations": [],
     "combination_bonus": 0.0,
@@ -985,7 +986,8 @@
       "absolute_editorial_score: 50.00/100"
     ],
     "risks": [
-      "низкая уверенность классификации"
+      "низкая уверенность классификации",
+      "не определены механизмы"
     ],
     "id": "oms_20261006_019",
     "title": "Омских «зайцев» хотят запереть в автобусах",
@@ -997,8 +999,7 @@
     "verified": true,
     "verification_note": "Тема вошла в дневной дайджест регионального СМИ.",
     "editorial_score_absolute": 50.0,
-    "fresh_rank_score": 50.0,
-    "editorial_rank": 19
+    "fresh_rank_score": 50.0
   },
   {
     "version": "1.0",
@@ -1008,13 +1009,9 @@
     "editorial_status": "ПРОПУСК",
     "classification": {
       "content_type": "news",
-      "classification_confidence": 0.5,
-      "mechanisms": [
-        "locality"
-      ],
-      "mechanism_strength": {
-        "locality": 0.55
-      },
+      "classification_confidence": 0.45,
+      "mechanisms": [],
+      "mechanism_strength": {},
       "official_attribution": false,
       "help_request": false,
       "complaint_signal": false,
@@ -1025,9 +1022,7 @@
       "text_length": 111,
       "has_media": false
     },
-    "mechanisms_used": [
-      "locality"
-    ],
+    "mechanisms_used": [],
     "mechanism_details": [],
     "matched_combinations": [],
     "combination_bonus": 0.0,
@@ -1037,7 +1032,8 @@
       "absolute_editorial_score: 50.00/100"
     ],
     "risks": [
-      "низкая уверенность классификации"
+      "низкая уверенность классификации",
+      "не определены механизмы"
     ],
     "id": "oms_20261006_020",
     "title": "На омском заводе модернизировали бронемашину для СВО",
@@ -1049,7 +1045,65 @@
     "verified": true,
     "verification_note": "Новость опубликована региональным информационным агентством.",
     "editorial_score_absolute": 50.0,
-    "fresh_rank_score": 50.0,
-    "editorial_rank": 20
+    "fresh_rank_score": 50.0
+  },
+  {
+    "version": "1.0",
+    "virality_score": 50.95,
+    "approval_score": 47.81,
+    "potential_score": 49.69,
+    "editorial_status": "ПРОПУСК",
+    "classification": {
+      "content_type": "social_story",
+      "classification_confidence": 0.6,
+      "mechanisms": [
+        "human_story"
+      ],
+      "mechanism_strength": {
+        "human_story": 0.4
+      },
+      "official_attribution": false,
+      "help_request": false,
+      "complaint_signal": false,
+      "advertising_signal": false,
+      "opinion_signal": false,
+      "question_cta": false,
+      "emoji_count": 0,
+      "text_length": 159,
+      "has_media": false
+    },
+    "mechanisms_used": [
+      "human_story"
+    ],
+    "mechanism_details": [
+      {
+        "mechanism": "human_story",
+        "sample_confidence": 1.0,
+        "virality": 50.95,
+        "approval": 47.81
+      }
+    ],
+    "matched_combinations": [],
+    "combination_bonus": 0.0,
+    "matched_editorial_rules": [],
+    "reasons": [
+      "mechanism human_story: V=50.95, A=47.81",
+      "potential: 49.69/100",
+      "absolute_editorial_score: 49.69/100"
+    ],
+    "risks": [
+      "низкая уверенность классификации"
+    ],
+    "id": "oms_20261006_007",
+    "title": "В Омской области начали работу над комиссией по гибели и травмам волонтеров",
+    "text": "В регионе создана специальная комиссия, которая будет устанавливать связь между гибелью или вредом здоровью волонтеров и их работой в приграничных территориях.",
+    "url": "https://omsk.top24.news/obshestvo/v-omskoj-oblasti-nachala-rabotu-komissiya-po-ustanovleniyu-faktov-gibeli-volonterov-v-prigraniche/",
+    "source": "TOP24",
+    "source_type": "regional_media",
+    "published_at": "2026-10-06T14:30:00+03:00",
+    "verified": true,
+    "verification_note": "Публикация указывает на указ губернатора Виталия Хоценко.",
+    "editorial_score_absolute": 49.69,
+    "fresh_rank_score": 49.69
   }
 ]
