@@ -1428,126 +1428,202 @@ def _fresh_event_strength(post: Dict[str, Any], classification: Dict[str, Any]) 
         "child_accident": bool(child and accident),
         "verified": verified,
     }
-def score_fresh_post(post, editorial_model):
-    """
-    Оценивает свежую новость по исторической модели аудитории.
 
-    Базовый балл строится из исторических VIRALITY / APPROVAL
-    соответствующих механизмов.
+FRESH_ROAD_RE = re.compile(
+    r"\bдтп\b|\bавари\w*|\bнаезд\w*|\bсбил\w*|\bсбила\w*|"
+    r"\bстолкнов\w*|\bпешеход\w*"
+)
 
-    Дополнительно применяются только те комбинации, которые
-    реально присутствуют в editorial_model["combination_rules"].
+FRESH_POLLUTION_RE = re.compile(
+    r"\bртут\w*|\bпдк\b|\bзагрязн\w*|\bтоксич\w*"
+)
 
-    Это эвристическая редакторская оценка, а не ML-прогноз.
-    """
-    classification = classify_one(post)
-    # v2.5: нормализация механизмов до любого последующего scoring.
-    # После этого все downstream-расчёты используют уже очищенный список.
-    text_lower = " ".join(part for part in ((post.get("title") or "").lower(), (post.get("text") or "").lower()) if part)
-    normalized_mechanisms = set(classification.get("mechanisms", []))
+FRESH_QUARANTINE_RE = re.compile(
+    r"\bкарантин\w*|\bкарантинн\w*|\bочаг\w*"
+)
 
-    if "animal" in normalized_mechanisms:
-        explicit_animal = any(w in text_lower for w in (
-            "медвед", "собак", "пёс", "пес", "кот", "кошк",
-            "котят", "борз", "щен", "животн", "лошад", "птиц",
-            "голуб", "мыш", "звер", "лис", "барханн"
-        ))
-        road_incident = any(w in text_lower for w in (
-            "дтп", "столкнов", "сбил", "сбила", "наезд",
-            "авари", "пешеход"
-        ))
-        if road_incident and not explicit_animal:
-            normalized_mechanisms.discard("animal")
+FRESH_DISEASE_RE = re.compile(
+    r"\bболезн\w*|\bзаболев\w*|\bинфекц\w*|\bвирус\w*"
+)
 
-    classification["mechanisms"] = sorted(normalized_mechanisms)
-    if isinstance(classification.get("mechanism_strength"), dict):
-        classification["mechanism_strength"] = {
-            k: v for k, v in classification["mechanism_strength"].items()
-            if k in normalized_mechanisms
-        }
+FRESH_CHILD_RE = re.compile(
+    r"\bребён\w*|\bребен\w*|\bдевоч\w*|\bмальчик\w*|\bдетск\w*"
+)
 
-    # v2.4: animal не должен определяться в обычном ДТП без
-    # явного упоминания животного.
-    text_lower = " ".join(part for part in ((post.get("title") or "").lower(), (post.get("text") or "").lower()) if part)
-    if "animal" in classification.get("mechanisms", []):
-        explicit_animal = any(w in text_lower for w in (
-            "медвед", "собак", "пёс", "пес", "кот", "кошк",
-            "котят", "борз", "щен", "животн", "лошад", "птиц",
-            "голуб", "мыш", "звер", "лис", "барханн"
-        ))
-        road_incident = any(w in text_lower for w in (
-            "дтп", "столкнов", "сбил", "сбила", "наезд",
-            "авари", "пешеход"
-        ))
-        if road_incident and not explicit_animal:
-            classification["mechanisms"] = [
-                m for m in classification.get("mechanisms", [])
-                if m != "animal"
-            ]
-            classification.get("mechanism_strength", {}).pop("animal", None)
+FRESH_DEATH_RE = re.compile(
+    r"\b(?:погиб\w*|умер\w*|смерт\w*)\b"
+)
+
+FRESH_EXPLICIT_ANIMAL_SUBSTRINGS = (
+    "медвед", "собак", "пёс", "пес", "кот", "кошк",
+    "котят", "борз", "щен", "животн", "лошад", "птиц",
+    "голуб", "мыш", "звер", "лис", "барханн",
+)
+
+_MODEL_MECHANISM_CACHE = {}
 
 
-    # v2.2: точечное усиление сильных сигналов, которые общий
-    # классификатор может пропустить.
-    text_lower=" ".join(part for part in ((post.get("title") or "").lower(), (post.get("text") or "").lower()) if part)
-    mechanisms_extra=set(classification.get("mechanisms", []))
-    strengths_extra=classification.setdefault("mechanism_strength", {})
+def _get_mechanism_rows(editorial_model):
+    """Return a cached mechanism lookup for one in-memory model object."""
+    key = id(editorial_model)
+    cached = _MODEL_MECHANISM_CACHE.get(key)
+    if cached is not None:
+        return cached
 
-    if any(w in text_lower for w in ("ртут","пдк","загрязнен","загрязн")):
-        mechanisms_extra.update(("shock","fear"))
-        strengths_extra["shock"]=max(float(strengths_extra.get("shock",0.0)),0.65)
-        strengths_extra["fear"]=max(float(strengths_extra.get("fear",0.0)),0.55)
-
-    if (
-        any(w in text_lower for w in ("карантин","карантинн","очаг"))
-        and any(w in text_lower for w in ("болезн","заболев","инфекц","вирус"))
-    ):
-        mechanisms_extra.update(("incident","fear"))
-        strengths_extra["incident"]=max(float(strengths_extra.get("incident",0.0)),0.60)
-        strengths_extra["fear"]=max(float(strengths_extra.get("fear",0.0)),0.65)
-
-    if (
-        any(w in text_lower for w in ("ребен","девоч","мальчик","детск"))
-        and any(w in text_lower for w in ("дтп","сбил","сбила","наезд","пешеходн","травм"))
-    ):
-        mechanisms_extra.update(("human_story","shock"))
-        strengths_extra["human_story"]=max(float(strengths_extra.get("human_story",0.0)),0.65)
-        strengths_extra["shock"]=max(float(strengths_extra.get("shock",0.0)),0.65)
-
-    if len(re.findall(r"\b(?:погиб\w*|умер\w*|смерт\w*)\b",text_lower))>=2:
-        mechanisms_extra.update(("human_story","shock"))
-        strengths_extra["human_story"]=max(float(strengths_extra.get("human_story",0.0)),0.70)
-        strengths_extra["shock"]=max(float(strengths_extra.get("shock",0.0)),0.80)
-
-    # v2.3: защита от ложного animal в обычных ДТП.
-    # Животное оставляем только если текст действительно содержит
-    # явное упоминание животного, а не случайное совпадение подстроки.
-    explicit_animal = any(w in text_lower for w in (
-        "собак", "собака", "животн", "лошад", "кошк",
-        "кот", "котен", "щен", "птиц", "птица"
-    ))
-    if (
-        "animal" in mechanisms_extra
-        and not explicit_animal
-        and any(w in text_lower for w in (
-            "дтп", "столкнов", "сбил", "сбила", "наезд", "авари"
-        ))
-    ):
-        mechanisms_extra.discard("animal")
-        strengths_extra.pop("animal", None)
-
-    classification["mechanisms"]=sorted(mechanisms_extra)
-
-
-    mechanisms = set(
-        classification.get("mechanisms", [])
-    )
-
-    mechanism_rows = {
+    cached = {
         row["mechanism"]: row
         for row in editorial_model.get("mechanisms", [])
         if row.get("mechanism")
     }
+    _MODEL_MECHANISM_CACHE[key] = cached
+    return cached
+
+
+def prepare_fresh_classification(post, classification=None):
+    """Normalize one fresh-news classification once for all audience models."""
+    if classification is None:
+        classification = classify_one(post)
+    else:
+        classification = dict(classification)
+        if isinstance(
+            classification.get("mechanism_strength"),
+            dict,
+        ):
+            classification["mechanism_strength"] = dict(
+                classification["mechanism_strength"]
+            )
+
+    text_lower = " ".join(
+        part
+        for part in (
+            (post.get("title") or "").lower(),
+            (post.get("text") or "").lower(),
+        )
+        if part
+    )
+
+    mechanisms = set(
+        classification.get("mechanisms", [])
+    )
+    strengths = classification.setdefault(
+        "mechanism_strength",
+        {},
+    )
+
+    # Keep animal detection precise for incident texts.
+    if (
+        "animal" in mechanisms
+        and FRESH_ROAD_RE.search(text_lower)
+        and not any(
+            pattern.search(text_lower)
+            for pattern in ANIMAL_PATTERNS
+        )
+    ):
+        mechanisms.discard("animal")
+        strengths.pop("animal", None)
+
+    # Targeted semantic boosts used by the fresh-event layer.
+    if FRESH_POLLUTION_RE.search(text_lower):
+        mechanisms.update(("shock", "fear"))
+        strengths["shock"] = max(
+            float(strengths.get("shock", 0.0)),
+            0.65,
+        )
+        strengths["fear"] = max(
+            float(strengths.get("fear", 0.0)),
+            0.55,
+        )
+
+    if (
+        FRESH_QUARANTINE_RE.search(text_lower)
+        and FRESH_DISEASE_RE.search(text_lower)
+    ):
+        mechanisms.update(("incident", "fear"))
+        strengths["incident"] = max(
+            float(strengths.get("incident", 0.0)),
+            0.60,
+        )
+        strengths["fear"] = max(
+            float(strengths.get("fear", 0.0)),
+            0.65,
+        )
+
+    if (
+        FRESH_CHILD_RE.search(text_lower)
+        and FRESH_ROAD_RE.search(text_lower)
+        or (
+            FRESH_CHILD_RE.search(text_lower)
+            and re.search(
+                r"\bтравм\w*",
+                text_lower,
+            )
+        )
+    ):
+        mechanisms.update(("human_story", "shock"))
+        strengths["human_story"] = max(
+            float(strengths.get("human_story", 0.0)),
+            0.65,
+        )
+        strengths["shock"] = max(
+            float(strengths.get("shock", 0.0)),
+            0.65,
+        )
+
+    if len(FRESH_DEATH_RE.findall(text_lower)) >= 2:
+        mechanisms.update(("human_story", "shock"))
+        strengths["human_story"] = max(
+            float(strengths.get("human_story", 0.0)),
+            0.70,
+        )
+        strengths["shock"] = max(
+            float(strengths.get("shock", 0.0)),
+            0.80,
+        )
+
+    # Preserve the older broad explicit-animal guard for rare edge cases.
+    if (
+        "animal" in mechanisms
+        and FRESH_ROAD_RE.search(text_lower)
+        and not any(
+            token in text_lower
+            for token in FRESH_EXPLICIT_ANIMAL_SUBSTRINGS
+        )
+    ):
+        mechanisms.discard("animal")
+        strengths.pop("animal", None)
+
+    classification["mechanisms"] = sorted(mechanisms)
+    classification["mechanism_strength"] = {
+        key: value
+        for key, value in strengths.items()
+        if key in mechanisms
+    }
+
+    return classification
+
+
+
+def score_fresh_post(post, editorial_model, classification=None):
+    """
+    Score one fresh story against one audience model.
+
+    Classification is injectable so a story shared across several audience
+    models is parsed only once.
+    """
+    classification = prepare_fresh_classification(
+        post,
+        classification=classification,
+    )
+    mechanisms = set(
+        classification.get("mechanisms", [])
+    )
+
+    mechanism_rows = _get_mechanism_rows(
+        editorial_model
+    )
+    mechanism_rows = _get_mechanism_rows(
+        editorial_model
+    )
 
     # --------------------------------------------------------
     # 1. БАЗОВАЯ ОЦЕНКА ПО МЕХАНИЗМАМ
@@ -2007,19 +2083,25 @@ def score_fresh_post(post, editorial_model):
     }
 
 def editorial_backtest(posts, editorial_model, top_n=20):
-    """
-    Ретроспективная проверка: показывает, какие уже опубликованные посты
-    модель поставила бы выше всего. Это не независимая валидация, поскольку
-    исторические показатели этих же постов участвовали в построении модели.
-    """
+    """Retrospective diagnostic using the same fresh-scoring path."""
     rows = []
+
     for post in posts:
-        scored = score_fresh_post(post, editorial_model)
+        classification = prepare_fresh_classification(post)
+        scored = score_fresh_post(
+            post,
+            editorial_model,
+            classification=classification,
+        )
+
         rows.append({
             "post_id": post.get("post_id"),
             "date": post.get("date"),
             "text": post.get("text", ""),
-            "historical_potential": round(float(post.get("potential", 0)), 2),
+            "historical_potential": round(
+                float(post.get("potential", 0)),
+                2,
+            ),
             "editorial_potential": scored["potential_score"],
             "editorial_status": scored["editorial_status"],
             "editorial_virality": scored["virality_score"],
@@ -2028,10 +2110,11 @@ def editorial_backtest(posts, editorial_model, top_n=20):
             "matched_combinations": scored["matched_combinations"],
         })
 
-    rows.sort(key=lambda x: x["editorial_potential"], reverse=True)
+    rows.sort(
+        key=lambda row: row["editorial_potential"],
+        reverse=True,
+    )
     return rows[:top_n]
-
-
 def make_report(group, posts):
 
     report = {
