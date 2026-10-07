@@ -1,11 +1,17 @@
-import time
 # -*- coding: utf-8 -*-
-
 """Общая библиотека аналитики. Не обращается к VK."""
-import csv, itertools, json, math, re
-from typing import Any, Dict
+
+from bisect import bisect_left, bisect_right
+import csv
+import itertools
+import json
+import math
+import re
+import time
 from datetime import datetime, timezone
 from pathlib import Path
+from typing import Any, Dict
+
 
 def safe_rate(value, denominator):
     if not denominator:
@@ -13,22 +19,32 @@ def safe_rate(value, denominator):
     return float(value) / float(denominator)
 
 
-def percentile(values, value):
-    if not values:
+def _percentile_sorted(sorted_values, value):
+    """Percentile for an already sorted sequence."""
+    if not sorted_values:
         return 0.0
 
-    ordered = sorted(values)
-
-    if len(ordered) == 1:
+    n = len(sorted_values)
+    if n == 1:
         return 100.0
 
-    less = sum(v < value for v in ordered)
-    equal = sum(v == value for v in ordered)
+    value = float(value)
+    left = bisect_left(sorted_values, value)
+    right = bisect_right(sorted_values, value)
+    equal = right - left
 
-    rank = less + (equal - 1) / 2
-    return rank / (len(ordered) - 1) * 100.0
+    rank = left + (equal - 1) / 2.0
+    return rank / (n - 1) * 100.0
 
 
+def percentile(values, value):
+    """Percentile 0..100 with historical tie handling."""
+    if not values:
+        return 0.0
+    return _percentile_sorted(
+        sorted(float(v) for v in values),
+        value,
+    )
 def robust_log(value):
     return math.log1p(max(0.0, float(value)))
 
@@ -169,7 +185,37 @@ OPINION_WORDS = (
 
 QUESTION_RE = re.compile(r"[?？]")
 EMOJI_RE = re.compile(
-    "[\U0001F300-\U0001FAFF\U00002600-\U000027BF]"
+    "[\\U0001F300-\\U0001FAFF\\U00002600-\\U000027BF]"
+)
+
+ANIMAL_PATTERNS = tuple(
+    re.compile(pattern)
+    for pattern in (
+        r"\bмедвед\w*",
+        r"\bсобак\w*",
+        r"\bпёс\w*",
+        r"\bпес(?:ом|у|а|ы|е|ей|ем)?\b",
+        r"\bкот(?:а|у|ом|е|ы|ов|ам|ами|ах)?\b",
+        r"\bкошк\w*",
+        r"\bкотят\w*",
+        r"\bборз\w*",
+        r"\bщен(?:ок|ка|ку|ком|ке|ки|ков|кам|ками|ках)?\b",
+        r"\bживотн\w*",
+        r"\bлошад\w*",
+        r"\bптиц\w*",
+        r"\bголуб\w*",
+        r"\bмыш(?:ь|и|ей|ью|ам|ами|ах)?\b",
+        r"\bзвер\w*",
+        r"\bлис(?:а|ы|у|ой|ом|е|ов|ам|ами|ах)?\b",
+        r"\bбарханн\w*",
+    )
+)
+
+OFFICIAL_ATTRIBUTION_RE = re.compile(
+    r"\b(официальн|МЧС|МВД|ГИБДД|Роспотребнадзор|"
+    r"правительств|губернатор|администрац|минздрав|"
+    r"прокуратур|следственн)\w*",
+    re.IGNORECASE,
 )
 
 
@@ -192,28 +238,9 @@ def classify_one(post):
         # "щен" -> "проверку ... пройдет", "лис" -> "пассажир ...",
         # "кот" -> "которая", "щен" -> "решение".
         if mechanism == "animal":
-            explicit_animal_patterns = (
-                r"\bмедвед\w*",
-                r"\bсобак\w*",
-                r"\bпёс\w*",
-                r"\bпес(?:ом|у|а|ы|е|ей|ем)?\b",
-                r"\bкот(?:а|у|ом|е|ы|ов|ам|ами|ах)?\b",
-                r"\bкошк\w*",
-                r"\bкотят\w*",
-                r"\bборз\w*",
-                r"\bщен(?:ок|ка|ку|ком|ке|ки|ков|кам|ками|ках)?\b",
-                r"\bживотн\w*",
-                r"\bлошад\w*",
-                r"\bптиц\w*",
-                r"\bголуб\w*",
-                r"\bмыш(?:ь|и|ей|ью|ам|ами|ах)?\b",
-                r"\bзвер\w*",
-                r"\bлис(?:а|ы|у|ой|ом|е|ов|ам|ами|ах)?\b",
-                r"\bбарханн\w*",
-            )
             hits = sum(
-                1 for pattern in explicit_animal_patterns
-                if re.search(pattern, lower)
+                1 for pattern in ANIMAL_PATTERNS
+                if pattern.search(lower)
             )
         else:
             hits = sum(1 for word in words if word in lower)
@@ -262,12 +289,9 @@ def classify_one(post):
 
     # "Official" is intentionally conservative: we only mark explicit
     # official wording, not inferred authority.
-    official_attribution = bool(re.search(
-        r"\b(официальн|МЧС|МВД|ГИБДД|Роспотребнадзор|"
-        r"правительств|губернатор|администрац|минздрав|"
-        r"прокуратур|следственн)\w*",
-        lower,
-    ))
+    official_attribution = bool(
+        OFFICIAL_ATTRIBUTION_RE.search(lower)
+    )
 
     # Lightweight confidence of the classification itself.
     confidence = min(
@@ -309,22 +333,39 @@ def classify_posts(posts):
 # ============================================================
 
 def calculate_scores(posts):
+    """Calculate historical scores with one sort per metric."""
     if not posts:
         return
 
-    repost_rates = [p["repost_rate"] for p in posts]
-    engagement_rates = [p["engagement_rate"] for p in posts]
-    like_rates = [p["like_rate"] for p in posts]
-    views_velocity = [p["views_per_hour"] for p in posts]
+    repost_rates = sorted(
+        float(p["repost_rate"]) for p in posts
+    )
+    engagement_rates = sorted(
+        float(p["engagement_rate"]) for p in posts
+    )
+    like_rates = sorted(
+        float(p["like_rate"]) for p in posts
+    )
+    views_velocity = sorted(
+        float(p["views_per_hour"]) for p in posts
+    )
 
     for post in posts:
-        repost_pct = percentile(repost_rates, post["repost_rate"])
-        engagement_pct = percentile(
-            engagement_rates, post["engagement_rate"]
+        repost_pct = _percentile_sorted(
+            repost_rates,
+            post["repost_rate"],
         )
-        like_pct = percentile(like_rates, post["like_rate"])
-        velocity_pct = percentile(
-            views_velocity, post["views_per_hour"]
+        engagement_pct = _percentile_sorted(
+            engagement_rates,
+            post["engagement_rate"],
+        )
+        like_pct = _percentile_sorted(
+            like_rates,
+            post["like_rate"],
+        )
+        velocity_pct = _percentile_sorted(
+            views_velocity,
+            post["views_per_hour"],
         )
 
         viral = (
@@ -332,40 +373,60 @@ def calculate_scores(posts):
             + engagement_pct * 0.25
             + velocity_pct * 0.15
         )
-
         approval = (
             like_pct * 0.75
             + engagement_pct * 0.25
         )
-
-        potential = viral * 0.60 + approval * 0.40
-
-        post["virality"] = round(max(0, min(100, viral)), 2)
-        post["approval"] = round(max(0, min(100, approval)), 2)
-        post["potential"] = round(max(0, min(100, potential)), 2)
-
-        post["repost_percentile"] = round(repost_pct, 2)
-        post["like_percentile"] = round(like_pct, 2)
-        post["velocity_percentile"] = round(velocity_pct, 2)
-        post["engagement_percentile"] = round(engagement_pct, 2)
-
-        # Statistical confidence proxy: a post with a tiny audience
-        # can have an extreme rate by chance. This does not alter the
-        # original scores; it creates a separate confidence field.
-        post["metric_confidence"] = round(
-            1.0 - math.exp(-max(0, post["views"]) / 5000.0),
-            3,
+        potential = (
+            viral * 0.60
+            + approval * 0.40
         )
-        post["confidence_adjusted_potential"] = round(
-            post["potential"] * post["metric_confidence"],
+
+        post["virality"] = round(
+            max(0.0, min(100.0, viral)),
+            2,
+        )
+        post["approval"] = round(
+            max(0.0, min(100.0, approval)),
+            2,
+        )
+        post["potential"] = round(
+            max(0.0, min(100.0, potential)),
             2,
         )
 
+        post["repost_percentile"] = round(
+            repost_pct,
+            2,
+        )
+        post["like_percentile"] = round(
+            like_pct,
+            2,
+        )
+        post["velocity_percentile"] = round(
+            velocity_pct,
+            2,
+        )
+        post["engagement_percentile"] = round(
+            engagement_pct,
+            2,
+        )
 
-# ============================================================
-# REPORT
-# ============================================================
-
+        views = max(
+            0.0,
+            float(post.get("views", 0)),
+        )
+        confidence = 1.0 - math.exp(
+            -views / 5000.0
+        )
+        post["metric_confidence"] = round(
+            confidence,
+            3,
+        )
+        post["confidence_adjusted_potential"] = round(
+            post["potential"] * confidence,
+            2,
+        )
 def content_type_report(posts):
     result = {}
 
@@ -491,119 +552,142 @@ def mechanism_report(posts):
 
 
 def mechanism_combinations(posts, mechanisms, min_posts=20, top_n=100):
-    """
-    Анализирует пары и тройки механизмов контента.
+    """Analyze mechanism pairs/triples with streaming aggregates.
 
-    Для каждой комбинации рассчитываются средние VIRALITY, APPROVAL,
-    POTENTIAL и скорректированный POTENTIAL. Показатель lift показывает,
-    насколько средний POTENTIAL комбинации выше или ниже среднего
-    POTENTIAL входящих в неё отдельных механизмов.
+    The previous implementation kept one score dict per post per
+    combination. We only need counts and sums, so aggregating in one pass
+    reduces both memory usage and Python-level work.
     """
+    allowed = set(mechanisms or [])
     groups = {}
-    mechanism_stats = {}
+    mechanism_sums = {}
 
     for post in posts:
-        raw_mechanisms = post.get("mechanisms", [])
+        raw = post.get("mechanisms", [])
 
-        if isinstance(raw_mechanisms, dict):
+        if isinstance(raw, dict):
             active = {
-                m for m in mechanisms
-                if raw_mechanisms.get(m)
+                name for name in allowed
+                if raw.get(name)
             }
-        elif isinstance(raw_mechanisms, list):
+        elif isinstance(raw, (list, tuple, set)):
             active = {
-                m for m in raw_mechanisms
-                if m in mechanisms
+                name for name in raw
+                if name in allowed
             }
         else:
             active = set()
 
-        scores = {
-            "virality": float(post.get("virality", 0.0)),
-            "approval": float(post.get("approval", 0.0)),
-            "potential": float(post.get("potential", 0.0)),
-            "confidence_adjusted_potential": float(
-                post.get(
-                    "confidence_adjusted_potential",
-                    post.get("potential", 0.0),
-                )
-            ),
-        }
+        if not active:
+            continue
+
+        potential = float(
+            post.get("potential", 0.0)
+        )
+        virality = float(
+            post.get("virality", 0.0)
+        )
+        approval = float(
+            post.get("approval", 0.0)
+        )
+        adjusted = float(
+            post.get(
+                "confidence_adjusted_potential",
+                potential,
+            )
+        )
 
         for mechanism in active:
-            mechanism_stats.setdefault(mechanism, []).append(scores)
+            agg = mechanism_sums.setdefault(
+                mechanism,
+                [0, 0.0],
+            )
+            agg[0] += 1
+            agg[1] += potential
 
         if len(active) < 2:
             continue
 
-        active = sorted(active)
-
         for size in (2, 3):
-            for combo in itertools.combinations(active, size):
-                groups.setdefault(combo, []).append(scores)
+            for combo in itertools.combinations(
+                sorted(active),
+                size,
+            ):
+                agg = groups.setdefault(
+                    combo,
+                    [0, 0.0, 0.0, 0.0, 0.0],
+                )
+                agg[0] += 1
+                agg[1] += potential
+                agg[2] += virality
+                agg[3] += approval
+                agg[4] += adjusted
 
-    # Средний POTENTIAL каждого отдельного механизма.
     mechanism_baseline = {
-        mechanism: (
-            sum(row["potential"] for row in rows) / len(rows)
-        )
-        for mechanism, rows in mechanism_stats.items()
-        if rows
+        mechanism: total / count
+        for mechanism, (count, total)
+        in mechanism_sums.items()
+        if count
     }
 
     result = []
 
-    for combo, rows in groups.items():
-        n = len(rows)
-        if n < min_posts:
+    for combo, agg in groups.items():
+        count = agg[0]
+        if count < min_posts:
             continue
 
-        avg_virality = sum(x["virality"] for x in rows) / n
-        avg_approval = sum(x["approval"] for x in rows) / n
-        avg_potential = sum(x["potential"] for x in rows) / n
-        avg_adjusted = (
-            sum(x["confidence_adjusted_potential"] for x in rows) / n
-        )
-
-        component_values = [
-            mechanism_baseline[m]
-            for m in combo
-            if m in mechanism_baseline
+        expected_parts = [
+            mechanism_baseline[name]
+            for name in combo
+            if name in mechanism_baseline
         ]
-        expected_potential = (
-            sum(component_values) / len(component_values)
-            if component_values
+        expected = (
+            sum(expected_parts) / len(expected_parts)
+            if expected_parts
             else 0.0
         )
-        lift = avg_potential - expected_potential
+
+        avg_potential = agg[1] / count
 
         result.append({
             "combination": list(combo),
-            "posts_count": n,
-            "avg_virality": round(avg_virality, 2),
-            "avg_approval": round(avg_approval, 2),
-            "avg_potential": round(avg_potential, 2),
-            "avg_confidence_adjusted_potential": round(avg_adjusted, 2),
-            "expected_potential_from_parts": round(expected_potential, 2),
-            "lift": round(lift, 2),
+            "posts_count": count,
+            "avg_virality": round(
+                agg[2] / count,
+                2,
+            ),
+            "avg_approval": round(
+                agg[3] / count,
+                2,
+            ),
+            "avg_potential": round(
+                avg_potential,
+                2,
+            ),
+            "avg_confidence_adjusted_potential": round(
+                agg[4] / count,
+                2,
+            ),
+            "expected_potential_from_parts": round(
+                expected,
+                2,
+            ),
+            "lift": round(
+                avg_potential - expected,
+                2,
+            ),
         })
 
     result.sort(
-        key=lambda item: (
-            item["lift"],
-            item["avg_confidence_adjusted_potential"],
-            item["posts_count"],
+        key=lambda row: (
+            row["lift"],
+            row["avg_confidence_adjusted_potential"],
+            row["posts_count"],
         ),
         reverse=True,
     )
-
     return result[:top_n]
-
-
-
-
-
-
 def stable_mechanism_combinations(posts, mechanisms, min_posts=50, top_n=100):
     """Отдельный ТОП устойчивых комбинаций с минимальной выборкой 50 постов."""
     rows = mechanism_combinations(posts, mechanisms, min_posts=min_posts, top_n=top_n)
@@ -770,15 +854,21 @@ def temporal_oos_combination_validation(
             continue
 
         # Проверяем пары и тройки независимо, затем объединяем кандидатов.
-        train_pairs = mechanism_combinations(
-            train_posts, mechanisms, min_posts=min_train_posts, top_n=max(100, top_n_train * 5)
+        train_combinations = mechanism_combinations(
+            train_posts,
+            mechanisms,
+            min_posts=min_train_posts,
+            top_n=max(100, top_n_train * 10),
         )
-        train_triples = mechanism_combinations(
-            train_posts, mechanisms, min_posts=min_train_posts, top_n=max(100, top_n_train * 5)
-        )
-        # mechanism_combinations возвращает пары+тройки; разделяем по длине.
-        pair_candidates = [x for x in train_pairs if len(x.get("combination", [])) == 2]
-        triple_candidates = [x for x in train_triples if len(x.get("combination", [])) == 3]
+        # Один расчёт возвращает пары и тройки; разделяем их только здесь.
+        pair_candidates = [
+            x for x in train_combinations
+            if len(x.get("combination", [])) == 2
+        ]
+        triple_candidates = [
+            x for x in train_combinations
+            if len(x.get("combination", [])) == 3
+        ]
         candidates = {
             "+".join(item["combination"]): item
             for item in (pair_candidates[:top_n_train] + triple_candidates[:top_n_train])
