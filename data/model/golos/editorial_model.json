@@ -1,0 +1,526 @@
+{
+  "version": "1.0",
+  "status": "final_for_operational_use_oos_calibrated",
+  "purpose": "Предварительная оценка свежих публикаций по историческим закономерностям аудитории.",
+  "score_components": {
+    "virality": {
+      "weight": 0.6,
+      "meaning": "вероятность сильного распространения"
+    },
+    "approval": {
+      "weight": 0.4,
+      "meaning": "вероятность положительной реакции"
+    },
+    "combination_bonus_max": 4.0
+  },
+  "thresholds": {
+    "priority": 62,
+    "take": 55,
+    "reserve": 52,
+    "skip_below": 52,
+    "note": "Пороговая шкала свежего скоринга: 62/55/52."
+  },
+  "mechanisms": [
+    {
+      "mechanism": "shock",
+      "posts": 459,
+      "sample_confidence": 1.0,
+      "virality": 64.32,
+      "approval": 65.45,
+      "potential": 64.78,
+      "confidence_adjusted_potential": 47.33
+    },
+    {
+      "mechanism": "fear",
+      "posts": 327,
+      "sample_confidence": 1.0,
+      "virality": 64.54,
+      "approval": 63.8,
+      "potential": 64.24,
+      "confidence_adjusted_potential": 46.21
+    },
+    {
+      "mechanism": "animal",
+      "posts": 156,
+      "sample_confidence": 0.721,
+      "virality": 70.95,
+      "approval": 77.94,
+      "potential": 73.75,
+      "confidence_adjusted_potential": 46.14
+    },
+    {
+      "mechanism": "incident",
+      "posts": 679,
+      "sample_confidence": 1.0,
+      "virality": 60.6,
+      "approval": 64.54,
+      "potential": 62.18,
+      "confidence_adjusted_potential": 44.43
+    },
+    {
+      "mechanism": "human_story",
+      "posts": 1032,
+      "sample_confidence": 1.0,
+      "virality": 60.22,
+      "approval": 64.71,
+      "potential": 62.02,
+      "confidence_adjusted_potential": 41.69
+    },
+    {
+      "mechanism": "conflict",
+      "posts": 451,
+      "sample_confidence": 1.0,
+      "virality": 58.19,
+      "approval": 62.25,
+      "potential": 59.81,
+      "confidence_adjusted_potential": 41.14
+    },
+    {
+      "mechanism": "usefulness",
+      "posts": 1049,
+      "sample_confidence": 1.0,
+      "virality": 60.39,
+      "approval": 64.5,
+      "potential": 62.03,
+      "confidence_adjusted_potential": 41.12
+    },
+    {
+      "mechanism": "help_request",
+      "posts": 60,
+      "sample_confidence": 0.447,
+      "virality": 57.66,
+      "approval": 75.1,
+      "potential": 64.64,
+      "confidence_adjusted_potential": 40.56
+    },
+    {
+      "mechanism": "question_cta",
+      "posts": 162,
+      "sample_confidence": 0.735,
+      "virality": 55.41,
+      "approval": 67.29,
+      "potential": 60.16,
+      "confidence_adjusted_potential": 40.39
+    },
+    {
+      "mechanism": "unusual",
+      "posts": 303,
+      "sample_confidence": 1.0,
+      "virality": 64.63,
+      "approval": 69.47,
+      "potential": 66.56,
+      "confidence_adjusted_potential": 40.35
+    },
+    {
+      "mechanism": "weather",
+      "posts": 309,
+      "sample_confidence": 1.0,
+      "virality": 60.49,
+      "approval": 65.17,
+      "potential": 62.36,
+      "confidence_adjusted_potential": 39.86
+    },
+    {
+      "mechanism": "emoji_hook",
+      "posts": 1381,
+      "sample_confidence": 1.0,
+      "virality": 61.87,
+      "approval": 67.42,
+      "potential": 64.09,
+      "confidence_adjusted_potential": 39.74
+    },
+    {
+      "mechanism": "locality",
+      "posts": 1543,
+      "sample_confidence": 1.0,
+      "virality": 59.41,
+      "approval": 65.9,
+      "potential": 62.0,
+      "confidence_adjusted_potential": 39.31
+    },
+    {
+      "mechanism": "positive_emotion",
+      "posts": 533,
+      "sample_confidence": 1.0,
+      "virality": 60.77,
+      "approval": 69.95,
+      "potential": 64.44,
+      "confidence_adjusted_potential": 38.72
+    },
+    {
+      "mechanism": "media",
+      "posts": 1918,
+      "sample_confidence": 1.0,
+      "virality": 59.19,
+      "approval": 66.13,
+      "potential": 61.96,
+      "confidence_adjusted_potential": 38.23
+    },
+    {
+      "mechanism": "visual_hook",
+      "posts": 328,
+      "sample_confidence": 1.0,
+      "virality": 62.05,
+      "approval": 70.4,
+      "potential": 65.39,
+      "confidence_adjusted_potential": 34.55
+    },
+    {
+      "mechanism": "humor",
+      "posts": 90,
+      "sample_confidence": 0.548,
+      "virality": 64.76,
+      "approval": 72.83,
+      "potential": 67.99,
+      "confidence_adjusted_potential": 33.88
+    }
+  ],
+  "combination_rules": [
+    {
+      "combination": [
+        "animal",
+        "media"
+      ],
+      "test_periods": 3,
+      "transfer_share": 1.0,
+      "test_posts_total": 107,
+      "avg_test_lift": 12.99,
+      "avg_test_potential": 74.69,
+      "reliability": "strong",
+      "editorial_bonus": 3.35,
+      "validation": "chronological_out_of_sample"
+    },
+    {
+      "combination": [
+        "animal",
+        "human_story",
+        "media"
+      ],
+      "test_periods": 3,
+      "transfer_share": 1.0,
+      "test_posts_total": 60,
+      "avg_test_lift": 12.64,
+      "avg_test_potential": 74.34,
+      "reliability": "strong",
+      "editorial_bonus": 3.23,
+      "validation": "chronological_out_of_sample"
+    },
+    {
+      "combination": [
+        "animal",
+        "human_story"
+      ],
+      "test_periods": 3,
+      "transfer_share": 1.0,
+      "test_posts_total": 62,
+      "avg_test_lift": 12.49,
+      "avg_test_potential": 74.19,
+      "reliability": "strong",
+      "editorial_bonus": 3.21,
+      "validation": "chronological_out_of_sample"
+    },
+    {
+      "combination": [
+        "animal",
+        "emoji_hook"
+      ],
+      "test_periods": 3,
+      "transfer_share": 1.0,
+      "test_posts_total": 81,
+      "avg_test_lift": 12.16,
+      "avg_test_potential": 73.85,
+      "reliability": "strong",
+      "editorial_bonus": 3.19,
+      "validation": "chronological_out_of_sample"
+    },
+    {
+      "combination": [
+        "animal",
+        "locality",
+        "media"
+      ],
+      "test_periods": 3,
+      "transfer_share": 1.0,
+      "test_posts_total": 80,
+      "avg_test_lift": 12.15,
+      "avg_test_potential": 73.85,
+      "reliability": "strong",
+      "editorial_bonus": 3.18,
+      "validation": "chronological_out_of_sample"
+    },
+    {
+      "combination": [
+        "animal",
+        "locality"
+      ],
+      "test_periods": 3,
+      "transfer_share": 1.0,
+      "test_posts_total": 84,
+      "avg_test_lift": 11.95,
+      "avg_test_potential": 73.65,
+      "reliability": "strong",
+      "editorial_bonus": 3.16,
+      "validation": "chronological_out_of_sample"
+    },
+    {
+      "combination": [
+        "animal",
+        "human_story",
+        "locality"
+      ],
+      "test_periods": 3,
+      "transfer_share": 1.0,
+      "test_posts_total": 55,
+      "avg_test_lift": 12.24,
+      "avg_test_potential": 73.93,
+      "reliability": "strong",
+      "editorial_bonus": 3.15,
+      "validation": "chronological_out_of_sample"
+    },
+    {
+      "combination": [
+        "animal",
+        "shock"
+      ],
+      "test_periods": 3,
+      "transfer_share": 1.0,
+      "test_posts_total": 40,
+      "avg_test_lift": 9.41,
+      "avg_test_potential": 71.1,
+      "reliability": "strong",
+      "editorial_bonus": 2.66,
+      "validation": "chronological_out_of_sample"
+    },
+    {
+      "combination": [
+        "fear",
+        "unusual"
+      ],
+      "test_periods": 3,
+      "transfer_share": 1.0,
+      "test_posts_total": 55,
+      "avg_test_lift": 9.09,
+      "avg_test_potential": 70.78,
+      "reliability": "strong",
+      "editorial_bonus": 2.65,
+      "validation": "chronological_out_of_sample"
+    },
+    {
+      "combination": [
+        "positive_emotion",
+        "unusual"
+      ],
+      "test_periods": 3,
+      "transfer_share": 1.0,
+      "test_posts_total": 59,
+      "avg_test_lift": 8.4,
+      "avg_test_potential": 70.09,
+      "reliability": "strong",
+      "editorial_bonus": 2.55,
+      "validation": "chronological_out_of_sample"
+    },
+    {
+      "combination": [
+        "fear",
+        "positive_emotion"
+      ],
+      "test_periods": 3,
+      "transfer_share": 1.0,
+      "test_posts_total": 49,
+      "avg_test_lift": 6.13,
+      "avg_test_potential": 67.82,
+      "reliability": "strong",
+      "editorial_bonus": 2.16,
+      "validation": "chronological_out_of_sample"
+    },
+    {
+      "combination": [
+        "shock",
+        "unusual"
+      ],
+      "test_periods": 3,
+      "transfer_share": 1.0,
+      "test_posts_total": 61,
+      "avg_test_lift": 5.43,
+      "avg_test_potential": 67.13,
+      "reliability": "strong",
+      "editorial_bonus": 2.08,
+      "validation": "chronological_out_of_sample"
+    },
+    {
+      "combination": [
+        "animal",
+        "human_story",
+        "usefulness"
+      ],
+      "test_periods": 2,
+      "transfer_share": 1.0,
+      "test_posts_total": 21,
+      "avg_test_lift": 13.23,
+      "avg_test_potential": 74.85,
+      "reliability": "promising",
+      "editorial_bonus": 3.2,
+      "validation": "chronological_out_of_sample"
+    },
+    {
+      "combination": [
+        "animal",
+        "human_story",
+        "shock"
+      ],
+      "test_periods": 2,
+      "transfer_share": 1.0,
+      "test_posts_total": 17,
+      "avg_test_lift": 12.03,
+      "avg_test_potential": 73.66,
+      "reliability": "promising",
+      "editorial_bonus": 2.98,
+      "validation": "chronological_out_of_sample"
+    },
+    {
+      "combination": [
+        "unusual",
+        "visual_hook"
+      ],
+      "test_periods": 2,
+      "transfer_share": 1.0,
+      "test_posts_total": 45,
+      "avg_test_lift": 11.24,
+      "avg_test_potential": 72.87,
+      "reliability": "promising",
+      "editorial_bonus": 2.97,
+      "validation": "chronological_out_of_sample"
+    },
+    {
+      "combination": [
+        "media",
+        "unusual",
+        "visual_hook"
+      ],
+      "test_periods": 2,
+      "transfer_share": 1.0,
+      "test_posts_total": 45,
+      "avg_test_lift": 11.24,
+      "avg_test_potential": 72.87,
+      "reliability": "promising",
+      "editorial_bonus": 2.97,
+      "validation": "chronological_out_of_sample"
+    },
+    {
+      "combination": [
+        "human_story",
+        "shock",
+        "visual_hook"
+      ],
+      "test_periods": 2,
+      "transfer_share": 1.0,
+      "test_posts_total": 23,
+      "avg_test_lift": 11.26,
+      "avg_test_potential": 72.89,
+      "reliability": "promising",
+      "editorial_bonus": 2.9,
+      "validation": "chronological_out_of_sample"
+    },
+    {
+      "combination": [
+        "animal",
+        "fear"
+      ],
+      "test_periods": 2,
+      "transfer_share": 1.0,
+      "test_posts_total": 21,
+      "avg_test_lift": 11.31,
+      "avg_test_potential": 72.94,
+      "reliability": "promising",
+      "editorial_bonus": 2.89,
+      "validation": "chronological_out_of_sample"
+    },
+    {
+      "combination": [
+        "human_story",
+        "unusual",
+        "visual_hook"
+      ],
+      "test_periods": 2,
+      "transfer_share": 1.0,
+      "test_posts_total": 31,
+      "avg_test_lift": 10.97,
+      "avg_test_potential": 72.59,
+      "reliability": "promising",
+      "editorial_bonus": 2.88,
+      "validation": "chronological_out_of_sample"
+    },
+    {
+      "combination": [
+        "locality",
+        "unusual",
+        "visual_hook"
+      ],
+      "test_periods": 2,
+      "transfer_share": 1.0,
+      "test_posts_total": 40,
+      "avg_test_lift": 9.87,
+      "avg_test_potential": 71.5,
+      "reliability": "promising",
+      "editorial_bonus": 2.74,
+      "validation": "chronological_out_of_sample"
+    }
+  ],
+  "editorial_rules": [
+    {
+      "id": "R1",
+      "name": "Необычность + визуальный повод + медиа",
+      "when": [
+        "unusual",
+        "visual_hook",
+        "media"
+      ],
+      "effect": "сильный кандидат на высокий общий потенциал",
+      "strength": "strong"
+    },
+    {
+      "id": "R2",
+      "name": "Необычность + тревожность/шок + медиа",
+      "when": {
+        "any_of": [
+          "unusual",
+          "fear",
+          "shock"
+        ],
+        "all_of": [
+          "media"
+        ]
+      },
+      "effect": "сильный кандидат прежде всего на распространение",
+      "strength": "strong"
+    },
+    {
+      "id": "R3",
+      "name": "Необычность + позитивная эмоция + медиа",
+      "when": [
+        "unusual",
+        "positive_emotion",
+        "media"
+      ],
+      "effect": "перспективный кандидат на баланс охвата и одобрения",
+      "strength": "promising"
+    },
+    {
+      "id": "R4",
+      "name": "Юмор",
+      "when": [
+        "humor"
+      ],
+      "effect": "повышать приоритет, особенно при наличии визуального материала",
+      "strength": "promising"
+    }
+  ],
+  "interpretation": {
+    "strong": "использовать как устойчивый сигнал при отборе",
+    "promising": "использовать как дополнительный сигнал, не как гарантию",
+    "caution": "модель не доказывает причинность и не заменяет проверку фактов, актуальности и качества источника",
+    "combination_validation": "комбинационные бонусы разрешены только при подтверждении на последующих временных периодах (chronological OOS)"
+  },
+  "audience": "golos",
+  "audience_label": "Голос Омска"
+}

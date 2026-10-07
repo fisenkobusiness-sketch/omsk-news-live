@@ -1,0 +1,350 @@
+{
+  "version": "1.0",
+  "status": "final_for_operational_use_oos_calibrated",
+  "purpose": "Предварительная оценка свежих публикаций по историческим закономерностям аудитории.",
+  "score_components": {
+    "virality": {
+      "weight": 0.6,
+      "meaning": "вероятность сильного распространения"
+    },
+    "approval": {
+      "weight": 0.4,
+      "meaning": "вероятность положительной реакции"
+    },
+    "combination_bonus_max": 4.0
+  },
+  "thresholds": {
+    "priority": 62,
+    "take": 55,
+    "reserve": 52,
+    "skip_below": 52,
+    "note": "Пороговая шкала свежего скоринга: 62/55/52."
+  },
+  "mechanisms": [
+    {
+      "mechanism": "animal",
+      "posts": 114,
+      "sample_confidence": 0.616,
+      "virality": 60.75,
+      "approval": 63.84,
+      "potential": 61.99,
+      "confidence_adjusted_potential": 39.24
+    },
+    {
+      "mechanism": "help_request",
+      "posts": 19,
+      "sample_confidence": 0.252,
+      "virality": 49.52,
+      "approval": 63.8,
+      "potential": 55.23,
+      "confidence_adjusted_potential": 29.35
+    },
+    {
+      "mechanism": "positive_emotion",
+      "posts": 211,
+      "sample_confidence": 0.839,
+      "virality": 50.04,
+      "approval": 53.45,
+      "potential": 51.41,
+      "confidence_adjusted_potential": 27.65
+    },
+    {
+      "mechanism": "media",
+      "posts": 1877,
+      "sample_confidence": 1.0,
+      "virality": 41.73,
+      "approval": 34.76,
+      "potential": 38.94,
+      "confidence_adjusted_potential": 24.5
+    },
+    {
+      "mechanism": "humor",
+      "posts": 29,
+      "sample_confidence": 0.311,
+      "virality": 53.74,
+      "approval": 50.71,
+      "potential": 52.53,
+      "confidence_adjusted_potential": 24.13
+    },
+    {
+      "mechanism": "weather",
+      "posts": 133,
+      "sample_confidence": 0.666,
+      "virality": 51.31,
+      "approval": 46.47,
+      "potential": 49.37,
+      "confidence_adjusted_potential": 23.09
+    },
+    {
+      "mechanism": "question_cta",
+      "posts": 85,
+      "sample_confidence": 0.532,
+      "virality": 36.27,
+      "approval": 37.98,
+      "potential": 36.96,
+      "confidence_adjusted_potential": 21.98
+    },
+    {
+      "mechanism": "usefulness",
+      "posts": 531,
+      "sample_confidence": 1.0,
+      "virality": 47.33,
+      "approval": 45.49,
+      "potential": 46.59,
+      "confidence_adjusted_potential": 21.9
+    },
+    {
+      "mechanism": "human_story",
+      "posts": 530,
+      "sample_confidence": 1.0,
+      "virality": 48.85,
+      "approval": 47.09,
+      "potential": 48.14,
+      "confidence_adjusted_potential": 21.71
+    },
+    {
+      "mechanism": "fear",
+      "posts": 187,
+      "sample_confidence": 0.79,
+      "virality": 51.15,
+      "approval": 47.23,
+      "potential": 49.58,
+      "confidence_adjusted_potential": 21.7
+    },
+    {
+      "mechanism": "shock",
+      "posts": 427,
+      "sample_confidence": 1.0,
+      "virality": 41.98,
+      "approval": 35.8,
+      "potential": 39.51,
+      "confidence_adjusted_potential": 21.1
+    },
+    {
+      "mechanism": "locality",
+      "posts": 767,
+      "sample_confidence": 1.0,
+      "virality": 45.49,
+      "approval": 42.6,
+      "potential": 44.33,
+      "confidence_adjusted_potential": 20.96
+    },
+    {
+      "mechanism": "visual_hook",
+      "posts": 202,
+      "sample_confidence": 0.821,
+      "virality": 44.75,
+      "approval": 41.83,
+      "potential": 43.58,
+      "confidence_adjusted_potential": 20.64
+    },
+    {
+      "mechanism": "emoji_hook",
+      "posts": 570,
+      "sample_confidence": 1.0,
+      "virality": 48.55,
+      "approval": 46.05,
+      "potential": 47.55,
+      "confidence_adjusted_potential": 20.5
+    },
+    {
+      "mechanism": "unusual",
+      "posts": 264,
+      "sample_confidence": 0.938,
+      "virality": 38.58,
+      "approval": 32.78,
+      "potential": 36.26,
+      "confidence_adjusted_potential": 20.34
+    },
+    {
+      "mechanism": "incident",
+      "posts": 462,
+      "sample_confidence": 1.0,
+      "virality": 47.89,
+      "approval": 45.59,
+      "potential": 46.97,
+      "confidence_adjusted_potential": 19.94
+    },
+    {
+      "mechanism": "conflict",
+      "posts": 230,
+      "sample_confidence": 0.876,
+      "virality": 47.51,
+      "approval": 49.73,
+      "potential": 48.4,
+      "confidence_adjusted_potential": 19.91
+    }
+  ],
+  "combination_rules": [
+    {
+      "combination": [
+        "animal",
+        "media"
+      ],
+      "test_periods": 3,
+      "transfer_share": 1.0,
+      "test_posts_total": 90,
+      "avg_test_lift": 20.75,
+      "avg_test_potential": 61.62,
+      "reliability": "strong",
+      "editorial_bonus": 4.0,
+      "validation": "chronological_out_of_sample"
+    },
+    {
+      "combination": [
+        "media",
+        "positive_emotion"
+      ],
+      "test_periods": 3,
+      "transfer_share": 1.0,
+      "test_posts_total": 180,
+      "avg_test_lift": 10.71,
+      "avg_test_potential": 51.58,
+      "reliability": "strong",
+      "editorial_bonus": 3.05,
+      "validation": "chronological_out_of_sample"
+    },
+    {
+      "combination": [
+        "human_story",
+        "media"
+      ],
+      "test_periods": 3,
+      "transfer_share": 1.0,
+      "test_posts_total": 482,
+      "avg_test_lift": 5.96,
+      "avg_test_potential": 46.83,
+      "reliability": "strong",
+      "editorial_bonus": 2.41,
+      "validation": "chronological_out_of_sample"
+    },
+    {
+      "combination": [
+        "animal",
+        "positive_emotion"
+      ],
+      "test_periods": 2,
+      "transfer_share": 1.0,
+      "test_posts_total": 13,
+      "avg_test_lift": 19.07,
+      "avg_test_potential": 64.06,
+      "reliability": "promising",
+      "editorial_bonus": 4.0,
+      "validation": "chronological_out_of_sample"
+    },
+    {
+      "combination": [
+        "animal",
+        "media",
+        "positive_emotion"
+      ],
+      "test_periods": 2,
+      "transfer_share": 1.0,
+      "test_posts_total": 13,
+      "avg_test_lift": 19.07,
+      "avg_test_potential": 64.06,
+      "reliability": "promising",
+      "editorial_bonus": 4.0,
+      "validation": "chronological_out_of_sample"
+    },
+    {
+      "combination": [
+        "media",
+        "usefulness"
+      ],
+      "test_periods": 2,
+      "transfer_share": 1.0,
+      "test_posts_total": 191,
+      "avg_test_lift": 5.15,
+      "avg_test_potential": 41.94,
+      "reliability": "promising",
+      "editorial_bonus": 2.17,
+      "validation": "chronological_out_of_sample"
+    },
+    {
+      "combination": [
+        "emoji_hook",
+        "media"
+      ],
+      "test_periods": 2,
+      "transfer_share": 1.0,
+      "test_posts_total": 519,
+      "avg_test_lift": 2.81,
+      "avg_test_potential": 47.8,
+      "reliability": "promising",
+      "editorial_bonus": 1.91,
+      "validation": "chronological_out_of_sample"
+    },
+    {
+      "combination": [
+        "locality",
+        "media"
+      ],
+      "test_periods": 2,
+      "transfer_share": 1.0,
+      "test_posts_total": 288,
+      "avg_test_lift": 2.4,
+      "avg_test_potential": 39.18,
+      "reliability": "promising",
+      "editorial_bonus": 1.78,
+      "validation": "chronological_out_of_sample"
+    }
+  ],
+  "editorial_rules": [
+    {
+      "id": "R1",
+      "name": "Необычность + визуальный повод + медиа",
+      "when": [
+        "unusual",
+        "visual_hook",
+        "media"
+      ],
+      "effect": "сильный кандидат на высокий общий потенциал",
+      "strength": "strong"
+    },
+    {
+      "id": "R2",
+      "name": "Необычность + тревожность/шок + медиа",
+      "when": {
+        "any_of": [
+          "unusual",
+          "fear",
+          "shock"
+        ],
+        "all_of": [
+          "media"
+        ]
+      },
+      "effect": "сильный кандидат прежде всего на распространение",
+      "strength": "strong"
+    },
+    {
+      "id": "R3",
+      "name": "Необычность + позитивная эмоция + медиа",
+      "when": [
+        "unusual",
+        "positive_emotion",
+        "media"
+      ],
+      "effect": "перспективный кандидат на баланс охвата и одобрения",
+      "strength": "promising"
+    },
+    {
+      "id": "R4",
+      "name": "Юмор",
+      "when": [
+        "humor"
+      ],
+      "effect": "повышать приоритет, особенно при наличии визуального материала",
+      "strength": "promising"
+    }
+  ],
+  "interpretation": {
+    "strong": "использовать как устойчивый сигнал при отборе",
+    "promising": "использовать как дополнительный сигнал, не как гарантию",
+    "caution": "модель не доказывает причинность и не заменяет проверку фактов, актуальности и качества источника",
+    "combination_validation": "комбинационные бонусы разрешены только при подтверждении на последующих временных периодах (chronological OOS)"
+  },
+  "audience": "zhest",
+  "audience_label": "Новости Омска | Жесть"
+}
