@@ -11,6 +11,20 @@
 
 ---
 
+# 0. Первый запуск после клонирования
+
+Установить зависимости:
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+Проверить окружение и ключевые артефакты:
+
+```bash
+python scripts/00_smoke_test.py
+```
+
 ## 1. Что делает pipeline
 
 ### Этап 01 — сбор VK
