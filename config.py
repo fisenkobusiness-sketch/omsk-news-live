@@ -106,7 +106,10 @@ RESERVE_THRESHOLD = 52.0
 
 GITHUB_OWNER = os.getenv("GITHUB_OWNER", "").strip()
 GITHUB_REPO = os.getenv("GITHUB_REPO", "").strip()
-GITHUB_BRANCH = os.getenv("GITHUB_BRANCH", "main").strip() or "main"
+GITHUB_BRANCH = os.getenv(
+    "GITHUB_BRANCH",
+    "audience-router",
+).strip() or "audience-router"
 
 GITHUB_DIRS = {
     "golos": "audience_analytics/vk/golos",
