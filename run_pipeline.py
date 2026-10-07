@@ -4,6 +4,9 @@
 По умолчанию:
     02 → 03 → 04 → 05
 
+Быстрый ежедневный режим:
+    python run_pipeline.py --score-only
+
 Для обновления истории VK:
     python run_pipeline.py --collect
 """
@@ -16,23 +19,15 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent
 
-STEPS = [
-    (
-        "scripts/02_build_dataset.py",
-        "Сборка общего dataset",
-    ),
-    (
-        "scripts/03_analyze_audience.py",
-        "Анализ двух аудиторий + профили",
-    ),
-    (
-        "scripts/04_build_editorial_model.py",
-        "Построение двух редакторских моделей",
-    ),
-    (
-        "scripts/05_score_news.py",
-        "Оценка свежих новостей + Audience Separator",
-    ),
+FULL_STEPS = [
+    ("scripts/02_build_dataset.py", "Сборка общего dataset"),
+    ("scripts/03_analyze_audience.py", "Анализ двух аудиторий + профили"),
+    ("scripts/04_build_editorial_model.py", "Построение двух редакторских моделей"),
+    ("scripts/05_score_news.py", "Оценка свежих новостей + Audience Separator"),
+]
+
+SCORE_ONLY_STEPS = [
+    ("scripts/05_score_news.py", "Быстрая оценка свежих новостей"),
 ]
 
 
@@ -124,11 +119,18 @@ def main():
         )
     )
 
-    parser.add_argument(
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument(
         "--collect",
         action="store_true",
+        help="Сначала обновить RAW через VK API.",
+    )
+    mode.add_argument(
+        "--score-only",
+        action="store_true",
         help=(
-            "Сначала обновить RAW через VK API"
+            "Не пересобирать dataset и модели; "
+            "только пересчитать свежие новости."
         ),
     )
 
@@ -157,7 +159,13 @@ def main():
             "Обновление RAW из VK",
         )
 
-    for script_name, title in STEPS:
+    steps = (
+        SCORE_ONLY_STEPS
+        if args.score_only
+        else FULL_STEPS
+    )
+
+    for script_name, title in steps:
         run_step(
             script_name,
             title,
