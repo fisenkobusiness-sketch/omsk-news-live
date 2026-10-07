@@ -1548,17 +1548,18 @@ def prepare_fresh_classification(post, classification=None):
             0.65,
         )
 
-    if (
+    child_incident = (
         FRESH_CHILD_RE.search(text_lower)
         and FRESH_ROAD_RE.search(text_lower)
-        or (
-            FRESH_CHILD_RE.search(text_lower)
-            and re.search(
-                r"\bтравм\w*",
-                text_lower,
-            )
+    )
+    child_injury = (
+        FRESH_CHILD_RE.search(text_lower)
+        and re.search(
+            r"\bтравм\w*",
+            text_lower,
         )
-    ):
+    )
+    if child_incident or child_injury:
         mechanisms.update(("human_story", "shock"))
         strengths["human_story"] = max(
             float(strengths.get("human_story", 0.0)),
@@ -1618,9 +1619,6 @@ def score_fresh_post(post, editorial_model, classification=None):
         classification.get("mechanisms", [])
     )
 
-    mechanism_rows = _get_mechanism_rows(
-        editorial_model
-    )
     mechanism_rows = _get_mechanism_rows(
         editorial_model
     )
