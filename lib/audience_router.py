@@ -75,26 +75,45 @@ def _quantile(values, q):
 
 
 def _score_history(posts, audience, model):
-    """Прогоняет исторические посты через ту же модель, что используется для fresh."""
+    """Score one audience history once, reusing one classification per post."""
     try:
-        from lib.analytics_core import score_fresh_post
+        from lib.analytics_core import (
+            prepare_fresh_classification,
+            score_fresh_post,
+        )
     except ImportError:
-        from analytics_core import score_fresh_post
+        from analytics_core import (
+            prepare_fresh_classification,
+            score_fresh_post,
+        )
 
-    rows = [p for p in posts if p.get("audience") == audience]
+    rows = [
+        post for post in posts
+        if post.get("audience") == audience
+    ]
+
     scores = []
     pairs = []
 
     for post in rows:
-        scored = score_fresh_post(post, model)
-        score = _num(scored.get("potential_score"), 50.0)
-        observed = _num(post.get("potential"), 0.0)
+        classification = prepare_fresh_classification(post)
+        scored = score_fresh_post(
+            post,
+            model,
+            classification=classification,
+        )
+        score = _num(
+            scored.get("potential_score"),
+            50.0,
+        )
+        observed = _num(
+            post.get("potential"),
+            0.0,
+        )
         scores.append(score)
         pairs.append((score, observed))
 
     return rows, scores, pairs
-
-
 def build_score_calibration(posts, audience, model, history=None):
     """Build model-score -> observed-potential calibration once."""
     if history is None:
