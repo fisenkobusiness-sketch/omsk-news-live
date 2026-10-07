@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import math
 import re
+from bisect import bisect_left, bisect_right
 from statistics import mean, median
 from datetime import datetime, timezone
 
@@ -31,20 +32,34 @@ def _num(value, default=0.0):
         return default
 
 
-def percentile_of_value(value, values):
-    """ECDF-percentile 0..100 с усреднением ties."""
-    xs = sorted(_num(v) for v in values)
-    if not xs:
+def _percentile_from_sorted(sorted_values, value):
+    """Fast percentile using binary search."""
+    if not sorted_values:
         return 50.0
-    v = _num(value)
-    less = sum(x < v for x in xs)
-    equal = sum(x == v for x in xs)
-    if len(xs) == 1:
-        return 100.0 if v >= xs[0] else 0.0
-    rank = less + 0.5 * equal
-    return round(max(0.0, min(100.0, rank / len(xs) * 100.0)), 2)
+
+    n = len(sorted_values)
+    value = _num(value)
+
+    if n == 1:
+        return 100.0 if value >= sorted_values[0] else 0.0
+
+    left = bisect_left(sorted_values, value)
+    right = bisect_right(sorted_values, value)
+    equal = right - left
+    rank = left + 0.5 * equal
+
+    return round(
+        max(0.0, min(100.0, rank / n * 100.0)),
+        2,
+    )
 
 
+def percentile_of_value(value, values):
+    """Compatibility wrapper; sorts only when needed by callers."""
+    return _percentile_from_sorted(
+        sorted(_num(v) for v in values),
+        value,
+    )
 def _quantile(values, q):
     xs = sorted(_num(v) for v in values)
     if not xs:
@@ -80,15 +95,16 @@ def _score_history(posts, audience, model):
     return rows, scores, pairs
 
 
-def build_score_calibration(posts, audience, model):
-    """Build a common-scale calibration: model score -> observed potential.
+def build_score_calibration(posts, audience, model, history=None):
+    """Build model-score -> observed-potential calibration once."""
+    if history is None:
+        history = _score_history(
+            posts,
+            audience,
+            model,
+        )
 
-    The previous router converted each audience's score to its own ECDF
-    percentile. That answers "how high is this score inside this audience",
-    but it is not a common audience scale. Here both models are calibrated to
-    the same observed target: historical post potential (0..100).
-    """
-    rows, scores, pairs = _score_history(posts, audience, model)
+    _, scores, pairs = history
 
     if not scores:
         return {
@@ -97,23 +113,47 @@ def build_score_calibration(posts, audience, model):
             "bins": [],
         }
 
-    pairs.sort(key=lambda x: x[0])
+    pairs = sorted(
+        pairs,
+        key=lambda item: item[0],
+    )
     n = len(pairs)
     bin_size = max(40, n // 20)
-    bins = []
 
+    bins = []
     for start in range(0, n, bin_size):
         chunk = pairs[start:start + bin_size]
         if not chunk:
             continue
-        score_values = [x[0] for x in chunk]
-        observed = [x[1] for x in chunk]
+
+        score_values = [
+            item[0] for item in chunk
+        ]
+        observed = [
+            item[1] for item in chunk
+        ]
+
         bins.append({
-            "score_min": round(min(score_values), 3),
-            "score_max": round(max(score_values), 3),
-            "score_mid": round(mean(score_values), 3),
-            "expected_potential": round(mean(observed), 3),
-            "observed_potential_median": round(median(observed), 3),
+            "score_min": round(
+                min(score_values),
+                3,
+            ),
+            "score_max": round(
+                max(score_values),
+                3,
+            ),
+            "score_mid": round(
+                mean(score_values),
+                3,
+            ),
+            "expected_potential": round(
+                mean(observed),
+                3,
+            ),
+            "observed_potential_median": round(
+                median(observed),
+                3,
+            ),
             "posts": len(chunk),
         })
 
@@ -124,8 +164,6 @@ def build_score_calibration(posts, audience, model):
         "target": "observed_potential",
         "target_scale": "0..100",
     }
-
-
 def _interpolate(x1, y1, x2, y2, x):
     if x2 == x1:
         return (y1 + y2) / 2.0
@@ -170,39 +208,71 @@ def calibrated_expected_potential(score, profile):
     return round(y, 2), density, "linear_bin_interpolation"
 
 
-def build_audience_profile(posts, audience, model=None, min_posts=MIN_PROFILE_POSTS):
-    """Строит независимую шкалу конкретной аудитории."""
-    rows = [p for p in posts if p.get("audience") == audience]
+def build_audience_profile(
+    posts,
+    audience,
+    model=None,
+    min_posts=MIN_PROFILE_POSTS,
+    history=None,
+):
+    """Build one audience profile with no duplicate model scoring."""
+    rows = [
+        post for post in posts
+        if post.get("audience") == audience
+    ]
+
     if len(rows) < min_posts:
         raise ValueError(
             f"Недостаточно истории для {audience}: "
             f"{len(rows)} < {min_posts}"
         )
 
-    potentials = [_num(p.get("potential")) for p in rows]
+    potentials = [
+        _num(post.get("potential"))
+        for post in rows
+    ]
 
-    model_scores = []
     if model is not None:
-        _, model_scores, _ = _score_history(posts, audience, model)
+        if history is None:
+            history = _score_history(
+                posts,
+                audience,
+                model,
+            )
+        _, model_scores, _ = history
+        calibration_scores = model_scores
+    else:
+        calibration_scores = potentials
 
-    calibration_scores = model_scores if model_scores else potentials
+    sorted_calibration_scores = sorted(
+        calibration_scores
+    )
 
     mechanism_stats = {}
     combo_stats = {}
 
-    for i, post in enumerate(rows):
-        fit = percentile_of_value(
-            calibration_scores[i],
-            calibration_scores,
+    for index, post in enumerate(rows):
+        fit = _percentile_from_sorted(
+            sorted_calibration_scores,
+            calibration_scores[index],
         )
-        mechanisms = sorted(set(post.get("mechanisms", []) or []))
+
+        mechanisms = sorted(
+            set(post.get("mechanisms", []) or [])
+        )
 
         for mechanism in mechanisms:
-            mechanism_stats.setdefault(mechanism, []).append(fit)
+            mechanism_stats.setdefault(
+                mechanism,
+                [],
+            ).append(fit)
 
         if len(mechanisms) >= 2:
             key = "+".join(mechanisms)
-            combo_stats.setdefault(key, []).append(fit)
+            combo_stats.setdefault(
+                key,
+                [],
+            ).append(fit)
 
     mechanisms = {
         key: {
@@ -238,8 +308,18 @@ def build_audience_profile(posts, audience, model=None, min_posts=MIN_PROFILE_PO
             "min": round(min(potentials), 2),
             "max": round(max(potentials), 2),
         },
-        "historical_potentials": [round(x, 4) for x in potentials],
-        "historical_model_scores": [round(x, 4) for x in calibration_scores],
+        "historical_potentials": [
+            round(value, 4)
+            for value in potentials
+        ],
+        "historical_model_scores": [
+            round(value, 4)
+            for value in calibration_scores
+        ],
+        "historical_model_scores_sorted": [
+            round(value, 4)
+            for value in sorted_calibration_scores
+        ],
         "mechanisms": mechanisms,
         "combinations": combinations,
         "method": "within_audience_model_score_ecdf",
@@ -249,9 +329,6 @@ def build_audience_profile(posts, audience, model=None, min_posts=MIN_PROFILE_PO
             "аудиториями напрямую не сравнивается."
         ),
     }
-
-
-
 def _affinity_features(post, content_types, mechanisms):
     """Compact interpretable feature vector for audience-affinity classifier."""
     values = []
@@ -416,30 +493,45 @@ def affinity_route(affinities, review_probability=60.0, both_margin=10.0, primar
 
 
 def build_profiles(posts, models=None, audiences=DEFAULT_AUDIENCES):
+    """Build profiles with one historical scoring pass per model."""
     models = models or {}
     profiles = {}
 
     for audience in audiences:
         model = models.get(audience)
+
+        history = (
+            _score_history(posts, audience, model)
+            if model is not None
+            else None
+        )
+
         profile = build_audience_profile(
             posts,
             audience,
             model=model,
+            history=history,
         )
 
-        if model is not None:
-            profile["score_calibration"] = build_score_calibration(
-                posts,
-                audience,
-                model,
+        if history is not None:
+            profile["score_calibration"] = (
+                build_score_calibration(
+                    posts,
+                    audience,
+                    model,
+                    history=history,
+                )
             )
 
         profiles[audience] = profile
 
-    affinity_model = build_audience_affinity_model(posts, audiences=audiences)
+    affinity_model = build_audience_affinity_model(
+        posts,
+        audiences=audiences,
+    )
 
     return {
-        "version": "3.0",
+        "version": "3.1",
         "audiences": profiles,
         "audience_affinity_model": affinity_model,
         "router": {
@@ -450,8 +542,6 @@ def build_profiles(posts, models=None, audiences=DEFAULT_AUDIENCES):
             "status": "diagnostic_until_oos_validated",
         },
     }
-
-
 def mechanism_fit(mechanisms, profile):
     """Диагностический средний fit по механизмам."""
     rows = []
@@ -474,15 +564,17 @@ def audience_fit(score, profile):
 
 
 def audience_percentile(score, profile):
-    """Diagnostic percentile inside the audience's own model-score history."""
-    history = profile.get("historical_model_scores") or []
-    if not history:
-        history = profile.get("historical_potentials") or []
-    return percentile_of_value(score, history)
+    """Diagnostic percentile using cached sorted history."""
+    history = profile.get(
+        "historical_model_scores_sorted"
+    ) or profile.get(
+        "historical_potentials"
+    ) or []
 
-
-
-
+    return _percentile_from_sorted(
+        history,
+        score,
+    )
 def _word_number(text):
     """Return a Russian cardinal number from text, or None."""
     mapping = {
