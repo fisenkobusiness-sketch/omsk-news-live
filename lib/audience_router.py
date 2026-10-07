@@ -1116,7 +1116,10 @@ def chronological_routing_oos(posts, audiences=DEFAULT_AUDIENCES, periods=4):
     split_results = []
     all_rows = []
 
-    from lib.analytics_core import score_fresh_post
+    from lib.analytics_core import (
+        prepare_fresh_classification,
+        score_fresh_post,
+    )
 
     for test_idx in range(1, len(chunks)):
         train_rows = [p for c in chunks[:test_idx] for p in c]
@@ -1148,9 +1151,19 @@ def chronological_routing_oos(posts, audiences=DEFAULT_AUDIENCES, periods=4):
             mechanisms = post.get("mechanisms", []) or []
             event_meta = {}
             scored_reference = {}
+
+            classification = prepare_fresh_classification(post)
+
             for audience in audiences:
-                scored = score_fresh_post(post, models[audience])
-                scores[audience] = _num(scored.get("potential_score"), 0.0)
+                scored = score_fresh_post(
+                    post,
+                    models[audience],
+                    classification=classification,
+                )
+                scores[audience] = _num(
+                    scored.get("potential_score"),
+                    0.0,
+                )
                 scored_reference = scored
                 if not mechanisms:
                     mechanisms = scored.get("mechanisms_used", []) or []
