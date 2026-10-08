@@ -16,7 +16,9 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from config import (
-    SEARCH_OUTPUT,
+    TELEGRAM_CHANNELS,
+    TELEGRAM_ENABLED,
+    TELEGRAM_MAX_MESSAGES,
     WEB_SEARCH_COUNTRY,
     WEB_SEARCH_DEFAULT_WHEN,
     WEB_SEARCH_ENABLED,
@@ -30,6 +32,10 @@ from collectors.search import (
     SearchQuery,
 )
 from collectors.vk import VKDiscoveryCollector
+from collectors.telegram import (
+    TelegramChannel,
+    TelegramMTProtoCollector,
+)
 
 
 NORMALIZED_DIR = ROOT / "data" / "normalized"
@@ -70,6 +76,24 @@ def collect_search():
     return items
 
 
+def collect_telegram():
+    if not TELEGRAM_ENABLED or not TELEGRAM_CHANNELS:
+        return []
+
+    channels = [
+        TelegramChannel(
+            username=item["username"],
+            label=item.get("label", ""),
+        )
+        for item in TELEGRAM_CHANNELS
+    ]
+    collector = TelegramMTProtoCollector(
+        channels,
+        max_messages=TELEGRAM_MAX_MESSAGES,
+    )
+    return collector.collect()
+
+
 def write_jsonl(items):
     NORMALIZED_DIR.mkdir(
         parents=True,
@@ -95,9 +119,11 @@ def main():
 
     vk_items = VKDiscoveryCollector().collect()
     search_items = collect_search()
+    telegram_items = collect_telegram()
 
     items = [
         *vk_items,
+        *telegram_items,
         *search_items,
     ]
 
@@ -110,6 +136,7 @@ def main():
     )
     print(
         f"VK: {len(vk_items)} | "
+        f"Telegram: {len(telegram_items)} | "
         f"Web Search: {len(search_items)} | "
         f"Всего: {len(items)}",
         flush=True,
