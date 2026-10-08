@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Conservative SourcePost -> NewsEvent clustering v7.
+"""Conservative SourcePost -> NewsEvent clustering v8.
 
 Diagnostic-only clustering. Scoring, datasets and publication routing are untouched.
 """
@@ -301,6 +301,16 @@ def _cross_platform_match(post: Dict[str, Any], event: Dict[str, Any]) -> Tuple[
 
     # Morphology alone is not enough: common news vocabulary (construction,
     # houses, accident, man, after, etc.) must never form an event identity.
+    # Accidents are especially collision-prone: "водитель / мужчина / насмерть"
+    # can describe many unrelated ДТП. For accident stories, morphology must
+    # have a concrete event identity anchor: a shared number, specific place,
+    # or distinctive two-word phrase. This is intentionally stricter than the
+    # generic cross-platform rule.
+    if type_match and current_entities["event_type"][0] == "accident":
+        accident_identity_anchor = bool(numbers or specific_places or phrase_anchors)
+        if not accident_identity_anchor:
+            return False, "accident_no_identity_anchor", max(recall, seq)
+
     # Require either two distinctive exact anchors or two distinctive
     # inflectional anchors, plus the same event type.
     morphology_anchor = (
@@ -434,7 +444,7 @@ def _build_event(posts: List[Dict[str, Any]]) -> Dict[str, Any]:
         "discovery_path": discovery_path,
         "canonical_url": next(iter(urls), None),
         "event_type": entities["event_type"][0],
-        "cluster_method": "deterministic_v7",
+        "cluster_method": "deterministic_v8",
     }
 
 
