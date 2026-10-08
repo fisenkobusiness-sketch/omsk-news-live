@@ -145,6 +145,52 @@ def event_semantic_signal(event):
     }
 
 
+
+def semantic_override_candidate(row):
+    """Diagnostic-only candidate for a future semantic routing override."""
+    signal = row.get("semantic_signal") or {}
+    level = signal.get("level")
+    target = signal.get("target")
+    event_type = str(row.get("event_type") or "").lower()
+    mechanisms = set(row.get("mechanisms") or [])
+
+    hard_types = {"crime", "accident", "fire"}
+    severe = {"death", "injury", "child_accident", "quarantine_disease",
+              "pollution_environment", "fire_multiple_injuries"}
+    hard_mechanisms = {"incident", "shock", "fear", "conflict", "animal", "unusual"}
+
+    zhest_candidate = (
+        target == "zhest" and (
+            level == "DOMINANT"
+            or (level == "STRONG" and (
+                event_type in hard_types
+                or bool(mechanisms & severe)
+                or len(mechanisms & hard_mechanisms) >= 2
+            ))
+            or (level == "MODERATE" and event_type in hard_types and (
+                "shock" in mechanisms or "incident" in mechanisms
+                or bool(mechanisms & severe)
+            ))
+        )
+    )
+    golos_candidate = (
+        target == "golos"
+        and level in ("DOMINANT", "STRONG")
+        and event_type in {"weather", "social"}
+        and bool(mechanisms & {"positive_emotion", "usefulness", "weather"})
+    )
+    candidate_target = "zhest" if zhest_candidate else "golos" if golos_candidate else None
+    current_target = row.get("target")
+    return {
+        "candidate": bool(candidate_target),
+        "target": candidate_target,
+        "changes_target": bool(candidate_target and candidate_target != current_target),
+        "reason": "strong_hard_semantics" if zhest_candidate
+                   else "strong_positive_public_interest" if golos_candidate
+                   else "not_strong_enough",
+    }
+
+
 def build_router_audit(routed):
     """Find cases where event semantics disagree with the final router."""
     rows = []
@@ -175,6 +221,12 @@ def build_router_audit(routed):
             "independent_source_count": event.get("independent_source_count"),
             "conflict": bool(event_best and event_best != target),
             "semantic_signal": semantic_signal,
+            "semantic_override": semantic_override_candidate({
+                "semantic_signal": semantic_signal,
+                "event_type": event.get("event_type"),
+                "mechanisms": (event.get("audience_scores") or {}).get("golos", {}).get("mechanisms", []),
+                "target": target,
+            }),
         })
     conflicts = [row for row in rows if row["conflict"]]
     conflicts.sort(key=lambda row: row["event_margin"], reverse=True)
@@ -194,6 +246,9 @@ def build_router_audit(routed):
         for mechanism in row.get("mechanisms") or []:
             by_mechanism[mechanism] = by_mechanism.get(mechanism, 0) + 1
 
+    override_candidates = [row for row in conflicts if row['semantic_override']['candidate']]
+    override_changes = [row for row in override_candidates if row['semantic_override']['changes_target']]
+
     strong_moderate = [
         row for row in conflicts
         if row["semantic_signal"]["level"] in ("STRONG", "MODERATE")
@@ -205,6 +260,8 @@ def build_router_audit(routed):
         "by_mechanism": dict(sorted(by_mechanism.items(), key=lambda item: item[1], reverse=True)),
         "by_pair": dict(sorted(by_pair.items(), key=lambda item: item[1], reverse=True)),
         "strong_moderate": strong_moderate[:100],
+        "override_candidates": override_candidates[:100],
+        "override_changes": override_changes[:100],
     }
 
 
