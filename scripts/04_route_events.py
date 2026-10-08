@@ -40,13 +40,23 @@ def write_jsonl(path: Path, rows):
 
 
 def event_to_post(event):
+    """Convert a NewsEvent representative into the flat post shape expected
+    by analytics_core and audience_router.
+    """
     representative = dict(event.get("representative_post") or {})
-    post = dict(representative.get("post") or {})
+    nested_post = dict(representative.get("post") or {})
+
+    # analytics_core reads title/text and other post fields from the top level.
+    # NewsEvent stores the original SourcePost under representative_post["post"],
+    # so flatten that nested object before classification/scoring.
+    post = dict(nested_post)
+    for key, value in representative.items():
+        if key != "post" and key not in post:
+            post[key] = value
+
     post["text"] = event.get("canonical_text") or post.get("text") or ""
     post.setdefault("title", post["text"][:180])
-    result = dict(representative)
-    result["post"] = post
-    return result
+    return post
 
 
 def main():
