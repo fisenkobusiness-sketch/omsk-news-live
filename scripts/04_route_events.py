@@ -99,6 +99,7 @@ def main():
                 "content_type": scored.get("content_type"),
                 "mechanisms": scored.get("mechanisms_used", []),
                 "mechanism_strength": scored.get("mechanism_strength"),
+                "fresh_event_strength": scored.get("fresh_event_strength"),
             }
             raw_scores[audience] = score
 
@@ -110,7 +111,16 @@ def main():
         affinity_post["content_type"] = primary.get("content_type")
 
         affinity = score_audience_affinity(affinity_post, affinity_model)
-        event_meta = extract_event_meta(post, {"fresh_event_strength": 0.0})
+
+        # Reuse scored classification/fresh-event strength so event-level
+        # routing stays aligned with analytics_core.
+        reference_scored = {
+            "classification": classification,
+            "fresh_event_strength": primary.get("fresh_event_strength", 0.0),
+            "mechanism_strength": primary.get("mechanism_strength"),
+            "content_type": primary.get("content_type"),
+        }
+        event_meta = extract_event_meta(post, reference_scored)
         routing = route_scores(
             raw_scores,
             profiles,
@@ -155,6 +165,7 @@ def main():
     print("Audience Router: DIAGNOSTIC_ONLY")
     for event in routed[:20]:
         routing = event.get("audience_routing", {})
+        scores = event.get("audience_scores", {})
         print(
             f"{event.get('event_id')} | {event.get('event_type')} | "
             f"target={routing.get('recommended_target')} | "
@@ -163,6 +174,14 @@ def main():
             f"decision={routing.get('decision')} | "
             f"freshness={event.get('freshness_age_minutes')}m | "
             f"spread={event.get('spread_minutes')}m"
+        )
+        print(
+            f"  scores: golos={scores.get('golos', {}).get('editorial_score_absolute')} "
+            f"zhest={scores.get('zhest', {}).get('editorial_score_absolute')} | "
+            f"mechanisms={scores.get('golos', {}).get('mechanisms')} | "
+            f"strength={scores.get('golos', {}).get('mechanism_strength')} | "
+            f"fresh_event_strength={scores.get('golos', {}).get('fresh_event_strength')} | "
+            f"fits={routing.get('fit')} | affinity={event.get('audience_affinity')}"
         )
 
 
