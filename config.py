@@ -214,6 +214,69 @@ TELEGRAM_SESSION = (
 # without @. It can be populated when MTProto credentials are configured.
 TELEGRAM_CHANNELS = []
 
+
+# ============================================================
+# DISCOVERY DONOR REGISTRY
+# ============================================================
+
+DISCOVERY_VK_SOURCES = [
+    {"screen_name": "inci55", "label": "Инцидент Омск"},
+    {"screen_name": "omsk_live", "label": "Омск Live"},
+    {"screen_name": "dushalady", "label": "dushalady"},
+    {"screen_name": "omsk_group", "label": "Омск"},
+    {"screen_name": "omsk_glavniy", "label": "Омск главный | Новости"},
+    {"screen_name": "12kanalomsk", "label": "12 Канал | Новости Омска"},
+    {"screen_name": "omsk_reg", "label": "Сегодня в Омске"},
+    {"screen_name": "club233315760", "label": "club233315760"},
+    {"screen_name": "ghest_omsk", "label": "Жесть Омска"},
+    {"screen_name": "omsk_online", "label": "ОМСК ОНЛАЙН"},
+    {"screen_name": "55gibdd", "label": "55 ГИБДД"},
+    {"screen_name": "ouromsk", "label": "НАШ ГОРОД ОМСК"},
+    {"screen_name": "live_omck", "label": "Я живу [В] Омске"},
+    {"screen_name": "omsk_pubs", "label": "Омск паблики"},
+    {"screen_name": "la_omsk", "label": "Леди Омск"},
+    {"screen_name": "chp55", "label": "ЧП Омск"},
+    {"screen_name": "tipical_omsk", "label": "Вкратце | Омск!"},
+    {"screen_name": "aomsk", "label": "Аварийный Омск"},
+    {"screen_name": "omsk_vk", "label": "Омск ВК"},
+    {"screen_name": "spletniki55", "label": "О чём говорят в Омске"},
+    {"screen_name": "region_omsk55", "label": "Омск | Регион-55 | REGIK55"},
+    {"screen_name": "regio55", "label": "Регион 55 | ЧС Омск"},
+    {"screen_name": "1oomestomska", "label": "100 необычных мест Омска"},
+    {"screen_name": "v_omsk", "label": "Омск сегодня"},
+    {"screen_name": "tvoy_omsk", "label": "Твой Омск"},
+    {"screen_name": "van_omsk", "label": "Омск"},
+    {"screen_name": "om1_omsk", "label": "Om1.ru: новости Омска"},
+    {"screen_name": "lovepub55", "label": "Новости Омск"},
+]
+
+TELEGRAM_CHANNELS = [
+    {"username": "Om1_Omsk", "label": "Om1"},
+    {"username": "HocenkoVP", "label": "Хоценко"},
+    {"username": "kanal12omsk", "label": "12 Канал"},
+    {"username": "omsk_smi", "label": "Новости Омска и области"},
+    {"username": "chp_55", "label": "ЧП Омск"},
+    {"username": "zhest_omsk_55", "label": "Жесть Омска"},
+    {"username": "region_omsk55", "label": "Регион 55"},
+    {"username": "aomsk", "label": "Аварийный Омск"},
+    {"username": "ghest_omsk", "label": "Жесть Омска"},
+    {"username": "gorod55ru", "label": "Город55"},
+    {"username": "vestiomsk", "label": "Вести Омск"},
+    {"username": "vkratce_omsk", "label": "Вкратце | Омск"},
+    {"username": "omskkoroche", "label": "Омсккороче"},
+    {"username": "ngs55news", "label": "NGS55"},
+    {"username": "shelest_sn", "label": "Шелест"},
+    {"username": "newsomsk", "label": "Новости Омска"},
+    {"username": "omsk_police", "label": "Омская полиция"},
+    {"username": "omskonelove", "label": "Омск One Love"},
+    {"username": "minzdrav_55", "label": "Минздрав Омской области"},
+    {"username": "omskiyavangard", "label": "Авангард"},
+    {"username": "omsktop1", "label": "Омск с огоньком"},
+    {"username": "omskinform_news", "label": "Омск-информ"},
+    {"username": "forumomskcom", "label": "Омский Форум"},
+    {"username": "forumomsknew", "label": "Новый Омский форум"},
+]
+
 # ============================================================
 # ДАННЫЕ
 # ============================================================
