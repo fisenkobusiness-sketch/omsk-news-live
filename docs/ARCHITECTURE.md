@@ -1,4 +1,4 @@
-# Архитектура проекта — сбор новостей VK + Telegram
+# Архитектура проекта — Discovery: VK + Telegram + Web Search
 
 ## 1. Цель
 Система должна максимально быстро находить свежие локальные события в Омске и Омской области, объединять одинаковые сообщения из разных источников, оценивать свежесть, скорость распространения и подтверждённость, а затем передавать единый объект новости в Audience Router.
@@ -7,9 +7,9 @@
 
 ## 2. Общая схема
 
-VK Collector ─┐
-              ├→ SourcePost → Event Clustering → Freshness/Verification → Scoring → Audience Router → Editorial Queue → Publication → Feedback
-TG Collector ─┘
+VK Collector ─────┐
+Telegram Collector ─┼→ SourcePost → Event Clustering → Freshness/Verification → Scoring → Audience Router → Editorial Queue → Publication → Feedback
+Web Search Collector ┘
 
 ## 3. Collectors
 Collectors отвечают только за получение данных. Они не выбирают лучшую новость и не принимают решение о публикации.
@@ -19,6 +19,8 @@ Collectors отвечают только за получение данных. �
 collectors/
   vk.py
   telegram.py
+  search.py
+  search.py
 
 VK:
 - история источников;
@@ -31,6 +33,31 @@ Telegram:
 - обработка изменений и удалений;
 - нормализация Telegram-полей.
 
+### 3.1 Web Search
+
+Поисковая выдача является третьим равноправным входом **на уровне discovery**, рядом с VK и Telegram.
+
+Первая реализация использует поисковые RSS-ленты Google News. Поисковый feed поддерживает поисковые запросы, оператор `when:` для ограничения свежести и `site:` для точечного поиска по конкретному издателю. Это позволяет одновременно искать общий поток по Омску и отдельно проверять региональные СМИ. citeturn225889search0turn225889search1
+
+Web Search не считается социальной метрикой и не получает искусственные views/likes/reposts.
+
+Каждый результат сохраняет:
+- поисковый запрос;
+- время публикации материала;
+- название издателя;
+- URL издателя, если он доступен в RSS;
+- ссылку на найденный материал;
+- позицию материала в выдаче;
+- список запросов, по которым один и тот же материал был найден.
+
+На уровне событий поиск особенно важен для сценария:
+
+`новостник → Web Search → Telegram/VK`
+
+То есть система может увидеть материал до того, как он разойдётся по соцсетям.
+
+В будущем к этому слою можно добавить отдельные RSS-ленты сайтов и другие поисковые адаптеры без изменения NewsEvent и Scoring.
+
 Telegram предоставляет отдельные Bot API и Telegram API/MTProto. Bot API умеет присылать channel_post и edited_channel_post обновления, но для общего мониторинга публичных каналов и чтения истории архитектурно лучше закладываться на Telegram API/MTProto. Telegram отдельно документирует получение истории и пагинацию сообщений. citeturn990889search0turn487976search2turn487976search5
 
 ## 4. Единый формат SourcePost
@@ -39,6 +66,7 @@ Telegram предоставляет отдельные Bot API и Telegram API/M
 Минимальные поля:
 
 source.platform
+source.kind
 source.source_id
 source.source_name
 source.source_url
@@ -75,13 +103,25 @@ NewsEvent хранит:
 - event_id;
 - first_seen_at;
 - last_seen_at;
+- first_source;
 - source_count;
 - independent_source_count;
 - platform_count;
 - source_posts;
 - canonical_text;
 - extracted entities;
-- verification state.
+- verification state;
+- discovery_path.
+
+`first_source` фиксирует, где событие впервые было замечено системой: `vk`, `telegram` или `web_search`.
+
+`discovery_path` нужен для анализа распространения, например:
+
+`web_search → telegram → vk`
+
+или:
+
+`telegram → vk`.
 
 ## 7. Дедупликация и кластеризация
 На первом этапе без тяжёлой ML-модели.
@@ -104,8 +144,13 @@ source_velocity
 platform_velocity
 first_seen_at
 last_seen_at
+search_first_seen
+social_first_seen
+web_to_social_minutes
 
 Это отдельный слой. Не смешиваем его напрямую с историческим POTENTIAL.
+
+Отдельно измеряем, сколько времени прошло от первого появления в Web Search до первого появления в VK/TG. Такой сигнал нужен не для доказательства причинности, а для оценки опережающих источников.
 
 ## 9. Verification
 Три уровня:
@@ -190,7 +235,9 @@ publication mismatch
 ## 14. Две скорости
 FAST PATH:
 
-VK/TG → новые сообщения → normalize → dedup → NewsEvent → score → queue
+VK/TG/Web Search → новые публикации → normalize → dedup → NewsEvent → score → queue
+
+Web Search не заменяет VK/TG: он даёт ранний сигнал и возможный первичный материал СМИ, после чего событие объединяется с последующими соцпубликациями.
 
 DEEP PATH:
 
@@ -234,6 +281,7 @@ scripts/
 data/
   raw/vk/
   raw/telegram/
+  raw/search/
   normalized/
   events/
   dataset/
@@ -243,9 +291,9 @@ data/
   feedback/
 
 ## 16. Приоритет реализации
-Этап A — VK и Telegram collectors.
-Этап B — единый SourcePost.
-Этап C — Event clustering.
+Этап A — VK, Telegram и Web Search collectors.
+Этап B — единый SourcePost для всех discovery-источников.
+Этап C — Event clustering с cross-platform dedup.
 Этап D — Freshness и source velocity.
 Этап E — Verification.
 Этап F — подключение Event к текущему Audience Router.
@@ -258,8 +306,8 @@ data/
 
 Мы строим единую цепочку:
 
-VK ───────┐
-          ├→ SourcePost → NewsEvent → scoring → routing → publication → feedback
-Telegram ─┘
+VK ─────────────┐
+Telegram ───────┼→ SourcePost → NewsEvent → scoring → routing → publication → feedback
+Web Search ─────┘
 
 Так новая площадка добавляется как новый collector, а не как второй независимый проект.
