@@ -18,10 +18,23 @@ The tool never modifies input files or GitHub. It diagnoses:
 from __future__ import annotations
 
 import argparse
+import sys
 import json
 import math
 import re
 import statistics
+
+# Force UTF-8 for Windows/PyCharm console output.
+if hasattr(sys.stdout, "reconfigure"):
+    try:
+        sys.stdout.reconfigure(encoding="utf-8", errors="backslashreplace")
+    except Exception:
+        pass
+if hasattr(sys.stderr, "reconfigure"):
+    try:
+        sys.stderr.reconfigure(encoding="utf-8", errors="backslashreplace")
+    except Exception:
+        pass
 from pathlib import Path
 from typing import Any
 
