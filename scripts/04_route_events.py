@@ -389,6 +389,8 @@ def main():
     print(f"Semantic conflict strength: {signal_counts}")
     print(f"Semantic conflicts by type: {semantic_analysis['by_event_type']}")
     print(f"Semantic conflicts by pair: {semantic_analysis['by_pair']}")
+    print(f"Semantic override candidates: {len(semantic_analysis['override_candidates'])}")
+    print(f"Semantic override target changes: {len(semantic_analysis['override_changes'])}")
     print(f"Сохранено: {EVENTS_OUTPUT}")
     print("Audience Router: DIAGNOSTIC_ONLY")
     for event in routed[:20]:
