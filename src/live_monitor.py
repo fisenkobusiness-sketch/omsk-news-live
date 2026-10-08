@@ -366,9 +366,12 @@ def main():
     )
 
     first_cycle = True
+    cycle_no = 0
 
     while True:
         try:
+            cycle_no += 1
+            log(f"Цикл #{cycle_no}: опрашиваю VK...")
             new_posts = []
             seen_before = seen.copy()
 
@@ -424,6 +427,7 @@ def main():
                 log("Новых постов при первом цикле нет.")
 
             first_cycle = False
+            log(f"Цикл #{cycle_no}: завершён. Следующий опрос через {POLL_SECONDS} сек.")
             time.sleep(POLL_SECONDS)
 
         except KeyboardInterrupt:
