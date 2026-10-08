@@ -59,6 +59,42 @@ def event_to_post(event):
     return post
 
 
+
+def build_router_audit(routed):
+    """Find cases where event semantics disagree with the final router."""
+    rows = []
+    for event in routed:
+        routing = event.get("audience_routing") or {}
+        event_fit = routing.get("event_fit") or {}
+        fit = routing.get("fit") or {}
+        target = routing.get("recommended_target")
+        if target not in ("golos", "zhest"):
+            continue
+        event_best = max(event_fit, key=event_fit.get) if event_fit else None
+        event_margin = abs(float(event_fit.get("golos", 50.0)) - float(event_fit.get("zhest", 50.0)))
+        fit_margin = abs(float(fit.get("golos", 50.0)) - float(fit.get("zhest", 50.0)))
+        rows.append({
+            "event_id": event.get("event_id"),
+            "event_type": event.get("event_type"),
+            "target": target,
+            "event_best": event_best,
+            "event_margin": round(event_margin, 2),
+            "fit_margin": round(fit_margin, 2),
+            "fit": fit,
+            "event_fit": event_fit,
+            "mechanisms": (event.get("audience_scores") or {}).get("golos", {}).get("mechanisms", []),
+            "freshness_age_minutes": event.get("freshness_age_minutes"),
+            "spread_minutes": event.get("spread_minutes"),
+            "source_count": event.get("source_count"),
+            "independent_source_count": event.get("independent_source_count"),
+            "conflict": bool(event_best and event_best != target),
+        })
+    conflicts = [row for row in rows if row["conflict"]]
+    conflicts.sort(key=lambda row: row["event_margin"], reverse=True)
+    borderline = sorted(rows, key=lambda row: row["fit_margin"])[:30]
+    return conflicts, borderline
+
+
 def main():
     if not EVENTS_INPUT.exists():
         raise FileNotFoundError(
@@ -161,7 +197,20 @@ def main():
 
     write_jsonl(EVENTS_OUTPUT, routed)
 
+    conflicts, borderline = build_router_audit(routed)
+    audit_path = ROOT / "data" / "events" / "router_audit.json"
+    audit_path.parent.mkdir(parents=True, exist_ok=True)
+    with audit_path.open("w", encoding="utf-8") as handle:
+        json.dump({
+            "event_count": len(routed),
+            "conflict_count": len(conflicts),
+            "conflicts": conflicts[:50],
+            "borderline": borderline,
+        }, handle, ensure_ascii=False, indent=2)
+
     print(f"NewsEvent: {len(routed)}")
+    print(f"Router audit: {audit_path}")
+    print(f"Event-fit/router conflicts: {len(conflicts)}")
     print(f"Сохранено: {EVENTS_OUTPUT}")
     print("Audience Router: DIAGNOSTIC_ONLY")
     for event in routed[:20]:
