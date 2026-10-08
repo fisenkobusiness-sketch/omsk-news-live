@@ -125,7 +125,7 @@ def vk_call(method, token, **params):
     params["access_token"] = token
     params["v"] = "5.199"
     url = f"https://api.vk.com/method/{method}"
-    r = requests.get(url, params=params, timeout=20)
+    r = requests.get(url, params=params, timeout=5)
     r.raise_for_status()
     data = r.json()
     if "error" in data:
