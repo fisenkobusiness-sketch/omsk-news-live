@@ -142,6 +142,7 @@ def main():
             "expected_potential": routing.get("expected_potential", {}),
             "percentiles": routing.get("percentiles", {}),
             "event_strength": routing.get("event_strength", 0.0),
+            "event_fit": routing.get("event_fit", {}),
             "event_dominant": routing.get("event_dominant", False),
             "method": routing.get("method"),
             "status": "DIAGNOSTIC_ONLY",
@@ -181,6 +182,7 @@ def main():
             f"mechanisms={scores.get('golos', {}).get('mechanisms')} | "
             f"strength={scores.get('golos', {}).get('mechanism_strength')} | "
             f"fresh_event_strength={scores.get('golos', {}).get('fresh_event_strength')} | "
+            f"event_fit={routing.get('event_fit')} | "
             f"fits={routing.get('fit')} | affinity={event.get('audience_affinity')}"
         )
 
