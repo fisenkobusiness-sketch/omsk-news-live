@@ -219,8 +219,26 @@ OFFICIAL_ATTRIBUTION_RE = re.compile(
 )
 
 
+def _contains_marker(text, marker):
+    """Match Russian lexical markers without substring false positives."""
+    marker = str(marker or '').strip().lower()
+    if not marker:
+        return False
+
+    if " " in marker or marker.endswith("-"):
+        return marker in text
+
+    if len(marker) <= 4:
+        return bool(re.search(rf'(?<![а-яёa-z]){re.escape(marker)}(?![а-яёa-z])', text))
+
+    return bool(re.search(
+        rf'(?<![а-яёa-z]){re.escape(marker)}[а-яёa-zё-]*',
+        text,
+    ))
+
+
 def contains_any(text, words):
-    return any(word in text for word in words)
+    return any(_contains_marker(text, word) for word in words)
 
 
 def classify_one(post):
@@ -243,7 +261,7 @@ def classify_one(post):
                 if pattern.search(lower)
             )
         else:
-            hits = sum(1 for word in words if word in lower)
+            hits = sum(1 for word in words if _contains_marker(lower, word))
 
         if hits:
             mechanisms.append(mechanism)
