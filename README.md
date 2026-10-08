@@ -83,6 +83,25 @@ python run_pipeline.py --collect
 python run_pipeline.py --search-only
 ```
 
+Единый нормализованный discovery-слой:
+
+```bash
+python run_pipeline.py --discovery
+```
+
+Он собирает:
+
+```text
+VK + Telegram* + Web Search
+        ↓
+     SourcePost
+        ↓
+data/normalized/source_posts.jsonl
+```
+
+`*` Telegram подключается только при включённом `TELEGRAM_ENABLED` и настроенных локальных MTProto credentials. Исторический VK RAW, dataset, модели и scoring этим режимом не изменяются.
+
+
 ---
 
 ### Этап 02 — dataset
