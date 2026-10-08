@@ -31,7 +31,7 @@ OUTPUT = "predictor_queue.json"
 def clamp(x, a=0, b=100):
     return max(a, min(b, x))
 
-from metrics import aggregate_topic_stats, topic_age_hours
+from metrics import aggregate_topic_stats, topic_age_hours, engagement_rate
 
 
 def stats(t):
@@ -104,12 +104,9 @@ def predict(t):
     comment_signal = clamp(comments * 5)
     repost_signal = clamp(reposts * 10)
 
-    engagement = (
-        (likes + comments * 2 + reposts * 4)
-        / max(views, 1)
-        * 1000
+    engagement = clamp(
+        engagement_rate(likes, comments, reposts, views)
     )
-    engagement = clamp(engagement)
 
     spread = clamp(
         max(0, posts - 1) * 25 +
