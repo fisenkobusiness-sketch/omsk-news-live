@@ -161,7 +161,8 @@ def classify(p):
 
     nonlocal_hit=has(t,NONLOCAL); omsk_hit=has(t,OMSK)
     explicit_omsk=omsk_hit and nonlocal_hit
-    excluded=excluded_topic(t)\n    ad=promotional_ad(t); opinion=has(t,OPINION)
+    excluded=excluded_topic(t)
+    ad=promotional_ad(t); opinion=has(t,OPINION)
     help_req_raw=has(t,HELP) or bool(re.search(r"(?:опубликуйте|огромная просьба|просьба о помощи|к кому обращаться|что нам делать|может кто(?:-нибудь)? видел|пожалуйста.{0,25}(?:запис|напиш|отклик)|просим|прошу|хотел(?: бы)? найти).{0,160}(?:очевидц|видеорегистратор|запис|помощь|владельц)", t, re.I))
     # Просьба о помощи внутри уже состоявшегося события не превращает
     # саму новость в "не новость". Например: "пропал человек, нужны записи".
