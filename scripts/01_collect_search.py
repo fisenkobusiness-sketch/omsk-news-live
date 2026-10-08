@@ -67,6 +67,13 @@ def main() -> None:
 
     items = collector.collect(queries)
 
+    if collector.errors:
+        for error in collector.errors:
+            log(
+                "WARN: запрос поиска пропущен: "
+                f"{error['query_id']}: {error['error']}"
+            )
+
     payload = {
         "version": "1.0",
         "platform": "web_search",
@@ -85,6 +92,8 @@ def main() -> None:
             for query in queries
         ],
         "posts_count": len(items),
+        "errors_count": len(collector.errors),
+        "errors": collector.errors,
         "posts": items,
     }
 
