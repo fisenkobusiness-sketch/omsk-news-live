@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Conservative SourcePost -> NewsEvent clustering v2.
+"""Conservative SourcePost -> NewsEvent clustering v3.
 
 Diagnostic-only clustering. Scoring, datasets and publication routing are untouched.
 """
@@ -146,6 +146,28 @@ def _similarity(a: str, b: str) -> float:
     return max(seq, jaccard)
 
 
+def _match_text(post: Dict[str, Any]) -> str:
+    """Text used for semantic matching; web search may have useful RSS description."""
+    text = _text(post)
+    if _platform(post) == "web_search":
+        description = str((post.get("meta") or {}).get("description") or "").strip()
+        if description and description not in text:
+            text = f"{text} {description}"
+    return text
+
+
+def _event_match_text(event: Dict[str, Any]) -> str:
+    texts = []
+    for post in event.get("source_posts") or []:
+        value = _match_text(post)
+        if value:
+            texts.append(value)
+    canonical = str(event.get("canonical_text") or "").strip()
+    if canonical and canonical not in texts:
+        texts.append(canonical)
+    return max(texts, key=len) if texts else canonical
+
+
 def _cross_platform_match(post: Dict[str, Any], event: Dict[str, Any]) -> Tuple[bool, str, float]:
     """Match a short web-search headline to a longer social post conservatively."""
     other = event.get("representative_post") or {}
@@ -155,8 +177,8 @@ def _cross_platform_match(post: Dict[str, Any], event: Dict[str, Any]) -> Tuple[
     if not _same_time(post, other, CROSS_PLATFORM_WINDOW_MINUTES):
         return False, "cross_platform_time_window", 0.0
 
-    left = meaningful_tokens(_text(post))
-    right = meaningful_tokens(event.get("canonical_text", ""))
+    left = meaningful_tokens(_match_text(post))
+    right = meaningful_tokens(_event_match_text(event))
 
     if not left or not right:
         return False, "cross_platform_no_tokens", 0.0
@@ -164,7 +186,7 @@ def _cross_platform_match(post: Dict[str, Any], event: Dict[str, Any]) -> Tuple[
     overlap = left & right
     recall = len(overlap) / len(left)
     precision = len(overlap) / len(right)
-    seq = SequenceMatcher(None, normalize_text(_text(post)), normalize_text(event.get("canonical_text", ""))).ratio()
+    seq = SequenceMatcher(None, normalize_text(_match_text(post)), normalize_text(_event_match_text(event))).ratio()
 
     current_entities = extract_entities(_text(post))
     event_entities = event.get("entities", {})
@@ -229,11 +251,8 @@ def _can_merge(post: Dict[str, Any], event: Dict[str, Any]) -> Tuple[bool, str, 
     if similarity >= 0.84 and event_type_match and (place_match or number_match):
         return True, "text_similarity_plus_entity", similarity
 
-    # Google News may surface the same publisher/title in multiple queries.
-    if _platform(post) == "web_search" and _publisher(post) and _publisher(post) == _publisher(event["representative_post"]):
-        if similarity >= 0.55 and _same_time(post, event["representative_post"], 24 * 60):
-            return True, "same_source_duplicate", similarity
-
+    # Do not merge merely because two Google News items have the same publisher.
+    # The RSS stream can contain unrelated articles from the same outlet minutes apart.
     return False, "no_match", similarity
 
 
@@ -306,7 +325,7 @@ def _build_event(posts: List[Dict[str, Any]]) -> Dict[str, Any]:
         "discovery_path": discovery_path,
         "canonical_url": next(iter(urls), None),
         "event_type": entities["event_type"][0],
-        "cluster_method": "deterministic_v2",
+        "cluster_method": "deterministic_v3",
     }
 
 
