@@ -858,6 +858,60 @@ def event_dominance_signal(post=None, event_strength=0.0, event_meta=None):
         "injury_hits": injuries,
     }
 
+def event_audience_fit(mechanisms=None, event_meta=None):
+    """Estimate audience fit from event-level semantics, independent of raw score.
+
+    This is a small diagnostic prior, not a replacement for historical
+    audience calibration. It intentionally uses broad editorial signals so
+    the router can distinguish otherwise similar mechanism aggregates.
+    """
+    mechanisms = set(mechanisms or [])
+    meta = event_meta or {}
+
+    golos = 50.0
+    zhest = 50.0
+
+    # Light/public-interest material tends to fit Golos.
+    if "positive_emotion" in mechanisms:
+        golos += 8.0
+    if "humor" in mechanisms:
+        golos += 10.0
+    if "weather" in mechanisms:
+        golos += 8.0
+    if "usefulness" in mechanisms:
+        golos += 5.0
+
+    # Hard/incident material tends to fit Zhest.
+    if "incident" in mechanisms:
+        zhest += 10.0
+    if "shock" in mechanisms:
+        zhest += 10.0
+    if "fear" in mechanisms:
+        zhest += 8.0
+    if "conflict" in mechanisms:
+        zhest += 8.0
+    if "animal" in mechanisms:
+        zhest += 5.0
+    if meta.get("hard_news_hint"):
+        zhest += 10.0
+
+    if int(_num(meta.get("death_count"), 0) or 0) > 0:
+        zhest += 15.0
+    if int(_num(meta.get("injury_hits"), 0) or 0) >= 2:
+        zhest += 10.0
+
+    # Human stories are intentionally shared rather than forced into one page.
+    if "human_story" in mechanisms:
+        golos += 3.0
+        zhest += 3.0
+
+    # Keep the diagnostic prior bounded and interpretable.
+    return {
+        "golos": round(max(0.0, min(100.0, golos)), 2),
+        "zhest": round(max(0.0, min(100.0, zhest)), 2),
+    }
+
+
 def route_scores(
     audience_scores,
     profiles,
@@ -869,6 +923,7 @@ def route_scores(
     high_margin=8.0,
     performance_weight=0.60,
     affinity_weight=0.40,
+    event_fit_weight=0.15,
     priority_threshold=62.0,
     take_threshold=55.0,
     reserve_threshold=52.0,
@@ -876,6 +931,8 @@ def route_scores(
     """Единый router для fresh и OOS с редакторскими предохранителями."""
     if abs((performance_weight + affinity_weight) - 1.0) > 1e-9:
         raise ValueError("performance_weight + affinity_weight must equal 1.0")
+    if not 0.0 <= event_fit_weight <= 1.0:
+        raise ValueError("event_fit_weight must be between 0 and 1")
 
     expected = {}
     percentiles = {}
@@ -883,6 +940,8 @@ def route_scores(
     calibration_meta = {}
     affinity = affinity or {}
     utility = {}
+    event_fit = event_audience_fit(mechanisms, event_meta)
+    historical_weight = max(0.0, 1.0 - event_fit_weight)
 
     for audience, score in audience_scores.items():
         profile = profiles.get(audience, {})
@@ -897,9 +956,13 @@ def route_scores(
             "calibration_method": method,
             "affinity_prior": round(_num(affinity.get(audience), 50.0), 2),
         }
-        utility[audience] = round(
+        calibrated_fit = (
             expected_value * performance_weight
-            + _num(affinity.get(audience), 50.0) * affinity_weight,
+            + _num(affinity.get(audience), 50.0) * affinity_weight
+        )
+        utility[audience] = round(
+            calibrated_fit * historical_weight
+            + event_fit.get(audience, 50.0) * event_fit_weight,
             2,
         )
 
@@ -921,13 +984,18 @@ def route_scores(
             "expected_potential": expected,
             "percentiles": percentiles,
             "mechanism_fits": mechanism_fits,
+            "event_fit": event_fit,
             "calibration": calibration_meta,
             "best_audience": ordered[0][0] if ordered else None,
             "second_audience": None,
             "fit_margin": None,
             "decision": "INSUFFICIENT_DATA",
-            "method": "calibrated_performance_60_affinity_prior_40_v2_5",
-            "weights": {"performance": performance_weight, "affinity": affinity_weight},
+            "method": "calibrated_performance_51_affinity_prior_34_event_fit_15_v1",
+            "weights": {
+                "performance": performance_weight * historical_weight,
+                "affinity": affinity_weight * historical_weight,
+                "event_fit": event_fit_weight,
+            },
             "event_strength": round(event_strength, 2),
             "event_dominant": bool(dominance.get("dominant")),
             "event_dominance": dominance,
@@ -1008,6 +1076,7 @@ def route_scores(
         "expected_potential": expected,
         "percentiles": percentiles,
         "mechanism_fits": mechanism_fits,
+        "event_fit": event_fit,
         "calibration": calibration_meta,
         "best_audience": best_audience,
         "second_audience": second_audience,
@@ -1021,7 +1090,11 @@ def route_scores(
         "score_status": score_status,
         "decision": decision,
         "method": "calibrated_performance_60_affinity_prior_40_v2_5",
-        "weights": {"performance": performance_weight, "affinity": affinity_weight},
+        "weights": {
+            "performance": performance_weight * historical_weight,
+            "affinity": affinity_weight * historical_weight,
+            "event_fit": event_fit_weight,
+        },
     }
 
 
