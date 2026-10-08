@@ -207,6 +207,8 @@ def build_router_audit(routed):
         semantic_signal = event_semantic_signal(event)
         rows.append({
             "event_id": event.get("event_id"),
+            "title": ((event.get("representative_post") or {}).get("post") or {}).get("title") or event.get("canonical_text", "")[:180],
+            "canonical_text": event.get("canonical_text", ""),
             "event_type": event.get("event_type"),
             "target": target,
             "event_best": event_best,
@@ -262,6 +264,7 @@ def build_router_audit(routed):
         "strong_moderate": strong_moderate[:100],
         "override_candidates": override_candidates[:100],
         "override_changes": override_changes[:100],
+        "override_review": override_changes[:100],
     }
 
 
