@@ -8,6 +8,7 @@ PRIOR_VIEWS = 2182.0
 PRIOR_ENGAGEMENT_PER_1000 = 5.2172351103321395
 PRIOR_COMMENTS_PER_1000 = 0.5007776088746414
 PRIOR_REPOSTS_PER_1000 = 0.2829720262054196
+PRIOR_VELOCITY_PER_HOUR = 262.8275109170306
 
 def aggregate_topic_stats(members):
     members = members or []
@@ -42,3 +43,10 @@ def comment_rate(comments, views):
 
 def repost_rate(reposts, views):
     return stabilized_rate_per_1000(reposts, views, PRIOR_REPOSTS_PER_1000)
+
+
+def velocity_signal(views, age_hours):
+    """Smooth current view velocity using a median-based saturation curve."""
+    age_hours = max(float(age_hours or 0), 0.25)
+    rate = max(float(views or 0), 0.0) / age_hours
+    return 100.0 * rate / (rate + PRIOR_VELOCITY_PER_HOUR)
