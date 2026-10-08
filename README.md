@@ -708,3 +708,13 @@ python run_pipeline.py --collect
 ```
 
 Секреты хранятся только локально в `secrets/` и исключены из Git.
+
+### Диагностический NewsEvent
+
+После discovery можно отдельно построить события из нормализованных SourcePost:
+
+```bash
+python run_pipeline.py --events
+```
+
+Результат записывается в `data/events/news_events.jsonl`. На этом этапе кластеризация не подключена к текущему scoring: dataset, модели и `data/scoring` не изменяются.
