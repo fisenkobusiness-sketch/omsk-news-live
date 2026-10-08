@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Conservative SourcePost -> NewsEvent clustering.
+"""Conservative SourcePost -> NewsEvent clustering v2.
 
-The first implementation is deterministic and intentionally diagnostic-only.
-It does not modify scoring, datasets, or publication routing.
+Diagnostic-only clustering. Scoring, datasets and publication routing are untouched.
 """
 from __future__ import annotations
 
@@ -28,6 +27,10 @@ EVENT_WINDOWS_MINUTES = {
     "general": 240,
 }
 
+# Cross-platform discovery is allowed a wider publication lag than same-type
+# duplicate clustering. The source still has to be recent relative to the event.
+CROSS_PLATFORM_WINDOW_MINUTES = 24 * 60
+
 EVENT_KEYWORDS = {
     "accident": ("дтп", "авар", "столкнов", "сбил", "наезд", "перевернул"),
     "fire": ("пожар", "загорел", "горит", "горел", "возгора"),
@@ -38,9 +41,22 @@ EVENT_KEYWORDS = {
     "politics": ("губернатор", "мэр", "чиновник", "правительств", "депутат", "назначен", "отстав"),
 }
 
+# Generic Russian words carry almost no cross-platform identity signal.
+_STOPWORDS = {
+    "омск", "омске", "омска", "омский", "область", "области", "област", "город",
+    "стали", "стал", "стала", "стало", "новый", "новая", "новое", "новые",
+    "рассказал", "рассказали", "сообщили", "сообщает", "стало", "известно",
+    "сегодня", "завтра", "вчера", "свежие", "данные", "жители", "люди",
+    "местные", "регионе", "регион", "время", "день", "дни",
+}
+
 
 def _text(post: Dict[str, Any]) -> str:
     return str((post.get("post") or {}).get("text") or "").strip()
+
+
+def _platform(post: Dict[str, Any]) -> str:
+    return str((post.get("source") or {}).get("platform") or "")
 
 
 def normalize_text(value: str) -> str:
@@ -52,6 +68,10 @@ def normalize_text(value: str) -> str:
 
 def token_set(value: str) -> set[str]:
     return {x for x in normalize_text(value).split() if len(x) >= 3}
+
+
+def meaningful_tokens(value: str) -> set[str]:
+    return {x for x in token_set(value) if x not in _STOPWORDS}
 
 
 def extract_numbers(value: str) -> set[str]:
@@ -69,8 +89,6 @@ def detect_event_type(value: str) -> str:
 
 
 def extract_entities(value: str) -> Dict[str, List[str]]:
-    # Lightweight entities for the first deterministic pass.
-    # Proper NER is intentionally deferred until real clustering diagnostics exist.
     text = normalize_text(value)
     tokens = token_set(value)
     places = sorted(
@@ -108,6 +126,10 @@ def _post_url(post: Dict[str, Any]) -> str:
     return str((post.get("post") or {}).get("url") or "").strip()
 
 
+def _publisher(post: Dict[str, Any]) -> str:
+    return str((post.get("meta") or {}).get("publisher") or "").strip().lower()
+
+
 def _same_time(a: Dict[str, Any], b: Dict[str, Any], window: int) -> bool:
     ta, tb = _published_minutes(a), _published_minutes(b)
     if ta is None or tb is None:
@@ -124,6 +146,51 @@ def _similarity(a: str, b: str) -> float:
     return max(seq, jaccard)
 
 
+def _cross_platform_match(post: Dict[str, Any], event: Dict[str, Any]) -> Tuple[bool, str, float]:
+    """Match a short web-search headline to a longer social post conservatively."""
+    other = event.get("representative_post") or {}
+    if _platform(post) == _platform(other):
+        return False, "same_platform", 0.0
+
+    if not _same_time(post, other, CROSS_PLATFORM_WINDOW_MINUTES):
+        return False, "cross_platform_time_window", 0.0
+
+    left = meaningful_tokens(_text(post))
+    right = meaningful_tokens(event.get("canonical_text", ""))
+
+    if not left or not right:
+        return False, "cross_platform_no_tokens", 0.0
+
+    overlap = left & right
+    recall = len(overlap) / len(left)
+    precision = len(overlap) / len(right)
+    seq = SequenceMatcher(None, normalize_text(_text(post)), normalize_text(event.get("canonical_text", ""))).ratio()
+
+    current_entities = extract_entities(_text(post))
+    event_entities = event.get("entities", {})
+    numbers = set(current_entities["numbers"]) & set(event_entities.get("numbers", []))
+    places = set(current_entities["places"]) & set(event_entities.get("places", []))
+    type_match = current_entities["event_type"][0] == event.get("event_type")
+
+    # Strong anchor: numbers or concrete place tokens. For titles without them,
+    # require at least two uncommon shared tokens and high title recall.
+    uncommon_overlap = {t for t in overlap if len(t) >= 5 and t not in _STOPWORDS}
+    strong_anchor = bool(numbers or places or len(uncommon_overlap) >= 2)
+
+    if recall >= 0.78 and strong_anchor:
+        score = 0.60 * recall + 0.20 * min(1.0, len(uncommon_overlap) / 3) + 0.10 * int(type_match) + 0.10 * min(1.0, seq)
+        return True, "title_in_body", score
+
+    if recall >= 0.62 and type_match and strong_anchor and (numbers or places):
+        score = 0.50 * recall + 0.20 * int(type_match) + 0.20 * min(1.0, len(numbers | places) / 2) + 0.10 * seq
+        return True, "entity_match", score
+
+    if seq >= 0.84 and type_match:
+        return True, "cross_platform_similarity", seq
+
+    return False, "cross_platform_no_match", max(recall, seq)
+
+
 def _can_merge(post: Dict[str, Any], event: Dict[str, Any]) -> Tuple[bool, str, float]:
     text = _text(post)
     normalized = normalize_text(text)
@@ -134,7 +201,12 @@ def _can_merge(post: Dict[str, Any], event: Dict[str, Any]) -> Tuple[bool, str, 
         return True, "exact_url", 1.0
 
     if normalized and normalized == event.get("normalized_text"):
-        return True, "normalized_text", 1.0
+        # Exact text across VK audiences / repeated search queries is one content
+        # origin, while every SourcePost remains attached to the event.
+        return True, "same_text", 1.0
+
+    if _platform(post) != _platform(event.get("representative_post") or {}):
+        return _cross_platform_match(post, event)
 
     if not _same_time(post, event["representative_post"], window):
         return False, "time_window", 0.0
@@ -157,6 +229,11 @@ def _can_merge(post: Dict[str, Any], event: Dict[str, Any]) -> Tuple[bool, str, 
     if similarity >= 0.84 and event_type_match and (place_match or number_match):
         return True, "text_similarity_plus_entity", similarity
 
+    # Google News may surface the same publisher/title in multiple queries.
+    if _platform(post) == "web_search" and _publisher(post) and _publisher(post) == _publisher(event["representative_post"]):
+        if similarity >= 0.55 and _same_time(post, event["representative_post"], 24 * 60):
+            return True, "same_source_duplicate", similarity
+
     return False, "no_match", similarity
 
 
@@ -167,6 +244,19 @@ def _event_id(posts: List[Dict[str, Any]]) -> str:
     )
     digest = hashlib.sha1("|".join(keys).encode("utf-8")).hexdigest()[:16]
     return f"evt_{digest}"
+
+
+def _origin_key(post: Dict[str, Any]) -> str:
+    """Approximate independent editorial origin, not raw audience/source id."""
+    normalized = normalize_text(_text(post))
+    if _platform(post) == "web_search":
+        publisher = _publisher(post) or "unknown"
+        return f"web:{publisher}:{normalized}"
+    return f"{_platform(post)}:{normalized}"
+
+
+def _independent_origin_count(posts: List[Dict[str, Any]]) -> int:
+    return len({_origin_key(p) for p in posts if _text(p)})
 
 
 def _build_event(posts: List[Dict[str, Any]]) -> Dict[str, Any]:
@@ -185,17 +275,18 @@ def _build_event(posts: List[Dict[str, Any]]) -> Dict[str, Any]:
     )
 
     source_keys = {_source_key(p) for p in posts}
-    platforms = {(p.get("source") or {}).get("platform") for p in posts}
+    platforms = {_platform(p) for p in posts}
     urls = {_post_url(p) for p in posts if _post_url(p)}
+    first_platform = _platform(first) or "unknown"
 
-    first_platform = (first.get("source") or {}).get("platform", "unknown")
     discovery_path = []
     for p in ordered:
-        platform = (p.get("source") or {}).get("platform", "unknown")
+        platform = _platform(p) or "unknown"
         if platform not in discovery_path:
             discovery_path.append(platform)
 
     entities = extract_entities(canonical)
+    origin_count = _independent_origin_count(posts)
 
     return {
         "event_id": _event_id(posts),
@@ -203,7 +294,8 @@ def _build_event(posts: List[Dict[str, Any]]) -> Dict[str, Any]:
         "last_seen_at": last_ts,
         "first_source": first_platform,
         "source_count": len(posts),
-        "independent_source_count": len(source_keys),
+        "independent_source_count": origin_count,
+        "raw_source_key_count": len(source_keys),
         "platform_count": len(platforms),
         "source_posts": posts,
         "canonical_text": canonical,
@@ -214,7 +306,7 @@ def _build_event(posts: List[Dict[str, Any]]) -> Dict[str, Any]:
         "discovery_path": discovery_path,
         "canonical_url": next(iter(urls), None),
         "event_type": entities["event_type"][0],
-        "cluster_method": "deterministic_v1",
+        "cluster_method": "deterministic_v2",
     }
 
 
@@ -244,6 +336,10 @@ def cluster_source_posts(source_posts: Iterable[Dict[str, Any]]) -> List[Dict[st
         event = events[best]
         posts = list(event["source_posts"]) + [post]
         updated = _build_event(posts)
+        reasons = list(event.get("cluster_reasons", []))
+        if best_reason not in reasons:
+            reasons.append(best_reason)
+        updated["cluster_reasons"] = reasons
         updated["cluster_reason_last"] = best_reason
         updated["cluster_similarity_last"] = round(best_similarity, 4)
         events[best] = updated
