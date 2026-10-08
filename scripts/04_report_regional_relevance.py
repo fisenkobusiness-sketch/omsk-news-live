@@ -38,6 +38,28 @@ def main():
     print(f"REJECTED:  {counts['REGION_REJECTED']}")
     print()
 
+    likely = [
+        (post, result)
+        for post, result in results
+        if result["regional_status"] == "REGION_LIKELY"
+    ]
+
+    print("LIKELY:")
+    for index, (post, result) in enumerate(likely, start=1):
+        source = post.get("source") or {}
+        body = post.get("post") or {}
+        meta = post.get("meta") or {}
+        print(
+            f"{index}. "
+            f"[{meta.get('query_id')}] "
+            f"{meta.get('publisher') or source.get('source_name')} | "
+            f"{body.get('text')} | "
+            f"score={result['regional_relevance']} | "
+            f"reason={','.join(result['regional_reasons'])}"
+        )
+
+    print()
+
     rejected = [
         (post, result)
         for post, result in results
