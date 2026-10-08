@@ -208,6 +208,7 @@ def _build_event(posts: List[Dict[str, Any]]) -> Dict[str, Any]:
         "source_posts": posts,
         "canonical_text": canonical,
         "normalized_text": normalize_text(canonical),
+        "representative_post": first,
         "entities": entities,
         "verification": {"state": "UNVERIFIED", "primary_sources": [], "secondary_sources": []},
         "discovery_path": discovery_path,
