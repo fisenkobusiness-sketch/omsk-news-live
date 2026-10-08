@@ -8,6 +8,7 @@
 """
 
 import json, re, sys
+from functools import lru_cache
 from pathlib import Path
 
 # Prefer UTF-8; if the host console is legacy, console_print below falls back safely.
@@ -99,7 +100,18 @@ NEWS=["произош","произошла","произошло","сообщил
  "выброс","превысил норм","тариф","отключ","закрыли","открыли","введут","изменят",
  "проверка","прокуратура","следственный комитет","мчс","гибдд","администрация"]
 
+@lru_cache(maxsize=4096)
 def norm(x): return re.sub(r"\s+"," ",str(x).lower()).strip()
+
+@lru_cache(maxsize=4096)
+def text_signature(text):
+    n=norm(text)
+    words=frozenset(re.findall(r"[а-яёa-z0-9]{4,}",n))
+    nums=frozenset(re.findall(r"\b\d+(?:[.,]\d+)?\b",n))
+    anchors=frozenset(x for x in
+      ["прокуратур","мчс","гибдд","суд","погиб","умер","пожар","авари","выброс","тариф","мошен",
+       "школ","столов","возгора","теплотрас","кипят"] if x in n)
+    return n,words,nums,anchors
 def text_of(p):
     for k in ("text","description","content","post_text","message"):
         if p.get(k): return str(p[k])
@@ -204,36 +216,25 @@ def classify(p):
       "explicit_omsk_relevance":explicit_omsk,"confidence":conf
     }
 
-def words(s): return set(re.findall(r"[а-яёa-z0-9]{4,}",norm(s)))
+def words(s): return text_signature(s)[1]
+
 def similar(a,b):
-    A,B=words(a),words(b)
+    na,A,nums_a,anchors_a=text_signature(a)
+    nb,B,nums_b,anchors_b=text_signature(b)
     if not A or not B:return False
     j=len(A&B)/len(A|B)
-    nums=set(re.findall(r"\b\d+(?:[.,]\d+)?\b",norm(a)))&set(re.findall(r"\b\d+(?:[.,]\d+)?\b",norm(b)))
-    anchors=sum(x in norm(a) and x in norm(b) for x in
-      ["прокуратур","мчс","гибдд","суд","погиб","умер","пожар","авари","выброс","тариф","мошен",
- "школ","столов","возгора","теплотрас","кипят"])
-    na, nb = norm(a), norm(b)
-    # Специальное объединение допустимо только для явно совпадающего
-    # школьного пожара; общие слова "теплотрасса/выбросы/тарифы"
-    # сами по себе не означают один и тот же инфоповод.
-    same_event = (
+    nums=nums_a&nums_b
+    anchors=len(anchors_a&anchors_b)
+    same_event=(
         ("школ" in na and "школ" in nb) and
-        any(x in na for x in ["пожар", "горел", "возгора"]) and
-        any(x in nb for x in ["пожар", "горел", "возгора"]) and
-        bool(set(re.findall(r"\b(?:№\s*)?\d+\b", na)) &
-             set(re.findall(r"\b(?:№\s*)?\d+\b", nb)))
+        any(x in na for x in ["пожар","горел","возгора"]) and
+        any(x in nb for x in ["пожар","горел","возгора"]) and
+        bool(set(re.findall(r"\b(?:№\s*)?\d+\b",na)) &
+             set(re.findall(r"\b(?:№\s*)?\d+\b",nb)))
     )
-
-    # Сильная сигнатура одного конкретного происшествия.
-    # Нужны минимум 3 характерных признака, чтобы не склеивать
-    # разные жалобы про теплотрассы/выбросы/кипяток.
-    event_signatures = [
-        ["рабоч", "теплов", "кипят", "ожог", "уголовн", "гибел", "гагарин"],
-    ]
-    strong_event = any(
-        sum(x in na and x in nb for x in sig) >= 3
-        for sig in event_signatures
+    strong_event=any(
+        sum(x in na and x in nb for x in sig)>=3
+        for sig in [["рабоч","теплов","кипят","ожог","уголовн","гибел","гагарин"]]
     )
     return j>=.23 or (anchors>=2 and j>=.12) or (len(nums)>=2 and j>=.12) or same_event or strong_event
 
@@ -241,12 +242,29 @@ def main():
     with INPUT.open(encoding="utf-8") as f:d=json.load(f)
     posts=d if isinstance(d,list) else next((d[k] for k in ("posts","items","data") if isinstance(d.get(k),list)),[])
     topics=[]
+    # Inverted token index cuts the clustering search space while preserving
+    # the original first-match topic order.
+    token_index={}
     for p in posts:
         t=text_of(p)
-        for q in topics:
+        _,post_words,_,_=text_signature(t)
+        candidate_ids=set()
+        for word in post_words:
+            candidate_ids.update(token_index.get(word, ()))
+        matched=False
+        for idx in sorted(candidate_ids):
+            q=topics[idx]
             if any(similar(t,m["text"]) for m in q["members"]):
-                q["members"].append({"text":t,"post":p});break
-        else:topics.append({"members":[{"text":t,"post":p}]})
+                q["members"].append({"text":t,"post":p})
+                for word in post_words:
+                    token_index.setdefault(word,set()).add(idx)
+                matched=True
+                break
+        if not matched:
+            idx=len(topics)
+            topics.append({"members":[{"text":t,"post":p}]})
+            for word in post_words:
+                token_index.setdefault(word,set()).add(idx)
 
     out=[]
     for q in topics:
@@ -280,10 +298,11 @@ def main():
         discussion = min(100, (comments / max(views, 1)) * 2500)
         spread = min(100, (reposts / max(views, 1)) * 5000)
 
+        joined_text=norm(" ".join(texts))
         hook = 0
-        hook += 18 if any(x in " ".join(texts).lower() for x in ["снесут", "запрет", "пропал", "погиб", "задержали", "авар", "пожар", "дтп"]) else 0
-        hook += 12 if any(x in " ".join(texts).lower() for x in ["почему", "как так", "куда смотр", "что будет", "впервые", "необыч"]) else 0
-        hook += 10 if any(x in " ".join(texts).lower() for x in ["омск", "омской", "омич", "омичи"]) else 0
+        hook += 18 if any(x in joined_text for x in ["снесут","запрет","пропал","погиб","задержали","авар","пожар","дтп"]) else 0
+        hook += 12 if any(x in joined_text for x in ["почему","как так","куда смотр","что будет","впервые","необыч"]) else 0
+        hook += 10 if any(x in joined_text for x in ["омск","омской","омич","омичи"]) else 0
 
         # Малый охват не обнуляет ранний сигнал.
         early_signal = min(100, velocity * 0.45 + engagement * 0.25 + discussion * 0.15 + spread * 0.15)
