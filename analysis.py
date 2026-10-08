@@ -34,7 +34,7 @@ def console_print(message):
         print(text.encode("ascii", "backslashreplace").decode("ascii"), flush=True)
 from datetime import datetime
 
-from metrics import aggregate_topic_stats, topic_age_hours, engagement_rate, comment_rate, repost_rate, velocity_signal
+from metrics import aggregate_topic_stats, topic_age_hours, engagement_rate, comment_signal, repost_signal, velocity_signal
 
 INPUT=Path("vk_today.json")
 OUTPUT=Path("editor_queue.json")
@@ -246,8 +246,8 @@ def main():
 
         engagement = min(100, engagement_rate(likes, comments, reposts, views))
         velocity = velocity_signal(views, hours_old)
-        discussion = min(100, comment_rate(comments, views) * 2.5)
-        spread = min(100, repost_rate(reposts, views) * 5.0)
+        discussion = comment_signal(comments, views)
+        spread = repost_signal(reposts, views)
 
         hook = 0
         hook += 18 if any(x in " ".join(texts).lower() for x in ["снесут", "запрет", "пропал", "погиб", "задержали", "авар", "пожар", "дтп"]) else 0
