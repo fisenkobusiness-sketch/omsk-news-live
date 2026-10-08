@@ -174,6 +174,47 @@ WEB_SEARCH_QUERIES = [
 
 
 # ============================================================
+# DISCOVERY LAYER
+# ============================================================
+
+# Registry is metadata only: collectors do not contain hard-coded
+# editorial source quality decisions.
+DISCOVERY_SOURCES = {
+    "vk": {
+        "source_type": "social",
+        "source_quality": "platform",
+        "verification_level": "UNVERIFIED",
+    },
+    "telegram": {
+        "source_type": "social",
+        "source_quality": "platform",
+        "verification_level": "UNVERIFIED",
+    },
+    "web_search": {
+        "source_type": "search",
+        "source_quality": "discovery",
+        "verification_level": "UNVERIFIED",
+    },
+}
+
+# Telegram credentials are intentionally read only from environment/local
+# secrets by collectors. No active credentials belong in this file.
+TELEGRAM_ENABLED = (
+    os.getenv("TELEGRAM_ENABLED", "0").strip() != "0"
+)
+TELEGRAM_MAX_MESSAGES = int(
+    os.getenv("TELEGRAM_MAX_MESSAGES", "200")
+)
+TELEGRAM_SESSION = (
+    os.getenv("TELEGRAM_SESSION", "").strip()
+    or str(BASE / "secrets" / "telegram")
+)
+
+# Channel registry is configuration, not collector code. Keep usernames
+# without @. It can be populated when MTProto credentials are configured.
+TELEGRAM_CHANNELS = []
+
+# ============================================================
 # ДАННЫЕ
 # ============================================================
 
