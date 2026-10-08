@@ -291,9 +291,12 @@ def publish_to_github():
     content = json.dumps(payload, ensure_ascii=False, indent=2)
     encoded = base64.b64encode(content.encode("utf-8")).decode("ascii")
 
-    # Публикуем широкий редакционный пул.
-    # final_queue.json оставляем для обратной совместимости старых потребителей.
-    for github_path in ("editorial_pool.json", "final_queue.json"):
+    # Публикуем только основной редакционный пул.
+    # final_queue.json больше не участвует в текущем pipeline:
+    # поиск по репозиторию не нашёл его потребителей. Старый файл можно
+    # оставить в GitHub для обратной совместимости, но не тратить ~5 сек
+    # на его обновление на каждом цикле.
+    for github_path in ("editorial_pool.json",):
         sha = None
         try:
             _, existing = github_request(
