@@ -328,7 +328,7 @@ def main():
         primary_post = ms[0]["post"] if ms else {}
         primary_url = primary_post.get("url") or primary_post.get("post_url") or primary_post.get("source_url")
         out.append({"score":score,"viral_score":round(viral,1),"editorial_score":round(editorial,1),
-          "confidence":conf,"posts":len(ms),"social_sources":len(sources),"views":views,"reposts":reposts,
+          "confidence":conf,"posts":len(ms),"social_sources":len(sources),"views":views,"reposts":reposts,"likes":likes,"comments":comments,
           "content_type":content,"official_attribution":official,"source_type":infos[0]["source_type"],
           "nonlocal_detected":nonlocal_only,"help_request":help_only,"opinion_detected":opinion_only,
           "advertising_detected":ad_only,"excluded_topic":excluded_only,"status":status,"action":action,
