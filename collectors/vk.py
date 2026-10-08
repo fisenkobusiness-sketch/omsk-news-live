@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import os
 import time
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from typing import Any, Dict, List
 
 import requests
@@ -215,13 +215,41 @@ class VKDiscoveryCollector:
                 if not items:
                     break
 
+                today_omsk = (
+                    datetime.now(timezone.utc) + timedelta(hours=6)
+                ).date()
+                today_items = []
+                reached_previous_day = False
+
+                for item in items:
+                    timestamp = int(item.get("date", 0) or 0)
+                    if not timestamp:
+                        continue
+
+                    item_date_omsk = (
+                        datetime.fromtimestamp(
+                            timestamp,
+                            tz=timezone.utc,
+                        )
+                        + timedelta(hours=6)
+                    ).date()
+
+                    if item_date_omsk == today_omsk:
+                        today_items.append(item)
+                    elif item_date_omsk < today_omsk:
+                        reached_previous_day = True
+                        break
+
                 result.extend(
                     self._normalize(group, item)
-                    for item in items
+                    for item in today_items
                 )
 
                 collected += len(items)
                 offset += len(items)
+
+                if reached_previous_day:
+                    break
 
                 total = int(
                     response.get("count", 0) or 0
