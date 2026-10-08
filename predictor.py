@@ -31,7 +31,7 @@ OUTPUT = "predictor_queue.json"
 def clamp(x, a=0, b=100):
     return max(a, min(b, x))
 
-from metrics import aggregate_topic_stats, topic_age_hours, engagement_rate, velocity_signal
+from metrics import aggregate_topic_stats, topic_age_hours, engagement_rate, comment_signal, repost_signal, velocity_signal
 
 
 def stats(t):
@@ -101,8 +101,8 @@ def predict(t):
 
     # Базовый ранний прогноз.
     reach = clamp(views / 50)
-    comment_signal = clamp(comments * 5)
-    repost_signal = clamp(reposts * 10)
+    comment_signal = comment_signal(comments, views)
+    repost_signal = repost_signal(reposts, views)
 
     engagement = clamp(
         engagement_rate(likes, comments, reposts, views)
