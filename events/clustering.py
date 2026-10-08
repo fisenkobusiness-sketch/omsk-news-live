@@ -364,3 +364,32 @@ def cluster_source_posts(source_posts: Iterable[Dict[str, Any]]) -> List[Dict[st
         events[best] = updated
 
     return events
+
+
+def cross_platform_candidates(source_posts: Iterable[Dict[str, Any]], limit: int = 50) -> List[Dict[str, Any]]:
+    """Return strongest WEB↔social pairs for diagnostic threshold tuning."""
+    posts=list(source_posts)
+    web_posts=[p for p in posts if _platform(p)=="web_search"]
+    social_posts=[p for p in posts if _platform(p) in {"vk","telegram"}]
+    candidates=[]
+    for web in web_posts:
+        left=meaningful_tokens(_match_text(web))
+        if not left: continue
+        for social in social_posts:
+            if not _same_time(web,social,CROSS_PLATFORM_WINDOW_MINUTES): continue
+            right=meaningful_tokens(_match_text(social))
+            if not right: continue
+            overlap=left & right
+            recall=len(overlap)/len(left)
+            precision=len(overlap)/len(right)
+            uncommon={t for t in overlap if len(t)>=5 and t not in _STOPWORDS}
+            seq=SequenceMatcher(None,normalize_text(_match_text(web)),normalize_text(_match_text(social))).ratio()
+            ew=extract_entities(_match_text(web)); es=extract_entities(_match_text(social))
+            numbers=set(ew["numbers"]) & set(es["numbers"])
+            places=set(ew["places"]) & set(es["places"])
+            type_match=ew["event_type"][0]==es["event_type"][0]
+            score=(0.45*recall+0.15*precision+0.15*min(1.0,len(uncommon)/3)+0.10*min(1.0,len(numbers|places)/2)+0.10*int(type_match)+0.05*seq)
+            if score<0.28: continue
+            candidates.append({"score":round(score,4),"recall":round(recall,4),"precision":round(precision,4),"sequence":round(seq,4),"shared_tokens":sorted(uncommon)[:12],"shared_numbers":sorted(numbers),"shared_places":sorted(places),"event_type_match":type_match,"web":web,"social":social})
+    candidates.sort(key=lambda x:(-x["score"],-x["recall"],-x["sequence"]))
+    return candidates[:limit]
