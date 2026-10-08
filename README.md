@@ -1,4 +1,4 @@
-# Анализатор контента — Omsk / две VK-аудитории
+# Анализатор контента — Omsk / VK + Telegram + Web Search / две VK-аудитории
 
 Проект анализирует исторические публикации двух VK-сообществ и строит две независимые редакторские модели.
 
@@ -27,7 +27,21 @@ python scripts/00_smoke_test.py
 
 ## 1. Что делает pipeline
 
-### Этап 01 — сбор VK
+### Этап 01 — discovery-сбор
+
+Источники постепенно собираются в общий discovery-слой:
+
+```text
+VK
+Telegram
+Web Search
+   ↓
+SourcePost
+   ↓
+NewsEvent
+```
+
+На текущем этапе в pipeline уже подключены VK и Web Search. Telegram-collector остаётся следующим этапом интеграции MTProto.
 
 ```text
 scripts/01_collect_vk.py
@@ -39,6 +53,15 @@ scripts/01_collect_vk.py
 data/raw/omsk_vk_raw.json
 ```
 
+Web Search:
+
+```text
+data/raw/search/omsk_search_raw.json
+```
+
+Результаты поиска используются как discovery-сигналы и сохраняются отдельно от исторического VK dataset, пока не завершён слой NewsEvent.
+```
+
 По умолчанию собирается до 2000 постов на каждую группу.
 
 Запуск:
@@ -47,10 +70,18 @@ data/raw/omsk_vk_raw.json
 python scripts/01_collect_vk.py
 ```
 
-или полный pipeline:
+или общий discovery-сбор:
 
 ```bash
 python run_pipeline.py --collect
+```
+
+Он обновляет VK RAW и поисковую выдачу.
+
+Только Web Search:
+
+```bash
+python run_pipeline.py --search-only
 ```
 
 ---
@@ -537,7 +568,7 @@ GITHUB_BRANCH
 `GITHUB_BRANCH` по умолчанию:
 
 ```text
-main
+audience-router
 ```
 
 ---
@@ -621,6 +652,20 @@ ML имеет смысл добавлять только после накопл
 # 18. Git workflow проекта
 
 Эта ветка предназначена только для проекта Audience Router.
+
+Для discovery-слоя сейчас действует принцип:
+
+```text
+VK ─────────────┐
+Telegram ───────┼→ SourcePost → NewsEvent
+Web Search ─────┘
+                     ↓
+                 Scoring
+                     ↓
+              Audience Router
+```
+
+Web Search не получает искусственные социальные метрики. Его ценность — в раннем обнаружении материала новостников, поисковой выдаче и последующем объединении с VK/TG-публикациями.
 
 `main` в репозитории используется другим проектом и не является источником истины для этого кода.
 
