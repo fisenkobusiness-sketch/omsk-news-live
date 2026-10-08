@@ -28,14 +28,53 @@ def console_print(message):
 INPUT = "editor_queue.json"
 OUTPUT = "predictor_queue.json"
 
+EXCLUDED_TOPIC_PATTERNS = [
+    "бпла", "беспилотник", "беспилотники", "беспилотный",
+    "беспилотные", "дрон", "дроны", "дрона", "дронами",
+    "воздушная тревога", "воздушной тревоги", "ракетной опасности",
+]
+
+PROMO_PATTERNS = [
+    "подписывайтесь", "подпишитесь", "подписывайся",
+    "наши каналы", "самые свежие новости",
+    "где публикуются самые свежие",
+]
+
+
 def clamp(x, a=0, b=100):
     return max(a, min(b, x))
+
+
+def topic_text(t):
+    parts = [
+        t.get("text"),
+        t.get("title"),
+        t.get("headline"),
+        t.get("summary"),
+    ]
+    for member in t.get("members", []) or []:
+        if isinstance(member, dict):
+            parts.append(member.get("text"))
+            parts.append(member.get("title"))
+    return " ".join(str(x or "").lower() for x in parts)
+
+
+def has_excluded_topic(t):
+    text = topic_text(t)
+    return any(pattern in text for pattern in EXCLUDED_TOPIC_PATTERNS)
+
+
+def has_promo_pattern(t):
+    text = topic_text(t)
+    return any(pattern in text for pattern in PROMO_PATTERNS)
+
 
 from metrics import aggregate_topic_stats, topic_age_hours
 
 
 def stats(t):
     return aggregate_topic_stats(t.get("members", []))
+
 
 def predict(t):
     text = (t.get("text") or "").lower()
@@ -48,6 +87,29 @@ def predict(t):
     sources = int(t.get("social_sources", 1) or 1)
 
     views, reposts, likes, comments = stats(t)
+
+    # Жёсткие редакционные исключения.
+    # Они не должны участвовать в прогнозе вообще, даже если
+    # получили огромный охват или много репостов.
+    if has_excluded_topic(t):
+        return {
+            "priority_score": 0,
+            "prediction": "⛔ НЕ БРАТЬ: ИСКЛЮЧЁННАЯ ТЕМА",
+            "confidence": 0,
+            "verification_required": False,
+            "disclaimer_required": False,
+            "exclusion_reason": "excluded_topic"
+        }
+
+    if has_promo_pattern(t):
+        return {
+            "priority_score": 0,
+            "prediction": "⛔ НЕ БРАТЬ: ПРОМО",
+            "confidence": 0,
+            "verification_required": False,
+            "disclaimer_required": False,
+            "exclusion_reason": "promotional"
+        }
 
     # Жёсткий фильтр.
     if t.get("advertising_detected") or status == "reject":
@@ -117,11 +179,9 @@ def predict(t):
     )
 
     # v5.5: сила события отдельно от текущего охвата.
-    # Свежая серьёзная новость не должна теряться из-за маленького охвата.
     text_all = text
 
     # v5.7: более строгая проверка локальности.
-    # Публикация в омской группе сама по себе не делает событие омским.
     nonlocal_words = [
         "шереметьево", "домодедово", "внуково",
         "москва", "москов", "санкт-петербург", "петербург",
@@ -151,6 +211,7 @@ def predict(t):
     ]
     if any(a in text_all and b in text_all for a, b in practical_pairs):
         practical_local = 10
+
     event_strength = 0
     event_rules = [
         (["погиб", "погибла", "погибли", "смерт", "умер"], 18),
@@ -167,8 +228,6 @@ def predict(t):
             event_strength = max(event_strength, bonus)
 
     # v5.6: свежесть и скорость распространения.
-    # Свежая сильная новость получает преимущество перед старой,
-    # которая просто успела накопить больше просмотров.
     members = t.get("members", [])
     primary = members[0] if members else {}
     ts = primary.get("timestamp")
@@ -198,12 +257,8 @@ def predict(t):
         + freshness * 0.05
         + velocity_now * 0.05
         + (practical_local if not explicit_nonlocal else 0)
-
     )
 
-    # Ключевая поправка v5.4:
-    # подтверждённая редактором новость получает приоритет,
-    # даже если ещё не успела набрать большой охват.
     if status == "take_now":
         score += 18
     elif status == "check":
@@ -212,13 +267,11 @@ def predict(t):
     if t.get("official_attribution"):
         score += 8
 
-    # Несколько источников одной темы — ранний признак распространения.
     if posts >= 2:
         score += min(8, (posts - 1) * 4)
     if sources >= 2:
         score += min(8, (sources - 1) * 4)
 
-    # Локальные крючки.
     hooks = [
         "погиб", "погибла", "пожар", "дтп", "авар", "пропал",
         "задерж", "снес", "запрет", "закро", "отключ",
@@ -227,7 +280,6 @@ def predict(t):
     ]
     score += min(10, sum(1 for x in hooks if x in text) * 2)
 
-    # Чужие темы не должны попадать в лидеры.
     if explicit_nonlocal:
         score = min(score, 20)
     elif t.get("nonlocal_detected"):
@@ -251,6 +303,7 @@ def predict(t):
         "verification_required": confidence < 50,
         "disclaimer_required": confidence < 50
     }
+
 
 def main():
     path = Path(INPUT)
@@ -279,6 +332,8 @@ def main():
             "complaints_are_separate_signals": True,
             "help_requests_are_not_news": True,
             "advertising_is_not_news": True,
+            "excluded_topics_are_hard_filtered": True,
+            "promotional_topics_are_hard_filtered": True,
             "nonlocal_cap": 35,
             "explicit_nonlocal_cap": 20,
             "event_strength_matters": True,
@@ -313,6 +368,7 @@ def main():
         p = topic["prediction"]
         title = (topic.get("text") or "").replace("\n", " ")[:100]
         console_print(f"{i}. {p['priority_score']} - {p['prediction']} - {title}")
+
 
 if __name__ == "__main__":
     main()
