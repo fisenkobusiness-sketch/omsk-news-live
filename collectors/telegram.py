@@ -53,7 +53,7 @@ class TelegramMTProtoCollector:
 
     def collect(self) -> List[dict[str, Any]]:
         try:
-            from telethon import TelegramClient
+            from telethon.sync import TelegramClient
         except ImportError as exc:
             raise RuntimeError(
                 "Для Telegram MTProto не установлен Telethon. "
