@@ -19,6 +19,10 @@ _CONFIRMED_MARKERS = (
 # Сильные нерегиональные маркеры, которые особенно опасны для широкого поиска.
 _REJECT_MARKERS = (
     "калужско-рижск", "медведково", "мытищи",
+    "новосибирск", "новосибирской", "новосибирском", "толмачёво", "нск",
+    "челябинск", "челябинской", "тюмень", "тюменской",
+    "забайкаль", "коми", "петербург", "санкт-петербург",
+    "краснодар", "краснодарский", "москва", "московской",
 )
 
 _NON_NEWS_MARKERS = (
@@ -53,11 +57,12 @@ def assess_regional_relevance(post: Dict[str, Any]) -> Dict[str, Any]:
     rejected = _contains_any(text, _REJECT_MARKERS)
     non_news = _contains_any(text, _NON_NEWS_MARKERS)
 
-    # Источник из целевого омского регионального пула — сильный дополнительный сигнал.
+    # Издатель — только вспомогательный сигнал. Сам по себе он не доказывает,
+    # что материал про Омск: даже om1 публикует материалы других регионов.
     regional_publisher = any(
         marker in publisher
         for marker in (
-            "омск", "om1", "gorod55", "kvnews", "superomsk",
+            "омск", "gorod55", "kvnews", "superomsk",
             "ngs55", "трамплин", "иртыш", "суперомск", "bk55",
         )
     )
@@ -76,22 +81,29 @@ def assess_regional_relevance(post: Dict[str, Any]) -> Dict[str, Any]:
         if confirmed:
             score += 70
             reasons.append("regional_marker")
-        if regional_publisher:
-            score += 20
-            reasons.append("regional_publisher")
-        if query_id in {
+        regional_query = query_id in {
             "omsk_oblast", "omsk_incident", "omsk_dtp", "omsk_fire",
             "omsk_court", "omsk_transport", "omsk_social",
             "omsk_schools", "omsk_weather", "om1", "kvnews",
             "superomsk", "ngs55", "omskinform",
-        }:
-            score += 10
+        }
+        if regional_publisher:
+            reasons.append("regional_publisher")
+        if regional_query:
             reasons.append("regional_query")
 
-        if score >= 70:
+        # Без явного омского маркера оставляем LIKELY только при двух
+        # независимых слабых сигналах: локальный издатель + локальный запрос.
+        if confirmed:
+            score = 70 + (20 if regional_publisher else 0) + (10 if regional_query else 0)
             status = "REGION_CONFIRMED"
-        elif score >= 30:
+        elif regional_publisher and regional_query:
+            score = 30
             status = "REGION_LIKELY"
+        else:
+            status = "REGION_REJECTED"
+            score = 0
+            reasons.append("no_regional_signal")
         else:
             status = "REGION_REJECTED"
             reasons.append("no_regional_signal")
