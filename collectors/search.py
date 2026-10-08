@@ -104,6 +104,7 @@ class GoogleNewsRSSCollector:
         self.max_items = max_items
         self.request_delay = request_delay
         self.session = session or requests.Session()
+        self.errors: List[Dict[str, str]] = []
 
     def fetch_query(
         self,
@@ -219,9 +220,20 @@ class GoogleNewsRSSCollector:
         results: List[Dict[str, Any]] = []
 
         for query in queries:
-            results.extend(
-                self.fetch_query(query)
-            )
+            try:
+                results.extend(
+                    self.fetch_query(query)
+                )
+            except (
+                requests.RequestException,
+                ET.ParseError,
+                ValueError,
+            ) as exc:
+                self.errors.append({
+                    "query_id": query.query_id,
+                    "query": query.query,
+                    "error": str(exc),
+                })
             if self.request_delay > 0:
                 time.sleep(self.request_delay)
 
