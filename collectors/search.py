@@ -207,6 +207,7 @@ class GoogleNewsRSSCollector:
                         "description": description,
                         "publisher": source_name or None,
                         "publisher_url": source_url,
+                        "query_id": query.query_id,
                     },
                 )
             )
