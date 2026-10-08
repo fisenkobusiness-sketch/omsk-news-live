@@ -172,6 +172,11 @@ def main():
         help="Прогнать NewsEvent через Audience Router в диагностическом режиме.",
     )
     mode.add_argument(
+        "--regional-report",
+        action="store_true",
+        help="Построить диагностический отчёт региональной релевантности SourcePost.",
+    )
+    mode.add_argument(
         "--score-only",
         action="store_true",
         help=(
@@ -233,9 +238,15 @@ def main():
             "NewsEvent → Audience Router (diagnostic)",
         )
 
+    if args.regional_report:
+        run_step(
+            "scripts/04_report_regional_relevance.py",
+            "SourcePost → Regional Relevance (diagnostic)",
+        )
+
     steps = (
         []
-        if args.search_only or args.discovery or args.events or args.event_report or args.route_events
+        if args.search_only or args.discovery or args.events or args.event_report or args.route_events or args.regional_report
         else SCORE_ONLY_STEPS
         if args.score_only
         else FULL_STEPS
@@ -288,6 +299,13 @@ def main():
         print(
             "Режим: отчёт по кластеризации NewsEvent. "
             "Dataset, модели и scoring не изменялись."
+        )
+        return
+
+    if args.regional_report:
+        print(
+            "Режим: диагностический Regional Relevance для SourcePost. "
+            "Discovery, dataset, модели и scoring не изменялись."
         )
         return
 
