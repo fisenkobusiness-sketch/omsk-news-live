@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Conservative SourcePost -> NewsEvent clustering v5.
+"""Conservative SourcePost -> NewsEvent clustering v6.
 
 Diagnostic-only clustering. Scoring, datasets and publication routing are untouched.
 """
@@ -120,6 +120,34 @@ def _morphology_anchors(
         and min(len(a), len(b)) >= 7
     }
     return exact_anchors, len(fuzzy_anchors)
+
+
+def _phrase_tokens(value: str) -> List[str]:
+    return [x for x in normalize_text(value).split() if x not in _STOPWORDS and len(x) >= 4]
+
+
+def _phrase_anchor_matches(left_text: str, right_text: str) -> List[Tuple[str, str]]:
+    """Find distinctive 2-word anchors, allowing Russian inflectional variants."""
+    left = _phrase_tokens(left_text)
+    right = _phrase_tokens(right_text)
+    matches = []
+    for i in range(len(left) - 1):
+        a1, a2 = left[i], left[i + 1]
+        if max(len(a1), len(a2)) < 6:
+            continue
+        for j in range(len(right) - 1):
+            b1, b2 = right[j], right[j + 1]
+            if max(len(b1), len(b2)) < 6:
+                continue
+            r1 = SequenceMatcher(None, a1, b1).ratio()
+            r2 = SequenceMatcher(None, a2, b2).ratio()
+            if r1 >= 0.86 and r2 >= 0.86:
+                matches.append((f"{a1} {a2}", f"{b1} {b2}"))
+    return matches
+
+
+def _strong_phrase_anchor(left_text: str, right_text: str) -> bool:
+    return bool(_phrase_anchor_matches(left_text, right_text))
 
 
 def extract_numbers(value: str) -> set[str]:
@@ -248,7 +276,10 @@ def _cross_platform_match(post: Dict[str, Any], event: Dict[str, Any]) -> Tuple[
     # require at least two uncommon shared tokens and high title recall.
     uncommon_overlap = {t for t in matched_left if len(t) >= 5 and t not in _STOPWORDS}
     fuzzy_count = len(fuzzy_overlap)
-    strong_anchor = bool(numbers or places or len(uncommon_overlap) >= 2)
+    phrase_anchors = _phrase_anchor_matches(_match_text(post), _event_match_text(event))
+    # "Омск" is a search geography, not an event identity by itself.
+    specific_places = {p for p in places if p not in {"омск", "омская", "область", "город", "центр"}}
+    strong_anchor = bool(numbers or specific_places or phrase_anchors or len(uncommon_overlap) >= 2)
 
     if recall >= 0.78 and strong_anchor:
         score = 0.60 * recall + 0.20 * min(1.0, len(uncommon_overlap) / 3) + 0.10 * int(type_match) + 0.10 * min(1.0, seq)
@@ -265,7 +296,11 @@ def _cross_platform_match(post: Dict[str, Any], event: Dict[str, Any]) -> Tuple[
     # houses, accident, man, after, etc.) must never form an event identity.
     # Require either two distinctive exact anchors or two distinctive
     # inflectional anchors, plus the same event type.
-    morphology_anchor = len(exact_anchors) >= 2 or fuzzy_anchor_count >= 2
+    morphology_anchor = (
+        len(exact_anchors) >= 2
+        or fuzzy_anchor_count >= 2
+        or bool(phrase_anchors)
+    )
     if type_match and morphology_anchor and strong_anchor:
         score = 0.45 * recall + 0.20 * min(1.0, (len(exact_anchors) + fuzzy_anchor_count) / 3) + 0.20 * int(type_match) + 0.15 * seq
         return True, "morphology_match", score
@@ -392,7 +427,7 @@ def _build_event(posts: List[Dict[str, Any]]) -> Dict[str, Any]:
         "discovery_path": discovery_path,
         "canonical_url": next(iter(urls), None),
         "event_type": entities["event_type"][0],
-        "cluster_method": "deterministic_v5",
+        "cluster_method": "deterministic_v6",
     }
 
 
