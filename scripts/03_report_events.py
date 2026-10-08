@@ -7,11 +7,11 @@ import sys
 from pathlib import Path
 from collections import Counter
 
-from events.clustering import cross_platform_candidates
-
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
+
+from events.clustering import cross_platform_candidates
 
 INPUT = ROOT / "data" / "events" / "news_events.jsonl"
 REPORT = ROOT / "data" / "events" / "clustering_report.txt"
