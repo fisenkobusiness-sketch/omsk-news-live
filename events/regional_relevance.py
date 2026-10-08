@@ -16,6 +16,20 @@ _CONFIRMED_MARKERS = (
     "12 канал", "город55", "города55", "ngs55",
 )
 
+# Устойчивые сущности Омска/Омской области. Используются как сильный
+# региональный сигнал даже без буквального упоминания "Омск".
+_LOCAL_ENTITY_MARKERS = (
+    "хоценко", "виталию хоценко", "виталием хоценко",
+    "правительств омской области", "губернатор омской области",
+    "мэр омска", "мэрии омска", "администрации омска",
+    "омский аэропорт", "омский нпз", "омский нефтеперерабатывающий",
+    "омский район", "омская область",
+    "омгу", "омгту", "омский государственный университет",
+    "омский государственный технический университет",
+    "омский университет", "омсктрансмаш",
+    "авангард", "омские крылья", "12 канал",
+)
+
 # Сильные нерегиональные маркеры, которые особенно опасны для широкого поиска.
 _REJECT_MARKERS = (
     "калужско-рижск", "медведково", "мытищи",
@@ -54,6 +68,7 @@ def assess_regional_relevance(post: Dict[str, Any]) -> Dict[str, Any]:
     text = " ".join(part for part in (title, description, publisher) if part)
 
     confirmed = _contains_any(text, _CONFIRMED_MARKERS)
+    local_entities = _contains_any(text, _LOCAL_ENTITY_MARKERS)
     rejected = _contains_any(text, _REJECT_MARKERS)
     non_news = _contains_any(text, _NON_NEWS_MARKERS)
 
@@ -94,8 +109,9 @@ def assess_regional_relevance(post: Dict[str, Any]) -> Dict[str, Any]:
 
         # Без явного омского маркера оставляем LIKELY только при двух
         # независимых слабых сигналах: локальный издатель + локальный запрос.
-        if confirmed:
+        if confirmed or local_entities:
             score = 70 + (20 if regional_publisher else 0) + (10 if regional_query else 0)
+            reasons.append("local_entity") if local_entities and not confirmed else None
             status = "REGION_CONFIRMED"
         elif regional_publisher and regional_query:
             score = 30
@@ -110,6 +126,7 @@ def assess_regional_relevance(post: Dict[str, Any]) -> Dict[str, Any]:
         "regional_status": status,
         "regional_reasons": reasons,
         "regional_markers": confirmed,
+        "local_entities": local_entities,
         "foreign_markers": rejected,
         "non_news_markers": non_news,
     }
