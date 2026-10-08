@@ -939,10 +939,14 @@ def route_scores(
     second_audience, second_fit = ordered[1]
     margin = round(best_fit - second_fit, 2)
 
+    # Status thresholds must be applied to the common-scale utility,
+    # not to raw audience scores. Raw scores from different audience models
+    # are explicitly non-comparable; using them here can override the
+    # calibrated fit and route a story to the wrong audience.
     score_status = {}
     status_rank = {"ПРОПУСК": 0, "РЕЗЕРВ": 1, "ВЗЯТЬ": 2, "ПРИОРИТЕТ": 3}
-    for audience, score in audience_scores.items():
-        s = _num(score, 0.0)
+    for audience, fit in utility.items():
+        s = _num(fit, 0.0)
         if s >= priority_threshold:
             score_status[audience] = "ПРИОРИТЕТ"
         elif s >= take_threshold:
