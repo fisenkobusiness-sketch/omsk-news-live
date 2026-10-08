@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Conservative SourcePost -> NewsEvent clustering v3.
+"""Conservative SourcePost -> NewsEvent clustering v4.
 
 Diagnostic-only clustering. Scoring, datasets and publication routing are untouched.
 """
@@ -72,6 +72,27 @@ def token_set(value: str) -> set[str]:
 
 def meaningful_tokens(value: str) -> set[str]:
     return {x for x in token_set(value) if x not in _STOPWORDS}
+
+
+def _token_fuzzy_match(left: set[str], right: set[str]) -> set[tuple[str, str]]:
+    """Conservative fuzzy token matches for Russian inflectional variants."""
+    matches: set[tuple[str, str]] = set()
+    for a in left:
+        if len(a) < 5:
+            continue
+        for b in right:
+            if len(b) < 5:
+                continue
+            ratio = SequenceMatcher(None, a, b).ratio()
+            if ratio >= 0.86:
+                matches.add((a, b))
+    return matches
+
+
+def _semantic_overlap(left: set[str], right: set[str]) -> tuple[set[str], set[tuple[str, str]]]:
+    exact = left & right
+    fuzzy = _token_fuzzy_match(left - exact, right - exact)
+    return exact, fuzzy
 
 
 def extract_numbers(value: str) -> set[str]:
@@ -183,9 +204,11 @@ def _cross_platform_match(post: Dict[str, Any], event: Dict[str, Any]) -> Tuple[
     if not left or not right:
         return False, "cross_platform_no_tokens", 0.0
 
-    overlap = left & right
-    recall = len(overlap) / len(left)
-    precision = len(overlap) / len(right)
+    overlap, fuzzy_overlap = _semantic_overlap(left, right)
+    matched_left = {a for a, _ in fuzzy_overlap} | overlap
+    matched_right = {b for _, b in fuzzy_overlap} | overlap
+    recall = len(matched_left) / len(left)
+    precision = len(matched_right) / len(right)
     seq = SequenceMatcher(None, normalize_text(_match_text(post)), normalize_text(_event_match_text(event))).ratio()
 
     current_entities = extract_entities(_text(post))
@@ -196,12 +219,22 @@ def _cross_platform_match(post: Dict[str, Any], event: Dict[str, Any]) -> Tuple[
 
     # Strong anchor: numbers or concrete place tokens. For titles without them,
     # require at least two uncommon shared tokens and high title recall.
-    uncommon_overlap = {t for t in overlap if len(t) >= 5 and t not in _STOPWORDS}
+    uncommon_overlap = {t for t in matched_left if len(t) >= 5 and t not in _STOPWORDS}
+    fuzzy_count = len(fuzzy_overlap)
     strong_anchor = bool(numbers or places or len(uncommon_overlap) >= 2)
 
     if recall >= 0.78 and strong_anchor:
         score = 0.60 * recall + 0.20 * min(1.0, len(uncommon_overlap) / 3) + 0.10 * int(type_match) + 0.10 * min(1.0, seq)
         return True, "title_in_body", score
+
+    # Headlines and social posts often use different Russian inflections
+    # (e.g. реликвий/реликвия, православных/православной). Accept a pair
+    # when several distinctive words line up, but require the same event type
+    # and at least one long lexical anchor to avoid generic-word collisions.
+    long_fuzzy = sum(1 for a, b in fuzzy_overlap if min(len(a), len(b)) >= 8)
+    if type_match and fuzzy_count >= 2 and long_fuzzy >= 1 and strong_anchor:
+        score = 0.45 * recall + 0.20 * min(1.0, fuzzy_count / 3) + 0.20 * int(type_match) + 0.15 * seq
+        return True, "morphology_match", score
 
     if recall >= 0.62 and type_match and strong_anchor and (numbers or places):
         score = 0.50 * recall + 0.20 * int(type_match) + 0.20 * min(1.0, len(numbers | places) / 2) + 0.10 * seq
@@ -325,7 +358,7 @@ def _build_event(posts: List[Dict[str, Any]]) -> Dict[str, Any]:
         "discovery_path": discovery_path,
         "canonical_url": next(iter(urls), None),
         "event_type": entities["event_type"][0],
-        "cluster_method": "deterministic_v3",
+        "cluster_method": "deterministic_v4",
     }
 
 
@@ -379,16 +412,19 @@ def cross_platform_candidates(source_posts: Iterable[Dict[str, Any]], limit: int
             if not _same_time(web,social,CROSS_PLATFORM_WINDOW_MINUTES): continue
             right=meaningful_tokens(_match_text(social))
             if not right: continue
-            overlap=left & right
-            recall=len(overlap)/len(left)
-            precision=len(overlap)/len(right)
-            uncommon={t for t in overlap if len(t)>=5 and t not in _STOPWORDS}
+            overlap, fuzzy_overlap = _semantic_overlap(left, right)
+            matched_left = {a for a, _ in fuzzy_overlap} | overlap
+            matched_right = {b for _, b in fuzzy_overlap} | overlap
+            recall=len(matched_left)/len(left)
+            precision=len(matched_right)/len(right)
+            uncommon={t for t in matched_left if len(t)>=5 and t not in _STOPWORDS}
             seq=SequenceMatcher(None,normalize_text(_match_text(web)),normalize_text(_match_text(social))).ratio()
             ew=extract_entities(_match_text(web)); es=extract_entities(_match_text(social))
             numbers=set(ew["numbers"]) & set(es["numbers"])
             places=set(ew["places"]) & set(es["places"])
             type_match=ew["event_type"][0]==es["event_type"][0]
-            score=(0.45*recall+0.15*precision+0.15*min(1.0,len(uncommon)/3)+0.10*min(1.0,len(numbers|places)/2)+0.10*int(type_match)+0.05*seq)
+            fuzzy_count = len(fuzzy_overlap)
+            score=(0.45*recall+0.15*precision+0.15*min(1.0,len(uncommon)/3)+0.10*min(1.0,len(numbers|places)/2)+0.10*int(type_match)+0.05*seq+0.05*min(1.0,fuzzy_count/2))
             if score<0.28: continue
             candidates.append({"score":round(score,4),"recall":round(recall,4),"precision":round(precision,4),"sequence":round(seq,4),"shared_tokens":sorted(uncommon)[:12],"shared_numbers":sorted(numbers),"shared_places":sorted(places),"event_type_match":type_match,"web":web,"social":social})
     candidates.sort(key=lambda x:(-x["score"],-x["recall"],-x["sequence"]))
