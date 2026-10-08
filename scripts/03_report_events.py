@@ -7,6 +7,8 @@ import sys
 from pathlib import Path
 from collections import Counter
 
+from events.clustering import cross_platform_candidates
+
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
@@ -92,6 +94,32 @@ def main():
             )
             lines.append(f"   {post_text(post)[:500]}")
 
+    candidates = cross_platform_candidates(
+        [p for event in events for p in (event.get("source_posts") or [])],
+        limit=40,
+    )
+    lines.append("")
+    lines.append("TOP WEB↔SOCIAL CANDIDATES")
+    lines.append("=" * 80)
+    if not candidates:
+        lines.append("Нет кандидатов WEB↔VK/TG.")
+    for number, candidate in enumerate(candidates, start=1):
+        web = candidate["web"]
+        social = candidate["social"]
+        lines.append(
+            f"[{number}] score={candidate['score']} recall={candidate['recall']} "
+            f"precision={candidate['precision']} seq={candidate['sequence']} "
+            f"type_match={candidate['event_type_match']}"
+        )
+        lines.append(f"   shared_tokens: {', '.join(candidate['shared_tokens']) or '—'}")
+        lines.append(f"   shared_numbers: {', '.join(candidate['shared_numbers']) or '—'}")
+        lines.append(f"   shared_places: {', '.join(candidate['shared_places']) or '—'}")
+        lines.append(f"   WEB: {source_label(web)} | {post_time(web)}")
+        lines.append(f"   {post_text(web)[:500]}")
+        lines.append(f"   SOCIAL: {source_label(social)} | {post_time(social)}")
+        lines.append(f"   {post_text(social)[:700]}")
+        lines.append("-" * 80)
+
     lines.append("")
     lines.append("ALL MULTI-SOURCE EVENTS")
     lines.append("=" * 80)
@@ -127,6 +155,7 @@ def main():
     print(f"Multi-source events: {len(multi)}")
     print(f"Cross-platform events: {len(cross)}")
     print(f"Events with independent origins >=2: {sum(1 for e in events if e.get('independent_source_count', 0) >= 2)}")
+    print(f"WEB↔social candidates: {len(candidates)}")
     print("Причины:")
     for reason, count in reason_counter.most_common():
         print(f"  {reason}: {count}")
