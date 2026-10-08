@@ -21,10 +21,18 @@ from lib.analytics_core import (
 from lib.audience_router import (
     extract_event_meta,
 )
+from collectors.search import build_google_news_search_url
 
 
 def main():
     assert AUDIENCES == ("golos", "zhest")
+
+    search_url = build_google_news_search_url(
+        query="Омск",
+        when="6h",
+    )
+    assert "news.google.com/rss/search" in search_url
+    assert "when%3A6h" in search_url
 
     classification = classify_one({
         "title": "На трассе Омск—Красноярка погибли три человека в ДТП",
