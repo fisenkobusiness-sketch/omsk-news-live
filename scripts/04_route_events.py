@@ -61,34 +61,88 @@ def event_to_post(event):
 
 
 def event_semantic_signal(event):
-    """Classify how strongly event semantics point to one audience.
+    """Classify semantic strength using event type and mechanism quality.
 
     Diagnostic only: this does not change the production routing decision.
+    Strong levels require either a concrete hard-news type or several
+    meaningful mechanisms; generic mechanism accumulation is capped.
     """
     routing = event.get("audience_routing") or {}
     event_fit = routing.get("event_fit") or {}
+    mechanisms = set(
+        (event.get("audience_scores") or {})
+        .get("golos", {})
+        .get("mechanisms", [])
+    )
+    event_type = str(event.get("event_type") or "").lower()
+    dominance = routing.get("event_dominance") or {}
+
     if not event_fit:
-        return {"level": "NONE", "target": None, "margin": 0.0}
+        return {
+            "level": "NONE",
+            "target": None,
+            "margin": 0.0,
+            "reason": "no_event_fit",
+        }
 
     golos = float(event_fit.get("golos", 50.0) or 50.0)
     zhest = float(event_fit.get("zhest", 50.0) or 50.0)
     margin = abs(golos - zhest)
     target = "golos" if golos > zhest else "zhest" if zhest > golos else None
 
-    dominance = routing.get("event_dominance") or {}
-    if dominance.get("level", 0) >= 2:
+    # Concrete hard-news categories carry more weight than generic hooks.
+    hard_types = {"crime", "accident", "fire"}
+    meaningful_hard = {
+        "incident", "shock", "fear", "conflict",
+        "unusual", "animal",
+    }
+    severe = {
+        "death", "injury", "child_accident",
+        "quarantine_disease", "pollution_environment",
+        "fire_multiple_injuries",
+    }
+    positive = {"humor", "positive_emotion", "weather", "usefulness"}
+
+    hard_count = len(mechanisms & meaningful_hard)
+    severe_count = len(mechanisms & severe)
+    positive_count = len(mechanisms & positive)
+
+    # Existing event-dominance rules are the strongest diagnostic evidence.
+    if int(dominance.get("level", 0) or 0) >= 2:
         level = "DOMINANT"
-    elif margin >= 30.0:
+        reason = "event_dominance"
+    elif event_type in hard_types and (hard_count >= 2 or "shock" in mechanisms):
         level = "STRONG"
-    elif margin >= 15.0:
+        reason = "hard_event_type"
+    elif event_type in hard_types and hard_count >= 1:
         level = "MODERATE"
-    elif margin >= 8.0:
+        reason = "hard_event_type_plus_mechanism"
+    elif target == "zhest" and margin >= 30.0 and hard_count >= 2:
+        level = "STRONG"
+        reason = "strong_hard_semantics"
+    elif target == "zhest" and margin >= 15.0 and hard_count >= 1:
+        level = "MODERATE"
+        reason = "moderate_hard_semantics"
+    elif target == "golos" and event_type in {"weather", "social"} and positive_count >= 2:
+        level = "MODERATE"
+        reason = "positive_public_interest"
+    elif target == "golos" and event_type not in hard_types and positive_count >= 2 and margin >= 15.0:
         level = "WEAK"
+        reason = "positive_semantics"
     else:
-        level = "NONE"
+        level = "NONE" if margin < 15.0 else "WEAK"
+        reason = "generic_or_weak_semantics"
 
-    return {"level": level, "target": target, "margin": round(margin, 2)}
-
+    return {
+        "level": level,
+        "target": target,
+        "margin": round(margin, 2),
+        "reason": reason,
+        "event_type": event_type,
+        "hard_mechanism_count": hard_count,
+        "severe_mechanism_count": severe_count,
+        "positive_mechanism_count": positive_count,
+    }
 
 
 def build_router_audit(routed):
