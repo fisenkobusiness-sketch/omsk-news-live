@@ -718,3 +718,13 @@ python run_pipeline.py --events
 ```
 
 Результат записывается в `data/events/news_events.jsonl`. На этом этапе кластеризация не подключена к текущему scoring: dataset, модели и `data/scoring` не изменяются.
+
+### Отчёт по кластеризации
+
+После построения NewsEvent можно получить список всех объединённых событий:
+
+```bash
+python run_pipeline.py --event-report
+```
+
+Отчёт сохраняется в `data/events/clustering_report.txt`.
