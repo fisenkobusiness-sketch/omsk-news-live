@@ -34,7 +34,7 @@ def console_print(message):
         print(text.encode("ascii", "backslashreplace").decode("ascii"), flush=True)
 from datetime import datetime
 
-from metrics import aggregate_topic_stats, topic_age_hours, engagement_rate, comment_rate, repost_rate
+from metrics import aggregate_topic_stats, topic_age_hours, engagement_rate, comment_rate, repost_rate, velocity_signal
 
 INPUT=Path("vk_today.json")
 OUTPUT=Path("editor_queue.json")
@@ -245,7 +245,7 @@ def main():
         hours_old = topic_age_hours(member_posts, datetime.now().timestamp())
 
         engagement = min(100, engagement_rate(likes, comments, reposts, views))
-        velocity = min(100, (views / hours_old) / 250 * 100)
+        velocity = velocity_signal(views, hours_old)
         discussion = min(100, comment_rate(comments, views) * 2.5)
         spread = min(100, repost_rate(reposts, views) * 5.0)
 
