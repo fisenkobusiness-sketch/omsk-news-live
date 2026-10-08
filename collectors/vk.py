@@ -17,6 +17,7 @@ import requests
 from config import (
     API_VERSION,
     GROUPS,
+    DISCOVERY_VK_SOURCES,
     PAGE_SIZE,
     REQUEST_DELAY,
     VK_TOKEN_FILE,
@@ -186,10 +187,10 @@ class VKDiscoveryCollector:
         token = self._token()
         result: List[Dict[str, Any]] = []
 
-        for audience_key, cfg in GROUPS.items():
+        for cfg in DISCOVERY_VK_SOURCES:
             group = self._resolve_group(
                 token,
-                audience_key,
+                "discovery",
                 cfg,
             )
 
