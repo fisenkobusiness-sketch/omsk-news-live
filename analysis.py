@@ -34,6 +34,8 @@ def console_print(message):
         print(text.encode("ascii", "backslashreplace").decode("ascii"), flush=True)
 from datetime import datetime
 
+from metrics import aggregate_topic_stats, topic_age_hours
+
 INPUT=Path("vk_today.json")
 OUTPUT=Path("editor_queue.json")
 
@@ -237,16 +239,9 @@ def main():
         elif ad_only: content="advertising"
         elif nonlocal_only: content="nonlocal"
 
-        views=sum(next((p["views"] for k in ("views","views_count","view_count")
-                         if isinstance((p:=m["post"]).get(k),(int,float))),0) for m in ms)
-        reposts=sum(next((p["reposts"] for k in ("reposts","reposts_count","shares","share_count")
-                           if isinstance((p:=m["post"]).get(k),(int,float))),0) for m in ms)
-        # v10.14: VIRAL SCORE — оцениваем не только текущий охват,
-        # но и ранние признаки будущего распространения.
-        primary = ms[0]["post"] if ms else {}
-        likes = next((primary.get(k) for k in ("likes","likes_count") if isinstance(primary.get(k),(int,float))), 0)
-        comments = next((primary.get(k) for k in ("comments","comments_count") if isinstance(primary.get(k),(int,float))), 0)
-        hours_old = max(0.25, (datetime.now().timestamp() - primary.get("timestamp", datetime.now().timestamp())) / 3600)
+        # Shared aggregation keeps analysis and predictor statistically consistent.
+        views, reposts, likes, comments = aggregate_topic_stats(ms)
+        hours_old = topic_age_hours(ms, datetime.now().timestamp())
 
         engagement = min(100, ((likes + comments * 2 + reposts * 4) / max(views, 1)) * 1000)
         velocity = min(100, (views / hours_old) / 250 * 100)
