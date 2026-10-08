@@ -125,7 +125,33 @@ def build_router_audit(routed):
     conflicts = [row for row in rows if row["conflict"]]
     conflicts.sort(key=lambda row: row["event_margin"], reverse=True)
     borderline = sorted(rows, key=lambda row: row["fit_margin"])[:30]
-    return conflicts, borderline
+
+    by_level = {}
+    by_event_type = {}
+    by_mechanism = {}
+    by_pair = {}
+    for row in conflicts:
+        level = row["semantic_signal"]["level"]
+        event_type = row.get("event_type") or "unknown"
+        by_level[level] = by_level.get(level, 0) + 1
+        by_event_type[event_type] = by_event_type.get(event_type, 0) + 1
+        pair = f'{row.get("event_best")}→{row.get("target")}'
+        by_pair[pair] = by_pair.get(pair, 0) + 1
+        for mechanism in row.get("mechanisms") or []:
+            by_mechanism[mechanism] = by_mechanism.get(mechanism, 0) + 1
+
+    strong_moderate = [
+        row for row in conflicts
+        if row["semantic_signal"]["level"] in ("STRONG", "MODERATE")
+    ]
+
+    return conflicts, borderline, {
+        "by_level": dict(sorted(by_level.items(), key=lambda item: item[1], reverse=True)),
+        "by_event_type": dict(sorted(by_event_type.items(), key=lambda item: item[1], reverse=True)),
+        "by_mechanism": dict(sorted(by_mechanism.items(), key=lambda item: item[1], reverse=True)),
+        "by_pair": dict(sorted(by_pair.items(), key=lambda item: item[1], reverse=True)),
+        "strong_moderate": strong_moderate[:100],
+    }
 
 
 def main():
@@ -230,7 +256,7 @@ def main():
 
     write_jsonl(EVENTS_OUTPUT, routed)
 
-    conflicts, borderline = build_router_audit(routed)
+    conflicts, borderline, semantic_analysis = build_router_audit(routed)
     audit_path = ROOT / "data" / "events" / "router_audit.json"
     audit_path.parent.mkdir(parents=True, exist_ok=True)
     with audit_path.open("w", encoding="utf-8") as handle:
@@ -239,6 +265,7 @@ def main():
             "conflict_count": len(conflicts),
             "conflicts": conflicts[:50],
             "borderline": borderline,
+            "semantic_analysis": semantic_analysis,
         }, handle, ensure_ascii=False, indent=2)
 
     print(f"NewsEvent: {len(routed)}")
@@ -249,6 +276,8 @@ def main():
         signal_counts[level] = signal_counts.get(level, 0) + 1
     print(f"Event-fit/router conflicts: {len(conflicts)}")
     print(f"Semantic conflict strength: {signal_counts}")
+    print(f"Semantic conflicts by type: {semantic_analysis['by_event_type']}")
+    print(f"Semantic conflicts by pair: {semantic_analysis['by_pair']}")
     print(f"Сохранено: {EVENTS_OUTPUT}")
     print("Audience Router: DIAGNOSTIC_ONLY")
     for event in routed[:20]:
