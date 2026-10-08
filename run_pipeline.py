@@ -151,6 +151,14 @@ def main():
         ),
     )
     mode.add_argument(
+        "--events",
+        action="store_true",
+        help=(
+            "Построить диагностический слой NewsEvent "
+            "из normalized SourcePost без изменения scoring."
+        ),
+    )
+    mode.add_argument(
         "--score-only",
         action="store_true",
         help=(
@@ -194,9 +202,15 @@ def main():
             "Единый discovery: VK + Web Search → SourcePost",
         )
 
+    if args.events:
+        run_step(
+            "scripts/02_build_events.py",
+            "SourcePost → NewsEvent (diagnostic)",
+        )
+
     steps = (
         []
-        if args.search_only or args.discovery
+        if args.search_only or args.discovery or args.events
         else SCORE_ONLY_STEPS
         if args.score_only
         else FULL_STEPS
@@ -235,6 +249,13 @@ def main():
         print(
             "Режим: единый discovery-слой. "
             "Исторический VK dataset и scoring не изменялись."
+        )
+        return
+
+    if args.events:
+        print(
+            "Режим: диагностический NewsEvent. "
+            "Dataset, модели и scoring не изменялись."
         )
         return
 
