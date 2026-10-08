@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Conservative SourcePost -> NewsEvent clustering v6.
+"""Conservative SourcePost -> NewsEvent clustering v7.
 
 Diagnostic-only clustering. Scoring, datasets and publication routing are untouched.
 """
@@ -103,6 +103,9 @@ _MORPHOLOGY_GENERIC = {
     "остаются", "осталось", "получил", "получила", "мужчина", "женщина",
     "авария", "аварии", "произошла", "произошел", "произошли",
     "после", "утром", "сегодня", "новая", "новый",
+    "рублей", "миллиардов", "миллиона", "миллион", "тысяч",
+    "водитель", "водителя", "автомобиль", "автомобиля",
+    "машина", "машины", "проезд", "стоит", "услуги", "услуг",
 }
 
 
@@ -133,10 +136,14 @@ def _phrase_anchor_matches(left_text: str, right_text: str) -> List[Tuple[str, s
     matches = []
     for i in range(len(left) - 1):
         a1, a2 = left[i], left[i + 1]
+        if a1 in _MORPHOLOGY_GENERIC or a2 in _MORPHOLOGY_GENERIC:
+            continue
         if max(len(a1), len(a2)) < 6:
             continue
         for j in range(len(right) - 1):
             b1, b2 = right[j], right[j + 1]
+            if b1 in _MORPHOLOGY_GENERIC or b2 in _MORPHOLOGY_GENERIC:
+                continue
             if max(len(b1), len(b2)) < 6:
                 continue
             r1 = SequenceMatcher(None, a1, b1).ratio()
@@ -427,7 +434,7 @@ def _build_event(posts: List[Dict[str, Any]]) -> Dict[str, Any]:
         "discovery_path": discovery_path,
         "canonical_url": next(iter(urls), None),
         "event_type": entities["event_type"][0],
-        "cluster_method": "deterministic_v6",
+        "cluster_method": "deterministic_v7",
     }
 
 
