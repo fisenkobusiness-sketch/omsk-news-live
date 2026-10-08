@@ -143,6 +143,14 @@ def main():
         ),
     )
     mode.add_argument(
+        "--discovery",
+        action="store_true",
+        help=(
+            "Собрать единый нормализованный discovery-слой "
+            "VK + Web Search без изменения исторического dataset."
+        ),
+    )
+    mode.add_argument(
         "--score-only",
         action="store_true",
         help=(
@@ -180,9 +188,15 @@ def main():
             "Обновление RAW из Web Search",
         )
 
+    if args.discovery:
+        run_step(
+            "scripts/01_collect_discovery.py",
+            "Единый discovery: VK + Web Search → SourcePost",
+        )
+
     steps = (
         []
-        if args.search_only
+        if args.search_only or args.discovery
         else SCORE_ONLY_STEPS
         if args.score_only
         else FULL_STEPS
@@ -214,6 +228,13 @@ def main():
             "Режим: только Web Search. "
             "Discovery-RAW обновлён; в scoring он пока "
             "не подключается напрямую."
+        )
+        return
+
+    if args.discovery:
+        print(
+            "Режим: единый discovery-слой. "
+            "Исторический VK dataset и scoring не изменялись."
         )
         return
 
