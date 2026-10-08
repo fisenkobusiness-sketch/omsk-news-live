@@ -9,6 +9,8 @@ PRIOR_ENGAGEMENT_PER_1000 = 5.2172351103321395
 PRIOR_COMMENTS_PER_1000 = 0.5007776088746414
 PRIOR_REPOSTS_PER_1000 = 0.2829720262054196
 PRIOR_VELOCITY_PER_HOUR = 262.8275109170306
+COMMENT_RATE_P95_PER_1000 = 3.43
+REPOST_RATE_P95_PER_1000 = 3.41
 
 def aggregate_topic_stats(members):
     members = members or []
@@ -50,3 +52,11 @@ def velocity_signal(views, age_hours):
     age_hours = max(float(age_hours or 0), 0.25)
     rate = max(float(views or 0), 0.0) / age_hours
     return 100.0 * rate / (rate + PRIOR_VELOCITY_PER_HOUR)
+
+
+def comment_signal(comments, views):
+    return min(100.0, comment_rate(comments, views) / COMMENT_RATE_P95_PER_1000 * 100.0)
+
+
+def repost_signal(reposts, views):
+    return min(100.0, repost_rate(reposts, views) / REPOST_RATE_P95_PER_1000 * 100.0)
