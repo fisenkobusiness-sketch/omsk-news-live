@@ -96,6 +96,25 @@ def percentile(values: list[float], p: float) -> float:
     return xs[lo] + (xs[hi] - xs[lo]) * (k - lo)
 
 
+def aggregate_display_stats(t: dict) -> tuple[float, float, float, float]:
+    """Read topic-level stats, falling back to member posts for diagnostics."""
+    views = num(t, "views")
+    likes = num(t, "likes")
+    comments = num(t, "comments")
+    reposts = num(t, "reposts")
+    if any((likes, comments)) or not t.get("members"):
+        return views, likes, comments, reposts
+    mv = ml = mc = mr = 0.0
+    for member in t.get("members", []) or []:
+        if not isinstance(member, dict):
+            continue
+        post = member.get("post") if isinstance(member.get("post"), dict) else member
+        mv += float(post.get("views", 0) or 0)
+        ml += float(post.get("likes", 0) or 0)
+        mc += float(post.get("comments", 0) or 0)
+        mr += float(post.get("reposts", 0) or 0)
+    return mv, ml, mc, mr
+
 def metric(t: dict, key: str) -> float | None:
     value = t.get(key)
     if isinstance(value, (int, float)):
@@ -209,10 +228,7 @@ def main() -> None:
         title = re.sub(r"\s+", " ", str(title)).strip()
         pred = t.get("prediction") if isinstance(t.get("prediction"), dict) else {}
 
-        views = num(t, "views")
-        likes = num(t, "likes")
-        comments = num(t, "comments")
-        reposts = num(t, "reposts")
+        views, likes, comments, reposts = aggregate_display_stats(t)
         posts = num(t, "posts")
         sources = num(t, "social_sources", "sources")
 
