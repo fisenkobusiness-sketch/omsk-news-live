@@ -104,9 +104,6 @@ def assess_regional_relevance(post: Dict[str, Any]) -> Dict[str, Any]:
             status = "REGION_REJECTED"
             score = 0
             reasons.append("no_regional_signal")
-        else:
-            status = "REGION_REJECTED"
-            reasons.append("no_regional_signal")
 
     return {
         "regional_relevance": min(score, 100),
