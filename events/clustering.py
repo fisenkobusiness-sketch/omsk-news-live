@@ -161,6 +161,17 @@ def extract_numbers(value: str) -> set[str]:
     return set(_NUMBER_RE.findall(value or ""))
 
 
+_ROAD_ACCIDENT_MARKERS = (
+    "дтп", "столкнов", "сбил", "наезд", "перевернул",
+    "пешеход", "водител", "автомобил", "машин",
+)
+
+
+def is_road_accident(value: str) -> bool:
+    text = normalize_text(value)
+    return any(marker in text for marker in _ROAD_ACCIDENT_MARKERS)
+
+
 def detect_event_type(value: str) -> str:
     text = normalize_text(value)
     scores = {
@@ -306,7 +317,12 @@ def _cross_platform_match(post: Dict[str, Any], event: Dict[str, Any]) -> Tuple[
     # have a concrete event identity anchor: a shared number, specific place,
     # or distinctive two-word phrase. This is intentionally stricter than the
     # generic cross-platform rule.
-    if type_match and current_entities["event_type"][0] == "accident":
+    if (
+        type_match
+        and current_entities["event_type"][0] == "accident"
+        and is_road_accident(_match_text(post))
+        and is_road_accident(_event_match_text(event))
+    ):
         accident_identity_anchor = bool(numbers or specific_places or phrase_anchors)
         if not accident_identity_anchor:
             return False, "accident_no_identity_anchor", max(recall, seq)
@@ -444,7 +460,7 @@ def _build_event(posts: List[Dict[str, Any]]) -> Dict[str, Any]:
         "discovery_path": discovery_path,
         "canonical_url": next(iter(urls), None),
         "event_type": entities["event_type"][0],
-        "cluster_method": "deterministic_v8",
+        "cluster_method": "deterministic_v9",
     }
 
 
