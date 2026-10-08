@@ -290,6 +290,30 @@ data/
   scoring/
   feedback/
 
+## 15.1 Текущее состояние реализации
+
+На ветке `audience-router` discovery-слой теперь внедряется поверх старого pipeline без миграции scoring.
+
+Уже есть:
+
+- `collectors/search.py` — Web Search через Google News RSS;
+- `collectors/vk.py` — VK → нормализованный `SourcePost`;
+- `collectors/telegram.py` — опциональный MTProto-адаптер с локальной сессией;
+- `normalization/source_post.py` — единый формат;
+- `scripts/01_collect_discovery.py` — сбор VK + Telegram + Web Search в `data/normalized/source_posts.jsonl`.
+
+Старый `scripts/01_collect_vk.py` намеренно не заменён: его RAW-схема остаётся совместимой с текущим dataset/scoring.
+
+Для проверки нового слоя:
+
+```bash
+python run_pipeline.py --discovery
+```
+
+Эта команда не пересобирает dataset, модели или scoring.
+
+Telegram по умолчанию выключен. Для него нужны локальные `TELEGRAM_API_ID`, `TELEGRAM_API_HASH` и session; credentials не должны попадать в Git.
+
 ## 16. Приоритет реализации
 Этап A — VK, Telegram и Web Search collectors.
 Этап B — единый SourcePost для всех discovery-источников.
