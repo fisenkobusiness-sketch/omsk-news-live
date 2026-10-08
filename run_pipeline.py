@@ -7,8 +7,11 @@
 Быстрый ежедневный режим:
     python run_pipeline.py --score-only
 
-Для обновления истории VK:
+Для обновления discovery-источников (VK + Web Search):
     python run_pipeline.py --collect
+
+Только поисковая выдача:
+    python run_pipeline.py --search-only
 """
 import argparse
 import os
@@ -18,6 +21,11 @@ import time
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent
+
+COLLECT_DISCOVERY_STEPS = [
+    ("scripts/01_collect_vk.py", "Обновление RAW из VK"),
+    ("scripts/01_collect_search.py", "Обновление RAW из Web Search"),
+]
 
 FULL_STEPS = [
     ("scripts/02_build_dataset.py", "Сборка общего dataset"),
@@ -37,6 +45,7 @@ def check_project():
         "lib/analytics_core.py",
         "lib/audience_router.py",
         "scripts/01_collect_vk.py",
+        "scripts/01_collect_search.py",
         "scripts/02_build_dataset.py",
         "scripts/03_analyze_audience.py",
         "scripts/04_build_editorial_model.py",
@@ -126,6 +135,14 @@ def main():
         help="Сначала обновить RAW через VK API.",
     )
     mode.add_argument(
+        "--search-only",
+        action="store_true",
+        help=(
+            "Только обновить поисковую выдачу Web Search; "
+            "историю VK и модели не трогать."
+        ),
+    )
+    mode.add_argument(
         "--score-only",
         action="store_true",
         help=(
@@ -154,13 +171,19 @@ def main():
     started = time.perf_counter()
 
     if args.collect:
+        for script_name, title in COLLECT_DISCOVERY_STEPS:
+            run_step(script_name, title)
+
+    if args.search_only:
         run_step(
-            "scripts/01_collect_vk.py",
-            "Обновление RAW из VK",
+            "scripts/01_collect_search.py",
+            "Обновление RAW из Web Search",
         )
 
     steps = (
-        SCORE_ONLY_STEPS
+        []
+        if args.search_only
+        else SCORE_ONLY_STEPS
         if args.score_only
         else FULL_STEPS
     )
@@ -186,6 +209,14 @@ def main():
     )
     print("=" * 70)
     print()
+    if args.search_only:
+        print(
+            "Режим: только Web Search. "
+            "Discovery-RAW обновлён; в scoring он пока "
+            "не подключается напрямую."
+        )
+        return
+
     print(
         "Audience Separator сейчас "
         "работает в режиме DIAGNOSTIC_ONLY."
