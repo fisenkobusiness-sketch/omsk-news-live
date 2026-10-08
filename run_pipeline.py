@@ -167,6 +167,11 @@ def main():
         ),
     )
     mode.add_argument(
+        "--route-events",
+        action="store_true",
+        help="Прогнать NewsEvent через Audience Router в диагностическом режиме.",
+    )
+    mode.add_argument(
         "--score-only",
         action="store_true",
         help=(
@@ -222,9 +227,15 @@ def main():
             "Диагностический отчёт NewsEvent",
         )
 
+    if args.route_events:
+        run_step(
+            "scripts/04_route_events.py",
+            "NewsEvent → Audience Router (diagnostic)",
+        )
+
     steps = (
         []
-        if args.search_only or args.discovery or args.events or args.event_report
+        if args.search_only or args.discovery or args.events or args.event_report or args.route_events
         else SCORE_ONLY_STEPS
         if args.score_only
         else FULL_STEPS
@@ -277,6 +288,13 @@ def main():
         print(
             "Режим: отчёт по кластеризации NewsEvent. "
             "Dataset, модели и scoring не изменялись."
+        )
+        return
+
+    if args.route_events:
+        print(
+            "Режим: диагностический Audience Router для NewsEvent. "
+            "Dataset и scoring не изменялись."
         )
         return
 
