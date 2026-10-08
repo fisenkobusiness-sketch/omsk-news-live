@@ -177,7 +177,8 @@ def classify(p):
     complaint=has(t,COMPLAINT)
     news_signal=has(t,NEWS)
 
-    if excluded: typ="excluded_topic"\n    elif ad: typ="advertising"
+    if excluded: typ="excluded_topic"
+    elif ad: typ="advertising"
     elif opinion: typ="opinion"
     elif help_req: typ="help_request"
     elif nonlocal_hit and not explicit_omsk: typ="nonlocal"
