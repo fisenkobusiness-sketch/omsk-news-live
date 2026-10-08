@@ -267,9 +267,24 @@ def classify_one(post):
             mechanisms.append(mechanism)
             scores[mechanism] = min(1.0, 0.25 + hits * 0.15)
 
-    if contains_any(lower, AD_WORDS):
+    # Advertising requires a stronger signal than a generic commercial noun.
+    # Words like "магазин" can describe an ordinary news event and must not
+    # classify the whole story as advertising on their own.
+    ad_matches = [
+        word for word in AD_WORDS
+        if _contains_marker(lower, word)
+    ]
+    strong_ad_matches = [
+        word for word in ad_matches
+        if word not in {"магазин", "услуги"}
+    ]
+    advertising_signal = bool(
+        strong_ad_matches
+        or len(ad_matches) >= 2
+    )
+
+    if advertising_signal:
         content_type = "advertising"
-        advertising_signal = True
     elif "help_request" in mechanisms:
         content_type = "help_request"
         advertising_signal = False
