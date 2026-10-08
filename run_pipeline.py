@@ -159,6 +159,14 @@ def main():
         ),
     )
     mode.add_argument(
+        "--event-report",
+        action="store_true",
+        help=(
+            "Построить текстовый диагностический отчёт "
+            "по объединённым NewsEvent."
+        ),
+    )
+    mode.add_argument(
         "--score-only",
         action="store_true",
         help=(
@@ -208,9 +216,15 @@ def main():
             "SourcePost → NewsEvent (diagnostic)",
         )
 
+    if args.event_report:
+        run_step(
+            "scripts/03_report_events.py",
+            "Диагностический отчёт NewsEvent",
+        )
+
     steps = (
         []
-        if args.search_only or args.discovery or args.events
+        if args.search_only or args.discovery or args.events or args.event_report
         else SCORE_ONLY_STEPS
         if args.score_only
         else FULL_STEPS
@@ -255,6 +269,13 @@ def main():
     if args.events:
         print(
             "Режим: диагностический NewsEvent. "
+            "Dataset, модели и scoring не изменялись."
+        )
+        return
+
+    if args.event_report:
+        print(
+            "Режим: отчёт по кластеризации NewsEvent. "
             "Dataset, модели и scoring не изменялись."
         )
         return
