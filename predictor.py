@@ -31,7 +31,7 @@ OUTPUT = "predictor_queue.json"
 def clamp(x, a=0, b=100):
     return max(a, min(b, x))
 
-from metrics import aggregate_topic_stats, topic_age_hours, engagement_rate
+from metrics import aggregate_topic_stats, topic_age_hours, engagement_rate, velocity_signal
 
 
 def stats(t):
@@ -177,7 +177,7 @@ def predict(t):
     if ts > 0:
         age_hours = topic_age_hours(members, time.time())
         freshness = max(0.0, min(100.0, 100.0 - age_hours * 7.0))
-        velocity_now = max(0.0, min(100.0, (views / age_hours) / 100.0))
+        velocity_now = velocity_signal(views, age_hours)
     else:
         freshness = 0.0
         velocity_now = 0.0
