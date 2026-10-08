@@ -26,17 +26,17 @@ exit /b 1
 
 :RUN_VENV
 echo Starting Omsk Live Monitor...
-".venv\Scripts\python.exe" -X utf8 "live_monitor.py"
+".venv\Scripts\python.exe" -X utf8 "src\live_monitor.py"
 goto FINISH
 
 :RUN_PY
 echo Starting Omsk Live Monitor...
-py -3 -X utf8 "live_monitor.py"
+py -3 -X utf8 "src\live_monitor.py"
 goto FINISH
 
 :RUN_PYTHON
 echo Starting Omsk Live Monitor...
-python -X utf8 "live_monitor.py"
+python -X utf8 "src\live_monitor.py"
 goto FINISH
 
 :FINISH
