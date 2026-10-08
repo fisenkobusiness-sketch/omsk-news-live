@@ -31,13 +31,11 @@ OUTPUT = "predictor_queue.json"
 def clamp(x, a=0, b=100):
     return max(a, min(b, x))
 
+from metrics import aggregate_topic_stats, topic_age_hours
+
+
 def stats(t):
-    members = t.get("members", [])
-    views = float(t.get("views", 0) or 0)
-    reposts = float(t.get("reposts", 0) or 0)
-    likes = sum(float(m.get("likes", 0) or 0) for m in members)
-    comments = sum(float(m.get("comments", 0) or 0) for m in members)
-    return views, reposts, likes, comments
+    return aggregate_topic_stats(t.get("members", []))
 
 def predict(t):
     text = (t.get("text") or "").lower()
@@ -180,7 +178,7 @@ def predict(t):
         ts = 0
 
     if ts > 0:
-        age_hours = max(0.25, (time.time() - ts) / 3600)
+        age_hours = topic_age_hours(members, time.time())
         freshness = max(0.0, min(100.0, 100.0 - age_hours * 7.0))
         velocity_now = max(0.0, min(100.0, (views / age_hours) / 100.0))
     else:
