@@ -12,6 +12,7 @@ if str(ROOT) not in sys.path:
 
 from events.clustering import cluster_source_posts
 from events.freshness import enrich_event_freshness
+from events.regional_relevance import assess_regional_relevance
 
 
 SOURCE_POSTS_INPUT = ROOT / "data" / "normalized" / "source_posts.jsonl"
@@ -41,7 +42,19 @@ def write_jsonl(events):
 
 def main():
     source_posts = list(read_jsonl(SOURCE_POSTS_INPUT))
-    events = cluster_source_posts(source_posts)
+
+    regional_results = [
+        (post, assess_regional_relevance(post))
+        for post in source_posts
+    ]
+    accepted_posts = [
+        post
+        for post, regional in regional_results
+        if regional["regional_status"] in {"REGION_CONFIRMED", "REGION_LIKELY"}
+    ]
+    rejected_count = len(source_posts) - len(accepted_posts)
+
+    events = cluster_source_posts(accepted_posts)
     events = [enrich_event_freshness(event) for event in events]
     write_jsonl(events)
 
@@ -53,6 +66,8 @@ def main():
     )
 
     print(f"SourcePost: {len(source_posts)}")
+    print(f"Regional accepted: {len(accepted_posts)}")
+    print(f"Regional rejected: {rejected_count}")
     print(f"NewsEvent: {len(events)}")
     print(f"Multi-source events: {multi_source}")
     print(f"Cross-platform events: {cross_platform}")
