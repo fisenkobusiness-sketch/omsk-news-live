@@ -12,6 +12,7 @@ import json
 import os
 import subprocess
 import sys
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # Force UTF-8 for Windows/PyCharm console output.
 if hasattr(sys.stdout, "reconfigure"):
@@ -41,6 +42,7 @@ PREDICTOR = BASE / "predictor.py"
 
 POLL_SECONDS = 30
 POSTS_PER_GROUP = 100
+MAX_VK_WORKERS = 8
 
 GITHUB_REPO = "fisenkobusiness-sketch/omsk-news-live"
 GITHUB_BRANCH = "main"
@@ -360,9 +362,28 @@ def main():
     while True:
         try:
             new_posts = []
+            seen_before = seen.copy()
 
-            for group_key, info in groups.items():
-                for post in fetch_group_today(token, group_key, info["id"]):
+            # VK network calls are independent, so fetch groups concurrently.
+            # Result order is restored by group index to keep the output stable.
+            group_items = list(groups.items())
+            fetched = [None] * len(group_items)
+            with ThreadPoolExecutor(max_workers=min(MAX_VK_WORKERS, max(1, len(group_items)))) as pool:
+                futures = {
+                    pool.submit(fetch_group_today, token, group_key, info["id"]): idx
+                    for idx, (group_key, info) in enumerate(group_items)
+                }
+                for future in as_completed(futures):
+                    idx = futures[future]
+                    group_key, _ = group_items[idx]
+                    try:
+                        fetched[idx] = future.result()
+                    except Exception as exc:
+                        log(f"VK {group_key}: ошибка получения: {exc}")
+                        fetched[idx] = []
+
+            for posts in fetched:
+                for post in posts or []:
                     key = f"{post['source']}:{post['id']}"
                     if key not in seen:
                         new_posts.append(post)
