@@ -20,7 +20,6 @@ collectors/
   vk.py
   telegram.py
   search.py
-  search.py
 
 VK:
 - история источников;
@@ -250,6 +249,7 @@ Fast path не должен каждый запуск пересобирать �
 collectors/
   vk.py
   telegram.py
+  search.py
 
 normalization/
   source_post.py
