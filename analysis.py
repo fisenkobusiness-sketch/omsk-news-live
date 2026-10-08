@@ -111,6 +111,28 @@ def source_of(p):
 def has(t,a): return any(x in norm(t) for x in a)
 def rx(t,a): return any(re.search(x,t,re.I) for x in a)
 
+# Editorial hard stop-list for topics outside the current editorial goal.
+EXCLUDED_TOPIC_PATTERNS = [
+    "бпла", "беспилотник", "беспилотники", "беспилотный", "беспилотные",
+    "дрон", "дроны", "дрона", "дронами", "воздушная тревога",
+    "воздушной тревоги", "ракетной опасности"
+]
+
+def excluded_topic(t):
+    return has(t, EXCLUDED_TOPIC_PATTERNS)
+
+def promotional_ad(t):
+    if has(t, AD):
+        return True
+    channel_words = ["канал", "канала", "каналов"]
+    promo_words = [
+        "подписывайтесь", "подпишитесь", "подписывайся",
+        "наши каналы", "самые свежие новости",
+        "где публикуются самые свежие"
+    ]
+    return has(t, channel_words) and has(t, promo_words)
+
+
 def classify(p):
     t=norm(text_of(p)); s=norm(source_of(p))
     official=not rx(t,OFFICIAL_NEG) and (
@@ -132,7 +154,7 @@ def classify(p):
 
     nonlocal_hit=has(t,NONLOCAL); omsk_hit=has(t,OMSK)
     explicit_omsk=omsk_hit and nonlocal_hit
-    ad=has(t,AD); opinion=has(t,OPINION)
+    excluded=excluded_topic(t)\n    ad=promotional_ad(t); opinion=has(t,OPINION)
     help_req_raw=has(t,HELP) or bool(re.search(r"(?:опубликуйте|огромная просьба|просьба о помощи|к кому обращаться|что нам делать|может кто(?:-нибудь)? видел|пожалуйста.{0,25}(?:запис|напиш|отклик)|просим|прошу|хотел(?: бы)? найти).{0,160}(?:очевидц|видеорегистратор|запис|помощь|владельц)", t, re.I))
     # Просьба о помощи внутри уже состоявшегося события не превращает
     # саму новость в "не новость". Например: "пропал человек, нужны записи".
@@ -147,7 +169,7 @@ def classify(p):
     complaint=has(t,COMPLAINT)
     news_signal=has(t,NEWS)
 
-    if ad: typ="advertising"
+    if excluded: typ="excluded_topic"\n    elif ad: typ="advertising"
     elif opinion: typ="opinion"
     elif help_req: typ="help_request"
     elif nonlocal_hit and not explicit_omsk: typ="nonlocal"
@@ -157,7 +179,7 @@ def classify(p):
     elif news_signal: typ="news"
     else: typ="social_story"
 
-    if ad or opinion or help_req: conf=0
+    if excluded or ad or opinion or help_req: conf=0
     elif official: conf=90
     elif media: conf=65
     elif complaint: conf=10
@@ -168,7 +190,7 @@ def classify(p):
       "content_type":typ,"source_type":("official_attribution" if official else
         "regional_media" if media else "complaint" if complaint else "social"),
       "official_attribution":official,"complaint_signal":complaint,
-      "help_request":help_req,"opinion_signal":opinion,"advertising_signal":ad,
+      "help_request":help_req,"opinion_signal":opinion,"advertising_signal":ad,"excluded_topic":excluded,
       "nonlocal_detected":nonlocal_hit and not explicit_omsk,
       "explicit_omsk_relevance":explicit_omsk,"confidence":conf
     }
@@ -227,6 +249,7 @@ def main():
         help_only=all(i["help_request"] for i in infos)
         opinion_only=all(i["opinion_signal"] for i in infos)
         ad_only=all(i["advertising_signal"] for i in infos)
+        excluded_only=all(i.get("excluded_topic",False) for i in infos)
         complaint_only=all(i["complaint_signal"] and not i["official_attribution"] for i in infos)
 
         # Приоритет типа: помощь -> жалоба -> мнение.
@@ -271,7 +294,9 @@ def main():
         # 3) жалоба — либо наблюдаем, либо показываем как непроверенный
         #    вирусный сигнал;
         # 4) обычное мнение — отбрасываем.
-        if ad_only:
+        if excluded_only:
+            status,action="reject","ОТБРОСИТЬ: ИСКЛЮЧЁННАЯ ТЕМА"
+        elif ad_only:
             status,action="reject","ОТБРОСИТЬ: РЕКЛАМА"
         elif help_only:
             status,action="watch","НЕ НОВОСТЬ: ПОМОЩЬ"
@@ -297,7 +322,7 @@ def main():
           "confidence":conf,"posts":len(ms),"social_sources":len(sources),"views":views,"reposts":reposts,
           "content_type":content,"official_attribution":official,"source_type":infos[0]["source_type"],
           "nonlocal_detected":nonlocal_only,"help_request":help_only,"opinion_detected":opinion_only,
-          "advertising_detected":ad_only,"status":status,"action":action,
+          "advertising_detected":ad_only,"excluded_topic":excluded_only,"status":status,"action":action,
           "members":[m["post"] for m in ms],"text":texts[0] if texts else "",
           "primary_source": source_of(primary_post),"primary_url": primary_url,
           "source_urls": [m["post"].get("url") for m in ms if m["post"].get("url")]})
