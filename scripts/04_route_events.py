@@ -60,6 +60,37 @@ def event_to_post(event):
 
 
 
+def event_semantic_signal(event):
+    """Classify how strongly event semantics point to one audience.
+
+    Diagnostic only: this does not change the production routing decision.
+    """
+    routing = event.get("audience_routing") or {}
+    event_fit = routing.get("event_fit") or {}
+    if not event_fit:
+        return {"level": "NONE", "target": None, "margin": 0.0}
+
+    golos = float(event_fit.get("golos", 50.0) or 50.0)
+    zhest = float(event_fit.get("zhest", 50.0) or 50.0)
+    margin = abs(golos - zhest)
+    target = "golos" if golos > zhest else "zhest" if zhest > golos else None
+
+    dominance = routing.get("event_dominance") or {}
+    if dominance.get("level", 0) >= 2:
+        level = "DOMINANT"
+    elif margin >= 30.0:
+        level = "STRONG"
+    elif margin >= 15.0:
+        level = "MODERATE"
+    elif margin >= 8.0:
+        level = "WEAK"
+    else:
+        level = "NONE"
+
+    return {"level": level, "target": target, "margin": round(margin, 2)}
+
+
+
 def build_router_audit(routed):
     """Find cases where event semantics disagree with the final router."""
     rows = []
@@ -73,6 +104,7 @@ def build_router_audit(routed):
         event_best = max(event_fit, key=event_fit.get) if event_fit else None
         event_margin = abs(float(event_fit.get("golos", 50.0)) - float(event_fit.get("zhest", 50.0)))
         fit_margin = abs(float(fit.get("golos", 50.0)) - float(fit.get("zhest", 50.0)))
+        semantic_signal = event_semantic_signal(event)
         rows.append({
             "event_id": event.get("event_id"),
             "event_type": event.get("event_type"),
@@ -88,6 +120,7 @@ def build_router_audit(routed):
             "source_count": event.get("source_count"),
             "independent_source_count": event.get("independent_source_count"),
             "conflict": bool(event_best and event_best != target),
+            "semantic_signal": semantic_signal,
         })
     conflicts = [row for row in rows if row["conflict"]]
     conflicts.sort(key=lambda row: row["event_margin"], reverse=True)
@@ -210,7 +243,12 @@ def main():
 
     print(f"NewsEvent: {len(routed)}")
     print(f"Router audit: {audit_path}")
+    signal_counts = {}
+    for row in conflicts:
+        level = row["semantic_signal"]["level"]
+        signal_counts[level] = signal_counts.get(level, 0) + 1
     print(f"Event-fit/router conflicts: {len(conflicts)}")
+    print(f"Semantic conflict strength: {signal_counts}")
     print(f"Сохранено: {EVENTS_OUTPUT}")
     print("Audience Router: DIAGNOSTIC_ONLY")
     for event in routed[:20]:
