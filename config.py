@@ -244,6 +244,7 @@ EDITORIAL_MODELS = {
 def ensure_directories():
     for path in (
         RAW_DIR,
+        SEARCH_RAW_DIR,
         DATASET_DIR,
         ANALYTICS_DIR,
         MODEL_DIR,
