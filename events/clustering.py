@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Conservative SourcePost -> NewsEvent clustering v4.
+"""Conservative SourcePost -> NewsEvent clustering v5.
 
 Diagnostic-only clustering. Scoring, datasets and publication routing are untouched.
 """
@@ -93,6 +93,33 @@ def _semantic_overlap(left: set[str], right: set[str]) -> tuple[set[str], set[tu
     exact = left & right
     fuzzy = _token_fuzzy_match(left - exact, right - exact)
     return exact, fuzzy
+
+
+# Words that frequently co-occur in unrelated stories and therefore cannot
+# serve as the sole morphology anchor.
+_MORPHOLOGY_GENERIC = {
+    "строительство", "строительства", "строить", "проект", "проекты",
+    "домов", "дом", "жилых", "многоквартирных", "сообщили", "сообщает",
+    "остаются", "осталось", "получил", "получила", "мужчина", "женщина",
+    "авария", "аварии", "произошла", "произошел", "произошли",
+    "после", "утром", "сегодня", "новая", "новый",
+)
+
+
+def _morphology_anchors(
+    exact: set[str],
+    fuzzy_overlap: set[tuple[str, str]],
+) -> tuple[set[str], int]:
+    exact_anchors = {
+        token for token in exact
+        if token not in _MORPHOLOGY_GENERIC and len(token) >= 6
+    }
+    fuzzy_anchors = {
+        (a, b) for a, b in fuzzy_overlap
+        if a not in _MORPHOLOGY_GENERIC and b not in _MORPHOLOGY_GENERIC
+        and min(len(a), len(b)) >= 7
+    }
+    return exact_anchors, len(fuzzy_anchors)
 
 
 def extract_numbers(value: str) -> set[str]:
@@ -231,9 +258,16 @@ def _cross_platform_match(post: Dict[str, Any], event: Dict[str, Any]) -> Tuple[
     # (e.g. реликвий/реликвия, православных/православной). Accept a pair
     # when several distinctive words line up, but require the same event type
     # and at least one long lexical anchor to avoid generic-word collisions.
+    exact_anchors, fuzzy_anchor_count = _morphology_anchors(overlap, fuzzy_overlap)
     long_fuzzy = sum(1 for a, b in fuzzy_overlap if min(len(a), len(b)) >= 8)
-    if type_match and fuzzy_count >= 2 and long_fuzzy >= 1 and strong_anchor:
-        score = 0.45 * recall + 0.20 * min(1.0, fuzzy_count / 3) + 0.20 * int(type_match) + 0.15 * seq
+
+    # Morphology alone is not enough: common news vocabulary (construction,
+    # houses, accident, man, after, etc.) must never form an event identity.
+    # Require either two distinctive exact anchors or two distinctive
+    # inflectional anchors, plus the same event type.
+    morphology_anchor = len(exact_anchors) >= 2 or fuzzy_anchor_count >= 2
+    if type_match and morphology_anchor and strong_anchor:
+        score = 0.45 * recall + 0.20 * min(1.0, (len(exact_anchors) + fuzzy_anchor_count) / 3) + 0.20 * int(type_match) + 0.15 * seq
         return True, "morphology_match", score
 
     if recall >= 0.62 and type_match and strong_anchor and (numbers or places):
@@ -358,7 +392,7 @@ def _build_event(posts: List[Dict[str, Any]]) -> Dict[str, Any]:
         "discovery_path": discovery_path,
         "canonical_url": next(iter(urls), None),
         "event_type": entities["event_type"][0],
-        "cluster_method": "deterministic_v4",
+        "cluster_method": "deterministic_v5",
     }
 
 
