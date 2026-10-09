@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Conservative SourcePost -> NewsEvent clustering v14.
+"""Conservative SourcePost -> NewsEvent clustering v15.
 
 Diagnostic-only clustering. Scoring, datasets and publication routing are untouched.
 """
@@ -321,8 +321,11 @@ def _event_match_text(event: Dict[str, Any]) -> str:
     canonical = str(event.get("canonical_text") or "").strip()
     if canonical and canonical not in texts:
         texts.append(canonical)
+    # Never concatenate all sources into one matching text. Doing so lets an
+    # event accumulate unrelated terms and then match a third, unrelated post
+    # through a "Frankenstein" union of tokens. Use one strongest source text.
     unique_texts = list(dict.fromkeys(texts))
-    return " ".join(unique_texts) if unique_texts else canonical
+    return max(unique_texts, key=len) if unique_texts else canonical
 
 
 
@@ -384,21 +387,9 @@ def _same_accident_location_and_details(left_text: str, right_text: str) -> bool
     right_tokens = meaningful_tokens(right_text)
     shared = left_tokens & right_tokens
 
-    if not shared_locations:
-        left_words = normalize_text(left_text).split()
-        right_words = normalize_text(right_text).split()
-        detail_groups = {
-            "vehicle": ("honda", "хонд", "автобус", "маз", "иномарк", "автомобил", "машин"),
-            "impact": ("столб", "опор", "переход", "сбил", "наезд", "влетел", "врезал", "столкнов"),
-            "casualty": ("дет", "ребен", "мальчик", "девоч", "пешеход", "пенсионер", "погиб", "насмерть", "смерт", "травм", "пострад"),
-            "landmark": ("континент", "заозерн", "заозёрн", "куйбышев", "лазо"),
-        }
-        shared_groups = {
-            group for group, stems in detail_groups.items()
-            if any(word.startswith(stem) for word in left_words for stem in stems)
-            and any(word.startswith(stem) for word in right_words for stem in stems)
-        }
-        return len(shared_groups) >= 3 and "landmark" in shared_groups
+    # Без совпавшего конкретного адреса или ориентира не склеиваем ДТП по
+    # набору общих категорий ("автомобиль", "пострадавший", "столб"):
+    # это приводит к смешению разных происшествий в разных местах.
 
     # Не считать сам адрес отличительными деталями: иначе любые два ДТП
     # на одной улице могли бы ошибочно склеиться.
@@ -669,7 +660,7 @@ def _build_event(posts: List[Dict[str, Any]]) -> Dict[str, Any]:
         "discovery_path": discovery_path,
         "canonical_url": next(iter(urls), None),
         "event_type": entities["event_type"][0],
-        "cluster_method": "deterministic_v14",
+        "cluster_method": "deterministic_v15",
     }
 
 
