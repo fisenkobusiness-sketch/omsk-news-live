@@ -17,8 +17,9 @@ if str(ROOT) not in sys.path:
 
 from config import (
     TELEGRAM_CHANNELS,
-    TELEGRAM_ENABLED,
-    TELEGRAM_MAX_MESSAGES,
+    TELEGRAM_WEB_ENABLED,
+    TELEGRAM_WEB_TIMEOUT,
+    TELEGRAM_WEB_REQUEST_DELAY,
     WEB_SEARCH_COUNTRY,
     WEB_SEARCH_DEFAULT_WHEN,
     WEB_SEARCH_ENABLED,
@@ -32,10 +33,7 @@ from collectors.search import (
     SearchQuery,
 )
 from collectors.vk import VKDiscoveryCollector
-from collectors.telegram import (
-    TelegramChannel,
-    TelegramMTProtoCollector,
-)
+from collectors.telegram_web import TelegramPublicWebCollector
 
 
 NORMALIZED_DIR = ROOT / "data" / "normalized"
@@ -76,31 +74,38 @@ def collect_search():
     return items
 
 
-def collect_telegram():
-    if not TELEGRAM_ENABLED or not TELEGRAM_CHANNELS:
+def collect_telegram_public():
+    """Collect public Telegram previews into a separate human-review stream."""
+    if not TELEGRAM_WEB_ENABLED or not TELEGRAM_CHANNELS:
         return []
 
-    channels = [
-        TelegramChannel(
-            username=item["username"],
-            label=item.get("label", ""),
-        )
-        for item in TELEGRAM_CHANNELS
-    ]
-    collector = TelegramMTProtoCollector(
-        channels,
-        max_messages=TELEGRAM_MAX_MESSAGES,
+    collector = TelegramPublicWebCollector(
+        TELEGRAM_CHANNELS,
+        timeout=TELEGRAM_WEB_TIMEOUT,
+        request_delay=TELEGRAM_WEB_REQUEST_DELAY,
     )
-    return collector.collect()
+    items = collector.collect()
+
+    for label, count in collector.source_counts.items():
+        print(f"  Telegram public: {label} — {count} постов за сегодня", flush=True)
+
+    for error in collector.errors:
+        print(
+            "WARN: Telegram source skipped: "
+            f"{error['label']} (@{error['username']}): {error['error']}",
+            flush=True,
+        )
+
+    return items
 
 
-def write_jsonl(items):
+def write_jsonl_to(items, output_path):
     NORMALIZED_DIR.mkdir(
         parents=True,
         exist_ok=True,
     )
 
-    with SOURCE_POSTS_OUTPUT.open(
+    with output_path.open(
         "w",
         encoding="utf-8",
     ) as handle:
@@ -114,20 +119,28 @@ def write_jsonl(items):
             )
 
 
+def write_jsonl(items):
+    write_jsonl_to(items, SOURCE_POSTS_OUTPUT)
+
+
+
 def main():
     started = datetime.now(timezone.utc)
 
     vk_items = VKDiscoveryCollector().collect()
     search_items = collect_search()
-    telegram_items = collect_telegram()
+    telegram_public_items = collect_telegram_public()
 
+    # Telegram's public preview is written separately for human editorial
+    # review; it is not merged into the SourcePost stream used by scoring.
+    telegram_output = NORMALIZED_DIR / "telegram_public_posts.jsonl"
     items = [
         *vk_items,
-        *telegram_items,
         *search_items,
     ]
 
     write_jsonl(items)
+    write_jsonl_to(telegram_public_items, telegram_output)
 
     print(
         f"Discovery SourcePost сохранён: "
@@ -136,9 +149,13 @@ def main():
     )
     print(
         f"VK: {len(vk_items)} | "
-        f"Telegram: {len(telegram_items)} | "
+        f"Telegram public (отдельная лента): {len(telegram_public_items)} | "
         f"Web Search: {len(search_items)} | "
-        f"Всего: {len(items)}",
+        f"Всего в основном discovery: {len(items)}",
+        flush=True,
+    )
+    print(
+        f"Telegram public posts сохранены отдельно: {telegram_output}",
         flush=True,
     )
     print(
