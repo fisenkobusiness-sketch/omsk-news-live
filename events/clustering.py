@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Conservative SourcePost -> NewsEvent clustering v13.
+"""Conservative SourcePost -> NewsEvent clustering v14.
 
 Diagnostic-only clustering. Scoring, datasets and publication routing are untouched.
 """
@@ -32,7 +32,10 @@ EVENT_WINDOWS_MINUTES = {
 CROSS_PLATFORM_WINDOW_MINUTES = 24 * 60
 
 EVENT_KEYWORDS = {
-    "accident": ("дтп", "авар", "столкнов", "сбил", "наезд", "перевернул"),
+    "accident": (
+        "дтп", "авар", "столкнов", "сбил", "наезд", "перевернул",
+        "влетел", "влетела", "врезал", "врезалась", "столб",
+    ),
     "fire": ("пожар", "загорел", "горит", "горел", "возгора"),
     "weather": ("снег", "дожд", "погода", "метел", "гололед", "мороз", "ветер"),
     "transport": ("маршрут", "автобус", "трамва", "троллейб", "дорог", "перекрыт", "движени"),
@@ -146,6 +149,15 @@ _MORPHOLOGY_GENERIC = {
     "следствие", "следователи", "задержали", "задержан",
     "хоккей", "хоккея", "хоккейный", "хоккейных", "матч", "матча", "матче",
     "матчей", "команда", "команды", "команде", "игра", "игры", "игре",
+    # Messenger names, legal verbs, lighting terms, and siren terminology
+    # are common topical words, not enough to identify one unique news event.
+    "telegram", "телеграм", "канал", "канала", "каналу", "каналы", "каналов",
+    "обвиняют", "обвиняет", "обвинение", "обвинения", "обвинять",
+    "создателя", "задержали", "задержан", "пропаганде",
+    "светильник", "светильника", "светильники", "светильников",
+    "освещение", "освещения", "сквер", "сквере", "вандалы", "темноте",
+    "сирена", "сирены", "сирен", "громкоговоритель", "громкоговорители",
+    "оповещения", "оповещении", "проверка", "проверки", "системы",
 }
 
 
@@ -204,6 +216,7 @@ def extract_numbers(value: str) -> set[str]:
 _ROAD_ACCIDENT_MARKERS = (
     "дтп", "столкнов", "сбил", "наезд", "перевернул",
     "пешеход", "водител", "автомобил", "машин",
+    "влетел", "врезал", "столб", "опору освещения", "не справил",
 )
 
 
@@ -308,7 +321,8 @@ def _event_match_text(event: Dict[str, Any]) -> str:
     canonical = str(event.get("canonical_text") or "").strip()
     if canonical and canonical not in texts:
         texts.append(canonical)
-    return max(texts, key=len) if texts else canonical
+    unique_texts = list(dict.fromkeys(texts))
+    return " ".join(unique_texts) if unique_texts else canonical
 
 
 
@@ -324,7 +338,7 @@ _ACCIDENT_GENERIC_ANCHORS = _MORPHOLOGY_GENERIC | {
 }
 _LOCATION_CUE_RE = re.compile(
     r"\b(?:улица|улице|улицы|ул|проспект|проспекте|просп|шоссе|"
-    r"переулок|бульвар|набережная|площадь)\s+"
+    r"переулок|бульвар|набережная|площадь|остановка|остановке|остановки|остановку)\s+"
     r"([а-яё0-9-]+(?:\s+[а-яё0-9-]+){0,3})\b",
     re.I,
 )
@@ -354,19 +368,37 @@ def _location_anchors(value: str) -> set[str]:
                 break
             phrase.append(word)
         if phrase:
+            # Keep both the full street/stop phrase and its first meaningful
+            # word so "ул. Заозёрная" matches "остановка 7-я Заозёрная".
+            if phrase and re.fullmatch(r"\d{1,3}-я", phrase[0]) and len(phrase) > 1:
+                phrase = phrase[1:]
             anchors.add(" ".join(phrase[:3]))
+            anchors.add(phrase[0])
     return {anchor for anchor in anchors if len(anchor) >= 5}
 
 
 def _same_accident_location_and_details(left_text: str, right_text: str) -> bool:
     """Подсказка для дублей ДТП: одна улица плюс несколько отличительных деталей."""
     shared_locations = _location_anchors(left_text) & _location_anchors(right_text)
-    if not shared_locations:
-        return False
-
     left_tokens = meaningful_tokens(left_text)
     right_tokens = meaningful_tokens(right_text)
     shared = left_tokens & right_tokens
+
+    if not shared_locations:
+        left_words = normalize_text(left_text).split()
+        right_words = normalize_text(right_text).split()
+        detail_groups = {
+            "vehicle": ("honda", "хонд", "автобус", "маз", "иномарк", "автомобил", "машин"),
+            "impact": ("столб", "опор", "переход", "сбил", "наезд", "влетел", "врезал", "столкнов"),
+            "casualty": ("дет", "ребен", "мальчик", "девоч", "пешеход", "пенсионер", "погиб", "насмерть", "смерт", "травм", "пострад"),
+            "landmark": ("континент", "заозерн", "заозёрн", "куйбышев", "лазо"),
+        }
+        shared_groups = {
+            group for group, stems in detail_groups.items()
+            if any(word.startswith(stem) for word in left_words for stem in stems)
+            and any(word.startswith(stem) for word in right_words for stem in stems)
+        }
+        return len(shared_groups) >= 3 and "landmark" in shared_groups
 
     # Не считать сам адрес отличительными деталями: иначе любые два ДТП
     # на одной улице могли бы ошибочно склеиться.
@@ -396,12 +428,21 @@ def _same_accident_location_and_details(left_text: str, right_text: str) -> bool
     )
 
 
+def _is_scheduled_siren_test(value: str) -> bool:
+    text = normalize_text(value)
+    tokens = text.split()
+    local = any(token.startswith(("омск", "омич")) for token in tokens)
+    alert_system = any(token.startswith(("сирен", "громкоговорител", "оповещ", "систем")) for token in tokens)
+    planned = any(token.startswith(("провер", "планов", "тестирован")) for token in tokens)
+    return local and alert_system and planned
+
+
 def _cross_platform_match(post: Dict[str, Any], event: Dict[str, Any]) -> Tuple[bool, str, float]:
     """Match a short web-search headline to a longer social post conservatively."""
     other = event.get("representative_post") or {}
-    same_platform = _platform(post) == _platform(other)
-    if same_platform and not _distinct_web_publisher_pair(post, other):
-        return False, "same_platform", 0.0
+    same_source = _source_key(post) == _source_key(other)
+    if same_source and not _distinct_web_publisher_pair(post, other):
+        return False, "same_source", 0.0
 
     if not _same_time(post, other, CROSS_PLATFORM_WINDOW_MINUTES):
         return False, "cross_platform_time_window", 0.0
@@ -447,7 +488,7 @@ def _cross_platform_match(post: Dict[str, Any], event: Dict[str, Any]) -> Tuple[
     specific_places = {p for p in places if p not in {"омск", "омская", "область", "город", "центр"}}
     strong_anchor = bool(specific_places or phrase_anchors or len(uncommon_overlap) >= 2)
 
-    if recall >= 0.78 and strong_anchor:
+    if recall >= 0.78 and strong_anchor and type_match:
         score = 0.60 * recall + 0.20 * min(1.0, len(uncommon_overlap) / 3) + 0.10 * int(type_match) + 0.10 * min(1.0, seq)
         return True, "title_in_body", score
 
@@ -512,6 +553,13 @@ def _can_merge(post: Dict[str, Any], event: Dict[str, Any]) -> Tuple[bool, str, 
 
     event_match_text = _event_match_text(event)
     if (
+        _is_scheduled_siren_test(text)
+        and _is_scheduled_siren_test(event_match_text)
+        and _same_time(post, event["representative_post"], CROSS_PLATFORM_WINDOW_MINUTES)
+    ):
+        return True, "same_scheduled_siren_test", 0.95
+
+    if (
         is_road_accident(text)
         and is_road_accident(event_match_text)
         and _same_accident_location_and_details(text, event_match_text)
@@ -521,6 +569,7 @@ def _can_merge(post: Dict[str, Any], event: Dict[str, Any]) -> Tuple[bool, str, 
     representative = event.get("representative_post") or {}
     if (
         _platform(post) != _platform(representative)
+        or _source_key(post) != _source_key(representative)
         or _distinct_web_publisher_pair(post, representative)
     ):
         return _cross_platform_match(post, event)
@@ -620,7 +669,7 @@ def _build_event(posts: List[Dict[str, Any]]) -> Dict[str, Any]:
         "discovery_path": discovery_path,
         "canonical_url": next(iter(urls), None),
         "event_type": entities["event_type"][0],
-        "cluster_method": "deterministic_v13",
+        "cluster_method": "deterministic_v14",
     }
 
 
