@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Conservative SourcePost -> NewsEvent clustering v11.
+"""Conservative SourcePost -> NewsEvent clustering v12.
 
 Diagnostic-only clustering. Scoring, datasets and publication routing are untouched.
 """
@@ -48,6 +48,30 @@ _STOPWORDS = {
     "рассказал", "рассказали", "сообщили", "сообщает", "стало", "известно",
     "сегодня", "завтра", "вчера", "свежие", "данные", "жители", "люди",
     "местные", "регионе", "регион", "время", "день", "дни",
+    # Окончания названия региона не должны считаться уникальными признаками новости.
+    "омском", "омской", "омскую", "омскому", "омского", "омские", "омских", "омскими",
+    "областной", "областного", "областному", "областной", "областных", "областную",
+    "россия", "россии", "российский", "российская", "российского", "российской", "российские",
+    "страна", "страны", "стране", "страной", "странах",
+    "район", "районе", "района", "району", "округ", "округа", "округе", "округу",
+    # Дата публикации часто совпадает у совершенно разных новостей.
+    "январь", "января", "январе", "февраль", "февраля", "феврале",
+    "март", "марта", "марте", "апрель", "апреля", "апреле",
+    "май", "мая", "мае", "июнь", "июня", "июне", "июль", "июля", "июле",
+    "август", "августа", "августе", "сентябрь", "сентября", "сентябре",
+    "октябрь", "октября", "октябре", "ноябрь", "ноября", "ноябре",
+    "декабрь", "декабря", "декабре",
+    "понедельник", "вторник", "среда", "среду", "среду", "четверг", "пятница", "пятницу",
+    "суббота", "субботу", "воскресенье",
+    # Формулировки из судебных новостей слишком часто встречаются в разных делах.
+    "уголовное", "уголовного", "уголовный", "уголовном", "дело", "дела",
+    "обвиняемый", "обвиняемого", "обвиняемая", "обвиняемой", "обвиняются",
+    "подозреваемый", "подозреваемого", "подозреваемая", "подозреваемой",
+    "судить", "суд", "суда", "судебный", "судебного", "прокуратура",
+    "следствие", "следователи", "задержали", "задержан", "задержали",
+    # Название спорта или общий формат мероприятия не равны одному событию.
+    "хоккей", "хоккея", "хоккейный", "хоккейных", "матч", "матча", "матче", "матчей",
+    "команда", "команды", "команде", "игра", "игры", "игре",
 }
 
 
@@ -106,6 +130,22 @@ _MORPHOLOGY_GENERIC = {
     "рублей", "миллиардов", "миллиона", "миллион", "тысяч",
     "водитель", "водителя", "автомобиль", "автомобиля",
     "машина", "машины", "проезд", "стоит", "услуги", "услуг",
+    # Не использовать географию, даты и общеупотребительные конструкции как якоря.
+    "омском", "омской", "омскую", "омскому", "омского", "омские", "омских", "омскими",
+    "областной", "областного", "областному", "областных", "областную",
+    "россии", "россия", "российский", "российская", "российского", "российской",
+    "районе", "района", "округа", "округе", "округу",
+    "января", "февраля", "марта", "апреля", "мая", "июня", "июля",
+    "августа", "сентября", "октября", "ноября", "декабря",
+    "понедельник", "вторник", "среда", "среду", "четверг", "пятница",
+    "пятницу", "суббота", "субботу", "воскресенье",
+    "уголовное", "уголовного", "уголовный", "уголовном", "дело", "дела",
+    "обвиняемый", "обвиняемого", "обвиняемая", "обвиняемой", "обвиняются",
+    "подозреваемый", "подозреваемого", "подозреваемая", "подозреваемой",
+    "судить", "суд", "суда", "судебный", "судебного", "прокуратура",
+    "следствие", "следователи", "задержали", "задержан",
+    "хоккей", "хоккея", "хоккейный", "хоккейных", "матч", "матча", "матче",
+    "матчей", "команда", "команды", "команде", "игра", "игры", "игре",
 }
 
 
@@ -396,14 +436,13 @@ def _cross_platform_match(post: Dict[str, Any], event: Dict[str, Any]) -> Tuple[
     ):
         return True, "same_accident_location_and_details", 0.94
 
-    # Strong anchor: numbers or concrete place tokens. For titles without them,
-    # require at least two uncommon shared tokens and high title recall.
+    # Identity needs a semantic anchor, not merely shared digits (such as the
+    # current year) or a broad regional location like Омск/Омская область.
     uncommon_overlap = {t for t in matched_left if len(t) >= 5 and t not in _STOPWORDS}
     fuzzy_count = len(fuzzy_overlap)
-    phrase_anchors = _phrase_anchor_matches(_match_text(post), _event_match_text(event))
-    # "Омск" is a search geography, not an event identity by itself.
+    phrase_anchors = _phrase_anchor_matches(left_text, right_text)
     specific_places = {p for p in places if p not in {"омск", "омская", "область", "город", "центр"}}
-    strong_anchor = bool(numbers or specific_places or phrase_anchors or len(uncommon_overlap) >= 2)
+    strong_anchor = bool(specific_places or phrase_anchors or len(uncommon_overlap) >= 2)
 
     if recall >= 0.78 and strong_anchor:
         score = 0.60 * recall + 0.20 * min(1.0, len(uncommon_overlap) / 3) + 0.10 * int(type_match) + 0.10 * min(1.0, seq)
@@ -444,8 +483,8 @@ def _cross_platform_match(post: Dict[str, Any], event: Dict[str, Any]) -> Tuple[
         score = 0.45 * recall + 0.20 * min(1.0, (len(exact_anchors) + fuzzy_anchor_count) / 3) + 0.20 * int(type_match) + 0.15 * seq
         return True, "morphology_match", score
 
-    if recall >= 0.62 and type_match and strong_anchor and (numbers or places):
-        score = 0.50 * recall + 0.20 * int(type_match) + 0.20 * min(1.0, len(numbers | places) / 2) + 0.10 * seq
+    if recall >= 0.62 and type_match and strong_anchor and (numbers or specific_places or phrase_anchors):
+        score = 0.50 * recall + 0.20 * int(type_match) + 0.20 * min(1.0, len(numbers | specific_places) / 2) + 0.10 * seq
         return True, "entity_match", score
 
     if seq >= 0.84 and type_match:
@@ -578,7 +617,7 @@ def _build_event(posts: List[Dict[str, Any]]) -> Dict[str, Any]:
         "discovery_path": discovery_path,
         "canonical_url": next(iter(urls), None),
         "event_type": entities["event_type"][0],
-        "cluster_method": "deterministic_v11",
+        "cluster_method": "deterministic_v12",
     }
 
 
