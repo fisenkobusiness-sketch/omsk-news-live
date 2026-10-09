@@ -262,6 +262,73 @@ def _event_match_text(event: Dict[str, Any]) -> str:
     return max(texts, key=len) if texts else canonical
 
 
+
+# Нерелевантные сами по себе слова при сравнении двух ДТП.
+_ACCIDENT_GENERIC_ANCHORS = _MORPHOLOGY_GENERIC | {
+    "дтп", "авария", "аварии", "происшествие", "происшествия",
+    "пострадал", "пострадала", "пострадали", "дети", "детей",
+    "ребенок", "ребёнок", "мальчик", "девочка", "травмы", "травмами",
+    "полиция", "сообщение", "предварительно", "установлено",
+    "госпитализировали", "больницу", "пассажир", "пассажиры",
+    "сегодня", "вчера", "около", "часов", "минут", "водитель",
+    "водителя", "женщина", "мужчина", "управление", "управлением",
+}
+_LOCATION_CUE_RE = re.compile(
+    r"\b(?:улица|улице|улицы|ул|проспект|проспекте|просп|шоссе|"
+    r"переулок|бульвар|набережная|площадь)\s+"
+    r"([а-яё0-9-]+(?:\s+[а-яё0-9-]+){0,3})\b",
+    re.I,
+)
+_NUMBERED_STREET_RE = re.compile(r"\b\d{1,3}\s+лет\s+[а-яё]{4,}\b", re.I)
+_LOCATION_STOP_WORDS = {
+    "не", "вчера", "сегодня", "завтра", "около", "районе", "дом", "дома",
+    "после", "перед", "когда", "где", "который", "которая", "которые",
+    "совершила", "совершил", "врезалась", "врезался", "не", "и", "а", "по",
+    "в", "на", "у", "с", "из", "до", "для", "что", "как",
+}
+
+
+def _location_anchors(value: str) -> set[str]:
+    """Извлекает осторожные текстовые якоря улиц и названий вида «70 лет Октября»."""
+    text = normalize_text(value)
+    anchors = {match.group(0) for match in _NUMBERED_STREET_RE.finditer(text)}
+    for match in _LOCATION_CUE_RE.finditer(text):
+        words = match.group(1).split()
+        phrase = []
+        for word in words:
+            if word in _LOCATION_STOP_WORDS:
+                break
+            phrase.append(word)
+        if phrase:
+            anchors.add(" ".join(phrase[:3]))
+    return {anchor for anchor in anchors if len(anchor) >= 5}
+
+
+def _same_accident_location_and_details(left_text: str, right_text: str) -> bool:
+    """Подсказка для дублей ДТП: одна улица плюс несколько отличительных деталей."""
+    shared_locations = _location_anchors(left_text) & _location_anchors(right_text)
+    if not shared_locations:
+        return False
+
+    left_tokens = meaningful_tokens(left_text)
+    right_tokens = meaningful_tokens(right_text)
+    shared = left_tokens & right_tokens
+
+    # Не считать сам адрес отличительными деталями: иначе любые два ДТП
+    # на одной улице могли бы ошибочно склеиться.
+    location_tokens = {
+        token
+        for anchor in shared_locations
+        for token in anchor.split()
+    }
+    distinctive = {
+        token for token in shared - location_tokens
+        if len(token) >= 5 and token not in _ACCIDENT_GENERIC_ANCHORS
+        and not token.isdigit()
+    }
+    return len(distinctive) >= 2
+
+
 def _cross_platform_match(post: Dict[str, Any], event: Dict[str, Any]) -> Tuple[bool, str, float]:
     """Match a short web-search headline to a longer social post conservatively."""
     other = event.get("representative_post") or {}
@@ -369,6 +436,16 @@ def _can_merge(post: Dict[str, Any], event: Dict[str, Any]) -> Tuple[bool, str, 
         return False, "time_window", 0.0
 
     event_type_match = event_type == event.get("event_type")
+    event_match_text = _event_match_text(event)
+    if (
+        event_type_match
+        and event_type == "accident"
+        and is_road_accident(text)
+        and is_road_accident(event_match_text)
+        and _same_accident_location_and_details(text, event_match_text)
+    ):
+        return True, "same_accident_location_and_details", 0.90
+
     similarity = _similarity(normalized, event.get("normalized_text", ""))
 
     current_entities = extract_entities(text)
