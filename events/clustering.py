@@ -280,6 +280,10 @@ _LOCATION_CUE_RE = re.compile(
     re.I,
 )
 _NUMBERED_STREET_RE = re.compile(r"\b\d{1,3}\s+лет\s+[а-яё]{4,}\b", re.I)
+_HOUSE_NUMBER_RE = re.compile(
+    r"\b(?:дом(?:а)?|д\.?)\s*(?:№\s*)?(\d+[а-яё]?(?:к\d+)?)\b",
+    re.I,
+)
 _LOCATION_STOP_WORDS = {
     "не", "вчера", "сегодня", "завтра", "около", "районе", "дом", "дома",
     "после", "перед", "когда", "где", "который", "которая", "которые",
@@ -292,6 +296,7 @@ def _location_anchors(value: str) -> set[str]:
     """Извлекает осторожные текстовые якоря улиц и названий вида «70 лет Октября»."""
     text = normalize_text(value)
     anchors = {match.group(0) for match in _NUMBERED_STREET_RE.finditer(text)}
+    anchors.update(match.group(1) for match in _HOUSE_NUMBER_RE.finditer(text))
     for match in _LOCATION_CUE_RE.finditer(text):
         words = match.group(1).split()
         phrase = []
@@ -326,7 +331,20 @@ def _same_accident_location_and_details(left_text: str, right_text: str) -> bool
         if len(token) >= 5 and token not in _ACCIDENT_GENERIC_ANCHORS
         and not token.isdigit()
     }
-    return len(distinctive) >= 2
+    shared_numbers = extract_numbers(left_text) & extract_numbers(right_text)
+    location_numbers = {
+        number
+        for anchor in shared_locations
+        for number in extract_numbers(anchor)
+    }
+    non_location_numbers = shared_numbers - location_numbers
+
+    # Для коротких формулировок вроде «не справилась с управлением» достаточно
+    # одного отличительного действия, если совпали ещё и несколько числовых
+    # деталей (например, время, возраст и данные пострадавших).
+    return len(distinctive) >= 2 or (
+        len(distinctive) >= 1 and len(non_location_numbers) >= 2
+    )
 
 
 def _cross_platform_match(post: Dict[str, Any], event: Dict[str, Any]) -> Tuple[bool, str, float]:
