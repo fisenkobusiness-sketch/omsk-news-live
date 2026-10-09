@@ -205,6 +205,17 @@ TELEGRAM_ENABLED = (
 TELEGRAM_MAX_MESSAGES = int(
     os.getenv("TELEGRAM_MAX_MESSAGES", "200")
 )
+# Public Telegram web previews work without MTProto API credentials.
+# Keep Telegram posts separate from model/scoring inputs.
+TELEGRAM_WEB_ENABLED = (
+    os.getenv("TELEGRAM_WEB_ENABLED", "1").strip() != "0"
+)
+TELEGRAM_WEB_TIMEOUT = float(
+    os.getenv("TELEGRAM_WEB_TIMEOUT", "15")
+)
+TELEGRAM_WEB_REQUEST_DELAY = float(
+    os.getenv("TELEGRAM_WEB_REQUEST_DELAY", "0.25")
+)
 TELEGRAM_SESSION = (
     os.getenv("TELEGRAM_SESSION", "").strip()
     or str(BASE / "secrets" / "telegram")
