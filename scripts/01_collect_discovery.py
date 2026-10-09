@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import json
 import sys
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -124,6 +124,57 @@ def write_jsonl(items):
 
 
 
+def merge_telegram_review_jsonl(items, output_path):
+    """Keep today's public Telegram posts across repeated discovery runs."""
+    today_omsk = (
+        datetime.now(timezone.utc) + timedelta(hours=6)
+    ).date()
+    merged = {}
+
+    if output_path.exists():
+        with output_path.open("r", encoding="utf-8") as handle:
+            for line in handle:
+                try:
+                    item = json.loads(line)
+                    post = item.get("post") or {}
+                    published_at = post.get("published_at")
+                    if not published_at:
+                        continue
+                    published = datetime.fromisoformat(
+                        published_at.replace("Z", "+00:00")
+                    )
+                    if published.tzinfo is None:
+                        published = published.replace(tzinfo=timezone.utc)
+                    local_date = (
+                        published.astimezone(timezone.utc)
+                        + timedelta(hours=6)
+                    ).date()
+                    if local_date != today_omsk:
+                        continue
+                    key = post.get("url") or post.get("id")
+                    if key:
+                        merged[str(key)] = item
+                except (json.JSONDecodeError, TypeError, ValueError):
+                    continue
+
+    for item in items:
+        post = item.get("post") or {}
+        key = post.get("url") or post.get("id")
+        if key:
+            merged[str(key)] = item
+
+    ordered = sorted(
+        merged.values(),
+        key=lambda item: (
+            (item.get("post") or {}).get("published_at") or ""
+        ),
+        reverse=True,
+    )
+    write_jsonl_to(ordered, output_path)
+    return ordered
+
+
+
 def main():
     started = datetime.now(timezone.utc)
 
@@ -140,7 +191,10 @@ def main():
     ]
 
     write_jsonl(items)
-    write_jsonl_to(telegram_public_items, telegram_output)
+    telegram_public_items = merge_telegram_review_jsonl(
+        telegram_public_items,
+        telegram_output,
+    )
 
     print(
         f"Discovery SourcePost сохранён: "
