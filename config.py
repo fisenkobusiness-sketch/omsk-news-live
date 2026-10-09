@@ -221,8 +221,8 @@ TELEGRAM_SESSION = (
     or str(BASE / "secrets" / "telegram")
 )
 
-# Channel registry is configuration, not collector code. Keep usernames
-# without @. It can be populated when MTProto credentials are configured.
+# Public Telegram usernames are consumed by the web-preview collector.
+# Keep usernames without @. Invite-only links require the later MTProto path.
 TELEGRAM_CHANNELS = []
 
 
