@@ -279,6 +279,16 @@ class TelegramPublicWebCollector:
                     if url:
                         seen_urls.add(url)
                     all_posts.append(post)
+            except (requests.Timeout, requests.ConnectionError) as exc:
+                self.source_counts[label or username] = 0
+                self.errors.append({
+                    "username": username,
+                    "label": label,
+                    "error": str(exc),
+                })
+                # A connection failure usually affects every Telegram web
+                # preview on this network; stop instead of timing out 24 times.
+                break
             except (requests.RequestException, ValueError) as exc:
                 self.source_counts[label or username] = 0
                 self.errors.append({
