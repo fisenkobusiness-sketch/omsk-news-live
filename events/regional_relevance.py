@@ -3,17 +3,16 @@
 from __future__ import annotations
 
 import re
-from typing import Any, Dict, Iterable, Tuple
+from typing import Any, Dict, Iterable
 
 
-# Уникальные/сильные омские маркеры. Они не требуют буквального "Омск".
+# Сильные маркеры в содержании новости, а не в имени издателя.
 _CONFIRMED_MARKERS = (
     "омск", "омича", "омич", "омичей", "омичи",
     "омская область", "омской области", "омском районе",
     "омский район", "омских", "омскому",
     "омгту", "омгу", "омский государственный",
     "омсктрансмаш", "авангард", "омские крылья",
-    "12 канал", "город55", "города55", "ngs55",
 )
 
 # Устойчивые сущности Омска/Омской области. Используются как сильный
@@ -27,16 +26,19 @@ _LOCAL_ENTITY_MARKERS = (
     "омгу", "омгту", "омский государственный университет",
     "омский государственный технический университет",
     "омский университет", "омсктрансмаш",
-    "авангард", "омские крылья", "12 канал",
+    "авангард", "омские крылья",
 )
 
-# Сильные нерегиональные маркеры, которые особенно опасны для широкого поиска.
+# Сильные нерегиональные маркеры, опасные для широкого поиска.
 _REJECT_MARKERS = (
     "калужско-рижск", "медведково", "мытищи",
     "новосибирск", "новосибирской", "новосибирском", "толмачёво", "нск",
     "челябинск", "челябинской", "тюмень", "тюменской",
     "забайкаль", "коми", "петербург", "санкт-петербург",
     "краснодар", "краснодарский", "москва", "московской",
+    "поморье", "архангельск", "архангельской области",
+    "северодвинск", "мурманск", "карелия", "карелии",
+    "петрозаводск",
 )
 
 _NON_NEWS_MARKERS = (
@@ -44,6 +46,17 @@ _NON_NEWS_MARKERS = (
     "ставка тв", "прогноз (кэф", "коэффициент",
 )
 
+# Google News иногда дописывает бренд издания к заголовку. Такой суффикс —
+# метка источника, а не доказательство того, что сама новость про Омск.
+_BRANDING_SUFFIX_RE = re.compile(
+    r"\s*(?:[-–—|]\s*)?(?:"
+    r"ngs55(?:\.ru)?|om1(?:\.ru)?|omskinform(?:\.ru)?|"
+    r"омск-информ|супер\s*омск|суперомск|kvnews(?:\.ru)?|"
+    r"коммерческие\s+вести|bk55(?:\.ru)?|"
+    r"12\s*канал|город55(?:\.ru)?"
+    r")\s*$",
+    re.IGNORECASE,
+)
 _WS_RE = re.compile(r"\s+")
 
 
@@ -51,29 +64,35 @@ def _norm(value: Any) -> str:
     return _WS_RE.sub(" ", str(value or "").lower()).strip()
 
 
+def _strip_branding_suffix(value: Any) -> str:
+    return _BRANDING_SUFFIX_RE.sub("", str(value or "")).strip()
+
+
 def _contains_any(text: str, markers: Iterable[str]) -> list[str]:
     return [marker for marker in markers if marker in text]
 
 
 def assess_regional_relevance(post: Dict[str, Any]) -> Dict[str, Any]:
-    """Возвращает explainable-оценку; ничего не отбрасывает."""
+    """Возвращает объяснимую оценку; ничего не отбрасывает сама."""
     source = post.get("source") or {}
     body = post.get("post") or {}
     meta = post.get("meta") or {}
 
-    title = _norm(body.get("text"))
-    description = _norm(meta.get("description"))
+    # Регион определяем по содержанию заголовка/описания.
+    # Имя паблика, сайта или поискового запроса не должно само по себе
+    # превращать материал о другом регионе в омскую новость.
+    title = _norm(_strip_branding_suffix(body.get("text")))
+    description = _norm(_strip_branding_suffix(meta.get("description")))
     publisher = _norm(meta.get("publisher") or source.get("source_name"))
     query_id = meta.get("query_id")
-    text = " ".join(part for part in (title, description, publisher) if part)
+    content_text = " ".join(part for part in (title, description) if part)
 
-    confirmed = _contains_any(text, _CONFIRMED_MARKERS)
-    local_entities = _contains_any(text, _LOCAL_ENTITY_MARKERS)
-    rejected = _contains_any(text, _REJECT_MARKERS)
-    non_news = _contains_any(text, _NON_NEWS_MARKERS)
+    confirmed = _contains_any(content_text, _CONFIRMED_MARKERS)
+    local_entities = _contains_any(content_text, _LOCAL_ENTITY_MARKERS)
+    rejected = _contains_any(content_text, _REJECT_MARKERS)
+    non_news = _contains_any(content_text, _NON_NEWS_MARKERS)
 
-    # Издатель — только вспомогательный сигнал. Сам по себе он не доказывает,
-    # что материал про Омск: даже om1 публикует материалы других регионов.
+    # Издатель и запрос используются лишь как слабые вспомогательные сигналы.
     regional_publisher = any(
         marker in publisher
         for marker in (
@@ -82,11 +101,11 @@ def assess_regional_relevance(post: Dict[str, Any]) -> Dict[str, Any]:
         )
     )
 
-    if rejected and not confirmed:
+    if rejected and not confirmed and not local_entities:
         status = "REGION_REJECTED"
         score = 0
         reasons = [f"foreign_marker:{item}" for item in rejected]
-    elif non_news and not confirmed:
+    elif non_news and not confirmed and not local_entities:
         status = "REGION_REJECTED"
         score = 0
         reasons = [f"non_news_marker:{item}" for item in non_news]
@@ -96,6 +115,7 @@ def assess_regional_relevance(post: Dict[str, Any]) -> Dict[str, Any]:
         if confirmed:
             score += 70
             reasons.append("regional_marker")
+
         regional_query = query_id in {
             "omsk_oblast", "omsk_incident", "omsk_dtp", "omsk_fire",
             "omsk_court", "omsk_transport", "omsk_social",
@@ -107,13 +127,14 @@ def assess_regional_relevance(post: Dict[str, Any]) -> Dict[str, Any]:
         if regional_query:
             reasons.append("regional_query")
 
-        # Без явного омского маркера оставляем LIKELY только при двух
-        # независимых слабых сигналах: локальный издатель + локальный запрос.
         if confirmed or local_entities:
             score = 70 + (20 if regional_publisher else 0) + (10 if regional_query else 0)
-            reasons.append("local_entity") if local_entities and not confirmed else None
+            if local_entities and not confirmed:
+                reasons.append("local_entity")
             status = "REGION_CONFIRMED"
         elif regional_publisher and regional_query:
+            # Это только предположение: локальное издание и локальный запрос
+            # ещё не доказывают региональность конкретной статьи.
             score = 30
             status = "REGION_LIKELY"
         else:
