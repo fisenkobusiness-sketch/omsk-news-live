@@ -211,7 +211,7 @@ TELEGRAM_WEB_ENABLED = (
     os.getenv("TELEGRAM_WEB_ENABLED", "1").strip() != "0"
 )
 TELEGRAM_WEB_TIMEOUT = float(
-    os.getenv("TELEGRAM_WEB_TIMEOUT", "15")
+    os.getenv("TELEGRAM_WEB_TIMEOUT", "8")
 )
 TELEGRAM_WEB_REQUEST_DELAY = float(
     os.getenv("TELEGRAM_WEB_REQUEST_DELAY", "0.25")
