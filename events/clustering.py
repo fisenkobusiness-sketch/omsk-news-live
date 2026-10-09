@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Conservative SourcePost -> NewsEvent clustering v10.
+"""Conservative SourcePost -> NewsEvent clustering v11.
 
 Diagnostic-only clustering. Scoring, datasets and publication routing are untouched.
 """
@@ -224,6 +224,15 @@ def _publisher(post: Dict[str, Any]) -> str:
     return str((post.get("meta") or {}).get("publisher") or "").strip().lower()
 
 
+def _distinct_web_publisher_pair(left: Dict[str, Any], right: Dict[str, Any]) -> bool:
+    """Google News items from different publishers are cross-source candidates."""
+    if _platform(left) != "web_search" or _platform(right) != "web_search":
+        return False
+    left_publisher = normalize_text(_publisher(left))
+    right_publisher = normalize_text(_publisher(right))
+    return bool(left_publisher and right_publisher and left_publisher != right_publisher)
+
+
 def _same_time(a: Dict[str, Any], b: Dict[str, Any], window: int) -> bool:
     ta, tb = _published_minutes(a), _published_minutes(b)
     if ta is None or tb is None:
@@ -350,14 +359,17 @@ def _same_accident_location_and_details(left_text: str, right_text: str) -> bool
 def _cross_platform_match(post: Dict[str, Any], event: Dict[str, Any]) -> Tuple[bool, str, float]:
     """Match a short web-search headline to a longer social post conservatively."""
     other = event.get("representative_post") or {}
-    if _platform(post) == _platform(other):
+    same_platform = _platform(post) == _platform(other)
+    if same_platform and not _distinct_web_publisher_pair(post, other):
         return False, "same_platform", 0.0
 
     if not _same_time(post, other, CROSS_PLATFORM_WINDOW_MINUTES):
         return False, "cross_platform_time_window", 0.0
 
-    left = meaningful_tokens(_match_text(post))
-    right = meaningful_tokens(_event_match_text(event))
+    left_text = _match_text(post)
+    right_text = _event_match_text(event)
+    left = meaningful_tokens(left_text)
+    right = meaningful_tokens(right_text)
 
     if not left or not right:
         return False, "cross_platform_no_tokens", 0.0
@@ -369,11 +381,20 @@ def _cross_platform_match(post: Dict[str, Any], event: Dict[str, Any]) -> Tuple[
     precision = len(matched_right) / len(right)
     seq = SequenceMatcher(None, normalize_text(_match_text(post)), normalize_text(_event_match_text(event))).ratio()
 
-    current_entities = extract_entities(_text(post))
-    event_entities = event.get("entities", {})
+    current_entities = extract_entities(left_text)
+    event_entities = extract_entities(right_text)
     numbers = set(current_entities["numbers"]) & set(event_entities.get("numbers", []))
     places = set(current_entities["places"]) & set(event_entities.get("places", []))
-    type_match = current_entities["event_type"][0] == event.get("event_type")
+    type_match = current_entities["event_type"][0] == event_entities["event_type"][0]
+
+    # Strong accident identity (same street and distinctive details) outranks
+    # headline wording and event-type labels, which are often inconsistent.
+    if (
+        is_road_accident(left_text)
+        and is_road_accident(right_text)
+        and _same_accident_location_and_details(left_text, right_text)
+    ):
+        return True, "same_accident_location_and_details", 0.94
 
     # Strong anchor: numbers or concrete place tokens. For titles without them,
     # require at least two uncommon shared tokens and high title recall.
@@ -447,23 +468,25 @@ def _can_merge(post: Dict[str, Any], event: Dict[str, Any]) -> Tuple[bool, str, 
         # origin, while every SourcePost remains attached to the event.
         return True, "same_text", 1.0
 
-    if _platform(post) != _platform(event.get("representative_post") or {}):
+    event_match_text = _event_match_text(event)
+    if (
+        is_road_accident(text)
+        and is_road_accident(event_match_text)
+        and _same_accident_location_and_details(text, event_match_text)
+    ):
+        return True, "same_accident_location_and_details", 0.94
+
+    representative = event.get("representative_post") or {}
+    if (
+        _platform(post) != _platform(representative)
+        or _distinct_web_publisher_pair(post, representative)
+    ):
         return _cross_platform_match(post, event)
 
     if not _same_time(post, event["representative_post"], window):
         return False, "time_window", 0.0
 
     event_type_match = event_type == event.get("event_type")
-    event_match_text = _event_match_text(event)
-    if (
-        event_type_match
-        and event_type == "accident"
-        and is_road_accident(text)
-        and is_road_accident(event_match_text)
-        and _same_accident_location_and_details(text, event_match_text)
-    ):
-        return True, "same_accident_location_and_details", 0.90
-
     similarity = _similarity(normalized, event.get("normalized_text", ""))
 
     current_entities = extract_entities(text)
@@ -555,7 +578,7 @@ def _build_event(posts: List[Dict[str, Any]]) -> Dict[str, Any]:
         "discovery_path": discovery_path,
         "canonical_url": next(iter(urls), None),
         "event_type": entities["event_type"][0],
-        "cluster_method": "deterministic_v10",
+        "cluster_method": "deterministic_v11",
     }
 
 
