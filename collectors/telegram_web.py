@@ -108,7 +108,6 @@ class _PublicChannelParser(HTMLParser):
                 "post_url": None,
                 "views": None,
                 "media_types": [],
-                "media_urls": [],
             }
             return
 
@@ -144,29 +143,6 @@ class _PublicChannelParser(HTMLParser):
             self.current["media_types"].append("sticker")
         if any("tgme_widget_message_poll" in name for name in classes):
             self.current["media_types"].append("poll")
-
-        # Public Telegram pages often expose media as a CSS background URL
-        # rather than a normal <img src>. Capture only URLs attached to media
-        # elements to avoid accidentally storing channel avatars.
-        is_media_element = bool(photo_classes or video_classes or document_classes)
-        media_urls = self.current.setdefault("media_urls", [])
-        style = attrs.get("style") or ""
-        if is_media_element:
-            media_urls.extend(re.findall(
-                r"url\(\s*['\"]?(https?://[^)'\"]+)",
-                style,
-                flags=re.IGNORECASE,
-            ))
-            for attr_name in ("src", "data-src", "poster"):
-                candidate = attrs.get(attr_name)
-                if candidate and candidate.startswith(("http://", "https://")):
-                    media_urls.append(candidate)
-            srcset = attrs.get("srcset") or ""
-            if srcset:
-                for candidate in srcset.split(","):
-                    candidate_url = candidate.strip().split(" ", 1)[0]
-                    if candidate_url.startswith(("http://", "https://")):
-                        media_urls.append(candidate_url)
 
         if tag == "div" and "tgme_widget_message_text" in classes:
             self.capture_kind = "text"
@@ -282,7 +258,7 @@ class TelegramPublicWebCollector:
                 media_types=media_types,
                 views=raw.get("views"),
                 collection_extra={
-                    "collector_version": "telegram-public-web/0.2",
+                    "collector_version": "telegram-public-web/0.1",
                     "review_only": True,
                     "prediction_eligible": False,
                     "publication_timezone": "Asia/Omsk",
@@ -291,9 +267,6 @@ class TelegramPublicWebCollector:
                     "channel_username": username,
                     "ingest_method": "public_web_preview",
                     "today_filter": "Asia/Omsk",
-                    "media_urls": sorted(set(raw.get("media_urls") or [])),
-                    "has_text": bool(post_text.strip()),
-                    "media_only": not bool(post_text.strip()) and bool(media_types),
                 },
             ))
 
