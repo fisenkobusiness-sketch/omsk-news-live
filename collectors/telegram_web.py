@@ -271,7 +271,8 @@ class TelegramPublicWebCollector:
             label = (channel.get("label") or username).strip()
             try:
                 posts = self._fetch_channel(channel)
-                self.source_counts[label or username] = len(posts)
+                source_label = f"{label} (@{username})" if label else f"@{username}"
+                self.source_counts[source_label] = len(posts)
                 for post in posts:
                     url = str((post.get("post") or {}).get("url") or "")
                     if url and url in seen_urls:
@@ -280,7 +281,8 @@ class TelegramPublicWebCollector:
                         seen_urls.add(url)
                     all_posts.append(post)
             except (requests.Timeout, requests.ConnectionError) as exc:
-                self.source_counts[label or username] = 0
+                source_label = f"{label} (@{username})" if label else f"@{username}"
+                self.source_counts[source_label] = 0
                 self.errors.append({
                     "username": username,
                     "label": label,
