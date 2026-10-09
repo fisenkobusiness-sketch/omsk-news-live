@@ -12,7 +12,6 @@ import time
 from datetime import datetime, timedelta, timezone
 from html.parser import HTMLParser
 from typing import Any, Dict, Iterable, List
-from urllib.parse import urlparse
 
 import requests
 
