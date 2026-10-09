@@ -151,6 +151,14 @@ def main():
         ),
     )
     mode.add_argument(
+        "--editorial-queue",
+        action="store_true",
+        help=(
+            "Полный свежий прогон discovery → events → routing → "
+            "HTML-очередь для ручной проверки. Исторические модели не переобучаются."
+        ),
+    )
+    mode.add_argument(
         "--events",
         action="store_true",
         help=(
@@ -220,6 +228,24 @@ def main():
             "Единый discovery: VK + Web Search → SourcePost",
         )
 
+    if args.editorial_queue:
+        run_step(
+            "scripts/01_collect_discovery.py",
+            "Discovery: VK + Web Search + публичный Telegram",
+        )
+        run_step(
+            "scripts/02_build_events.py",
+            "VK/Web → региональный фильтр и объединение дублей",
+        )
+        run_step(
+            "scripts/04_route_events.py",
+            "VK/Web → диагностическая маршрутизация на Голос/Жесть",
+        )
+        run_step(
+            "scripts/08_build_editorial_queue.py",
+            "Формирование кликабельной редакторской очереди",
+        )
+
     if args.events:
         run_step(
             "scripts/02_build_events.py",
@@ -246,7 +272,7 @@ def main():
 
     steps = (
         []
-        if args.search_only or args.discovery or args.events or args.event_report or args.route_events or args.regional_report
+        if args.search_only or args.discovery or args.editorial_queue or args.events or args.event_report or args.route_events or args.regional_report
         else SCORE_ONLY_STEPS
         if args.score_only
         else FULL_STEPS
@@ -278,6 +304,15 @@ def main():
             "Режим: только Web Search. "
             "Discovery-RAW обновлён; в scoring он пока "
             "не подключается напрямую."
+        )
+        return
+
+    if args.editorial_queue:
+        print(
+            "Режим: редакторская очередь сформирована. "
+            "VK/Web прошли текущие фильтры и диагностическую маршрутизацию; "
+            "Telegram доступен отдельным списком для ручной проверки. "
+            "Обучение и автоматическая публикация не запускались."
         )
         return
 
