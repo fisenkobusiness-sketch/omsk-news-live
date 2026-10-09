@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import html
 import json
+import re
 import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -82,8 +83,37 @@ def audience_label(value: Any) -> str:
     return {"golos": "Голос", "zhest": "Жесть"}.get(str(value or ""), "Не определено")
 
 
+_AD_EXPLICIT_RE = re.compile(r"\b(?:реклама|erid\s*[:=])\b?", re.IGNORECASE)
+_AD_STRONG_RE = re.compile(
+    r"\b(?:скидк\w*|промокод\w*|распродаж\w*|купить|заказать|"
+    r"запись и консультация|бесплатный подбор|только до \d{1,2}\s+\w+)\b",
+    re.IGNORECASE,
+)
+_PHONE_RE = re.compile(r"(?:\+7|8)[\s(\\-]*\d{3}")
+
+
+def _is_commercial_event(event: dict[str, Any]) -> bool:
+    """Conservative queue-only ad gate; never changes the source or model data."""
+    snippets = [str(event.get("canonical_text") or "")]
+    for source_post in event.get("source_posts") or []:
+        post = source_post.get("post") or {}
+        snippets.append(str(post.get("text") or ""))
+    text = "\n".join(snippets)
+    if _AD_EXPLICIT_RE.search(text):
+        return True
+
+    strong_signals = len(_AD_STRONG_RE.findall(text))
+    has_commercial_context = bool(
+        re.search(r"\\b(?:салон|магазин|клиника|заказ|услуг|товар|стоимость|цена)\\w*\\b", text, re.I)
+        or _PHONE_RE.search(text)
+        or re.search(r"\\b\\d{1,2}\\s*%", text)
+    )
+    return strong_signals >= 2 and has_commercial_context
+
+
 def build_payload(events: list[dict[str, Any]], telegram_posts: list[dict[str, Any]]) -> dict[str, Any]:
     prepared_events = []
+    commercial_events = []
     for event in events:
         routing = event.get("audience_routing") or {}
         scores = event.get("audience_scores") or {}
@@ -104,7 +134,7 @@ def build_payload(events: list[dict[str, Any]], telegram_posts: list[dict[str, A
                 "url": url,
                 "published_at": post.get("published_at"),
             })
-        prepared_events.append({
+        prepared_row = {
             "event_id": event.get("event_id"),
             "title": str(event.get("canonical_text") or representative_post.get("text") or "Без текста").strip(),
             "published_at": event.get("first_seen_at") or representative_post.get("published_at"),
@@ -118,18 +148,22 @@ def build_payload(events: list[dict[str, Any]], telegram_posts: list[dict[str, A
             "source_count": event.get("source_count") or len(sources),
             "independent_source_count": event.get("independent_source_count"),
             "sources": sources,
-        })
+        }
+        if _is_commercial_event(event):
+            prepared_row["editorial_exclusion"] = "Реклама или коммерческое предложение"
+            commercial_events.append(prepared_row)
+        else:
+            prepared_events.append(prepared_row)
 
-    prepared_events.sort(
-        key=lambda row: (
-            max(
-                (row.get("route_fit") or {}).values() or [0.0]
+    for collection in (prepared_events, commercial_events):
+        collection.sort(
+            key=lambda row: (
+                max((row.get("route_fit") or {}).values() or [0.0]),
+                -(float(row.get("freshness_age_minutes") or 0)),
+                int(row.get("source_count") or 0),
             ),
-            -(float(row.get("freshness_age_minutes") or 0)),
-            int(row.get("source_count") or 0),
-        ),
-        reverse=True,
-    )
+            reverse=True,
+        )
 
     prepared_telegram = []
     seen_urls: set[str] = set()
@@ -159,12 +193,16 @@ def build_payload(events: list[dict[str, Any]], telegram_posts: list[dict[str, A
         "timezone": "Asia/Omsk",
         "counts": {
             "vk_web_events": len(prepared_events),
+            "commercial_events": len(commercial_events),
+            "vk_web_events_total": len(prepared_events) + len(commercial_events),
             "telegram_manual_posts": len(prepared_telegram),
         },
         "vk_web_events": prepared_events,
+        "commercial_events": commercial_events,
         "telegram_manual_posts": prepared_telegram,
         "notes": [
             "VK/Web events use existing diagnostic regional relevance, deduplication and audience routing.",
+            "Commercial or explicitly marked advertising posts are separated from the main news queue, not deleted from source data.",
             "Telegram posts are listed separately for manual editorial review; they are not scored or used for model training.",
             "Only original publication links are included. Images and videos are not downloaded or embedded.",
         ],
@@ -176,7 +214,11 @@ def esc(value: Any) -> str:
 
 
 def render_event_card(event: dict[str, Any], rank: int) -> str:
-    target = audience_label(event.get("recommended_target"))
+    target = (
+        "Реклама / коммерция"
+        if event.get("editorial_exclusion")
+        else audience_label(event.get("recommended_target"))
+    )
     score_golos = event.get("score_golos")
     score_zhest = event.get("score_zhest")
     score_text = (
@@ -232,12 +274,16 @@ def render_telegram_card(post: dict[str, Any]) -> str:
 
 def render_html(payload: dict[str, Any]) -> str:
     events = payload["vk_web_events"]
+    commercial = payload.get("commercial_events") or []
     telegram = payload["telegram_manual_posts"]
     generated = local_time(payload.get("generated_at"))
     event_cards = "".join(render_event_card(row, idx) for idx, row in enumerate(events, start=1))
+    commercial_cards = "".join(render_event_card(row, idx) for idx, row in enumerate(commercial, start=1))
     telegram_cards = "".join(render_telegram_card(row) for row in telegram)
     if not event_cards:
         event_cards = '<p class="empty">Пока нет событий VK/Web. Сначала запусти discovery → events → route-events.</p>'
+    if not commercial_cards:
+        commercial_cards = '<p class="empty">Рекламных или явно коммерческих публикаций не найдено.</p>'
     if not telegram_cards:
         telegram_cards = '<p class="empty">Сегодняшних публичных Telegram-публикаций нет или файл ещё не создан.</p>'
     return f"""<!doctype html>
@@ -278,7 +324,8 @@ footer {{ color:var(--muted); font-size:12px; border-top:1px solid var(--line); 
   <p class="note">Ссылки ведут на оригинальные публикации. Изображения и видео не скачиваются и не встраиваются.</p>
   <p class="muted">Сформировано: {esc(generated)}</p>
   <div class="stats">
-    <div class="stat"><strong>{len(events)}</strong> событий VK/Web после объединения</div>
+    <div class="stat"><strong>{len(events)}</strong> событий в основной очереди</div>
+    <div class="stat"><strong>{len(commercial)}</strong> рекламных / коммерческих публикаций отдельно</div>
     <div class="stat"><strong>{len(telegram)}</strong> Telegram-публикаций для ручной проверки</div>
   </div>
 </header>
@@ -286,7 +333,10 @@ footer {{ color:var(--muted); font-size:12px; border-top:1px solid var(--line); 
   <h2>1. VK + Web Search — очередь с диагностической оценкой</h2>
   <p class="note">Используются существующие фильтр региона, дедупликация и маршрутизатор. Оценки — внутренние модельные баллы, не проценты вероятности вирусности.</p>
   {event_cards}
-  <h2>2. Telegram — ссылки для ручной проверки</h2>
+  <h2>2. Реклама и коммерческие публикации — отдельно</h2>
+  <p class="note">Сюда вынесены материалы с явной маркировкой рекламы или сильными коммерческими признаками. Это вспомогательный фильтр: перед окончательным решением список можно просмотреть вручную.</p>
+  {commercial_cards}
+  <h2>3. Telegram — ссылки для ручной проверки</h2>
   <p class="note">Telegram не участвует в оценке или обучении модели. Список отсортирован по времени публикации; для каждого сообщения дана ссылка на оригинал.</p>
   {telegram_cards}
   <footer>Оперативная редакторская очередь. Не публикует материалы автоматически и не скачивает медиа.</footer>
