@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Conservative SourcePost -> NewsEvent clustering v12.
+"""Conservative SourcePost -> NewsEvent clustering v13.
 
 Diagnostic-only clustering. Scoring, datasets and publication routing are untouched.
 """
@@ -438,7 +438,10 @@ def _cross_platform_match(post: Dict[str, Any], event: Dict[str, Any]) -> Tuple[
 
     # Identity needs a semantic anchor, not merely shared digits (such as the
     # current year) or a broad regional location like Омск/Омская область.
-    uncommon_overlap = {t for t in matched_left if len(t) >= 5 and t not in _STOPWORDS}
+    uncommon_overlap = {
+        t for t in matched_left
+        if len(t) >= 5 and t not in _STOPWORDS and t not in _MORPHOLOGY_GENERIC
+    }
     fuzzy_count = len(fuzzy_overlap)
     phrase_anchors = _phrase_anchor_matches(left_text, right_text)
     specific_places = {p for p in places if p not in {"омск", "омская", "область", "город", "центр"}}
@@ -617,7 +620,7 @@ def _build_event(posts: List[Dict[str, Any]]) -> Dict[str, Any]:
         "discovery_path": discovery_path,
         "canonical_url": next(iter(urls), None),
         "event_type": entities["event_type"][0],
-        "cluster_method": "deterministic_v12",
+        "cluster_method": "deterministic_v13",
     }
 
 
