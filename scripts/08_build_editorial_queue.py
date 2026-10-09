@@ -83,13 +83,13 @@ def audience_label(value: Any) -> str:
     return {"golos": "Голос", "zhest": "Жесть"}.get(str(value or ""), "Не определено")
 
 
-_AD_EXPLICIT_RE = re.compile(r"\b(?:реклама|erid\s*[:=])\b?", re.IGNORECASE)
+_AD_EXPLICIT_RE = re.compile(r"\b(?:реклама\b|erid\s*[:=])", re.IGNORECASE)
 _AD_STRONG_RE = re.compile(
     r"\b(?:скидк\w*|промокод\w*|распродаж\w*|купить|заказать|"
     r"запись и консультация|бесплатный подбор|только до \d{1,2}\s+\w+)\b",
     re.IGNORECASE,
 )
-_PHONE_RE = re.compile(r"(?:\+7|8)[\s(\\-]*\d{3}")
+_PHONE_RE = re.compile(r"(?:\+7|8)[\s()-]*\d{3}")
 
 
 def _is_commercial_event(event: dict[str, Any]) -> bool:
@@ -104,9 +104,9 @@ def _is_commercial_event(event: dict[str, Any]) -> bool:
 
     strong_signals = len(_AD_STRONG_RE.findall(text))
     has_commercial_context = bool(
-        re.search(r"\\b(?:салон|магазин|клиника|заказ|услуг|товар|стоимость|цена)\\w*\\b", text, re.I)
+        re.search(r"\b(?:салон|магазин|клиника|заказ|услуг|товар|стоимость|цена)\w*\b", text, re.I)
         or _PHONE_RE.search(text)
-        or re.search(r"\\b\\d{1,2}\\s*%", text)
+        or re.search(r"\b\d{1,2}\s*%", text)
     )
     return strong_signals >= 2 and has_commercial_context
 
