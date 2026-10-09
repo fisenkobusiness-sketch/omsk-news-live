@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Conservative SourcePost -> NewsEvent clustering v8.
+"""Conservative SourcePost -> NewsEvent clustering v10.
 
 Diagnostic-only clustering. Scoring, datasets and publication routing are untouched.
 """
@@ -555,7 +555,7 @@ def _build_event(posts: List[Dict[str, Any]]) -> Dict[str, Any]:
         "discovery_path": discovery_path,
         "canonical_url": next(iter(urls), None),
         "event_type": entities["event_type"][0],
-        "cluster_method": "deterministic_v9",
+        "cluster_method": "deterministic_v10",
     }
 
 
