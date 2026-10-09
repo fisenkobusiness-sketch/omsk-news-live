@@ -47,6 +47,8 @@ PREDICTOR = SRC_DIR / "predictor.py"
 POLL_SECONDS = 30
 POSTS_PER_GROUP = 100
 MAX_VK_WORKERS = 8
+VK_REQUEST_TIMEOUT = 15
+VK_REQUEST_RETRIES = 2
 
 GITHUB_REPO = "fisenkobusiness-sketch/omsk-news-live"
 GITHUB_BRANCH = "main"
@@ -125,9 +127,22 @@ def vk_call(method, token, **params):
     params["access_token"] = token
     params["v"] = "5.199"
     url = f"https://api.vk.com/method/{method}"
-    r = requests.get(url, params=params, timeout=5)
-    r.raise_for_status()
-    data = r.json()
+    # Повторяем временные сетевые сбои: VK периодически отвечает дольше обычного.
+    # Всего до 3 попыток, с небольшими паузами 1 и 2 секунды.
+    last_error = None
+    for attempt in range(VK_REQUEST_RETRIES + 1):
+        try:
+            r = requests.get(url, params=params, timeout=VK_REQUEST_TIMEOUT)
+            r.raise_for_status()
+            data = r.json()
+            break
+        except requests.exceptions.RequestException as exc:
+            last_error = exc
+            if attempt >= VK_REQUEST_RETRIES:
+                raise
+            time.sleep(attempt + 1)
+    else:
+        raise last_error
     if "error" in data:
         raise RuntimeError(
             f"VK API {method}: {data['error'].get('error_msg', data['error'])}"
@@ -410,7 +425,20 @@ def main():
                         fetched[idx] = future.result()
                     except Exception as exc:
                         log(f"VK {group_key}: ошибка получения: {exc}")
-                        fetched[idx] = []
+                        fetched[idx] = None
+
+            successful_groups = sum(posts is not None for posts in fetched)
+            failed_groups = len(group_items) - successful_groups
+            log(
+                f"VK итоги цикла #{cycle_no}: успешно {successful_groups}/{len(group_items)}, "
+                f"ошибок {failed_groups}."
+            )
+            cycle_incomplete = failed_groups > successful_groups
+            if cycle_incomplete:
+                log(
+                    f"ВНИМАНИЕ: цикл #{cycle_no} неполный — больше половины групп "
+                    "не удалось опросить. Данные за этот цикл могут быть неполными."
+                )
 
             for posts in fetched:
                 for post in posts or []:
@@ -462,7 +490,12 @@ def main():
                 log("Analysis + Predictor + GitHub завершены.")
 
             first_cycle = False
-            log(f"Цикл #{cycle_no}: завершён. Следующий опрос через {POLL_SECONDS} сек.")
+            cycle_status = "завершён НЕПОЛНО" if cycle_incomplete else "завершён"
+            log(
+                f"Цикл #{cycle_no}: {cycle_status}. "
+                f"Успешно: {successful_groups}/{len(group_items)}, ошибок: {failed_groups}. "
+                f"Следующий опрос через {POLL_SECONDS} сек."
+            )
             time.sleep(POLL_SECONDS)
 
         except KeyboardInterrupt:
