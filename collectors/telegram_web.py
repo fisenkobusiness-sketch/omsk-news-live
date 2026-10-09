@@ -153,7 +153,7 @@ class _PublicChannelParser(HTMLParser):
         style = attrs.get("style") or ""
         if is_media_element:
             media_urls.extend(re.findall(
-                r"url\\(\\s*['\\\"]?(https?://[^)'\\\"]+)",
+                r"url\(\s*['\"]?(https?://[^)'\"]+)",
                 style,
                 flags=re.IGNORECASE,
             ))
