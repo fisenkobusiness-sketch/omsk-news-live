@@ -14,7 +14,6 @@ import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
-from zoneinfo import ZoneInfo
 
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
@@ -26,7 +25,7 @@ OUTPUT_DIR = ROOT / "data" / "events"
 JSON_OUTPUT = OUTPUT_DIR / "editorial_queue.json"
 HTML_OUTPUT = OUTPUT_DIR / "editorial_queue.html"
 
-OMSK = ZoneInfo("Asia/Omsk")
+OMSK = timezone(timedelta(hours=6), name="Asia/Omsk")
 
 
 def read_jsonl(path: Path, *, required: bool = True) -> list[dict[str, Any]]:
