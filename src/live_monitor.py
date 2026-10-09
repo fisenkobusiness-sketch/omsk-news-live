@@ -365,6 +365,25 @@ def main():
         f"Опрос каждые {POLL_SECONDS} сек."
     )
 
+    # Долговечное состояние конвейера: после сбоя GitHub не теряем
+    # необходимость публикации, даже если новых постов в следующих циклах нет.
+    PENDING_FILE = RUNTIME_DIR / "publish_pending.json"
+    pending = load_json(PENDING_FILE, {})
+    if not isinstance(pending, dict):
+        pending = {}
+
+    # Восстановление после обновления кода/перезапуска: если локальная очередь
+    # создана сегодня, но состояние ожидания ещё не существовало, повторно
+    # публикуем её. Это закрывает сбой публикации, случившийся до установки фикса.
+    pool_file = RUNTIME_DIR / "predictor_queue.json"
+    if not PENDING_FILE.exists() and pool_file.exists():
+        local_pool = load_json(pool_file, {})
+        generated_at = str(local_pool.get("generated_at", "")) if isinstance(local_pool, dict) else ""
+        if generated_at[:10] == datetime.now().astimezone().strftime("%Y-%m-%d"):
+            pending = {"pipeline_pending": False, "publish_pending": True}
+            save_json(PENDING_FILE, pending)
+            log("Восстановление: найдена очередь Predictor за сегодня, поставлена в публикацию.")
+
     first_cycle = True
     cycle_no = 0
 
@@ -416,15 +435,31 @@ def main():
                 save_json(INPUT_FILE, today_posts)
                 save_json(SEEN_FILE, sorted(seen))
 
+                # Сначала фиксируем необходимость обработки на диске.
+                # Если процесс упадёт в середине pipeline, следующий цикл повторит его.
+                pending = {"pipeline_pending": True, "publish_pending": False}
+                save_json(PENDING_FILE, pending)
                 log(f"Новых постов: {len(new_posts)}")
-                run_pipeline()
-                publish_to_github()
-                log("Analysis + Predictor + GitHub завершены.")
 
             elif first_cycle:
                 save_json(INPUT_FILE, today_posts)
                 save_json(SEEN_FILE, sorted(seen))
                 log("Новых постов при первом цикле нет.")
+
+            # Возобновляем незавершённую обработку независимо от наличия новых постов.
+            if pending.get("pipeline_pending"):
+                run_pipeline()
+                pending = {"pipeline_pending": False, "publish_pending": True}
+                save_json(PENDING_FILE, pending)
+                log("Analysis + Predictor завершены. Очередь ожидает публикации в GitHub.")
+
+            # После сетевого сбоя повторяем только публикацию, не прогоняя
+            # analysis.py и predictor.py заново. Снимаем флаг только после успеха.
+            if pending.get("publish_pending"):
+                publish_to_github()
+                pending = {"pipeline_pending": False, "publish_pending": False}
+                save_json(PENDING_FILE, pending)
+                log("Analysis + Predictor + GitHub завершены.")
 
             first_cycle = False
             log(f"Цикл #{cycle_no}: завершён. Следующий опрос через {POLL_SECONDS} сек.")
