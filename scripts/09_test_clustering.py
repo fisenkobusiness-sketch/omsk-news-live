@@ -213,5 +213,102 @@ def main() -> None:
     )
 
 
+    # Two different crashes happened in different locations in Omsk on the same
+    # morning. Similar vehicle/casualty words must not merge them.
+    bus_different = source_post(
+        platform="vk",
+        source_id="bus_at_zaozernaya",
+        source_name="ЧП Омск",
+        published_at="2026-10-09T04:05:30Z",
+        text=(
+            "На ул. Заозёрная автобус сбил человека, предположительно "
+            "на пешеходном переходе."
+        ),
+    )
+    honda_different = source_post(
+        platform="web_search",
+        source_id="ngs55_honda_different",
+        source_name="NGS55.RU",
+        publisher="NGS55.RU",
+        published_at="2026-10-09T05:14:14Z",
+        text=(
+            "Пострадали двое детей: рядом с «Континентом» иномарка "
+            "влетела в столб - NGS55.RU"
+        ),
+    )
+    check("bus crash and Honda crash at different locations stay separate",
+          [bus_different, honda_different], 2)
+
+    # Actual false merge from the sample: siren test versus preparation of
+    # outdoor hockey rinks. Same city and same publication date are not identity.
+    hockey_rinks = source_post(
+        platform="vk",
+        source_id="hockey_rinks",
+        source_name="Омск ВК",
+        published_at="2026-10-09T04:00:00Z",
+        text=(
+            "В Омске анонсировали процесс заливки хоккейных площадок. "
+            "Хоккейные коробки необходимо залить в срок до 11 декабря 2026 года. "
+            "В городской администрации сообщили о подготовке к зимнему периоду "
+            "плоскостных спортивных сооружений."
+        ),
+    )
+    check("planned siren check and hockey rink preparation stay separate",
+          [siren_vk, hockey_rinks], 2)
+
+    # Same publisher and governor name, but different story: budget amendment
+    # versus a statement about people responding to a drone attack.
+    budget_story = source_post(
+        platform="web_search",
+        source_id="budget_query",
+        source_name="СуперОмск",
+        publisher="СуперОмск",
+        published_at="2026-10-09T03:29:00Z",
+        text=(
+            "Хоценко: доходы бюджета Омской области предложено увеличить "
+            "на 8,7 млрд рублей - СуперОмск"
+        ),
+    )
+    drone_statement = source_post(
+        platform="web_search",
+        source_id="governor_statement_query",
+        source_name="СуперОмск",
+        publisher="СуперОмск",
+        published_at="2026-10-09T03:41:00Z",
+        text=(
+            "Хоценко обратился к отражавшим атаку БПЛА на Омскую область "
+            "- СуперОмск"
+        ),
+    )
+    check("budget story and governor drone-attack statement stay separate",
+          [budget_story, drone_statement], 2)
+
+    # Common opener phrases like "Доброе утро, Омск" do not turn a greeting
+    # into the same event as a public complaint about heating and hot water.
+    postal_day = source_post(
+        platform="vk",
+        source_id="postal_day",
+        source_name="Om1",
+        published_at="2026-10-09T03:12:41Z",
+        text=(
+            "Доброе утро, Омск! Сегодня — Всемирный день почты! "
+            "Праздник напоминает о временах, когда письма ждали неделями."
+        ),
+    )
+    hot_water_complaint = source_post(
+        platform="vk",
+        source_id="hot_water_complaint",
+        source_name="Аварийный Омск",
+        published_at="2026-10-09T03:17:38Z",
+        text=(
+            "Доброе утро! Администрация города Омска, примите меры. "
+            "По улице Магистральная, дома 56А и 56Б, третью неделю без "
+            "горячей воды и отопления."
+        ),
+    )
+    check("morning greeting and heating complaint stay separate",
+          [postal_day, hot_water_complaint], 2)
+
+
 if __name__ == "__main__":
     main()
