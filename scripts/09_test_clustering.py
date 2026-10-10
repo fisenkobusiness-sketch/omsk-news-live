@@ -151,6 +151,20 @@ def main() -> None:
     )
     check("same Honda crash merges across sources", [honda_vk, honda_ngs], 1)
 
+    honda_kv = source_post(
+        platform="web_search",
+        source_id="kvnews_honda",
+        source_name="KVnews.ru",
+        publisher="KVnews.ru",
+        published_at="2026-10-09T06:59:29Z",
+        text=(
+            "Женщина – водитель Honda врезалась в столб: "
+            "госпитализированы двое детей - KVnews.ru"
+        ),
+    )
+    check("same Honda crash also matches short KVnews headline", [honda_vk, honda_kv], 1)
+
+
     bus_short = source_post(
         platform="vk",
         source_id="chp_bus",
@@ -174,6 +188,29 @@ def main() -> None:
         ),
     )
     check("same fatal bus crash merges across sources", [bus_short, bus_full], 1)
+
+    bus_ngs = source_post(
+        platform="web_search",
+        source_id="omsk_transport",
+        source_name="NGS55.RU",
+        publisher="NGS55.RU",
+        published_at="2026-10-09T06:51:24Z",
+        text="Автобус насмерть сбил омича на «зебре» - NGS55.RU",
+    )
+    bus_omskinform = source_post(
+        platform="web_search",
+        source_id="omsk_transport",
+        source_name="omskinform.ru",
+        publisher="omskinform.ru",
+        published_at="2026-10-09T06:55:00Z",
+        text="Автобус в Омске переехал пенсионера - omskinform.ru",
+    )
+    check(
+        "same fatal bus crash absorbs NGS55 and Omskinform headlines",
+        [bus_short, bus_full, bus_ngs, bus_omskinform],
+        1,
+    )
+
 
     siren_vk = source_post(
         platform="vk",
