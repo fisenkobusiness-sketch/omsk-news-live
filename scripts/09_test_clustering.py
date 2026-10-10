@@ -310,5 +310,81 @@ def main() -> None:
           [postal_day, hot_water_complaint], 2)
 
 
+    # Regression case from the real discovery batch: multiple unrelated
+    # accidents/reports plus crime and a memorial notice were chained into
+    # one NewsEvent by the location/detail shortcut. All six must stay separate.
+    traffic_daily = source_post(
+        platform="vk",
+        source_id="traffic_daily",
+        source_name="Госавтоинспекция Омской области",
+        published_at="2026-10-09T03:42:06Z",
+        text=(
+            "Итоги суток 8 октября 2026 года. За сутки на дорогах Омской области "
+            "зарегистрировано 5 ДТП, в которых 1 человек погиб и 8 получили травмы. "
+            "Возбуждено 496 административных дел."
+        ),
+    )
+    honda_on_70 = source_post(
+        platform="vk",
+        source_id="honda_on_70",
+        source_name="ЧП Омск",
+        published_at="2026-10-09T04:23:17Z",
+        text=(
+            "Двое детей пострадали в ДТП на улице 70 лет Октября. 35-летняя "
+            "женщина на Honda потеряла управление и врезалась в фонарный столб "
+            "возле дома № 5к4. Мальчик 5 лет и девочка 7 лет госпитализированы."
+        ),
+    )
+    fire_27_work = source_post(
+        platform="vk",
+        source_id="fire_27_work",
+        source_name="ЧП Омск",
+        published_at="2026-10-09T04:24:00Z",
+        text=(
+            "Накануне поздно вечером на 27-й Рабочей полыхал жилой дом и постройки. "
+            "Горели квартира, кровля, кочегарка, баня и дровяник. На пожаре получила "
+            "травмы женщина."
+        ),
+    )
+    traffic_summary = source_post(
+        platform="vk",
+        source_id="traffic_summary",
+        source_name="Госавтоинспекция Омской области",
+        published_at="2026-10-09T04:52:16Z",
+        text=(
+            "В Госавтоинспекции подвели итоги за 9 месяцев 2026 года. В Омской "
+            "области зарегистрировано 1 737 ДТП, в которых 102 человека погибли "
+            "и 2 190 получили травмы."
+        ),
+    )
+    fraud_case = source_post(
+        platform="vk",
+        source_id="fraud_case",
+        source_name="Жесть Омска",
+        published_at="2026-10-09T05:34:56Z",
+        text=(
+            "В Омске начнут судить банду телефонных мошенников. Перед судом "
+            "предстанет 21 человек, обвиняемых в мошенничестве. Курьеров "
+            "контролировали через Telegram."
+        ),
+    )
+    memorial = source_post(
+        platform="vk",
+        source_id="memorial",
+        source_name="Om1",
+        published_at="2026-10-09T08:31:11Z",
+        text=(
+            "Шелест принял участие в открытии памятного знака Борису Суворову. "
+            "В Омске открыли памятный знак участнику боевых действий в Афганистане. "
+            "Для монумента выбрали сквер, названный в честь Суворова."
+        ),
+    )
+    check(
+        "unrelated posts from actual contaminated event stay separate",
+        [traffic_daily, honda_on_70, fire_27_work, traffic_summary, fraud_case, memorial],
+        6,
+    )
+
+
 if __name__ == "__main__":
     main()
