@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Conservative SourcePost -> NewsEvent clustering v15.
+"""Conservative SourcePost -> NewsEvent clustering v16.
 
 Diagnostic-only clustering. Scoring, datasets and publication routing are untouched.
 """
@@ -302,11 +302,27 @@ def _similarity(a: str, b: str) -> float:
     return max(seq, jaccard)
 
 
+def _strip_source_brand_suffix(value: str, post: Dict[str, Any]) -> str:
+    """Remove a publisher label only when it is appended as a headline suffix."""
+    result = str(value or "").strip()
+    source = post.get("source") or {}
+    meta = post.get("meta") or {}
+    brands = [meta.get("publisher"), source.get("source_name")]
+    for brand in brands:
+        brand = str(brand or "").strip()
+        if len(brand) < 3:
+            continue
+        pattern = r"\s*(?:[-–—|:]\s*)?" + re.escape(brand) + r"\s*$"
+        result = re.sub(pattern, "", result, flags=re.IGNORECASE).strip()
+    return result
+
+
 def _match_text(post: Dict[str, Any]) -> str:
-    """Text used for semantic matching; web search may have useful RSS description."""
-    text = _text(post)
+    """Text for matching, without appended publisher labels."""
+    text = _strip_source_brand_suffix(_text(post), post)
     if _platform(post) == "web_search":
         description = str((post.get("meta") or {}).get("description") or "").strip()
+        description = _strip_source_brand_suffix(description, post)
         if description and description not in text:
             text = f"{text} {description}"
     return text
@@ -319,6 +335,10 @@ def _event_match_text(event: Dict[str, Any]) -> str:
         if value:
             texts.append(value)
     canonical = str(event.get("canonical_text") or "").strip()
+    # Canonical text can itself carry a Google News publisher suffix; remove it
+    # using source metadata before considering the text for semantic identity.
+    for source_post in event.get("source_posts") or []:
+        canonical = _strip_source_brand_suffix(canonical, source_post)
     if canonical and canonical not in texts:
         texts.append(canonical)
     # Never concatenate all sources into one matching text. Doing so lets an
@@ -660,7 +680,7 @@ def _build_event(posts: List[Dict[str, Any]]) -> Dict[str, Any]:
         "discovery_path": discovery_path,
         "canonical_url": next(iter(urls), None),
         "event_type": entities["event_type"][0],
-        "cluster_method": "deterministic_v15",
+        "cluster_method": "deterministic_v16",
     }
 
 
