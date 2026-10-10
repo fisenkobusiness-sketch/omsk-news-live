@@ -17,7 +17,7 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from events.clustering import cluster_source_posts
+from events.clustering import cluster_source_posts, detect_event_type
 
 
 def source_post(
@@ -384,6 +384,119 @@ def main() -> None:
         [traffic_daily, honda_on_70, fire_27_work, traffic_summary, fraud_case, memorial],
         6,
     )
+
+
+    # Real-data regression: a UGC complaint starts with a greeting and long
+    # heating details; those details must not merge it with a separate city
+    # announcement about preparing hockey rinks.
+    heating_ugc = source_post(
+        platform="vk",
+        source_id="heating_ugc",
+        source_name="Аварийный Омск",
+        published_at="2026-10-09T03:17:38Z",
+        text=(
+            "Доброе утро! Анонимно.\\n"
+            "Администрация города Омска, примите уже меры сколько можно.\\n"
+            "По улице Магистральная дома 56 А и 56 Б третью неделю без горячей воды, "
+            "без отопления. Ремонтировали непонятно что и как.\\n"
+            "Вчера дали отопление на 2 часа и опять всё отключили."
+        ),
+    )
+    hockey_announcement = source_post(
+        platform="vk",
+        source_id="hockey_announcement",
+        source_name="Омск ВК",
+        published_at="2026-10-09T04:00:00Z",
+        text=(
+            "В Омске анонсировали процесс заливки хоккейных площадок\\n\\n"
+            "Хоккейные коробки необходимо залить в срок до 11 декабря 2026 года. "
+            "В городской администрации сообщили о подготовке к зимнему периоду."
+        ),
+    )
+    check("heating complaint and hockey rink announcement stay separate",
+          [heating_ugc, hockey_announcement], 2)
+
+    bridge_repair = source_post(
+        platform="vk",
+        source_id="bridge_repair",
+        source_name="Омск ВК",
+        published_at="2026-10-09T05:30:00Z",
+        text=(
+            "Конь не валялся: стало известно реальное состояние дел с ремонтом моста у Телецентра в Омске\\n\\n"
+            "Ремонт моста имени 60-летия ВЛКСМ через Иртыш значительно отстает от графика. "
+            "В мэрии сообщили о задержках по нескольким направлениям работ."
+        ),
+    )
+    budget_increase = source_post(
+        platform="vk",
+        source_id="budget_increase",
+        source_name="12 Канал",
+        published_at="2026-10-09T06:35:00Z",
+        text=(
+            "В Омской области планируют увеличить бюджет на 13 млрд рублей. На что направят эти деньги?\\n\\n"
+            "Как сообщил Виталий Хоценко, доходы предложено довести до 185,8 млрд рублей. "
+            "Деньги направят на благоустройство, дороги, медицину и другие направления."
+        ),
+    )
+    check("bridge repair and regional budget change stay separate",
+          [bridge_repair, budget_increase], 2)
+
+    drone_safety_update = source_post(
+        platform="vk",
+        source_id="drone_safety_update",
+        source_name="12 Канал",
+        published_at="2026-10-09T03:42:28Z",
+        text=(
+            "При атаке вражеских БПЛА на Омск никто не пострадал\\n\\n"
+            "В разных районах Омска прозвучали сигналы оповещения. По поручению "
+            "губернатора Виталия Хоценко оперативные службы переведены в режим готовности."
+        ),
+    )
+    tire_supplier = source_post(
+        platform="vk",
+        source_id="tire_supplier",
+        source_name="Om1",
+        published_at="2026-10-09T04:32:15Z",
+        text=(
+            "Бережливые технологии помогли омскому поставщику шин сократить время отгрузки на маркетплейсы\\n\\n"
+            "Региональная программа повышения производительности труда, разработанная "
+            "по поручению губернатора Омской области Виталия Хоценко, помогла ускорить обработку заказов."
+        ),
+    )
+    check("drone safety update and tire supplier story stay separate",
+          [drone_safety_update, tire_supplier], 2)
+
+    fuel_queues = source_post(
+        platform="web_search",
+        source_id="fuel_queues",
+        source_name="NGS55.RU",
+        publisher="NGS55.RU",
+        published_at="2026-10-09T04:17:05Z",
+        text=(
+            "Очереди на АЗС после атаки дронов: что происходит на заправках Омска сегодня "
+            "- 9 октября 2026 | НГС55.ру"
+        ),
+    )
+    datacenter_damage = source_post(
+        platform="web_search",
+        source_id="datacenter_damage",
+        source_name="NGS55.RU",
+        publisher="NGS55.RU",
+        published_at="2026-10-09T07:36:35Z",
+        text=(
+            "Несколько модулей дата-центра «Яндекс» вышли из строя после атаки дронов "
+            "- NGS55.RU"
+        ),
+    )
+    check("fuel queues and datacenter damage after drone attacks stay separate",
+          [fuel_queues, datacenter_damage], 2)
+
+    memorial_type = detect_event_type(
+        "Шелест открыл памятный знак землякам и ветеранам боевых действий в Афганистане"
+    )
+    if memorial_type == "weather":
+        raise AssertionError("word 'ветеранам' must not classify a memorial story as weather")
+    print(f"OK: veteran wording does not trigger weather classification -> {memorial_type}")
 
 
 if __name__ == "__main__":
