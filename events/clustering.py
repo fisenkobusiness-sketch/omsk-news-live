@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Conservative SourcePost -> NewsEvent clustering v20.
+"""Conservative SourcePost -> NewsEvent clustering v21.
 
 Diagnostic-only clustering. Scoring, datasets and publication routing are untouched.
 """
@@ -366,18 +366,18 @@ def _event_match_text(event: Dict[str, Any]) -> str:
 
 
 def _identity_text(post: Dict[str, Any]) -> str:
-    """Choose a headline/lead for matching; long article bodies are supporting context."""
+    """Choose a headline plus one lead paragraph; ignore later article context."""
     text = _match_text(post)
     raw = _strip_source_brand_suffix(_text(post), post)
     lines = [line.strip() for line in raw.splitlines() if line.strip()]
     if len(lines) > 1:
-        # Publisher posts normally place the headline before a blank line.
-        # If the opening is boilerplate (greeting/anonymity label), keep that
-        # opening as identity rather than matching the body to an unrelated story.
-        return lines[0][:240]
-    # Search results usually contain only a headline; full social texts without
-    # line breaks are limited to their lead to avoid matching on distant details.
-    return text[:240]
+        # Keep the headline and first body line/paragraph. A title alone can be
+        # too short to match the same incident reported with different wording.
+        # Capping this excerpt avoids matching against unrelated later context.
+        return " ".join(lines[:2])[:420]
+    # Search results usually contain only a headline; long single-line posts are
+    # limited to a short lead to avoid matching on distant details.
+    return text[:420]
 
 
 def _event_identity_text(event: Dict[str, Any]) -> str:
@@ -526,6 +526,23 @@ def _traffic_summary_period(value: str) -> str | None:
     return "summary:unspecified"
 
 
+def _is_bus_pedestrian_collision(value: str) -> bool:
+    """Narrow identity cue for short headlines describing a bus hitting a person."""
+    text = normalize_text(value)
+    bus = bool(re.search(r"\bавтобус[а-яё]*\b", text))
+    collision = any(
+        marker in text
+        for marker in ("сбил", "сбила", "сбило", "переехал", "переехала",
+                       "переехали", "наезд", "наехал", "наехала")
+    )
+    victim = any(
+        marker in text
+        for marker in ("пенсионер", "пожил", "пешеход", "человек", "мужчин",
+                       "женщин", "омич")
+    )
+    return bus and collision and victim
+
+
 def _cross_platform_match(post: Dict[str, Any], event: Dict[str, Any]) -> Tuple[bool, str, float]:
     """Match a short web-search headline to a longer social post conservatively."""
     other = event.get("representative_post") or {}
@@ -540,6 +557,17 @@ def _cross_platform_match(post: Dict[str, Any], event: Dict[str, Any]) -> Tuple[
     right_text = _event_match_text(event)
     left_identity = _identity_text(post)
     right_identity = _event_identity_text(event)
+
+    # Some short headlines omit the place and use different verbs (e.g.
+    # "автобус насмерть сбил пенсионера" vs "автобус переехал пенсионера").
+    # Require a bus, collision verb and human victim on both sides, plus a
+    # tight time window; never use this for car crashes or general transport.
+    if (
+        _is_bus_pedestrian_collision(left_text)
+        and _is_bus_pedestrian_collision(right_text)
+        and _same_time(post, other, 360)
+    ):
+        return True, "same_bus_pedestrian_collision", 0.93
 
     # Aggregated road-safety statistics are separate editorial events from
     # individual crashes. Also keep reports for different reporting periods
@@ -775,7 +803,7 @@ def _build_event(posts: List[Dict[str, Any]]) -> Dict[str, Any]:
         "discovery_path": discovery_path,
         "canonical_url": next(iter(urls), None),
         "event_type": entities["event_type"][0],
-        "cluster_method": "deterministic_v20",
+        "cluster_method": "deterministic_v21",
     }
 
 
