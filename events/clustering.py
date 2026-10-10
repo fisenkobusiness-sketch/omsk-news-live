@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Conservative SourcePost -> NewsEvent clustering v17.
+"""Conservative SourcePost -> NewsEvent clustering v18.
 
 Diagnostic-only clustering. Scoring, datasets and publication routing are untouched.
 """
@@ -369,7 +369,10 @@ _LOCATION_CUE_RE = re.compile(
     r"([а-яё0-9-]+(?:\s+[а-яё0-9-]+){0,3})\b",
     re.I,
 )
-_NUMBERED_STREET_RE = re.compile(r"\b\d{1,3}\s+лет\s+[а-яё]{4,}\b", re.I)
+_NUMBERED_STREET_RE = re.compile(r"\b\d{1,3}\s+(?:лет|я)\s+[а-яё]{4,}\b", re.I)
+_LANDMARK_ANCHOR_RE = re.compile(
+    r"\b(?:континент|заозерн\w*|куйбышев\w*|лазо|юбилейн\w*)\b", re.I
+)
 _HOUSE_NUMBER_RE = re.compile(
     r"\b(?:дом(?:а)?|д\.?)\s*(?:№\s*)?(\d+[а-яё]?(?:к\d+)?)\b",
     re.I,
@@ -386,6 +389,7 @@ def _location_anchors(value: str) -> set[str]:
     """Извлекает осторожные текстовые якоря улиц и названий вида «70 лет Октября»."""
     text = normalize_text(value)
     anchors = {match.group(0) for match in _NUMBERED_STREET_RE.finditer(text)}
+    anchors.update(match.group(0) for match in _LANDMARK_ANCHOR_RE.finditer(text))
     anchors.update(match.group(1) for match in _HOUSE_NUMBER_RE.finditer(text))
     for match in _LOCATION_CUE_RE.finditer(text):
         words = match.group(1).split()
@@ -407,6 +411,11 @@ def _location_anchors(value: str) -> set[str]:
 def _same_accident_location_and_details(left_text: str, right_text: str) -> bool:
     """Подсказка для дублей ДТП: одна улица плюс несколько отличительных деталей."""
     shared_locations = _location_anchors(left_text) & _location_anchors(right_text)
+    # A road-accident match requires a shared concrete location/landmark.
+    # Similar accident vocabulary, ages, dates or numbers alone are not enough.
+    if not shared_locations:
+        return False
+
     left_tokens = meaningful_tokens(left_text)
     right_tokens = meaningful_tokens(right_text)
     shared = left_tokens & right_tokens
@@ -684,7 +693,7 @@ def _build_event(posts: List[Dict[str, Any]]) -> Dict[str, Any]:
         "discovery_path": discovery_path,
         "canonical_url": next(iter(urls), None),
         "event_type": entities["event_type"][0],
-        "cluster_method": "deterministic_v17",
+        "cluster_method": "deterministic_v18",
     }
 
 
