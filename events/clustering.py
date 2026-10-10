@@ -590,7 +590,7 @@ def _cross_platform_match(post: Dict[str, Any], event: Dict[str, Any]) -> Tuple[
         if len(t) >= 5 and t not in _STOPWORDS and t not in _MORPHOLOGY_GENERIC
     }
     fuzzy_count = len(fuzzy_overlap)
-    phrase_anchors = _phrase_anchor_matches(left_text, right_text)
+    phrase_anchors = _phrase_anchor_matches(left_identity, right_identity)
     specific_places = {p for p in places if p not in {"омск", "омская", "область", "город", "центр"}}
     strong_anchor = bool(specific_places or phrase_anchors or len(uncommon_overlap) >= 2)
 
