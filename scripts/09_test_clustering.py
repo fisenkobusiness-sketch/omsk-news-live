@@ -164,6 +164,35 @@ def main() -> None:
     )
     check("same Honda crash also matches short KVnews headline", [honda_vk, honda_kv], 1)
 
+    honda_chp_short = source_post(
+        platform="vk",
+        source_id="honda_chp_short",
+        source_name="ЧП Омск",
+        published_at="2026-10-09T04:23:17Z",
+        text=(
+            "Двое детей пострадали в ДТП на улице 70 лет Октября. "
+            "35-летняя женщина за рулём Honda потеряла управление и врезалась "
+            "в фонарный столб возле дома № 5к4. Мальчик 5 лет и девочка 7 лет госпитализированы."
+        ),
+    )
+    honda_ngs_short = source_post(
+        platform="web_search",
+        source_id="ngs55_honda_short",
+        source_name="NGS55.RU",
+        publisher="NGS55.RU",
+        published_at="2026-10-09T05:14:14Z",
+        text=(
+            "Пострадали двое детей: рядом с «Континентом» иномарка "
+            "влетела в столб - NGS55.RU"
+        ),
+    )
+    check(
+        "actual Honda crash headline matches despite different location wording",
+        [honda_chp_short, honda_ngs_short],
+        1,
+    )
+
+
 
     bus_short = source_post(
         platform="vk",
@@ -319,6 +348,37 @@ def main() -> None:
     )
     check("budget story and governor drone-attack statement stay separate",
           [budget_story, drone_statement], 2)
+
+    budget_post = source_post(
+        platform="vk",
+        source_id="channel_budget_amendment",
+        source_name="12 Канал | Новости Омска",
+        published_at="2026-10-09T06:35:00Z",
+        text=(
+            "В Омской области планируют увеличить бюджет на 13 млрд рублей. "
+            "На что направят эти деньги?\\n\\n"
+            "Как сообщил Виталий Хоценко, по итогам заседания областного правительства "
+            "доходы предложено довести до 185,8 млрд рублей. Большая часть — это "
+            "федеральные целевые средства. Ещё 1,5 млрд рублей — рост собственных доходов региона.\\n\\n"
+            "Деньги направят на благоустройство, дороги, медицину и другие направления. "
+            "Расходы тоже вырастут и достигнут почти 192 млрд рублей."
+        ),
+    )
+    teacher_stipend = source_post(
+        platform="vk",
+        source_id="teacher_stipend",
+        source_name="Жесть Омска",
+        published_at="2026-10-09T07:52:17Z",
+        text=(
+            "Почти 22 миллиона: Хоценко направил дополнительные средства на стипендии будущим педагогам\\n\\n"
+            "Губернатор Омской области Виталий Хоценко решил поддержать тех, кто выбрал "
+            "профессию педагога. Муниципалитетам направят еще почти 12,7 млн рублей — "
+            "эти деньги пойдут на ежемесячные стипендии студентам педагогических специальностей."
+        ),
+    )
+    check("budget amendment and teacher stipend story stay separate",
+          [budget_post, teacher_stipend], 2)
+
 
     # Common opener phrases like "Доброе утро, Омск" do not turn a greeting
     # into the same event as a public complaint about heating and hot water.
