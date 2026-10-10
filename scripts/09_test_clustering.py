@@ -596,5 +596,125 @@ def main() -> None:
     print(f"OK: veteran wording does not trigger weather classification -> {memorial_type}")
 
 
+    # These five headlines concern the same proposed regional budget revision:
+    # the outlet reports different income/expenditure figures, but the overall
+    # policy event and timing are the same.
+    budget_proposal_super = source_post(
+        platform="web_search",
+        source_id="budget_proposal_super",
+        source_name="СуперОмск",
+        publisher="СуперОмск",
+        published_at="2026-10-09T03:29:00Z",
+        text="Хоценко: доходы бюджета Омской области предложено увеличить на 8,7 млрд рублей - СуперОмск",
+    )
+    budget_proposal_om1 = source_post(
+        platform="web_search",
+        source_id="budget_proposal_om1",
+        source_name="Om1.ru",
+        publisher="Om1.ru",
+        published_at="2026-10-09T04:04:00Z",
+        text="Плюс 13 миллиардов: в Омской области предложили увеличить расходы бюджета - Om1.ru",
+    )
+    budget_proposal_omski = source_post(
+        platform="web_search",
+        source_id="budget_proposal_omski",
+        source_name="omskinform.ru",
+        publisher="omskinform.ru",
+        published_at="2026-10-09T04:15:00Z",
+        text="Бюджет Омской области решили увеличить сразу на 13 млрд рублей - omskinform.ru",
+    )
+    budget_proposal_kv = source_post(
+        platform="web_search",
+        source_id="budget_proposal_kv",
+        source_name="KVnews.ru",
+        publisher="KVnews.ru",
+        published_at="2026-10-09T05:31:00Z",
+        text="Бюджет Омской области останется дефицитным, но его доходы и расходы вырастут - KVnews.ru",
+    )
+    budget_proposal_channel = source_post(
+        platform="vk",
+        source_id="budget_proposal_channel",
+        source_name="12 Канал | Новости Омска",
+        published_at="2026-10-09T06:35:00Z",
+        text=(
+            "В Омской области планируют увеличить бюджет на 13 млрд рублей. На что направят эти деньги?\\n\\n"
+            "Как сообщил Виталий Хоценко, доходы предложено довести до 185,8 млрд рублей. "
+            "Расходы тоже вырастут и достигнут почти 192 млрд рублей."
+        ),
+    )
+    check(
+        "same regional budget amendment merges across outlets",
+        [budget_proposal_super, budget_proposal_om1, budget_proposal_omski,
+         budget_proposal_kv, budget_proposal_channel],
+        1,
+    )
+
+    budget_growth_past = source_post(
+        platform="web_search",
+        source_id="budget_growth_past",
+        source_name="Вечерний Омск",
+        publisher="Вечерний Омск",
+        published_at="2026-10-09T04:28:14Z",
+        text="Доходы бюджета Омской области за год выросли на 8,7 миллиарда рублей - Вечерний Омск",
+    )
+    check(
+        "annual budget-growth report stays separate from proposed budget amendment",
+        [budget_proposal_super, budget_growth_past],
+        2,
+    )
+
+    hockey_rink_plan = source_post(
+        platform="vk",
+        source_id="hockey_rink_plan",
+        source_name="Омск ВК",
+        published_at="2026-10-09T04:00:00Z",
+        text=(
+            "В Омске анонсировали процесс заливки хоккейных площадок\\n\\n"
+            "Хоккейные коробки необходимо залить в срок до 11 декабря 2026 года."
+        ),
+    )
+    hockey_rink_count = source_post(
+        platform="vk",
+        source_id="hockey_rink_count",
+        source_name="Омск сегодня",
+        published_at="2026-10-09T05:21:26Z",
+        text=(
+            "Зимой в Омске зальют 26 хоккейных коробок. Ледовые площадки появятся "
+            "во всех пяти округах города, работы планируют завершить до 11 декабря."
+        ),
+    )
+    check(
+        "same hockey rink filling plan merges across sources",
+        [hockey_rink_plan, hockey_rink_count],
+        1,
+    )
+
+    memorial_om1 = source_post(
+        platform="vk",
+        source_id="memorial_om1",
+        source_name="Om1: новости Омска и России",
+        published_at="2026-10-09T08:31:11Z",
+        text=(
+            "Шелест принял участие в открытии памятного знака земляку, погибшему "
+            "при штурме дворца Амина\\n\\n"
+            "В Омске открыли памятный знак землякам — участникам боевых действий "
+            "в Афганистане и Борису Суворову."
+        ),
+    )
+    memorial_omski = source_post(
+        platform="web_search",
+        source_id="memorial_omski",
+        source_name="omskinform.ru",
+        publisher="omskinform.ru",
+        published_at="2026-10-09T07:41:00Z",
+        text="В Омске появился памятник герою войны в Афганистане Суворову - omskinform.ru",
+    )
+    check(
+        "same Suvorov memorial opening merges across outlets",
+        [memorial_om1, memorial_omski],
+        1,
+    )
+
+
 if __name__ == "__main__":
     main()
