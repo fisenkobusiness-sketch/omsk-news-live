@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Conservative SourcePost -> NewsEvent clustering v21.
+"""Conservative SourcePost -> NewsEvent clustering v22.
 
 Diagnostic-only clustering. Scoring, datasets and publication routing are untouched.
 """
@@ -407,7 +407,7 @@ _LOCATION_CUE_RE = re.compile(
 )
 _NUMBERED_STREET_RE = re.compile(r"\b\d{1,3}\s+(?:лет|я)\s+[а-яё]{4,}\b", re.I)
 _LANDMARK_ANCHOR_RE = re.compile(
-    r"\b(?:континент|заозерн\w*|куйбышев\w*|лазо|юбилейн\w*)\b", re.I
+    r"\b(?:континент\w*|заозерн\w*|куйбышев\w*|лазо\w*|юбилейн\w*)\b", re.I
 )
 _HOUSE_NUMBER_RE = re.compile(
     r"\b(?:дом(?:а)?|д\.?)\s*(?:№\s*)?(\d+[а-яё]?(?:к\d+)?)\b",
@@ -526,6 +526,30 @@ def _traffic_summary_period(value: str) -> str | None:
     return "summary:unspecified"
 
 
+def _has_children_and_pole_crash(value: str) -> bool:
+    """Distinctive crash fingerprint: child passengers/victims and a lighting pole."""
+    text = normalize_text(value)
+    has_children = bool(re.search(r"\b(?:дет\w*|ребен\w*)\b", text))
+    has_pole = any(marker in text for marker in ("столб", "опору освещения", "опора освещения", "фонарн"))
+    has_vehicle = any(marker in text for marker in ("автомобил", "иномарк", "honda", "врезал", "влетел"))
+    return has_children and has_pole and has_vehicle and is_road_accident(text)
+
+
+def _is_budget_amendment(value: str) -> bool:
+    text = normalize_text(value)
+    return "бюджет" in text and any(
+        marker in text
+        for marker in ("доход", "расход", "млрд", "заксобран", "изменений поступит")
+    )
+
+
+def _is_education_stipend_story(value: str) -> bool:
+    text = normalize_text(value)
+    return any(marker in text for marker in ("стипенд", "студент", "целевик")) and any(
+        marker in text for marker in ("педагог", "учител", "вуз", "студент")
+    )
+
+
 def _is_bus_pedestrian_collision(value: str) -> bool:
     """Narrow identity cue for short headlines describing a bus hitting a person."""
     text = normalize_text(value)
@@ -557,6 +581,15 @@ def _cross_platform_match(post: Dict[str, Any], event: Dict[str, Any]) -> Tuple[
     right_text = _event_match_text(event)
     left_identity = _identity_text(post)
     right_identity = _event_identity_text(event)
+
+    # Do not merge a budget amendment with a separate student-stipend item just
+    # because both mention the governor, additional funding and regional money.
+    left_budget = _is_budget_amendment(left_identity)
+    right_budget = _is_budget_amendment(right_identity)
+    left_stipend = _is_education_stipend_story(left_identity)
+    right_stipend = _is_education_stipend_story(right_identity)
+    if (left_budget and right_stipend) or (right_budget and left_stipend):
+        return False, "budget_vs_education_stipends", 0.0
 
     # Some short headlines omit the place and use different verbs (e.g.
     # "автобус насмерть сбил пенсионера" vs "автобус переехал пенсионера").
@@ -601,6 +634,16 @@ def _cross_platform_match(post: Dict[str, Any], event: Dict[str, Any]) -> Tuple[
     numbers = set(current_entities["numbers"]) & set(event_entities.get("numbers", []))
     places = set(current_entities["places"]) & set(event_entities.get("places", []))
     type_match = current_entities["event_type"][0] == event_entities["event_type"][0]
+
+    # This observed Honda crash was reported both as a street-number address
+    # and as "near the Continent" in a short headline. Require matching child,
+    # pole and vehicle cues plus a tight time window before using that identity.
+    if (
+        _has_children_and_pole_crash(left_text)
+        and _has_children_and_pole_crash(right_text)
+        and _same_time(post, other, 120)
+    ):
+        return True, "same_children_pole_crash", 0.92
 
     # Strong accident identity (same street and distinctive details) outranks
     # headline wording and event-type labels, which are often inconsistent.
@@ -803,7 +846,7 @@ def _build_event(posts: List[Dict[str, Any]]) -> Dict[str, Any]:
         "discovery_path": discovery_path,
         "canonical_url": next(iter(urls), None),
         "event_type": entities["event_type"][0],
-        "cluster_method": "deterministic_v21",
+        "cluster_method": "deterministic_v22",
     }
 
 
