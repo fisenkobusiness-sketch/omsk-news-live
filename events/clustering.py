@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Conservative SourcePost -> NewsEvent clustering v19.
+"""Conservative SourcePost -> NewsEvent clustering v20.
 
 Diagnostic-only clustering. Scoring, datasets and publication routing are untouched.
 """
@@ -37,7 +37,7 @@ EVENT_KEYWORDS = {
         "влетел", "влетела", "врезал", "врезалась", "столб",
     ),
     "fire": ("пожар", "загорел", "горит", "горел", "возгора"),
-    "weather": ("снег", "дожд", "погода", "метел", "гололед", "мороз", "ветер"),
+    "weather": ("снег", "дожд", "погода", "метел", "гололед", "мороз", "ветр"),
     "transport": ("маршрут", "автобус", "трамва", "троллейб", "дорог", "перекрыт", "движени"),
     "social": ("тариф", "выплат", "пособ", "льгот", "зарплат", "пенси"),
     "crime": ("суд", "приговор", "задерж", "уголов", "полици", "прокурат"),
@@ -55,6 +55,11 @@ _STOPWORDS = {
     "омском", "омской", "омскую", "омскому", "омского", "омские", "омских", "омскими",
     "областной", "областного", "областному", "областной", "областных", "областную",
     "россия", "россии", "российский", "российская", "российского", "российской", "российские",
+    "атака", "атаки", "атаке", "атакой", "атаку", "дрон", "дроны", "дронов",
+    "бпла", "беспилотник", "беспилотники", "беспилотников", "беспилотная", "беспилотной",
+    "губернатор", "губернатора", "губернатору", "хоценко", "виталия",
+    "администрация", "администрации", "администрацию", "администрацией",
+    "мэрия", "мэрии", "мэр", "мэра", "города", "городской", "городская", "городского",
     "страна", "страны", "стране", "страной", "странах",
     "район", "районе", "района", "району", "округ", "округа", "округе", "округу",
     # Дата публикации часто совпадает у совершенно разных новостей.
@@ -158,6 +163,14 @@ _MORPHOLOGY_GENERIC = {
     "освещение", "освещения", "сквер", "сквере", "вандалы", "темноте",
     "сирена", "сирены", "сирен", "громкоговоритель", "громкоговорители",
     "оповещения", "оповещении", "проверка", "проверки", "системы",
+    # A regional UAV attack can generate multiple unrelated follow-up stories.
+    "атака", "атаки", "атаке", "атакой", "атаку", "дрон", "дроны", "дронов",
+    "бпла", "беспилотник", "беспилотники", "беспилотников", "беспилотная",
+    "беспилотной", "губернатор", "губернатора", "губернатору", "хоценко",
+    "виталия", "администрация", "администрации", "администрацию", "администрацией",
+    "мэрия", "мэрии", "мэр", "мэра", "города", "городской", "городская",
+    "городского", "городской", "программа", "программы", "программой",
+    "меры", "мер", "поставщик", "поставщика", "поставщику",
     # Standard greeting/opening phrases don't identify a unique news event.
     "доброе", "добрый", "добрая", "добрую", "добрыи", "утро", "привет",
     "приветствуем", "здравствуйте", "уважаемые", "дорогие", "читатели",
@@ -352,6 +365,29 @@ def _event_match_text(event: Dict[str, Any]) -> str:
     return max(unique_texts, key=len) if unique_texts else canonical
 
 
+def _identity_text(post: Dict[str, Any]) -> str:
+    """Choose a headline/lead for matching; long article bodies are supporting context."""
+    text = _match_text(post)
+    raw = _strip_source_brand_suffix(_text(post), post)
+    lines = [line.strip() for line in raw.splitlines() if line.strip()]
+    if len(lines) > 1:
+        # Publisher posts normally place the headline before a blank line.
+        # If the opening is boilerplate (greeting/anonymity label), keep that
+        # opening as identity rather than matching the body to an unrelated story.
+        return lines[0][:240]
+    # Search results usually contain only a headline; full social texts without
+    # line breaks are limited to their lead to avoid matching on distant details.
+    return text[:240]
+
+
+def _event_identity_text(event: Dict[str, Any]) -> str:
+    identities = [
+        _identity_text(post)
+        for post in event.get("source_posts") or []
+        if _identity_text(post)
+    ]
+    return max(identities, key=len) if identities else str(event.get("canonical_text") or "")[:240]
+
 
 # Нерелевантные сами по себе слова при сравнении двух ДТП.
 _ACCIDENT_GENERIC_ANCHORS = _MORPHOLOGY_GENERIC | {
@@ -502,6 +538,8 @@ def _cross_platform_match(post: Dict[str, Any], event: Dict[str, Any]) -> Tuple[
 
     left_text = _match_text(post)
     right_text = _event_match_text(event)
+    left_identity = _identity_text(post)
+    right_identity = _event_identity_text(event)
 
     # Aggregated road-safety statistics are separate editorial events from
     # individual crashes. Also keep reports for different reporting periods
@@ -514,8 +552,11 @@ def _cross_platform_match(post: Dict[str, Any], event: Dict[str, Any]) -> Tuple[
     if left_period and right_period and left_period != right_period:
         return False, "traffic_summary_period_mismatch", 0.0
 
-    left = meaningful_tokens(left_text)
-    right = meaningful_tokens(right_text)
+    # Do ordinary semantic matching on headlines/leads, not the full article
+    # bodies. Body mentions of a governor, city administration, roads or a UAV
+    # attack often describe context rather than the story's actual subject.
+    left = meaningful_tokens(left_identity)
+    right = meaningful_tokens(right_identity)
 
     if not left or not right:
         return False, "cross_platform_no_tokens", 0.0
@@ -525,10 +566,10 @@ def _cross_platform_match(post: Dict[str, Any], event: Dict[str, Any]) -> Tuple[
     matched_right = {b for _, b in fuzzy_overlap} | overlap
     recall = len(matched_left) / len(left)
     precision = len(matched_right) / len(right)
-    seq = SequenceMatcher(None, normalize_text(_match_text(post)), normalize_text(_event_match_text(event))).ratio()
+    seq = SequenceMatcher(None, normalize_text(left_identity), normalize_text(right_identity)).ratio()
 
-    current_entities = extract_entities(left_text)
-    event_entities = extract_entities(right_text)
+    current_entities = extract_entities(left_identity)
+    event_entities = extract_entities(right_identity)
     numbers = set(current_entities["numbers"]) & set(event_entities.get("numbers", []))
     places = set(current_entities["places"]) & set(event_entities.get("places", []))
     type_match = current_entities["event_type"][0] == event_entities["event_type"][0]
@@ -734,7 +775,7 @@ def _build_event(posts: List[Dict[str, Any]]) -> Dict[str, Any]:
         "discovery_path": discovery_path,
         "canonical_url": next(iter(urls), None),
         "event_type": entities["event_type"][0],
-        "cluster_method": "deterministic_v19",
+        "cluster_method": "deterministic_v20",
     }
 
 
