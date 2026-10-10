@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Conservative SourcePost -> NewsEvent clustering v16.
+"""Conservative SourcePost -> NewsEvent clustering v17.
 
 Diagnostic-only clustering. Scoring, datasets and publication routing are untouched.
 """
@@ -158,6 +158,10 @@ _MORPHOLOGY_GENERIC = {
     "освещение", "освещения", "сквер", "сквере", "вандалы", "темноте",
     "сирена", "сирены", "сирен", "громкоговоритель", "громкоговорители",
     "оповещения", "оповещении", "проверка", "проверки", "системы",
+    # Standard greeting/opening phrases don't identify a unique news event.
+    "доброе", "добрый", "добрая", "добрую", "добрыи", "утро", "привет",
+    "приветствуем", "здравствуйте", "уважаемые", "дорогие", "читатели",
+    "подписчики", "горожане",
 }
 
 
@@ -680,7 +684,7 @@ def _build_event(posts: List[Dict[str, Any]]) -> Dict[str, Any]:
         "discovery_path": discovery_path,
         "canonical_url": next(iter(urls), None),
         "event_type": entities["event_type"][0],
-        "cluster_method": "deterministic_v16",
+        "cluster_method": "deterministic_v17",
     }
 
 
