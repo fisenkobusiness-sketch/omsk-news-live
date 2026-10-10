@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Conservative SourcePost -> NewsEvent clustering v18.
+"""Conservative SourcePost -> NewsEvent clustering v19.
 
 Diagnostic-only clustering. Scoring, datasets and publication routing are untouched.
 """
@@ -461,6 +461,35 @@ def _is_scheduled_siren_test(value: str) -> bool:
     return local and alert_system and planned
 
 
+def _traffic_summary_period(value: str) -> str | None:
+    """Return a period key for traffic-statistics posts, not individual crashes."""
+    text = normalize_text(value)
+    is_summary = any(
+        marker in text
+        for marker in (
+            "итоги суток", "подвели итоги", "итоги работы", "статистика дтп",
+            "показатели аварийности", "состояние аварийности",
+        )
+    )
+    has_traffic_context = any(
+        marker in text for marker in ("дтп", "аварийн", "госавтоинспек", "дорожн")
+    )
+    if not (is_summary and has_traffic_context):
+        return None
+
+    months = re.search(r"\bза\s+(\d{1,2})\s+месяц", text)
+    if months:
+        return f"months:{months.group(1)}"
+    if re.search(r"\b(?:суток|минувшие сутки|прошедшие сутки)\b", text):
+        return "daily"
+    quarters = re.search(r"\bза\s+(\d{1,2})\s+квартал", text)
+    if quarters:
+        return f"quarters:{quarters.group(1)}"
+    if re.search(r"\bза\s+год\b|\bгодовые итоги\b", text):
+        return "yearly"
+    return "summary:unspecified"
+
+
 def _cross_platform_match(post: Dict[str, Any], event: Dict[str, Any]) -> Tuple[bool, str, float]:
     """Match a short web-search headline to a longer social post conservatively."""
     other = event.get("representative_post") or {}
@@ -473,6 +502,18 @@ def _cross_platform_match(post: Dict[str, Any], event: Dict[str, Any]) -> Tuple[
 
     left_text = _match_text(post)
     right_text = _event_match_text(event)
+
+    # Aggregated road-safety statistics are separate editorial events from
+    # individual crashes. Also keep reports for different reporting periods
+    # separate (e.g. daily totals vs results for nine months), even when they
+    # share many accident-related words and the same regional publisher.
+    left_period = _traffic_summary_period(left_text)
+    right_period = _traffic_summary_period(right_text)
+    if (left_period is None) != (right_period is None):
+        return False, "traffic_summary_vs_incident", 0.0
+    if left_period and right_period and left_period != right_period:
+        return False, "traffic_summary_period_mismatch", 0.0
+
     left = meaningful_tokens(left_text)
     right = meaningful_tokens(right_text)
 
@@ -693,7 +734,7 @@ def _build_event(posts: List[Dict[str, Any]]) -> Dict[str, Any]:
         "discovery_path": discovery_path,
         "canonical_url": next(iter(urls), None),
         "event_type": entities["event_type"][0],
-        "cluster_method": "deterministic_v18",
+        "cluster_method": "deterministic_v19",
     }
 
 
