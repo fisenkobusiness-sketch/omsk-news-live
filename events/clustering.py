@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Conservative SourcePost -> NewsEvent clustering v22.
+"""Conservative SourcePost -> NewsEvent clustering v23.
 
 Diagnostic-only clustering. Scoring, datasets and publication routing are untouched.
 """
@@ -535,11 +535,13 @@ def _has_children_and_pole_crash(value: str) -> bool:
     return has_children and has_pole and has_vehicle and is_road_accident(text)
 
 
-def _is_budget_amendment(value: str) -> bool:
+def _is_historical_budget_growth(value: str) -> bool:
     text = normalize_text(value)
-    return "бюджет" in text and any(
-        marker in text
-        for marker in ("доход", "расход", "млрд", "заксобран", "изменений поступит")
+    return (
+        "бюджет" in text
+        and ("за год" in text or "за прошлый год" in text)
+        and any(marker in text for marker in ("вырос", "увеличил", "рост доход"))
+        and not any(marker in text for marker in ("предлож", "планируют", "решили увеличить"))
     )
 
 
@@ -547,6 +549,42 @@ def _is_education_stipend_story(value: str) -> bool:
     text = normalize_text(value)
     return any(marker in text for marker in ("стипенд", "студент", "целевик")) and any(
         marker in text for marker in ("педагог", "учител", "вуз", "студент")
+    )
+
+
+def _is_budget_amendment(value: str) -> bool:
+    text = normalize_text(value)
+    if "бюджет" not in text or _is_education_stipend_story(text):
+        return False
+    # Do not treat retrospective reports of annual revenue growth as the
+    # same event as a newly proposed budget revision.
+    if _is_historical_budget_growth(text):
+        return False
+    finance_context = any(
+        marker in text for marker in ("доход", "расход", "дефицит", "млрд", "заксобран")
+    )
+    proposal_context = any(
+        marker in text for marker in (
+            "предлож", "планируют увеличить", "решили увеличить", "увеличить бюджет",
+            "расходы вырастут", "доходы вырастут", "доходы и расходы вырастут",
+        )
+    )
+    return finance_context and proposal_context
+
+
+def _is_hockey_rink_filling(value: str) -> bool:
+    text = normalize_text(value)
+    has_rink = "хоккей" in text and any(marker in text for marker in ("коробк", "площадк"))
+    has_filling_plan = any(marker in text for marker in ("залив", "заль", "ледов", "льда"))
+    return has_rink and has_filling_plan
+
+
+def _is_suvorov_afghan_memorial(value: str) -> bool:
+    text = normalize_text(value)
+    return (
+        "суворов" in text
+        and ("афган" in text or "дворца амина" in text)
+        and any(marker in text for marker in ("памят", "монумент", "мемориал"))
     )
 
 
@@ -582,14 +620,55 @@ def _cross_platform_match(post: Dict[str, Any], event: Dict[str, Any]) -> Tuple[
     left_identity = _identity_text(post)
     right_identity = _event_identity_text(event)
 
+    event_texts = [
+        _match_text(source_post)
+        for source_post in (event.get("source_posts") or [])
+        if _match_text(source_post)
+    ] or [right_text]
+
+    # Keep a retrospective annual revenue report separate from a newly
+    # proposed budget revision, even when both mention similar amounts.
+    left_historical_budget = _is_historical_budget_growth(left_text)
+    event_historical_budget = any(_is_historical_budget_growth(t) for t in event_texts)
+    left_budget = _is_budget_amendment(left_text)
+    event_budget = any(_is_budget_amendment(t) for t in event_texts)
+    left_stipend = _is_education_stipend_story(left_text)
+    event_stipend = any(_is_education_stipend_story(t) for t in event_texts)
+    if (
+        (left_historical_budget and event_budget)
+        or (left_budget and event_historical_budget)
+    ):
+        return False, "historical_budget_vs_amendment", 0.0
+
     # Do not merge a budget amendment with a separate student-stipend item just
     # because both mention the governor, additional funding and regional money.
-    left_budget = _is_budget_amendment(left_identity)
-    right_budget = _is_budget_amendment(right_identity)
-    left_stipend = _is_education_stipend_story(left_identity)
-    right_stipend = _is_education_stipend_story(right_identity)
-    if (left_budget and right_stipend) or (right_budget and left_stipend):
+    if (left_budget and event_stipend) or (left_stipend and event_budget):
         return False, "budget_vs_education_stipends", 0.0
+
+    # Cross-outlet reports of the same proposed regional budget amendment use
+    # different figures for income and expenditure, so match the narrow topic
+    # fingerprint within the same morning's publication window.
+    if left_budget and event_budget and _same_time(post, other, 8 * 60):
+        return True, "same_regional_budget_amendment", 0.91
+
+    # A pair of reports about filling the city's hockey rinks is a single
+    # municipal plan, not a hockey match or a general winter-weather story.
+    if (
+        _is_hockey_rink_filling(left_text)
+        and any(_is_hockey_rink_filling(t) for t in event_texts)
+        and _same_time(post, other, 8 * 60)
+    ):
+        return True, "same_hockey_rink_filling_plan", 0.91
+
+    # Different headlines describe the same unveiling of a memorial to
+    # Boris Suvorov, who died in Afghanistan. Require name, memorial and
+    # Afghanistan/Amin's-palace context together.
+    if (
+        _is_suvorov_afghan_memorial(left_text)
+        and any(_is_suvorov_afghan_memorial(t) for t in event_texts)
+        and _same_time(post, other, 8 * 60)
+    ):
+        return True, "same_suvorov_afghan_memorial", 0.93
 
     # Some short headlines omit the place and use different verbs (e.g.
     # "автобус насмерть сбил пенсионера" vs "автобус переехал пенсионера").
@@ -846,7 +925,7 @@ def _build_event(posts: List[Dict[str, Any]]) -> Dict[str, Any]:
         "discovery_path": discovery_path,
         "canonical_url": next(iter(urls), None),
         "event_type": entities["event_type"][0],
-        "cluster_method": "deterministic_v22",
+        "cluster_method": "deterministic_v23",
     }
 
 
