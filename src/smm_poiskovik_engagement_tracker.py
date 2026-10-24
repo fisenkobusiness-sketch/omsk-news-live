@@ -95,6 +95,7 @@ def init_db(db_path: Path = DB_PATH) -> None:
             views_at_3h INTEGER, likes_at_3h INTEGER, comments_at_3h INTEGER, reposts_at_3h INTEGER,
             measured_at_1h INTEGER, measured_at_3h INTEGER,
             completed_1h INTEGER NOT NULL DEFAULT 0, completed_3h INTEGER NOT NULL DEFAULT 0,
+            missed_1h INTEGER NOT NULL DEFAULT 0, missed_3h INTEGER NOT NULL DEFAULT 0,
             notified_1h INTEGER NOT NULL DEFAULT 0, notified_3h INTEGER NOT NULL DEFAULT 0,
             created_at INTEGER NOT NULL)""")
         db.execute("CREATE TABLE IF NOT EXISTS state (key TEXT PRIMARY KEY, value TEXT NOT NULL)")
@@ -236,12 +237,16 @@ def process_due_observations(token: str, db_path: Path = DB_PATH, now: int | Non
         age = now - int(row["predicted_at"])
         due_hours = []
         for hours in CHECKPOINTS_HOURS:
-            if row[f"completed_{hours}h"]:
+            if row[f"completed_{hours}h"] or row[f"missed_{hours}h"]:
                 continue
             delta = age - hours * 3600
             if 0 <= delta <= tolerance_seconds:
                 due_hours.append(hours)
             elif delta > tolerance_seconds:
+                with db_connect(db_path) as db:
+                    db.execute(f"UPDATE observations SET missed_{hours}h=1 WHERE observation_id=?",
+                               (row["observation_id"],))
+                    db.commit()
                 log(f"Пропущена точная точка {hours}h для {row['audience_name']} {row['member_ids_json']}: "
                     f"возраст {age / 3600:.2f} ч. Поздний замер не засчитывается.")
         if not due_hours:
