@@ -91,6 +91,9 @@ def init_db(db_path: Path = DB_PATH) -> None:
             initial_views INTEGER NOT NULL DEFAULT 0, initial_likes INTEGER NOT NULL DEFAULT 0,
             initial_comments INTEGER NOT NULL DEFAULT 0, initial_reposts INTEGER NOT NULL DEFAULT 0,
             score_at_1h REAL, score_at_3h REAL,
+            views_at_1h INTEGER, likes_at_1h INTEGER, comments_at_1h INTEGER, reposts_at_1h INTEGER,
+            views_at_3h INTEGER, likes_at_3h INTEGER, comments_at_3h INTEGER, reposts_at_3h INTEGER,
+            measured_at_1h INTEGER, measured_at_3h INTEGER,
             completed_1h INTEGER NOT NULL DEFAULT 0, completed_3h INTEGER NOT NULL DEFAULT 0,
             notified_1h INTEGER NOT NULL DEFAULT 0, notified_3h INTEGER NOT NULL DEFAULT 0,
             created_at INTEGER NOT NULL)""")
@@ -224,11 +227,23 @@ def maybe_notify_threshold(db_path: Path, send_func=telegram_send, token: str | 
 
 def process_due_observations(token: str, db_path: Path = DB_PATH, now: int | None = None) -> None:
     now = now if now is not None else now_ts()
+    # A checkpoint is accepted only within a 10-minute window. If the process
+    # was stopped for longer, leave it incomplete rather than label a late value as 1h/3h.
+    tolerance_seconds = 10 * 60
     with db_connect(db_path) as db:
         rows = db.execute("SELECT * FROM observations WHERE completed_1h=0 OR completed_3h=0 ORDER BY predicted_at").fetchall()
     for row in rows:
         age = now - int(row["predicted_at"])
-        due_hours = [hours for hours in CHECKPOINTS_HOURS if age >= hours * 3600 and not row[f"completed_{hours}h"]]
+        due_hours = []
+        for hours in CHECKPOINTS_HOURS:
+            if row[f"completed_{hours}h"]:
+                continue
+            delta = age - hours * 3600
+            if 0 <= delta <= tolerance_seconds:
+                due_hours.append(hours)
+            elif delta > tolerance_seconds:
+                log(f"Пропущена точная точка {hours}h для {row['audience_name']} {row['member_ids_json']}: "
+                    f"возраст {age / 3600:.2f} ч. Поздний замер не засчитывается.")
         if not due_hours:
             continue
         audience = row["audience"]
@@ -240,14 +255,20 @@ def process_due_observations(token: str, db_path: Path = DB_PATH, now: int | Non
         likes = sum(v["likes"] for v in counters.values())
         comments = sum(v["comments"] for v in counters.values())
         reposts = sum(v["reposts"] for v in counters.values())
-        # Store engagement snapshot as a scalar for this prototype; raw counters are logged.
-        engagement = views + likes + comments + reposts
+        weighted_engagement_rate = (likes + 2 * comments + 4 * reposts) / max(views, 1)
         with db_connect(db_path) as db:
             for hours in due_hours:
-                db.execute(f"UPDATE observations SET score_at_{hours}h=?,completed_{hours}h=1 WHERE observation_id=?",
-                           (float(engagement), row["observation_id"]))
+                db.execute(
+                    f"""UPDATE observations SET score_at_{hours}h=?,
+                        views_at_{hours}h=?, likes_at_{hours}h=?, comments_at_{hours}h=?,
+                        reposts_at_{hours}h=?, measured_at_{hours}h=?, completed_{hours}h=1
+                        WHERE observation_id=?""",
+                    (weighted_engagement_rate, views, likes, comments, reposts, now, row["observation_id"]),
+                )
             db.commit()
-        log(f"Контроль {row['audience_name']}: +{age / 3600:.2f} ч, просмотры={views}, лайки={likes}, комментарии={comments}, репосты={reposts}")
+        log(f"Контроль {row['audience_name']}: +{age / 3600:.2f} ч, "
+            f"просмотры={views}, лайки={likes}, комментарии={comments}, репосты={reposts}, "
+            f"вовлечённость/просмотры={weighted_engagement_rate:.5f}")
 
 def main() -> None:
     init_db()
