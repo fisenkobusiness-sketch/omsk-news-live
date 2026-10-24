@@ -87,6 +87,19 @@ class TrackerTests(unittest.TestCase):
         self.assertEqual(row, (0, 1))
         fetch.assert_not_called()
 
+    def test_partial_counter_response_does_not_complete_checkpoint(self):
+        predicted_at = 10_000
+        self.add_observation("golos", predicted_at)
+        with sqlite3.connect(self.db) as db:
+            db.execute("UPDATE observations SET member_ids_json='[123,456]'")
+            db.commit()
+        counters = {123: {"views": 100, "likes": 10, "comments": 2, "reposts": 1}}
+        with patch.object(tracker, "fetch_post_counters", return_value=counters), patch.object(tracker, "log"):
+            process_due_observations("token", self.db, now=predicted_at + 3600)
+        with sqlite3.connect(self.db) as db:
+            row = db.execute("SELECT completed_1h, views_at_1h FROM observations").fetchone()
+        self.assertEqual(row, (0, None))
+
     def test_target_audience_ids(self):
         self.assertEqual(AUDIENCES["golos"]["group_id"], 133335843)
         self.assertEqual(AUDIENCES["zhest"]["group_id"], 76091195)
