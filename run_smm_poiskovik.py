@@ -22,7 +22,7 @@ def main() -> int:
             for process in PROCESSES:
                 code = process.poll()
                 if code is not None:
-                    print(f"Процесс {process.args[-1]} завершился с кодом {code}. Второй процесс продолжает работу.", flush=True)
+                    print(f"Процесс {process.args[-1]} завершился с кодом {code}. Завершился один из процессов; останавливаю оба, чтобы запуск оставался согласованным.", flush=True)
                     return code
             time.sleep(1)
     except KeyboardInterrupt:
