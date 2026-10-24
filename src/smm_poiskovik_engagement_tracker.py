@@ -253,8 +253,13 @@ def process_due_observations(token: str, db_path: Path = DB_PATH, now: int | Non
             continue
         audience = row["audience"]
         counters = fetch_post_counters(token, audience, json.loads(row["member_ids_json"]))
-        if not counters:
-            log(f"Не удалось получить свежие счётчики: {row['audience_name']} {row['member_ids_json']}")
+        expected_ids = {int(pid) for pid in json.loads(row["member_ids_json"])}
+        returned_ids = set(counters)
+        if returned_ids != expected_ids:
+            missing_ids = sorted(expected_ids - returned_ids)
+            unexpected_ids = sorted(returned_ids - expected_ids)
+            log(f"Неполный замер {row['audience_name']}: получено {len(returned_ids)}/{len(expected_ids)} постов; "
+                f"не получены ID={missing_ids[:20]}, лишние ID={unexpected_ids[:20]}. Точка не засчитывается.")
             continue
         views = sum(v["views"] for v in counters.values())
         likes = sum(v["likes"] for v in counters.values())
