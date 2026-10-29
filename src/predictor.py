@@ -201,6 +201,11 @@ def predict(t):
     else:
         label = "⚪ НИЗКИЙ ПРИОРИТЕТ"
 
+    effective_weights = {
+        name: round(weight / weight_total, 4)
+        for name, (_, weight) in usable.items()
+    }
+
     return {
         "priority_score": score,
         "prediction": label,
@@ -217,7 +222,7 @@ def predict(t):
             name: (round(value, 1) if value is not None else None)
             for name, (value, _) in components.items()
         },
-        "score_weights": {name: weight for name, (_, weight) in usable.items()},
+        "score_weights": effective_weights,
         "legacy_scores": {
             "analyzer_score": t.get("score"),
             "viral_score": t.get("viral_score"),
