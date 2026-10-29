@@ -242,9 +242,11 @@ def completed_counts(db_path: Path = DB_PATH) -> dict[str, int]:
     return counts
 
 
-def progress_message(counts: dict[str, int]) -> str:
-    """Compact console progress without repeating the fixed target threshold."""
-    return f"Выборка: Голос — {counts.get('golos', 0)}; Жесть — {counts.get('zhest', 0)}."
+def progress_message(counts: dict[str, int], threshold: int = TARGET_PER_AUDIENCE) -> str:
+    """Show remaining completed observations needed for each audience."""
+    golos_left = max(0, threshold - counts.get("golos", 0))
+    zhest_left = max(0, threshold - counts.get("zhest", 0))
+    return f"Осталось до цели: Голос — {golos_left}; Жесть — {zhest_left}."
 
 def maybe_notify_threshold(db_path: Path, send_func=telegram_send, token: str | None = None,
                            chat_id: str | None = None, threshold: int = TARGET_PER_AUDIENCE) -> bool:
