@@ -14,7 +14,7 @@ Produce one comparable priority score for every eligible Omsk story. The score r
 Each topic must keep raw evidence separate from derived features:
 - Evidence: source posts, timestamps, URLs, views, likes, comments, reposts, source identities.
 - Classification: content type, local relevance, event class/impact, attribution/evidence status, exclusion reason.
-- Independent features, each normalized to 0–100: freshness, audience engagement, discussion, reshare rate, reach, velocity, local usefulness, event impact, evidence quality.
+- Independent ranking features, each normalized to 0–100: freshness, audience engagement, discussion, reshare rate, reach, velocity, local usefulness, event impact. Evidence confidence and official attribution are separate diagnostic notes, not ranking features.
 - Final `priority_score`: one 0–100 editorial triage score calculated only from the independent features.
 - `viral_score` and analyzer `score` remain legacy/diagnostic fields during migration; they must not be presented as the canonical final ranking.
 - `confidence` means evidence/verification confidence only. It must not be described as popularity.
