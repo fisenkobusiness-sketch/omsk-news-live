@@ -30,7 +30,7 @@ def console_print(message):
 INPUT = "runtime/editor_queue.json"
 OUTPUT = "runtime/predictor_queue.json"
 
-from editorial_rules import is_excluded_topic, is_promotional, clean_legacy_metadata
+from editorial_rules import is_excluded_topic, is_promotional, clean_legacy_metadata, topic_text
 
 def has_excluded_topic(t):
     return is_excluded_topic(t)
