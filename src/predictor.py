@@ -80,25 +80,59 @@ def stats(t):
     return aggregate_topic_stats(t.get("members", []))
 
 
-def predict(t):
-    """Rank eligible local stories by audience-interest signals.
+def _metric_coverage(members):
+    """Count which audience metrics are actually present in source posts."""
+    keys = ("views", "likes", "comments", "reposts")
+    found = set()
+    for member in members:
+        post = member.get("post") if isinstance(member, dict) and isinstance(member.get("post"), dict) else member
+        if not isinstance(post, dict):
+            continue
+        for key in keys:
+            if post.get(key) is not None:
+                found.add(key)
+    return found
 
-    Confidence and workflow status are verification metadata, not popularity
-    bonuses. The output remains one sorted queue; hard exclusions score zero.
+
+def _event_profile(text):
+    """Map a story to a broad editorial event class, not a one-off score exception."""
+    profiles = (
+        ("fatal_incident", ("погиб", "погибла", "погибли", "смертельн", "умер", "скончал"), 100),
+        ("public_safety", ("эвакуир", "эвакуац", "угроз", "минирован", "подозрительн предмет", "закрыли здание"), 85),
+        ("major_incident", ("взрыв", "обруш", "крушен", "крупн авар", "массов", "разрушен"), 90),
+        ("fire_or_emergency", ("пожар", "горит", "загорел", "возгора", "спасател"), 75),
+        ("transport_incident", ("дтп", "столкновен", "сбил", "наезд", "перекрыт", "закрыли дорогу"), 65),
+        ("missing_person", ("пропал", "пропала", "пропали", "разыскива"), 55),
+        ("public_decision", ("повысили тариф", "изменят тариф", "запрет", "вступит в силу", "приняли закон", "отменили маршрут", "закроют маршрут"), 45),
+    )
+    for event_class, patterns, impact in profiles:
+        if any(pattern in text for pattern in patterns):
+            return event_class, float(impact)
+    return "general", 20.0
+
+
+def predict(t):
+    """Calculate a single editorial triage score from independent, observable features.
+
+    Legacy analyzer scores are preserved as diagnostics but are deliberately not
+    re-used here because they overlap (viral_score is already inside editorial_score
+    and score). Verification confidence is returned separately from ranking.
     """
     members = t.get("members", []) or []
     newest_ts = newest_timestamp(members)
     today = datetime.now(OMSK_TZ).date()
+    confidence = float(t.get("confidence", 0) or 0)
 
     def rejected(reason, label):
         return {
-            "priority_score": 0,
+            "priority_score": 0.0,
             "prediction": label,
-            "confidence": float(t.get("confidence", 0) or 0),
-            "verification_required": float(t.get("confidence", 0) or 0) < 50,
-            "disclaimer_required": float(t.get("confidence", 0) or 0) < 50,
+            "confidence": confidence,
+            "verification_required": confidence < 50,
+            "disclaimer_required": confidence < 50,
             "eligible": False,
             "exclusion_reason": reason,
+            "score_version": "editorial_v2",
         }
 
     if newest_ts is None:
@@ -109,14 +143,6 @@ def predict(t):
     text = topic_text(t)
     content_type = t.get("content_type", "")
     status = t.get("status", "")
-    confidence = float(t.get("confidence", 0) or 0)
-    viral = clamp(float(t.get("viral_score", 0) or 0))
-    editorial = clamp(float(t.get("editorial_score", 0) or 0))
-    posts = int(t.get("posts", len(members) or 1) or 1)
-    sources = int(t.get("social_sources", 1) or 1)
-    views, reposts, likes, comments = stats(t)
-
-    # Apply eligibility filters before any ranking signals.
     if has_excluded_topic(t) or t.get("excluded_topic"):
         return rejected("excluded_topic", "⛔ ИСКЛЮЧЕНО: ЗАПРЕЩЁННАЯ ТЕМА")
     if has_promo_pattern(t):
@@ -129,70 +155,51 @@ def predict(t):
         return rejected("opinion", "⛔ ИСКЛЮЧЕНО: МНЕНИЕ")
 
     age_minutes = max(0.0, (time.time() - newest_ts) / 60.0)
-    age_hours = max(1.0 / 60.0, age_minutes / 60.0)
-
-    # Smooth logarithmic reach prevents large raw view counts from swallowing
-    # all other signals. Interaction rates preserve early signals on small reach.
-    reach = clamp(100.0 * math.log1p(max(0.0, views)) /
-                  __import__("math").log1p(50000.0))
-    engagement_rate = clamp(
-        ((likes + comments * 2 + reposts * 4) / max(views, 1)) * 1000
-    )
-    comment_signal = clamp((comments / max(views, 1)) * 5000)
-    repost_signal = clamp((reposts / max(views, 1)) * 5000)
-    velocity = clamp(
-        100.0 * __import__("math").log1p(max(0.0, views) / age_hours) /
-        __import__("math").log1p(50000.0)
-    )
     freshness = clamp(100.0 * (1.0 - age_minutes / 180.0))
+    views, reposts, likes, comments = stats(t)
+    available = _metric_coverage(members)
+    has_views = "views" in available and views > 0
 
-    # A single interpretable score: audience signals + editorial relevance.
-    # Confidence, official attribution and workflow status do not add popularity.
-    score = (
-        editorial * 0.22
-        + viral * 0.20
-        + reach * 0.12
-        + engagement_rate * 0.14
-        + comment_signal * 0.10
-        + repost_signal * 0.10
-        + velocity * 0.08
-        + freshness * 0.04
-    )
+    # When metrics are absent, don't treat missing data as measured zero interest.
+    reach = clamp(100.0 * math.log1p(max(0.0, views)) / math.log1p(50000.0)) if has_views else None
+    engagement = clamp(((likes + comments * 2 + reposts * 4) / max(views, 1)) * 1000) if has_views and available.intersection({"likes", "comments", "reposts"}) else None
+    discussion = clamp((comments / max(views, 1)) * 5000) if has_views and "comments" in available else None
+    reshare = clamp((reposts / max(views, 1)) * 5000) if has_views and "reposts" in available else None
+    velocity = clamp(100.0 * math.log1p(max(0.0, views) / max(age_minutes / 60.0, 1.0 / 60.0)) / math.log1p(50000.0)) if has_views else None
 
-    # Event importance and local usefulness provide only a small tie-breaker.
-    event_rules = [
-        (("погиб", "погибла", "погибли", "смерт", "умер"), 7),
-        (("дтп", "столкновен", "сбил", "наезд", "авар"), 5),
-        (("пожар", "горит", "загорел", "возгора"), 4),
-        (("взрыв", "взорвал", "обруш", "разруш", "крушен"), 5),
-        (("пропал", "пропала", "пропали", "разыскива"), 3),
-        (("перекрыт", "перекрыли", "закрыли дорогу"), 2),
-    ]
-    for words, bonus in event_rules:
-        if any(word in text for word in words):
-            score += bonus
-            break
-
-    local_words = ("омск", "омской", "омич", "омичи", "тара", "черлак", "калачинск")
-    nonlocal_words = (
-        "шереметьево", "домодедово", "внуково", "москва", "москов",
-        "санкт-петербург", "петербург", "екатеринбург", "новосибирск",
-        "иркутск", "казань", "краснодар", "ростов-на-дону", "нижний новгород"
-    )
-    local = any(word in text for word in local_words)
-    explicit_nonlocal = any(word in text for word in nonlocal_words) and not local
-    if local:
-        score += 3
-    if explicit_nonlocal or t.get("nonlocal_detected"):
-        score = min(score, 20 if explicit_nonlocal else 35)
-
-    score = round(clamp(score), 1)
-    if score >= 65:
-        label = "🟢 ВЫСОКИЙ ПОТЕНЦИАЛ"
-    elif score >= 45:
-        label = "🟡 СРЕДНИЙ ПОТЕНЦИАЛ"
+    # Local usefulness is based on the analyzer's explicit classification where available.
+    if t.get("nonlocal_detected"):
+        local_relevance = 0.0
+    elif t.get("explicit_omsk_relevance"):
+        local_relevance = 100.0
+    elif any(word in text for word in ("омск", "омской", "омич", "омичи", "тара", "черлак", "калачинск", "исилькуль")):
+        local_relevance = 80.0
     else:
-        label = "⚪ НИЗКИЙ ПОТЕНЦИАЛ"
+        local_relevance = 30.0
+
+    event_class, event_impact = _event_profile(text)
+    # Score only dimensions with usable evidence; weights are renormalized so missing
+    # engagement counters do not silently punish early stories.
+    components = {
+        "freshness": (freshness, 0.20),
+        "local_relevance": (local_relevance, 0.16),
+        "event_impact": (event_impact, 0.16),
+        "reach": (reach, 0.12),
+        "engagement": (engagement, 0.16),
+        "discussion": (discussion, 0.08),
+        "reshare": (reshare, 0.06),
+        "velocity": (velocity, 0.06),
+    }
+    usable = {name: (value, weight) for name, (value, weight) in components.items() if value is not None}
+    weight_total = sum(weight for _, weight in usable.values())
+    score = round(clamp(sum(value * weight for value, weight in usable.values()) / weight_total), 1) if weight_total else 0.0
+
+    if score >= 70:
+        label = "🟢 ВЫСОКИЙ ПРИОРИТЕТ"
+    elif score >= 45:
+        label = "🟡 СРЕДНИЙ ПРИОРИТЕТ"
+    else:
+        label = "⚪ НИЗКИЙ ПРИОРИТЕТ"
 
     return {
         "priority_score": score,
@@ -202,16 +209,21 @@ def predict(t):
         "disclaimer_required": confidence < 50,
         "eligible": True,
         "exclusion_reason": None,
+        "score_version": "editorial_v2",
+        "event_class": event_class,
+        "metric_coverage": sorted(available),
+        "coverage_ratio": round(len(available) / 4.0, 2),
         "signals": {
-            "reach": round(reach, 1),
-            "engagement_rate": round(engagement_rate, 1),
-            "comment_rate": round(comment_signal, 1),
-            "repost_rate": round(repost_signal, 1),
-            "velocity": round(velocity, 1),
-            "freshness": round(freshness, 1),
+            name: (round(value, 1) if value is not None else None)
+            for name, (value, _) in components.items()
+        },
+        "score_weights": {name: weight for name, (_, weight) in usable.items()},
+        "legacy_scores": {
+            "analyzer_score": t.get("score"),
+            "viral_score": t.get("viral_score"),
+            "editorial_score": t.get("editorial_score"),
         },
     }
-
 
 def main():
     path = Path(INPUT)
@@ -227,10 +239,14 @@ def main():
 
     result = {
         "generated_at": data.get("generated_at"),
-        "version": "predictor",
+        "version": "predictor-editorial-v2",
         "model": {
-            "purpose": "раннее выявление потенциально сильных материалов",
+            "purpose": "единый редакционный приоритет по независимым признакам",
             "early_dynamics_priority": True,
+            "canonical_score": "prediction.priority_score",
+            "score_version": "editorial_v2",
+            "legacy_scores_are_diagnostic_only": True,
+            "missing_metrics_are_not_zero_interest": True,
             "editorial_priority_preserved": True,
             "official_news_bonus": False,
             "reach_matters": True,
@@ -245,6 +261,7 @@ def main():
             "nonlocal_cap": 35,
             "explicit_nonlocal_cap": 20,
             "event_strength_matters": True,
+            "event_classification": "broad editorial taxonomy",
             "fresh_serious_events_get_bonus": True,
             "freshness_matters": True,
             "freshness_window_minutes": 180,
