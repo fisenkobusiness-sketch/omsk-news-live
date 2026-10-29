@@ -67,6 +67,26 @@ def _metric_coverage(members):
     return found
 
 
+def _source_spread(members):
+    """Score spread across distinct named sources, not duplicate posts from one source."""
+    source_keys = ("source", "source_name", "group_name", "community_name", "source_id", "group_id")
+    sources = set()
+    for member in members or []:
+        post = member.get("post") if isinstance(member, dict) and isinstance(member.get("post"), dict) else member
+        if not isinstance(post, dict):
+            continue
+        source = next((post.get(key) for key in source_keys if post.get(key) not in (None, "")), None)
+        if source is not None:
+            sources.add(str(source).strip().casefold())
+    if not sources:
+        return None, 0
+    count = len(sources)
+    # Two independent sources are already a meaningful early signal; returns
+    # diminish as more sources repeat the same story.
+    score = clamp(100.0 * (1.0 - math.exp(-(count - 1) / 2.0)))
+    return score, count
+
+
 def _event_profile(text):
     """Map a story to a broad editorial event class, avoiding incidental word matches."""
     fatal_patterns = (
@@ -163,17 +183,25 @@ def predict(t):
         local_relevance = 30.0
 
     event_class, event_impact = _event_profile(text)
+    source_spread, source_count = _source_spread(members)
+    is_complaint = (
+        content_type == "complaint"
+        or bool(t.get("complaint_signal"))
+        or bool(t.get("complaint_detected"))
+    )
     # Score only dimensions with usable evidence; weights are renormalized so missing
-    # engagement counters do not silently punish early stories.
+    # engagement counters do not silently punish early stories. Independent-source
+    # spread is a separate early signal, not a proxy for official confirmation.
     components = {
         "freshness": (freshness, 0.20),
         "local_relevance": (local_relevance, 0.16),
         "event_impact": (event_impact, 0.16),
-        "reach": (reach, 0.12),
-        "engagement": (engagement, 0.16),
-        "discussion": (discussion, 0.08),
-        "reshare": (reshare, 0.06),
+        "reach": (reach, 0.10),
+        "engagement": (engagement, 0.14),
+        "discussion": (discussion, 0.07),
+        "reshare": (reshare, 0.05),
         "velocity": (velocity, 0.06),
+        "cross_source_spread": (source_spread, 0.06),
     }
     usable = {name: (value, weight) for name, (value, weight) in components.items() if value is not None}
     weight_total = sum(weight for _, weight in usable.values())
@@ -197,6 +225,14 @@ def predict(t):
     elif is_event_announcement:
         score = min(score, 42.0)
 
+    # A rapidly spreading public complaint can be a local-news signal even when
+    # it is not a conventional news report. Do not require official confirmation.
+    complaint_is_viral = is_complaint and (
+        views >= 5000 or reposts >= 10 or len(members) >= 3 or source_count >= 3
+    )
+    complaint_bonus = 8.0 if complaint_is_viral else 0.0
+    score = round(clamp(score + complaint_bonus), 1)
+
     if score >= 70:
         label = "🟢 ВЫСОКИЙ ПРИОРИТЕТ"
     elif score >= 45:
@@ -217,6 +253,10 @@ def predict(t):
         "exclusion_reason": None,
         "score_version": "editorial_v2",
         "event_class": event_class,
+        "complaint_signal": is_complaint,
+        "complaint_viral_signal": complaint_is_viral,
+        "complaint_bonus": complaint_bonus,
+        "cross_source_count": source_count,
         "metric_coverage": sorted(available),
         "coverage_ratio": round(len(available) / 4.0, 2),
         "signals": {
@@ -281,8 +321,8 @@ def main():
             "reach_matters": True,
             "comments_weighted": True,
             "reposts_weighted": True,
-            "cross_source_spread_matters": False,
-            "complaints_are_separate_signals": False,
+            "cross_source_spread_matters": True,
+            "complaints_are_separate_signals": True,
             "help_requests_are_not_news": True,
             "advertising_is_not_news": True,
             "excluded_topics_are_hard_filtered": True,
@@ -293,7 +333,9 @@ def main():
             "event_classification": "broad editorial taxonomy",
             "freshness_matters": True,
             "freshness_window_minutes": 180,
-            "base_weights": {"freshness": 0.20, "local_relevance": 0.16, "event_impact": 0.16, "reach": 0.12, "engagement": 0.16, "discussion": 0.08, "reshare": 0.06, "velocity": 0.06},
+            "base_weights": {"freshness": 0.20, "local_relevance": 0.16, "event_impact": 0.16, "reach": 0.10, "engagement": 0.14, "discussion": 0.07, "reshare": 0.05, "velocity": 0.06, "cross_source_spread": 0.06},
+            "viral_complaint_bonus": 8,
+            "viral_complaint_threshold": "views>=5000 OR reposts>=10 OR posts>=3 OR independent_sources>=3",
             "confidence_is_diagnostic_only": True,
             "workflow_status_bonus": False,
             "single_ranked_queue": True,
