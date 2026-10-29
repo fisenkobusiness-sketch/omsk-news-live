@@ -32,6 +32,10 @@ OUTPUT = "runtime/predictor_queue.json"
 
 from editorial_rules import is_excluded_topic, is_promotional, clean_legacy_metadata, topic_text
 
+def clamp(x, a=0, b=100):
+    return max(a, min(b, x))
+
+
 def has_excluded_topic(t):
     return is_excluded_topic(t)
 
