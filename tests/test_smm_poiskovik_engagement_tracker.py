@@ -3,6 +3,7 @@ from contextlib import closing
 import unittest
 import sys
 import sqlite3
+from unittest.mock import Mock
 from pathlib import Path
 from unittest.mock import patch
 
@@ -13,6 +14,32 @@ from smm_poiskovik_engagement_tracker import (
     AUDIENCES, completed_counts, init_db, maybe_notify_threshold, unseen_posts,
     process_due_observations,
 )
+
+
+
+class VkCallTests(unittest.TestCase):
+    @patch.object(tracker.requests, "get")
+    def test_vk_call_returns_response_payload(self, mock_get):
+        mock_response = Mock()
+        mock_response.json.return_value = {"response": {"items": [1]}}
+        mock_get.return_value = mock_response
+        self.assertEqual(tracker.vk_call("token", "wall.get", count=1), {"items": [1]})
+
+    @patch.object(tracker.requests, "get")
+    def test_vk_call_handles_string_error_without_attribute_error(self, mock_get):
+        mock_response = Mock()
+        mock_response.json.return_value = {"error": "access denied"}
+        mock_get.return_value = mock_response
+        with self.assertRaisesRegex(RuntimeError, "access denied"):
+            tracker.vk_call("token", "wall.get")
+
+    @patch.object(tracker.requests, "get")
+    def test_vk_call_rejects_response_without_response_field(self, mock_get):
+        mock_response = Mock()
+        mock_response.json.return_value = {"unexpected": "payload"}
+        mock_get.return_value = mock_response
+        with self.assertRaisesRegex(RuntimeError, "отсутствует поле response"):
+            tracker.vk_call("token", "wall.get")
 
 
 class TrackerTests(unittest.TestCase):
