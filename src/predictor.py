@@ -258,11 +258,16 @@ def main():
         "topics": []
     }
 
+    excluded_count = 0
     for topic in topics:
         item = dict(topic)
         item["prediction"] = predict(topic)
+        if not item["prediction"].get("eligible", False):
+            excluded_count += 1
+            continue
         result["topics"].append(item)
 
+    result["excluded_topics_count"] = excluded_count
     result["topics"].sort(
         key=lambda x: x["prediction"]["priority_score"],
         reverse=True
