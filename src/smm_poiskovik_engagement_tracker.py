@@ -3,6 +3,7 @@
 from __future__ import annotations
 import hashlib, json, os, sqlite3, subprocess, sys, time
 from datetime import datetime
+from contextlib import closing, contextmanager
 from pathlib import Path
 from typing import Any
 import requests
@@ -48,12 +49,31 @@ def read_secret(filename: str, env_name: str) -> str:
 
 def vk_call(token: str, method: str, **params: Any) -> Any:
     params.update(access_token=token, v=VK_VERSION)
-    response = requests.get(f"https://api.vk.com/method/{method}", params=params, timeout=VK_TIMEOUT)
+    response = requests.get(
+        f"https://api.vk.com/method/{method}",
+        params=params,
+        timeout=VK_TIMEOUT,
+    )
     response.raise_for_status()
     data = response.json()
+    if not isinstance(data, dict):
+        raise RuntimeError(
+            f"VK API {method}: ожидался JSON-объект, получен {type(data).__name__}"
+        )
     if "error" in data:
         err = data["error"]
-        raise RuntimeError(f"VK API {method}: {err.get('error_msg', err)}")
+        if isinstance(err, dict):
+            message = err.get("error_msg", str(err))
+            code = err.get("error_code", "не указан")
+        else:
+            message = str(err)
+            code = "не указан"
+        raise RuntimeError(f"VK API {method}: ошибка {code}: {message}")
+    if "response" not in data:
+        raise RuntimeError(
+            f"VK API {method}: в ответе отсутствует поле response; "
+            f"поля ответа: {', '.join(data.keys())}"
+        )
     return data["response"]
 
 def fetch_wall(token: str, group_id: int) -> list[dict[str, Any]]:
@@ -80,7 +100,7 @@ def normalize_post(audience_key: str, raw: dict[str, Any]) -> dict[str, Any]:
 
 def init_db(db_path: Path = DB_PATH) -> None:
     db_path.parent.mkdir(parents=True, exist_ok=True)
-    with sqlite3.connect(db_path) as db:
+    with closing(sqlite3.connect(db_path)) as db:
         db.execute("""CREATE TABLE IF NOT EXISTS seen_posts (
             audience TEXT NOT NULL, post_id INTEGER NOT NULL, first_seen_at INTEGER NOT NULL,
             PRIMARY KEY (audience, post_id))""")
@@ -101,10 +121,18 @@ def init_db(db_path: Path = DB_PATH) -> None:
         db.execute("CREATE TABLE IF NOT EXISTS state (key TEXT PRIMARY KEY, value TEXT NOT NULL)")
         db.commit()
 
-def db_connect(db_path: Path = DB_PATH) -> sqlite3.Connection:
+@contextmanager
+def db_connect(db_path: Path = DB_PATH):
     db = sqlite3.connect(db_path, timeout=30)
     db.row_factory = sqlite3.Row
-    return db
+    try:
+        yield db
+        db.commit()
+    except Exception:
+        db.rollback()
+        raise
+    finally:
+        db.close()
 
 def unseen_posts(db_path: Path, audience: str, posts: list[dict[str, Any]]) -> list[dict[str, Any]]:
     """First poll bootstraps existing posts; only later posts enter the experiment."""
