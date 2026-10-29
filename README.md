@@ -1,40 +1,44 @@
 # СММ Поисковик — новости Омска
 
-Основной код конвейера находится в `src/`. Корневые файлы `analysis.py`, `predictor.py`, `live_monitor.py` и `metrics.py` оставлены только для совместимости со старыми командами: отдельной логики в них больше нет.
+Единая точка запуска проекта — `run_smm_poiskovik.py`. Рабочая логика находится в `src/`; отдельные копии модулей в корне не используются.
 
 ## Запуск
 
 1. Откройте проект в PyCharm и активируйте виртуальное окружение.
-2. Установите зависимости, если это новая среда: `python -m pip install requests`.
+2. Установите зависимость, если это новая среда: `python -m pip install requests`.
 3. Проверьте локальные секреты в `.secrets/`:
    - `vk_service_key.txt`
    - `github_token.txt`
-4. Запустите **только** `run_smm_poiskovik.py`.
+   - секреты Telegram, если используете уведомления трекера.
+4. Запустите `run_smm_poiskovik.py`.
 
-Запускатель поднимает монитор VK и трекер вовлечённости. Для остановки нажмите `Ctrl+C`. Не запускайте одновременно корневые скрипты и запускатель.
+Запускатель согласованно запускает монитор VK и трекер вовлечённости. Для остановки нажмите `Ctrl+C`. Не запускайте параллельно второй экземпляр комбайна.
 
 ## Структура
 
 - `run_smm_poiskovik.py` — единственная рекомендуемая точка запуска.
-- `src/live_monitor.py` — сбор свежих публикаций VK, управление циклами и обновление `editorial_pool.json`.
-- `src/analysis.py` — классификация, фильтры и первичный анализ тем.
-- `src/predictor.py` — единая модель `editorial_v2`; канонический рейтинг: `prediction.priority_score`.
-- `src/metrics.py` — общие расчёты охвата и вовлечённости.
-- `src/smm_poiskovik_engagement_tracker.py` — независимое измерение динамики вовлечённости.
-- `runtime/` — временные очереди, состояние и логи; не коммитить эти данные.
+- `src/live_monitor.py` — сбор свежих публикаций VK и публикация пула.
+- `src/analysis.py` — первичная классификация и редакционные фильтры.
+- `src/predictor.py` — итоговый рейтинг `editorial_v2`; канонический рейтинг — `prediction.priority_score`.
+- `src/metrics.py` — общие расчёты метрик.
+- `src/smm_poiskovik_engagement_tracker.py` — отдельное измерение динамики вовлечённости.
 - `tools/diagnostic.py` — диагностика очередей без изменения файлов.
+- `tools/check_smm_poiskovik_connections.py` — проверка подключений VK/Telegram без запуска монитора.
 - `tests/` — автоматические проверки.
+- `docs/` — техническая документация.
+- `runtime/` — временные очереди, состояние, база трекера и логи; эти данные не коммитятся.
+- `.secrets/` — локальные секреты; эта папка не коммитится.
 
-## Путь данных
+## Поток данных
 
 `VK → runtime/vk_today.json → src/analysis.py → runtime/editor_queue.json → src/predictor.py → runtime/predictor_queue.json → editorial_pool.json`
 
-Публикация в GitHub выполняется монитором после успешной сборки очереди. Перед реальной публикацией новостей отдельно проверяйте факты и источники: рейтинг помогает расставлять приоритеты, но не заменяет редакторскую проверку.
+`editorial_pool.json` остаётся в корне намеренно: монитор публикует этот файл как текущий пул кандидатов. `PUBLISHED_TOPICS.json` — отдельный постоянный реестр редакционной истории.
 
 ## Проверка после изменений
 
 ```powershell
-python -m py_compile run_smm_poiskovik.py src\live_monitor.py src\analysis.py src\predictor.py src\metrics.py
+python -m py_compile run_smm_poiskovik.py src\live_monitor.py src\analysis.py src\predictor.py src\metrics.py src\smm_poiskovik_engagement_tracker.py tools\diagnostic.py tools\check_smm_poiskovik_connections.py
 python -m unittest discover -s tests -p "test_*.py" -v
 ```
 
