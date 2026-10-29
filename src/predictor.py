@@ -239,6 +239,34 @@ def predict(t):
         },
     }
 
+def apply_editorial_action(item, prediction):
+    """Keep queue actions consistent with the canonical score and verification gate."""
+    if prediction.get("verification_required", True):
+        status, action, label, mode = (
+            "watch", "НАБЛЮДАТЬ", "🔵 НАБЛЮДАТЬ", "verification_required"
+        )
+    elif prediction.get("priority_score", 0) >= 70:
+        status, action, label, mode = (
+            "take_now", "БРАТЬ", "🟢 БРАТЬ", "editorial_review"
+        )
+    elif prediction.get("priority_score", 0) >= 45:
+        status, action, label, mode = (
+            "check", "ПРОВЕРИТЬ", "🟡 ПРОВЕРИТЬ", "editorial_review"
+        )
+    else:
+        status, action, label, mode = (
+            "watch", "НАБЛЮДАТЬ", "🔵 НАБЛЮДАТЬ", "editorial_review"
+        )
+
+    item["status"] = status
+    item["action"] = action
+    item["editor_status"] = label
+    item["publication_mode"] = mode
+    item["verification_required"] = bool(prediction.get("verification_required", True))
+    item["publish_disclaimer_required"] = bool(prediction.get("disclaimer_required", True))
+    return item
+
+
 def main():
     path = Path(INPUT)
     if not path.exists():
@@ -301,30 +329,7 @@ def main():
             excluded_count += 1
             continue
 
-        # Never carry legacy analyzer actions into the canonical editorial queue.
-        # Verification gates publication readiness; it does not lower the score.
-        if prediction["verification_required"]:
-            item["status"] = "watch"
-            item["action"] = "НАБЛЮДАТЬ"
-            item["editor_status"] = "🔵 НАБЛЮДАТЬ"
-            item["publication_mode"] = "verification_required"
-        elif prediction["priority_score"] >= 70:
-            item["status"] = "take_now"
-            item["action"] = "БРАТЬ"
-            item["editor_status"] = "🟢 БРАТЬ"
-            item["publication_mode"] = "editorial_review"
-        elif prediction["priority_score"] >= 45:
-            item["status"] = "check"
-            item["action"] = "ПРОВЕРИТЬ"
-            item["editor_status"] = "🟡 ПРОВЕРИТЬ"
-            item["publication_mode"] = "editorial_review"
-        else:
-            item["status"] = "watch"
-            item["action"] = "НАБЛЮДАТЬ"
-            item["editor_status"] = "🔵 НАБЛЮДАТЬ"
-            item["publication_mode"] = "editorial_review"
-        item["verification_required"] = prediction["verification_required"]
-        item["publish_disclaimer_required"] = prediction["disclaimer_required"]
+        apply_editorial_action(item, prediction)
         result["topics"].append(item)
 
     result["excluded_topics_count"] = excluded_count
