@@ -90,9 +90,12 @@ class TrackerTests(unittest.TestCase):
     def test_progress_message_shows_audience_counts_without_threshold(self):
         self.assertEqual(
             tracker.progress_message({"golos": 123, "zhest": 87}),
-            "Выборка: Голос — 123; Жесть — 87.",
+            "Осталось до цели: Голос — 377; Жесть — 413.",
         )
-        self.assertNotIn("500", tracker.progress_message({"golos": 123, "zhest": 87}))
+        self.assertEqual(
+            tracker.progress_message({"golos": 600, "zhest": 500}),
+            "Осталось до цели: Голос — 0; Жесть — 0.",
+        )
 
     def test_threshold_does_not_notify_until_both_cohorts_ready(self):
         calls = []
