@@ -195,6 +195,26 @@ class EditorialRankingTests(unittest.TestCase):
         self.assertEqual(item["editorial_exclusion_reason"], "below_priority_threshold")
 
 
+    def test_mention_of_police_without_explicit_attribution_is_not_official(self):
+        result = classify({
+            "text": "Жители жалуются на потоп. Полиция приехала на место, официального комментария в сообщении нет.",
+            "source": "Очевидец",
+        })
+        self.assertFalse(result["official_attribution"])
+        self.assertEqual(result["source_type"], "complaint")
+
+    def test_explicit_official_statement_is_attributed_but_eyewitness_is_not(self):
+        official = classify({
+            "text": "По данным прокуратуры, проверка началась сегодня в Омске.",
+            "source": "Региональный канал",
+        })
+        eyewitness = classify({
+            "text": "По словам очевидцев, проверка началась сегодня в Омске.",
+            "source": "Региональный канал",
+        })
+        self.assertTrue(official["official_attribution"])
+        self.assertFalse(eyewitness["official_attribution"])
+
     def test_pet_adoption_listing_with_phone_is_not_news(self):
         result = classify({
             "text": "Пристройство кота Барсика, звоните 8 913 123-45-67",
