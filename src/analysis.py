@@ -177,8 +177,8 @@ def classify(p):
     excluded=excluded_topic(t)
     ad=promotional_ad(t); opinion=has(t,OPINION)
     # Pet adoption classifieds with a contact phone are not news.
-    phone_contact = bool(re.search(r"(?:\\+?7|8)?\\s*\\(?\\d{3}\\)?[\\s-]*\\d{3}[\\s-]*\\d{2}[\\s-]*\\d{2}", t))
-    animal_listing = bool(re.search(r"(?:пристро\\w*|отда\\w*\\s+(?:в\\s+добрые\\s+руки|кот\\w*|кош\\w*|животн\\w*)|ищ\\w*\\s+дом|забрать\\s+домой|кот\\w*\\s+барсик)", t, re.I))
+    phone_contact = bool(re.search(r"(?:\+?7|8)?\s*\(?\d{3}\)?[\s-]*\d{3}[\s-]*\d{2}[\s-]*\d{2}", t))
+    animal_listing = bool(re.search(r"(?:пристро\w*|отда\w*\s+(?:в\s+добрые\s+руки|кот\w*|кош\w*|животн\w*)|ищ\w*\s+дом|забрать\s+домой|кот\w*\s+барсик)", t, re.I))
     personal_listing = phone_contact and animal_listing
     help_req_raw=personal_listing or has(t,HELP) or bool(re.search(r"(?:опубликуйте|огромная просьба|просьба о помощи|к кому обращаться|что нам делать|может кто(?:-нибудь)? видел|пожалуйста.{0,25}(?:запис|напиш|отклик)|просим|прошу|хотел(?: бы)? найти).{0,160}(?:очевидц|видеорегистратор|запис|помощь|владельц)", t, re.I))
     # Просьба о помощи внутри уже состоявшегося события не превращает
