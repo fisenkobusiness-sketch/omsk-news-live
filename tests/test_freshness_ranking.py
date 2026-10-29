@@ -1,14 +1,13 @@
 import sys
 import unittest
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
-from zoneinfo import ZoneInfo
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from predictor import predict
 from analysis import classify, classify_editorial_status
 
-OMSK_TZ = ZoneInfo("Asia/Omsk")
+OMSK_TZ = timezone(timedelta(hours=6), name="Asia/Omsk")
 
 
 def make_topic(age_minutes=5, sources=1, posts=1, text=None, metrics=True, confidence=90):
