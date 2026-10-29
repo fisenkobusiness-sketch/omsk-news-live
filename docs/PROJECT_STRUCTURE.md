@@ -19,6 +19,7 @@
 | `src/analysis.py` | Первичная классификация и жёсткие редакционные фильтры |
 | `src/predictor.py` | Итоговый рейтинг `editorial_v2` |
 | `src/metrics.py` | Общие функции расчёта метрик |
+| `src/editorial_rules.py` | Общие фильтры запрещённых тем и промо; очистка устаревших флагов |
 | `src/smm_poiskovik_engagement_tracker.py` | Независимый трекер вовлечённости |
 | `tools/diagnostic.py` | Read-only диагностика очередей |
 | `tools/check_smm_poiskovik_connections.py` | Read-only проверка доступности VK и Telegram |
