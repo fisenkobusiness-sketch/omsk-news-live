@@ -215,12 +215,20 @@ def predict(t):
         for name, (_, weight) in usable.items()
     }
 
+    # Low analyzer confidence alone must not block ordinary news.
+    # Keep the editorial hold only for high-risk incident classes.
+    high_risk_classes = {
+        "fatal_incident", "major_incident", "public_safety",
+        "fire_or_emergency", "transport_incident",
+    }
+    verification_required = confidence < 50 and event_class in high_risk_classes
+
     return {
         "priority_score": score,
         "prediction": label,
         "confidence": confidence,
-        "verification_required": confidence < 50,
-        "disclaimer_required": confidence < 50,
+        "verification_required": verification_required,
+        "disclaimer_required": verification_required,
         "eligible": True,
         "exclusion_reason": None,
         "score_version": "editorial_v2",
