@@ -217,12 +217,8 @@ def normalize_post(group_key, item):
         "views": views,
         "url": f"https://vk.ru/wall{owner_id}_{post_id}",
         "source_type": "social",
-        "confirmed": False,
         "flags": [],
         "editor_status": "⏳ ДО ОЦЕНКИ РЕЙТИНГА",
-        "publication_mode": "verification_required",
-        "verification_required": True,
-        "publish_disclaimer_required": True,
     }
 
 
