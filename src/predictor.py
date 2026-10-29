@@ -1,4 +1,4 @@
-import json, sys
+import json, re, sys
 import math
 import time
 from datetime import datetime, timedelta, timezone
@@ -95,9 +95,18 @@ def _metric_coverage(members):
 
 
 def _event_profile(text):
-    """Map a story to a broad editorial event class, not a one-off score exception."""
+    """Map a story to a broad editorial event class, avoiding incidental word matches."""
+    fatal_patterns = (
+        r"\bпогиб(?:ла|ли|ло)?\s+(?:\d+\s+)?(?:человек|людей|мужчин\w*|женщин\w*|реб[её]нок|дети|водител\w*|пассажир\w*|рабоч\w*|сотрудник\w*|полицейск\w*)",
+        r"\b(?:человек|мужчин\w*|женщин\w*|реб[её]нок|дети|водител\w*|пассажир\w*)\b.{0,40}\bпогиб\w*",
+        r"\bсмертельн\w*\s+(?:дтп|авари\w*|происшеств\w*|столкновен\w*|наезд\w*)",
+        r"\bумер(?:ла|ли)?\s+(?:человек|мужчин\w*|женщин\w*|реб[её]нок|пациент\w*)",
+        r"\bскончал(?:ся|ась|ись)\b",
+    )
+    if any(re.search(pattern, text, re.I) for pattern in fatal_patterns):
+        return "fatal_incident", 100.0
+
     profiles = (
-        ("fatal_incident", ("погиб", "погибла", "погибли", "смертельн", "умер", "скончал"), 100),
         ("public_safety", ("эвакуир", "эвакуац", "угроз", "минирован", "подозрительн предмет", "закрыли здание"), 85),
         ("major_incident", ("взрыв", "обруш", "крушен", "крупн авар", "массов", "разрушен"), 90),
         ("fire_or_emergency", ("пожар", "горит", "загорел", "возгора", "спасател"), 75),
@@ -287,9 +296,35 @@ def main():
     for topic in topics:
         item = dict(topic)
         item["prediction"] = predict(topic)
-        if not item["prediction"].get("eligible", False):
+        prediction = item["prediction"]
+        if not prediction.get("eligible", False):
             excluded_count += 1
             continue
+
+        # Never carry legacy analyzer actions into the canonical editorial queue.
+        # Verification gates publication readiness; it does not lower the score.
+        if prediction["verification_required"]:
+            item["status"] = "watch"
+            item["action"] = "НАБЛЮДАТЬ"
+            item["editor_status"] = "🔵 НАБЛЮДАТЬ"
+            item["publication_mode"] = "verification_required"
+        elif prediction["priority_score"] >= 70:
+            item["status"] = "take_now"
+            item["action"] = "БРАТЬ"
+            item["editor_status"] = "🟢 БРАТЬ"
+            item["publication_mode"] = "editorial_review"
+        elif prediction["priority_score"] >= 45:
+            item["status"] = "check"
+            item["action"] = "ПРОВЕРИТЬ"
+            item["editor_status"] = "🟡 ПРОВЕРИТЬ"
+            item["publication_mode"] = "editorial_review"
+        else:
+            item["status"] = "watch"
+            item["action"] = "НАБЛЮДАТЬ"
+            item["editor_status"] = "🔵 НАБЛЮДАТЬ"
+            item["publication_mode"] = "editorial_review"
+        item["verification_required"] = prediction["verification_required"]
+        item["publish_disclaimer_required"] = prediction["disclaimer_required"]
         result["topics"].append(item)
 
     result["excluded_topics_count"] = excluded_count
