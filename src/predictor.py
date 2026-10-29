@@ -248,29 +248,34 @@ def predict(t):
     }
 
 def apply_editorial_action(item, prediction):
-    """Keep queue actions consistent with the canonical score and verification gate."""
-    if prediction.get("verification_required", True):
+    """Assign only actionable or excluded statuses; never create a holding bucket."""
+    score = float(prediction.get("priority_score", 0) or 0)
+    verification_required = bool(prediction.get("verification_required", True))
+
+    if verification_required:
         status, action, label, mode = (
-            "watch", "НАБЛЮДАТЬ", "🔵 НАБЛЮДАТЬ", "verification_required"
+            "reject", "ИСКЛЮЧИТЬ", "⛔ ИСКЛЮЧИТЬ: НУЖНО ПОДТВЕРЖДЕНИЕ",
+            "blocked_verification",
         )
-    elif prediction.get("priority_score", 0) >= 70:
+        reason = "verification_required"
+    elif score >= 45:
         status, action, label, mode = (
-            "take_now", "БРАТЬ", "🟢 БРАТЬ", "editorial_review"
+            "take_now", "БРАТЬ В РАБОТУ", "🟢 В РАБОТУ", "editorial_work",
         )
-    elif prediction.get("priority_score", 0) >= 45:
-        status, action, label, mode = (
-            "check", "ПРОВЕРИТЬ", "🟡 ПРОВЕРИТЬ", "editorial_review"
-        )
+        reason = None
     else:
         status, action, label, mode = (
-            "watch", "НАБЛЮДАТЬ", "🔵 НАБЛЮДАТЬ", "editorial_review"
+            "reject", "ИСКЛЮЧИТЬ", "⚪ ИСКЛЮЧИТЬ: НИЗКИЙ ПРИОРИТЕТ",
+            "below_priority_threshold",
         )
+        reason = "below_priority_threshold"
 
     item["status"] = status
     item["action"] = action
     item["editor_status"] = label
     item["publication_mode"] = mode
-    item["verification_required"] = bool(prediction.get("verification_required", True))
+    item["editorial_exclusion_reason"] = reason
+    item["verification_required"] = verification_required
     item["publish_disclaimer_required"] = bool(prediction.get("disclaimer_required", True))
     return item
 
@@ -284,7 +289,7 @@ def main():
     topics = data.get("topics", [])
 
     if not topics:
-        for key in ("take_now", "unconfirmed_signals", "check", "watch", "reject"):
+        for key in ("take_now", "reject", "unconfirmed_signals", "check", "watch"):
             topics.extend(data.get(key, []))
 
     result = {
