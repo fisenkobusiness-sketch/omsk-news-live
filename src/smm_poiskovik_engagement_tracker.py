@@ -241,6 +241,11 @@ def completed_counts(db_path: Path = DB_PATH) -> dict[str, int]:
     counts.update({row["audience"]: int(row["n"]) for row in rows})
     return counts
 
+
+def progress_message(counts: dict[str, int]) -> str:
+    """Compact console progress without repeating the fixed target threshold."""
+    return f"Выборка: Голос — {counts.get('golos', 0)}; Жесть — {counts.get('zhest', 0)}."
+
 def maybe_notify_threshold(db_path: Path, send_func=telegram_send, token: str | None = None,
                            chat_id: str | None = None, threshold: int = TARGET_PER_AUDIENCE) -> bool:
     counts = completed_counts(db_path)
@@ -319,7 +324,9 @@ def main() -> None:
     vk_token = read_secret("vk_service_key.txt", "VK_SERVICE_KEY")
     tg_token = read_secret("telegram_bot_token.txt", "TELEGRAM_BOT_TOKEN")
     tg_chat_id = read_secret("telegram_chat_id.txt", "TELEGRAM_CHAT_ID")
-    log(f"Трекер запущен. Порог: {TARGET_PER_AUDIENCE} завершённых наблюдений на каждую аудиторию.")
+    last_counts = completed_counts()
+    log("Трекер запущен.")
+    log(progress_message(last_counts))
     while True:
         try:
             for key, audience in AUDIENCES.items():
@@ -331,6 +338,10 @@ def main() -> None:
                     added = store_observations(DB_PATH, key, topics)
                     log(f"{audience['name']}: новых постов {len(fresh)}, сохранено прогнозов {added}.")
             process_due_observations(vk_token)
+            current_counts = completed_counts()
+            if current_counts != last_counts:
+                log(progress_message(current_counts))
+                last_counts = current_counts
             if maybe_notify_threshold(DB_PATH, token=tg_token, chat_id=tg_chat_id):
                 log("Telegram: отправлено уведомление о готовности контрольной выборки.")
         except Exception as exc:
