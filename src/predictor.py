@@ -137,8 +137,6 @@ def predict(t):
             "priority_score": 0.0,
             "prediction": label,
             "confidence": confidence,
-            "verification_required": confidence < 50,
-            "disclaimer_required": confidence < 50,
             "eligible": False,
             "exclusion_reason": reason,
             "score_version": "editorial_v2",
@@ -238,15 +236,10 @@ def predict(t):
         for name, (_, weight) in usable.items()
     }
 
-    # Confidence is diagnostic metadata only; it never blocks eligible local news.
-    verification_required = False
-
     return {
         "priority_score": score,
         "prediction": label,
         "confidence": confidence,
-        "verification_required": verification_required,
-        "disclaimer_required": verification_required,
         "eligible": True,
         "exclusion_reason": None,
         "score_version": "editorial_v2",
@@ -268,9 +261,6 @@ def predict(t):
 def apply_editorial_action(item, prediction):
     """Assign only actionable or excluded statuses; never create a holding bucket."""
     score = float(prediction.get("priority_score", 0) or 0)
-    # Verification is informational, never an editorial gate.
-    verification_required = False
-
     if score >= 45:
         status, action, label, mode = (
             "take_now", "БРАТЬ В РАБОТУ", "🟢 В РАБОТУ", "editorial_work",
@@ -288,8 +278,6 @@ def apply_editorial_action(item, prediction):
     item["editor_status"] = label
     item["publication_mode"] = mode
     item["editorial_exclusion_reason"] = reason
-    item["verification_required"] = verification_required
-    item["publish_disclaimer_required"] = bool(prediction.get("disclaimer_required", True))
     return item
 
 
@@ -333,7 +321,7 @@ def main():
             "freshness_matters": True,
             "freshness_window_minutes": 180,
             "base_weights": {"freshness": 0.20, "local_relevance": 0.16, "event_impact": 0.16, "reach": 0.12, "engagement": 0.16, "discussion": 0.08, "reshare": 0.06, "velocity": 0.06},
-            "confidence_is_verification_only": True,
+            "confidence_is_diagnostic_only": True,
             "workflow_status_bonus": False,
             "single_ranked_queue": True,
             "today_only_timezone": "Asia/Omsk",
