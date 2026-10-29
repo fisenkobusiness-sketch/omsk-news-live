@@ -1,4 +1,5 @@
 import json, sys
+import math
 import time
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -247,7 +248,10 @@ def main():
             "fresh_serious_events_get_bonus": True,
             "freshness_matters": True,
             "freshness_window_minutes": 180,
-            "freshness_weight": 0.04,\n            "confidence_is_verification_only": True,\n            "workflow_status_bonus": False,\n            "single_ranked_queue": True,
+            "freshness_weight": 0.04,
+            "confidence_is_verification_only": True,
+            "workflow_status_bonus": False,
+            "single_ranked_queue": True,
             "today_only_timezone": "Asia/Omsk",
             "wide_source_saturation_penalty": True,
             "velocity_now_matters": True,
