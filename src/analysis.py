@@ -122,7 +122,7 @@ def source_of(p):
 def has(t,a): return any(x in norm(t) for x in a)
 def rx(t,a): return any(re.search(x,t,re.I) for x in a)
 
-from editorial_rules import is_excluded_topic, is_promotional
+from editorial_rules import clean_legacy_metadata, is_excluded_topic, is_promotional
 
 def excluded_topic(t):
     return is_excluded_topic(t)
