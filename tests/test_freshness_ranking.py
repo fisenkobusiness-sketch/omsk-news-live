@@ -107,6 +107,28 @@ class EditorialRankingTests(unittest.TestCase):
         self.assertFalse(result["eligible"])
         self.assertEqual(result["exclusion_reason"], "excluded_topic")
 
+    def test_reference_to_deceased_people_does_not_make_story_fatal_incident(self):
+        topic = make_topic(
+            text="Фонд помогает детям погибших и пропавших без вести защитников",
+            metrics=False,
+        )
+
+        result = predict(topic)
+
+        self.assertEqual(result["event_class"], "general")
+        self.assertEqual(result["signals"]["event_impact"], 20.0)
+
+    def test_actual_fatality_is_classified_as_fatal_incident(self):
+        topic = make_topic(
+            text="В Омске в ДТП погиб водитель автомобиля",
+            metrics=False,
+        )
+
+        result = predict(topic)
+
+        self.assertEqual(result["event_class"], "fatal_incident")
+        self.assertEqual(result["signals"]["event_impact"], 100.0)
+
 
 if __name__ == "__main__":
     unittest.main()
