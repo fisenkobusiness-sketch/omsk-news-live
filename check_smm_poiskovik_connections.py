@@ -74,12 +74,19 @@ def main() -> int:
     failures = 0
     for name, group_id in AUDIENCES.items():
         try:
-            posts = vk_call(vk_token, "wall.get", owner_id=-group_id, count=1, filter="owner").get("items", [])
+            wall_data = vk_call(vk_token, "wall.get", owner_id=-group_id, count=1, filter="owner")
+            if not isinstance(wall_data, dict):
+                raise RuntimeError(f"wall.get вернул {type(wall_data).__name__} вместо объекта; проверьте ответ VK API и права токена")
+            posts = wall_data.get("items", [])
+            if not isinstance(posts, list):
+                raise RuntimeError(f"wall.get: поле items имеет тип {type(posts).__name__}, ожидался список")
             if not posts:
                 raise RuntimeError("VK вернул пустой список постов")
             post_id = int(posts[0]["id"])
             counters = vk_call(vk_token, "wall.getById", posts=f"-{group_id}_{post_id}")
-            matching = [item for item in counters if int(item.get("id", 0) or 0) == post_id]
+            if not isinstance(counters, list):
+                raise RuntimeError(f"wall.getById вернул {type(counters).__name__} вместо списка; проверьте ответ VK API и права токена")
+            matching = [item for item in counters if isinstance(item, dict) and int(item.get("id", 0) or 0) == post_id]
             if not matching:
                 raise RuntimeError("wall.getById не вернул ожидаемый пост")
             item = matching[0]
