@@ -23,7 +23,7 @@ jobs:
           python-version: "3.12"
       - name: Install dependency
         run: python -m pip install requests
-      - name: Compile canonical modules and compatibility launchers
-        run: python -m py_compile run_smm_poiskovik.py live_monitor.py analysis.py predictor.py diagnostic.py src/live_monitor.py src/analysis.py src/predictor.py src/metrics.py tools/diagnostic.py
+      - name: Compile canonical modules and tools
+        run: python -m py_compile run_smm_poiskovik.py src/live_monitor.py src/analysis.py src/predictor.py src/metrics.py src/smm_poiskovik_engagement_tracker.py tools/diagnostic.py tools/check_smm_poiskovik_connections.py
       - name: Run tests
         run: python -m unittest discover -s tests -p "test_*.py" -v
