@@ -138,14 +138,13 @@ def metric(t: dict, key: str) -> float | None:
     return None
 
 
-def label_score(s: float) -> str:
-    if s >= 65:
-        return "🟢 БРАТЬ"
-    if s >= 50:
-        return "🟡 ПРОВЕРИТЬ"
-    if s >= 35:
-        return "🔵 НАБЛЮДАТЬ"
-    return "⚪ НИЗКИЙ"
+def label_score(s: float, topic: dict | None = None) -> str:
+    topic = topic or {}
+    if topic.get("verification_required"):
+        return "⛔ ИСКЛЮЧИТЬ: НУЖНО ПОДТВЕРЖДЕНИЕ"
+    if s >= 45:
+        return "🟢 В РАБОТУ"
+    return "⚪ ИСКЛЮЧИТЬ: НИЗКИЙ ПРИОРИТЕТ"
 
 
 def main() -> None:
@@ -249,7 +248,7 @@ def main() -> None:
         editorial = metric(t, "editorial_score")
         confidence = metric(t, "confidence")
 
-        print(f"\n#{i}  {s:.1f}  {label_score(s)}")
+        print(f"\n#{i}  {s:.1f}  {label_score(s, t)}")
         print(f"    {title[:190]}")
 
         print(
