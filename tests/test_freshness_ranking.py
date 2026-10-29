@@ -107,6 +107,37 @@ class EditorialRankingTests(unittest.TestCase):
         self.assertFalse(result["eligible"])
         self.assertEqual(result["exclusion_reason"], "excluded_topic")
 
+    def test_editorial_action_uses_score_and_verification_gate(self):
+        from predictor import apply_editorial_action
+
+        item = {"status": "take_now", "action": "БРАТЬ"}
+        apply_editorial_action(item, {
+            "priority_score": 90,
+            "verification_required": True,
+            "disclaimer_required": True,
+        })
+        self.assertEqual(item["status"], "watch")
+        self.assertEqual(item["action"], "НАБЛЮДАТЬ")
+        self.assertEqual(item["publication_mode"], "verification_required")
+
+        item = {"status": "watch", "action": "НАБЛЮДАТЬ"}
+        apply_editorial_action(item, {
+            "priority_score": 55,
+            "verification_required": False,
+            "disclaimer_required": False,
+        })
+        self.assertEqual(item["status"], "check")
+        self.assertEqual(item["action"], "ПРОВЕРИТЬ")
+
+        item = {}
+        apply_editorial_action(item, {
+            "priority_score": 75,
+            "verification_required": False,
+            "disclaimer_required": False,
+        })
+        self.assertEqual(item["status"], "take_now")
+        self.assertEqual(item["action"], "БРАТЬ")
+
     def test_reference_to_deceased_people_does_not_make_story_fatal_incident(self):
         topic = make_topic(
             text="Фонд помогает детям погибших и пропавших без вести защитников",
