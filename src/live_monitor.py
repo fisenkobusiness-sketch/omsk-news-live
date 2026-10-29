@@ -23,7 +23,8 @@ import time
 import base64
 import urllib.request
 import urllib.error
-from datetime import datetime
+from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
 from pathlib import Path
 
 import requests
@@ -49,6 +50,7 @@ POSTS_PER_GROUP = 100
 MAX_VK_WORKERS = 8
 VK_REQUEST_TIMEOUT = 15
 VK_REQUEST_RETRIES = 2
+OMSK_TZ = ZoneInfo("Asia/Omsk")
 
 GITHUB_REPO = "fisenkobusiness-sketch/omsk-news-live"
 GITHUB_BRANCH = "main"
@@ -185,8 +187,13 @@ def save_json(path, data):
 
 
 def today_start():
-    now = datetime.now().astimezone()
+    """Start of the current calendar day in Omsk, independent of PC timezone."""
+    now = datetime.now(OMSK_TZ)
     return now.replace(hour=0, minute=0, second=0, microsecond=0)
+
+def tomorrow_start():
+    """Exclusive end of the current Omsk calendar day."""
+    return today_start() + timedelta(days=1)
 
 
 def normalize_post(group_key, item):
@@ -201,7 +208,7 @@ def normalize_post(group_key, item):
     return {
         "source": group_key,
         "id": post_id,
-        "date": datetime.fromtimestamp(date_ts).strftime("%Y-%m-%d %H:%M:%S"),
+        "date": datetime.fromtimestamp(date_ts, OMSK_TZ).strftime("%Y-%m-%d %H:%M:%S"),
         "timestamp": date_ts,
         "text": item.get("text", "") or "",
         "likes": likes,
@@ -221,6 +228,7 @@ def normalize_post(group_key, item):
 
 def fetch_group_today(token, group_key, group_id):
     start = int(today_start().timestamp())
+    end = int(tomorrow_start().timestamp())
     response = vk_call(
         "wall.get",
         token,
@@ -231,7 +239,7 @@ def fetch_group_today(token, group_key, group_id):
     return [
         normalize_post(group_key, item)
         for item in response.get("items", [])
-        if int(item.get("date", 0) or 0) >= start
+        if start <= int(item.get("date", 0) or 0) < end
     ]
 
 
@@ -353,15 +361,16 @@ def main():
     seen_raw = load_json(SEEN_FILE, [])
     seen = set(seen_raw if isinstance(seen_raw, list) else [])
     today_start_ts = int(today_start().timestamp())
+    tomorrow_start_ts = int(tomorrow_start().timestamp())
 
-    # Новый календарный день = новая рабочая лента.
+    # Новый календарный день = новая рабочая лента (по времени Омска).
     # Старые посты не должны переходить в сегодняшний массив.
     loaded_posts = load_json(INPUT_FILE, [])
     if not isinstance(loaded_posts, list):
         loaded_posts = []
     today_posts = [
         p for p in loaded_posts
-        if isinstance(p, dict) and int(p.get("timestamp", 0) or 0) >= today_start_ts
+        if isinstance(p, dict) and today_start_ts <= int(p.get("timestamp", 0) or 0) < tomorrow_start_ts
     ]
 
     unique = {}

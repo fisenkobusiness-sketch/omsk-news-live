@@ -1,5 +1,7 @@
 import json, sys
 import time
+from datetime import datetime
+from zoneinfo import ZoneInfo
 from pathlib import Path
 
 # Prefer UTF-8; if the host console is legacy, console_print below falls back safely.
@@ -69,7 +71,9 @@ def has_promo_pattern(t):
     return any(pattern in text for pattern in PROMO_PATTERNS)
 
 
-from metrics import aggregate_topic_stats, topic_age_hours
+from metrics import aggregate_topic_stats, topic_age_hours, newest_timestamp
+
+OMSK_TZ = ZoneInfo("Asia/Omsk")
 
 
 def stats(t):
@@ -77,6 +81,20 @@ def stats(t):
 
 
 def predict(t):
+    # Second hard guard: the predictor must never rank yesterday/undated posts.
+    members = t.get("members", []) or []
+    newest_ts = newest_timestamp(members)
+    today = datetime.now(OMSK_TZ).date()
+    if newest_ts is None or datetime.fromtimestamp(newest_ts, OMSK_TZ).date() != today:
+        return {
+            "priority_score": 0,
+            "prediction": "⛔ НЕ БРАТЬ: НЕ СЕГОДНЯ / НЕТ ДАТЫ",
+            "confidence": 0,
+            "verification_required": False,
+            "disclaimer_required": False,
+            "exclusion_reason": "not_today_or_missing_timestamp"
+        }
+
     text = (t.get("text") or "").lower()
     content_type = t.get("content_type", "")
     status = t.get("status", "")
@@ -173,9 +191,11 @@ def predict(t):
     )
     engagement = clamp(engagement)
 
+    # Small multi-source confirmation is useful, but wide coverage can mean
+    # the story has already spread. Avoid rewarding saturation as a viral signal.
     spread = clamp(
-        max(0, posts - 1) * 25 +
-        max(0, sources - 1) * 20
+        max(0, posts - 1) * 8 +
+        max(0, sources - 1) * 8
     )
 
     # v5.5: сила события отдельно от текущего охвата.
@@ -228,21 +248,12 @@ def predict(t):
             event_strength = max(event_strength, bonus)
 
     # v5.6: свежесть и скорость распространения.
-    members = t.get("members", [])
-    primary = members[0] if members else {}
-    ts = primary.get("timestamp")
-    try:
-        ts = float(ts)
-    except (TypeError, ValueError):
-        ts = 0
-
-    if ts > 0:
-        age_hours = topic_age_hours(members, time.time())
-        freshness = max(0.0, min(100.0, 100.0 - age_hours * 7.0))
-        velocity_now = max(0.0, min(100.0, (views / age_hours) / 100.0))
-    else:
-        freshness = 0.0
-        velocity_now = 0.0
+    age_minutes = max(0.0, (time.time() - newest_ts) / 60.0)
+    age_hours = max(1.0 / 60.0, age_minutes / 60.0)
+    # Freshness distinguishes minute-old items instead of flooring all posts
+    # under 15 minutes to the same age. Score decays to zero after 3 hours.
+    freshness = max(0.0, min(100.0, 100.0 * (1.0 - age_minutes / 180.0)))
+    velocity_now = max(0.0, min(100.0, (views / age_hours) / 100.0))
 
     score = (
         editorial * 0.22 +
@@ -267,10 +278,13 @@ def predict(t):
     if t.get("official_attribution"):
         score += 8
 
-    if posts >= 2:
-        score += min(8, (posts - 1) * 4)
-    if sources >= 2:
-        score += min(8, (sources - 1) * 4)
+    # Do not give a large automatic bonus to stories already copied widely.
+    if sources >= 5:
+        score -= 12
+    elif sources >= 3:
+        score -= 6
+    if posts >= 8:
+        score -= 3
 
     hooks = [
         "погиб", "погибла", "пожар", "дтп", "авар", "пропал",
@@ -285,6 +299,9 @@ def predict(t):
     elif t.get("nonlocal_detected"):
         score = min(score, 35)
 
+    # Freshness materially affects the final ranking, but cannot replace
+    # editorial relevance, source reliability, or local importance.
+    score = score * 0.78 + freshness * 0.22
     score = round(clamp(score), 1)
 
     if score >= 65:
@@ -339,6 +356,10 @@ def main():
             "event_strength_matters": True,
             "fresh_serious_events_get_bonus": True,
             "freshness_matters": True,
+            "freshness_window_minutes": 180,
+            "freshness_weight": 0.22,
+            "today_only_timezone": "Asia/Omsk",
+            "wide_source_saturation_penalty": True,
             "velocity_now_matters": True,
             "fresh_news_gets_priority": True,
             "strict_nonlocal_detection": True,

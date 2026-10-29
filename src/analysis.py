@@ -34,11 +34,13 @@ def console_print(message):
     except (UnicodeEncodeError, LookupError):
         print(text.encode("ascii", "backslashreplace").decode("ascii"), flush=True)
 from datetime import datetime
+from zoneinfo import ZoneInfo
 
 from metrics import aggregate_topic_stats, topic_age_hours
 
 INPUT=Path("runtime/vk_today.json")
 OUTPUT=Path("runtime/editor_queue.json")
+OMSK_TZ = ZoneInfo("Asia/Omsk")
 
 OFFICIAL_POS=[
  r"\bпрокуратур\w*\s+(?:сообщил|заявил|выявил|проверил|установил|внёс|вынес|потребовал)",
@@ -241,6 +243,19 @@ def similar(a,b):
 def main():
     with INPUT.open(encoding="utf-8") as f:d=json.load(f)
     posts=d if isinstance(d,list) else next((d[k] for k in ("posts","items","data") if isinstance(d.get(k),list)),[])
+    # Hard guard: only source posts published on the current Omsk calendar day.
+    today = datetime.now(OMSK_TZ).date()
+    before_today_filter = len(posts)
+    def is_today_post(post):
+        try:
+            ts = float(post.get("timestamp", 0) or 0)
+            return ts > 0 and datetime.fromtimestamp(ts, OMSK_TZ).date() == today
+        except (TypeError, ValueError, OSError, OverflowError):
+            return False
+    posts = [post for post in posts if isinstance(post, dict) and is_today_post(post)]
+    dropped_old = before_today_filter - len(posts)
+    if dropped_old:
+        console_print(f"Фильтр даты Омска: исключено старых/без даты постов: {dropped_old}")
     topics=[]
     # Inverted token index cuts the clustering search space while preserving
     # the original first-match topic order.
@@ -309,7 +324,23 @@ def main():
         viral = round(min(100, early_signal * 0.65 + hook * 0.35), 1)
         locality=0 if nonlocal_only else 100 if any("омск" in norm(t) for t in texts) else 30
         editorial=locality*.45+viral*.25+conf*.30
-        score=round(viral*.5+editorial*.5,1)
+        base_score=round(viral*.5+editorial*.5,1)
+        # Exact age uses the newest source post; unlike topic_age_hours, it does not
+        # apply a 15-minute floor, so a 5-minute-old post outranks a 20-minute-old one.
+        valid_timestamps = []
+        for member in ms:
+            try:
+                member_ts = float((member.get("post") or {}).get("timestamp", 0) or 0)
+                if member_ts > 0:
+                    valid_timestamps.append(member_ts)
+            except (TypeError, ValueError):
+                continue
+        newest_ts = max(valid_timestamps) if valid_timestamps else 0
+        age_minutes = max(0.0, (datetime.now().timestamp() - newest_ts) / 60.0) if newest_ts else None
+        recency_score = round(max(0.0, 100.0 * (1.0 - age_minutes / 180.0)), 1) if age_minutes is not None else 0.0
+        # Recency has a material (28%) influence on ranking, while the base score
+        # preserves relevance and reliability. Freshness decays to zero after 3h.
+        score = round(base_score * 0.72 + recency_score * 0.28, 1)
 
         complaint_viral_signal = (
             complaint_only and
@@ -346,7 +377,10 @@ def main():
 
         primary_post = ms[0]["post"] if ms else {}
         primary_url = primary_post.get("url") or primary_post.get("post_url") or primary_post.get("source_url")
-        out.append({"score":score,"viral_score":round(viral,1),"editorial_score":round(editorial,1),
+        out.append({"score":score,"base_score":base_score,"recency_score":recency_score,
+          "age_minutes":round(age_minutes,1) if age_minutes is not None else None,
+          "newest_source_timestamp":newest_ts or None,
+          "viral_score":round(viral,1),"editorial_score":round(editorial,1),
           "confidence":conf,"posts":len(ms),"social_sources":len(sources),"views":views,"reposts":reposts,"likes":likes,"comments":comments,
           "content_type":content,"official_attribution":official,"source_type":infos[0]["source_type"],
           "nonlocal_detected":nonlocal_only,"help_request":help_only,"opinion_detected":opinion_only,
@@ -356,7 +390,8 @@ def main():
           "source_urls": [m["post"].get("url") for m in ms if m["post"].get("url")]})
 
     out.sort(key=lambda x:x["score"],reverse=True)
-    result={"generated_at":datetime.now().isoformat(timespec="seconds"),"clustering_version":"v10.14",
+    result={"generated_at":datetime.now(OMSK_TZ).isoformat(timespec="seconds"),"timezone":"Asia/Omsk",
+      "date_filter":"current Omsk calendar day only","clustering_version":"v10.15-freshness",
       "posts_analyzed":len(posts),"topic_count":len(out),
       "rules":{"help_requests_are_not_news":True,"social_reposts_are_not_independent_confirmation":True,
                "official_attribution_is_high_confidence":True,"official_source_names_detected":True,
