@@ -33,14 +33,13 @@ def console_print(message):
         print(text, flush=True)
     except (UnicodeEncodeError, LookupError):
         print(text.encode("ascii", "backslashreplace").decode("ascii"), flush=True)
-from datetime import datetime
-from zoneinfo import ZoneInfo
+from datetime import datetime, timedelta, timezone
 
 from metrics import aggregate_topic_stats, topic_age_hours
 
 INPUT=Path("runtime/vk_today.json")
 OUTPUT=Path("runtime/editor_queue.json")
-OMSK_TZ = ZoneInfo("Asia/Omsk")
+OMSK_TZ = timezone(timedelta(hours=6), name="Asia/Omsk")
 
 OFFICIAL_POS=[
  r"\bпрокуратур\w*\s+(?:сообщил|заявил|выявил|проверил|установил|внёс|вынес|потребовал)",
