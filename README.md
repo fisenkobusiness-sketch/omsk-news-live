@@ -21,6 +21,7 @@
 - `src/analysis.py` — первичная классификация и редакционные фильтры.
 - `src/predictor.py` — итоговый рейтинг `editorial_v2`; канонический рейтинг — `prediction.priority_score`.
 - `src/metrics.py` — общие расчёты метрик.
+- `src/editorial_rules.py` — единые жёсткие фильтры и удаление устаревших флагов из runtime-данных.
 - `src/smm_poiskovik_engagement_tracker.py` — отдельное измерение динамики вовлечённости.
 - `tools/diagnostic.py` — диагностика очередей без изменения файлов.
 - `tools/check_smm_poiskovik_connections.py` — проверка подключений VK/Telegram без запуска монитора.

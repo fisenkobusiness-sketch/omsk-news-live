@@ -30,45 +30,18 @@ def console_print(message):
 INPUT = "runtime/editor_queue.json"
 OUTPUT = "runtime/predictor_queue.json"
 
-EXCLUDED_TOPIC_PATTERNS = [
-    "бпла", "беспилот", "беспилотник", "беспилотники", "беспилотный",
-    "беспилотные", "дрон", "дроны", "дрона", "дронами",
-    "воздушная тревога", "воздушной тревоги", "ракетной опасности",
-]
-
-PROMO_PATTERNS = [
-    "подписывайтесь", "подпишитесь", "подписывайся",
-    "наши каналы", "самые свежие новости",
-    "где публикуются самые свежие",
-]
-
+from editorial_rules import is_excluded_topic, is_promotional, clean_legacy_metadata, topic_text
 
 def clamp(x, a=0, b=100):
     return max(a, min(b, x))
 
 
-def topic_text(t):
-    parts = [
-        t.get("text"),
-        t.get("title"),
-        t.get("headline"),
-        t.get("summary"),
-    ]
-    for member in t.get("members", []) or []:
-        if isinstance(member, dict):
-            parts.append(member.get("text"))
-            parts.append(member.get("title"))
-    return " ".join(str(x or "").lower() for x in parts)
-
-
 def has_excluded_topic(t):
-    text = topic_text(t)
-    return any(pattern in text for pattern in EXCLUDED_TOPIC_PATTERNS)
+    return is_excluded_topic(t)
 
 
 def has_promo_pattern(t):
-    text = topic_text(t)
-    return any(pattern in text for pattern in PROMO_PATTERNS)
+    return is_promotional(t)
 
 
 from metrics import aggregate_topic_stats, topic_age_hours, newest_timestamp
@@ -335,7 +308,10 @@ def main():
     }
 
     excluded_count = 0
-    for topic in topics:
+    for raw_topic in topics:
+        topic = clean_legacy_metadata(raw_topic)
+        if not isinstance(topic, dict):
+            continue
         item = dict(topic)
         item["prediction"] = predict(topic)
         prediction = item["prediction"]

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-анализ_v10.14.py
-Фикс классификации контента:
+Первичный редакционный анализ.
+Классификация контента:
 - news / incident / social_story / help_request / opinion / advertising / nonlocal
 - просьбы найти дом, сборы, помощь животным и людям не попадают
   в "ВИРУСНЫЙ СИГНАЛ" новостной очереди
@@ -75,8 +75,6 @@ NONLOCAL=["иркутской области","иркутск","краснода
  "новосибирске","новосибирской области","красноярске","красноярского края"]
 OMSK=["омск","омской области","омская область","омском","омские","омский","тара","калачинск","исилькуль"]
 
-AD=["реклама","скидк","акция","акции","акцию","оформить","подать заявку","бесплатная консультация","utm_",
- "app5898182","спишем долги","списание долгов"]
 OPINION=["наш любимый омск","бравурных репортажей","можете задонатить","по большому секрету",
  "прорывная команда","клоунада","позор","авангардный рывок","только вот незадача",
  "пропиаренных","какие плюшки","омичей травят","а где эти","ну и да, если кто",
@@ -124,33 +122,13 @@ def source_of(p):
 def has(t,a): return any(x in norm(t) for x in a)
 def rx(t,a): return any(re.search(x,t,re.I) for x in a)
 
-# Editorial hard stop-list for topics outside the current editorial goal.
-EXCLUDED_TOPIC_PATTERNS = [
-    "бпла", "беспилот", "дрон", "дроны", "дрона", "дронами",
-    "воздушн", "тревог", "ракетн", "опасност", "пво"
-]
+from editorial_rules import is_excluded_topic, is_promotional
 
 def excluded_topic(t):
-    return has(t, EXCLUDED_TOPIC_PATTERNS)
+    return is_excluded_topic(t)
 
 def promotional_ad(t):
-    if has(t, AD):
-        return True
-    channel_words = ["канал", "канала", "каналов"]
-    promo_words = [
-        "подписывайтесь", "подпишитесь", "подписывайся",
-        "наши каналы", "самые свежие новости",
-        "где публикуются самые свежие", "публикуем в нашем канале",
-        "актуальную информацию", "в режиме онлайн",
-        "следим за обстановкой", "ищите по запросу",
-        "вся оперативная информация"
-    ]
-    direct_promo = [
-        "публикуем в нашем канале", "актуальную информацию",
-        "в режиме онлайн", "следим за обстановкой",
-        "ищите по запросу", "вся оперативная информация"
-    ]
-    return has(t, channel_words) and has(t, promo_words) or has(t, direct_promo)
+    return is_promotional(t)
 
 
 def classify(p):
@@ -272,6 +250,7 @@ def classify_editorial_status(*, excluded_only=False, ad_only=False, help_only=F
 def main():
     with INPUT.open(encoding="utf-8") as f:d=json.load(f)
     posts=d if isinstance(d,list) else next((d[k] for k in ("posts","items","data") if isinstance(d.get(k),list)),[])
+    posts = [clean_legacy_metadata(post) for post in posts if isinstance(post, dict)]
     # Hard guard: only source posts published on the current Omsk calendar day.
     today = datetime.now(OMSK_TZ).date()
     before_today_filter = len(posts)
