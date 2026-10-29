@@ -156,8 +156,13 @@ def predict(t):
         return rejected("excluded_topic", "⛔ ИСКЛЮЧЕНО: ЗАПРЕЩЁННАЯ ТЕМА")
     if has_promo_pattern(t):
         return rejected("promotional", "⛔ ИСКЛЮЧЕНО: ПРОМО")
-    if t.get("advertising_detected") or status == "reject" or content_type == "advertising":
-        return rejected("advertising_or_rejected", "⛔ ИСКЛЮЧЕНО: РЕКЛАМА/ОТКЛОНЕНО")
+    # "reject" is also used by the first-stage ranker for ordinary stories
+    # below its own threshold. It is not, by itself, a hard editorial exclusion.
+    # Keep explicit hard exclusions here so lower-ranked local news can be scored.
+    if t.get("advertising_detected") or content_type == "advertising":
+        return rejected("advertising", "⛔ ИСКЛЮЧЕНО: РЕКЛАМА")
+    if t.get("nonlocal_detected"):
+        return rejected("nonlocal_topic", "⛔ ИСКЛЮЧЕНО: НЕ ОМСК")
     if t.get("help_request") or content_type == "help_request":
         return rejected("help_request", "⛔ ИСКЛЮЧЕНО: ПРОСЬБА О ПОМОЩИ")
     if content_type == "opinion" or t.get("opinion_detected"):
