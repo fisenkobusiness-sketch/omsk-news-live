@@ -125,6 +125,19 @@ class EditorialRankingTests(unittest.TestCase):
 
         self.assertEqual(predict(first)["priority_score"], predict(second)["priority_score"])
 
+    def test_corporate_advertorial_is_hard_filtered(self):
+        topic = make_topic(
+            metrics=False,
+            text=(
+                "От городских улиц до театральных сцен: как ОНПЗ меняет культурный облик Омска. "
+                "Благодаря поддержке предприятия и программе «Родные города» учреждения искусства "
+                "получают возможности для развития. В новом видеопроекте рассказывают о переменах."
+            ),
+        )
+        result = predict(topic)
+        self.assertFalse(result["eligible"])
+        self.assertEqual(result["exclusion_reason"], "promotional")
+
     def test_excluded_topics_remain_hard_filtered(self):
         topic = make_topic(text="В Омской области объявили беспилотную опасность")
 
