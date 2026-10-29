@@ -24,4 +24,4 @@ jobs:
       - name: Compile news pipeline modules
         run: python -m py_compile src/live_monitor.py src/analysis.py src/predictor.py
       - name: Run tracker tests
-        run: python -m unittest discover -s tests -p "test_smm_poiskovik_engagement_tracker.py" -v
+        run: python -m unittest discover -s tests -p "test_*.py" -v
