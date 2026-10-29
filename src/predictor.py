@@ -1,7 +1,6 @@
 import json, sys
 import time
-from datetime import datetime
-from zoneinfo import ZoneInfo
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 # Prefer UTF-8; if the host console is legacy, console_print below falls back safely.
@@ -73,7 +72,7 @@ def has_promo_pattern(t):
 
 from metrics import aggregate_topic_stats, topic_age_hours, newest_timestamp
 
-OMSK_TZ = ZoneInfo("Asia/Omsk")
+OMSK_TZ = timezone(timedelta(hours=6), name="Asia/Omsk")
 
 
 def stats(t):
