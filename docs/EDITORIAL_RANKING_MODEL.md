@@ -25,7 +25,7 @@ Each topic must keep raw evidence separate from derived features:
 2. Freshness is time-decayed and timezone-aware (Asia/Omsk); stale/missing timestamps are rejected by the existing same-day gate.
 3. Audience response, reach and spread are distinct features; raw counts must be normalized so one large account cannot dominate the entire ranking.
 4. Local usefulness and event impact are explicit editorial dimensions, not hidden bonuses buried in text matching.
-5. Verification confidence is reported separately. A potentially important but unconfirmed story can rank for editorial review while remaining clearly marked as unconfirmed.
+5. Verification confidence is reported separately. High-risk stories that require verification are excluded from the active work queue until their evidence is adequate; they do not receive a separate holding status.
 6. Cross-posts from the same source do not count as independent confirmation.
 7. One canonical sorted queue uses descending `priority_score`. Rubrics are labels applied after ranking, never separate score systems.
 
@@ -36,6 +36,14 @@ Each topic must keep raw evidence separate from derived features:
 - Invariant: absent counters are exposed as missing/low-coverage, not confused with measured zero engagement.
 - Regression fixtures: high-impact low-engagement story, ordinary administrative update, fast-growing complaint, stale story, excluded topic, and nonlocal story.
 - Compare the old and new rankings on a saved pool; inspect large rank changes before replacing production output.
+
+## Editorial queue statuses
+
+The predictor uses only two editorial statuses:
+- `take_now` — priority score is at least 45 and the verification gate is clear; the story enters editorial work.
+- `reject` — score is below 45, or a high-risk story is blocked by the verification gate. The technical `editorial_exclusion_reason` distinguishes low priority from required verification.
+
+Do not emit `check` or `watch` statuses. Verification remains a separate safety gate, not a third editorial status.
 
 ## Migration policy
 Do not manually edit `editorial_pool.json`. Keep the current output until the new model passes tests and a side-by-side ranking comparison. Remove legacy score fields only in a later version after all consumers are migrated.
