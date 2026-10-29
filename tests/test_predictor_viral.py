@@ -12,15 +12,15 @@ sys.path.insert(0, str(ROOT / "src"))
 from predictor import predict  # noqa: E402
 
 
-def post(source: str, *, views: int = 1000, timestamp: float | None = None) -> dict:
+def post(source: str, *, views: int = 1000, timestamp: float | None = None, likes: int = 10, comments: int = 5, reposts: int = 2) -> dict:
     return {
         "source": source,
         "timestamp": timestamp if timestamp is not None else time.time(),
         "text": "В Омске обсуждают важное городское событие",
         "views": views,
-        "likes": 10,
-        "comments": 5,
-        "reposts": 2,
+        "likes": likes,
+        "comments": comments,
+        "reposts": reposts,
     }
 
 
@@ -30,15 +30,15 @@ class EarlyViralSignalTests(unittest.TestCase):
         one_source = {
             "text": "В Омске обсуждают важное городское событие",
             "content_type": "news",
-            "members": [post("source-a", views=3000, timestamp=now)],
+            "members": [post("source-a", views=3000, timestamp=now, likes=9, comments=6, reposts=3)],
         }
         three_sources = {
             "text": "В Омске обсуждают важное городское событие",
             "content_type": "news",
             "members": [
-                post("source-a", views=1000, timestamp=now),
-                post("source-b", views=1000, timestamp=now),
-                post("source-c", views=1000, timestamp=now),
+                post("source-a", views=1000, timestamp=now, likes=3, comments=2, reposts=1),
+                post("source-b", views=1000, timestamp=now, likes=3, comments=2, reposts=1),
+                post("source-c", views=1000, timestamp=now, likes=3, comments=2, reposts=1),
             ],
         }
 
