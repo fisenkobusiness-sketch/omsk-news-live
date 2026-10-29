@@ -39,9 +39,9 @@ Each topic must keep raw evidence separate from derived features:
 
 ## Editorial queue statuses
 
-The predictor uses only two editorial statuses:
-- `take_now` — priority score is at least 45 and the verification gate is clear; the story enters editorial work.
-- `reject` — score is below 45, or a high-risk story is blocked by the verification gate. The technical `editorial_exclusion_reason` distinguishes low priority from required verification.
+The pipeline uses only two editorial statuses:
+- `take_now` — priority score is at least 45, or the topic is a qualifying viral complaint/signal; the story enters editorial work. Viral complaints must be written as attributed reports, not established facts.
+- `reject` — score is below 45, the topic is excluded by editorial rules, or a high-risk story is blocked by the predictor's verification gate. The technical `editorial_exclusion_reason` distinguishes low priority from required verification.
 
 Do not emit `check` or `watch` statuses. Verification remains a separate safety gate, not a third editorial status.
 
