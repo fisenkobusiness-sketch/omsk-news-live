@@ -30,12 +30,34 @@ def secret(filename: str, env_name: str) -> str:
 
 def vk_call(token: str, method: str, **params):
     params.update(access_token=token, v=VK_VERSION)
-    response = requests.get(f"https://api.vk.com/method/{method}", params=params, timeout=TIMEOUT)
+    response = requests.get(
+        f"https://api.vk.com/method/{method}",
+        params=params,
+        timeout=TIMEOUT,
+    )
     response.raise_for_status()
     payload = response.json()
+
+    if not isinstance(payload, dict):
+        raise RuntimeError(
+            f"VK {method}: ожидался JSON-объект, получен {type(payload).__name__}"
+        )
+
     if "error" in payload:
         error = payload["error"]
-        raise RuntimeError(f"VK {method}: {error.get('error_msg', error)}")
+        if isinstance(error, dict):
+            message = error.get("error_msg", str(error))
+            code = error.get("error_code", "не указан")
+        else:
+            message = str(error)
+            code = "не указан"
+        raise RuntimeError(f"VK {method}: ошибка API {code}: {message}")
+
+    if "response" not in payload:
+        raise RuntimeError(
+            f"VK {method}: в ответе отсутствует поле response; "
+            f"поля ответа: {', '.join(payload.keys())}"
+        )
     return payload["response"]
 
 
