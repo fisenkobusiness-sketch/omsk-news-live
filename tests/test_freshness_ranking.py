@@ -97,22 +97,24 @@ class EditorialRankingTests(unittest.TestCase):
         self.assertIsNone(result["signals"]["reach"])
         self.assertIsNone(result["signals"]["engagement"])
 
-    def test_confidence_is_verification_metadata_not_popularity(self):
+    def test_confidence_is_diagnostic_only_and_has_no_verification_gate(self):
         high_confidence = predict(make_topic(confidence=90))
         low_confidence = predict(make_topic(confidence=10))
 
         self.assertEqual(high_confidence["priority_score"], low_confidence["priority_score"])
-        self.assertFalse(high_confidence["verification_required"])
-        # A low confidence score alone must not block an ordinary local story.
-        self.assertFalse(low_confidence["verification_required"])
+        self.assertNotIn("verification_required", high_confidence)
+        self.assertNotIn("disclaimer_required", high_confidence)
+        # Low confidence must not create a verification gate or output field.
+        self.assertNotIn("verification_required", low_confidence)
+        self.assertNotIn("disclaimer_required", low_confidence)
 
         high_risk = predict(make_topic(
             confidence=10,
             text="В Омске в ДТП погиб водитель автомобиля",
             metrics=False,
         ))
-        self.assertFalse(high_risk["verification_required"])
-        self.assertFalse(high_risk["disclaimer_required"])
+        self.assertNotIn("verification_required", high_risk)
+        self.assertNotIn("disclaimer_required", high_risk)
 
     def test_legacy_scores_are_diagnostic_only(self):
         first = make_topic()
@@ -156,20 +158,17 @@ class EditorialRankingTests(unittest.TestCase):
         item = {"status": "take_now", "action": "БРАТЬ"}
         apply_editorial_action(item, {
             "priority_score": 90,
-            "verification_required": True,
-            "disclaimer_required": True,
         })
         self.assertEqual(item["status"], "take_now")
         self.assertEqual(item["action"], "БРАТЬ В РАБОТУ")
         self.assertEqual(item["publication_mode"], "editorial_work")
         self.assertIsNone(item["editorial_exclusion_reason"])
-        self.assertFalse(item["verification_required"])
+        self.assertNotIn("verification_required", item)
+        self.assertNotIn("publish_disclaimer_required", item)
 
         item = {"status": "watch", "action": "НАБЛЮДАТЬ"}
         apply_editorial_action(item, {
             "priority_score": 55,
-            "verification_required": False,
-            "disclaimer_required": False,
         })
         self.assertEqual(item["status"], "take_now")
         self.assertEqual(item["action"], "БРАТЬ В РАБОТУ")
@@ -177,8 +176,6 @@ class EditorialRankingTests(unittest.TestCase):
         item = {}
         apply_editorial_action(item, {
             "priority_score": 30,
-            "verification_required": False,
-            "disclaimer_required": False,
         })
         self.assertEqual(item["status"], "reject")
         self.assertEqual(item["action"], "ИСКЛЮЧИТЬ")
@@ -200,7 +197,7 @@ class EditorialRankingTests(unittest.TestCase):
         )
         result = predict(topic)
         self.assertLessEqual(result["priority_score"], 40.0)
-        self.assertFalse(result["verification_required"])
+        self.assertNotIn("verification_required", result)
 
     def test_event_announcement_is_not_automatically_high_priority(self):
         topic = make_topic(
