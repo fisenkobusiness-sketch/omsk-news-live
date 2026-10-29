@@ -6,6 +6,7 @@ from zoneinfo import ZoneInfo
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from predictor import predict
+from analysis import classify_editorial_status
 
 OMSK_TZ = ZoneInfo("Asia/Omsk")
 
@@ -34,6 +35,20 @@ def make_topic(age_minutes=5, sources=1, posts=1, text=None, metrics=True, confi
 
 
 class EditorialRankingTests(unittest.TestCase):
+    def test_analysis_uses_only_work_or_reject_statuses(self):
+        cases = [
+            ({"score": 70}, "take_now"),
+            ({"score": 20}, "reject"),
+            ({"score": 99, "help_only": True}, "reject"),
+            ({"score": 10, "complaint_viral_signal": True}, "take_now"),
+            ({"score": 99, "nonlocal_only": True}, "reject"),
+        ]
+        for kwargs, expected in cases:
+            with self.subTest(kwargs=kwargs):
+                status, _ = classify_editorial_status(**kwargs)
+                self.assertEqual(status, expected)
+                self.assertIn(status, {"take_now", "reject"})
+
     def test_yesterday_topic_is_rejected(self):
         yesterday = datetime.now(OMSK_TZ).replace(
             hour=0, minute=0, second=0, microsecond=0
