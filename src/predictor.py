@@ -220,13 +220,8 @@ def predict(t):
         for name, (_, weight) in usable.items()
     }
 
-    # Low analyzer confidence alone must not block ordinary news.
-    # Keep the editorial hold only for high-risk incident classes.
-    high_risk_classes = {
-        "fatal_incident", "major_incident", "public_safety",
-        "fire_or_emergency", "transport_incident",
-    }
-    verification_required = confidence < 50 and event_class in high_risk_classes
+    # Confidence is diagnostic metadata only; it never blocks eligible local news.
+    verification_required = False
 
     return {
         "priority_score": score,
@@ -255,15 +250,10 @@ def predict(t):
 def apply_editorial_action(item, prediction):
     """Assign only actionable or excluded statuses; never create a holding bucket."""
     score = float(prediction.get("priority_score", 0) or 0)
-    verification_required = bool(prediction.get("verification_required", True))
+    # Verification is informational, never an editorial gate.
+    verification_required = False
 
-    if verification_required:
-        status, action, label, mode = (
-            "reject", "ИСКЛЮЧИТЬ", "⛔ ИСКЛЮЧИТЬ: НУЖНО ПОДТВЕРЖДЕНИЕ",
-            "blocked_verification",
-        )
-        reason = "verification_required"
-    elif score >= 45:
+    if score >= 45:
         status, action, label, mode = (
             "take_now", "БРАТЬ В РАБОТУ", "🟢 В РАБОТУ", "editorial_work",
         )
