@@ -208,6 +208,24 @@ def predict(t):
     weight_total = sum(weight for _, weight in usable.values())
     score = round(clamp(sum(value * weight for value, weight in usable.values()) / weight_total), 1) if weight_total else 0.0
 
+    # Event announcements and sports interviews are useful, but should not
+    # outrank city incidents and public-interest reporting by default.
+    is_sports_interview = bool(re.search(
+        r"\b(?:интервью|рассказал\w*|поделил\w*\s+впечатлен\w*|после\s+матча)\b",
+        text, re.I
+    )) and bool(re.search(
+        r"\b(?:хокке\w*|авангард\w*|футбол\w*|спортсмен\w*|матча|игрок\w*|голкипер\w*)\b",
+        text, re.I
+    ))
+    is_event_announcement = bool(re.search(
+        r"\b(?:автограф-сесси\w*|анонс\w*\s+мероприят\w*|состоится\s+(?:концерт|встреча|мероприятие|автограф))",
+        text, re.I
+    ))
+    if is_sports_interview:
+        score = min(score, 40.0)
+    elif is_event_announcement:
+        score = min(score, 42.0)
+
     if score >= 70:
         label = "🟢 ВЫСОКИЙ ПРИОРИТЕТ"
     elif score >= 45:
