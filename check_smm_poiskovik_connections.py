@@ -84,8 +84,10 @@ def main() -> int:
                 raise RuntimeError("VK вернул пустой список постов")
             post_id = int(posts[0]["id"])
             counters = vk_call(vk_token, "wall.getById", posts=f"-{group_id}_{post_id}")
+            if isinstance(counters, dict):
+                counters = counters.get("items")
             if not isinstance(counters, list):
-                raise RuntimeError(f"wall.getById вернул {type(counters).__name__} вместо списка; проверьте ответ VK API и права токена")
+                raise RuntimeError(f"wall.getById: ожидался список постов или объект с items, получен {type(counters).__name__}")
             matching = [item for item in counters if isinstance(item, dict) and int(item.get("id", 0) or 0) == post_id]
             if not matching:
                 raise RuntimeError("wall.getById не вернул ожидаемый пост")

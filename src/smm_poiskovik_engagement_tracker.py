@@ -210,7 +210,13 @@ def fetch_post_counters(token: str, audience: str, post_ids: list[int]) -> dict[
         chunk = post_ids[offset:offset + 100]
         posts_param = ",".join(f"-{group_id}_{pid}" for pid in chunk)
         items = vk_call(token, "wall.getById", posts=posts_param)
+        if isinstance(items, dict):
+            items = items.get("items")
+        if not isinstance(items, list):
+            raise RuntimeError(f"VK API wall.getById: ожидался список постов или объект с items, получен {type(items).__name__}")
         for item in items:
+            if not isinstance(item, dict):
+                continue
             pid = int(item.get("id", 0) or 0)
             result[pid] = {
                 "views": int((item.get("views") or {}).get("count", 0) or 0),
