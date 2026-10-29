@@ -88,7 +88,16 @@ class EditorialRankingTests(unittest.TestCase):
 
         self.assertEqual(high_confidence["priority_score"], low_confidence["priority_score"])
         self.assertFalse(high_confidence["verification_required"])
-        self.assertTrue(low_confidence["verification_required"])
+        # A low confidence score alone must not block an ordinary local story.
+        self.assertFalse(low_confidence["verification_required"])
+
+        high_risk = predict(make_topic(
+            confidence=10,
+            text="В Омске в ДТП погиб водитель автомобиля",
+            metrics=False,
+        ))
+        self.assertTrue(high_risk["verification_required"])
+        self.assertTrue(high_risk["disclaimer_required"])
 
     def test_legacy_scores_are_diagnostic_only(self):
         first = make_topic()
