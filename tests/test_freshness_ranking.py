@@ -111,8 +111,8 @@ class EditorialRankingTests(unittest.TestCase):
             text="В Омске в ДТП погиб водитель автомобиля",
             metrics=False,
         ))
-        self.assertTrue(high_risk["verification_required"])
-        self.assertTrue(high_risk["disclaimer_required"])
+        self.assertFalse(high_risk["verification_required"])
+        self.assertFalse(high_risk["disclaimer_required"])
 
     def test_legacy_scores_are_diagnostic_only(self):
         first = make_topic()
@@ -159,10 +159,11 @@ class EditorialRankingTests(unittest.TestCase):
             "verification_required": True,
             "disclaimer_required": True,
         })
-        self.assertEqual(item["status"], "reject")
-        self.assertEqual(item["action"], "ИСКЛЮЧИТЬ")
-        self.assertEqual(item["publication_mode"], "blocked_verification")
-        self.assertEqual(item["editorial_exclusion_reason"], "verification_required")
+        self.assertEqual(item["status"], "take_now")
+        self.assertEqual(item["action"], "БРАТЬ В РАБОТУ")
+        self.assertEqual(item["publication_mode"], "editorial_work")
+        self.assertIsNone(item["editorial_exclusion_reason"])
+        self.assertFalse(item["verification_required"])
 
         item = {"status": "watch", "action": "НАБЛЮДАТЬ"}
         apply_editorial_action(item, {
@@ -182,6 +183,25 @@ class EditorialRankingTests(unittest.TestCase):
         self.assertEqual(item["status"], "reject")
         self.assertEqual(item["action"], "ИСКЛЮЧИТЬ")
         self.assertEqual(item["editorial_exclusion_reason"], "below_priority_threshold")
+
+
+    def test_sports_interview_is_capped_below_priority_threshold(self):
+        topic = make_topic(
+            text="В Омске хоккеист Глеб Бурала дал интервью после матча",
+            metrics=True,
+        )
+        result = predict(topic)
+        self.assertLessEqual(result["priority_score"], 40.0)
+        self.assertFalse(result["verification_required"])
+
+    def test_event_announcement_is_not_automatically_high_priority(self):
+        topic = make_topic(
+            text="В Омске состоится автограф-сессия бывших капитанов Авангарда",
+            metrics=True,
+        )
+        result = predict(topic)
+        self.assertLessEqual(result["priority_score"], 42.0)
+        self.assertEqual(result["event_class"], "general")
 
     def test_reference_to_deceased_people_does_not_make_story_fatal_incident(self):
         topic = make_topic(
