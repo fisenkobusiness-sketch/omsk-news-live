@@ -23,8 +23,7 @@ import time
 import base64
 import urllib.request
 import urllib.error
-from datetime import datetime, timedelta
-from zoneinfo import ZoneInfo
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 import requests
@@ -50,7 +49,8 @@ POSTS_PER_GROUP = 100
 MAX_VK_WORKERS = 8
 VK_REQUEST_TIMEOUT = 15
 VK_REQUEST_RETRIES = 2
-OMSK_TZ = ZoneInfo("Asia/Omsk")
+# Omsk uses UTC+6 year-round. A fixed offset avoids requiring the external tzdata package on Windows.
+OMSK_TZ = timezone(timedelta(hours=6), name="Asia/Omsk")
 
 GITHUB_REPO = "fisenkobusiness-sketch/omsk-news-live"
 GITHUB_BRANCH = "main"
