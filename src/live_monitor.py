@@ -219,7 +219,7 @@ def normalize_post(group_key, item):
         "source_type": "social",
         "confirmed": False,
         "flags": [],
-        "editor_status": "🔵 НАБЛЮДАТЬ",
+        "editor_status": "⏳ ДО ОЦЕНКИ РЕЙТИНГА",
         "publication_mode": "verification_required",
         "verification_required": True,
         "publish_disclaimer_required": True,
