@@ -131,6 +131,25 @@ class EditorialRankingTests(unittest.TestCase):
         self.assertFalse(result["eligible"])
         self.assertEqual(result["exclusion_reason"], "excluded_topic")
 
+    def test_low_priority_status_does_not_hard_filter_ordinary_local_news(self):
+        topic = make_topic(text="В Омске сообщили о городском решении", metrics=False)
+        topic["status"] = "reject"
+
+        result = predict(topic)
+
+        self.assertTrue(result["eligible"])
+        self.assertIsNone(result["exclusion_reason"])
+
+    def test_explicit_advertising_and_nonlocal_flags_remain_hard_filtered(self):
+        ad = make_topic(text="В Омске сообщили о событии", metrics=False)
+        ad["status"] = "reject"
+        ad["content_type"] = "advertising"
+        self.assertEqual(predict(ad)["exclusion_reason"], "advertising")
+
+        nonlocal_topic = make_topic(text="В Омске сообщили о событии", metrics=False)
+        nonlocal_topic["nonlocal_detected"] = True
+        self.assertEqual(predict(nonlocal_topic)["exclusion_reason"], "nonlocal_topic")
+
     def test_editorial_action_has_only_work_or_reject_statuses(self):
         from predictor import apply_editorial_action
 
