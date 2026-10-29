@@ -42,6 +42,18 @@ class VkCallTests(unittest.TestCase):
             tracker.vk_call("token", "wall.get")
 
 
+    @patch.object(tracker, "vk_call")
+    def test_fetch_post_counters_accepts_items_envelope(self, mock_vk_call):
+        mock_vk_call.return_value = {"items": [
+            {"id": 123, "views": {"count": 9}, "likes": {"count": 2},
+             "comments": {"count": 1}, "reposts": {"count": 0}}
+        ]}
+        audience = next(iter(AUDIENCES))
+        counters = tracker.fetch_post_counters("token", audience, [123])
+        self.assertEqual(counters[123]["views"], 9)
+        self.assertEqual(counters[123]["likes"], 2)
+
+
 class TrackerTests(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
