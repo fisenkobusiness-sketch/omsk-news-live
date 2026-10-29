@@ -116,7 +116,7 @@ class EditorialRankingTests(unittest.TestCase):
         self.assertFalse(result["eligible"])
         self.assertEqual(result["exclusion_reason"], "excluded_topic")
 
-    def test_editorial_action_uses_score_and_verification_gate(self):
+    def test_editorial_action_has_only_work_or_reject_statuses(self):
         from predictor import apply_editorial_action
 
         item = {"status": "take_now", "action": "БРАТЬ"}
@@ -125,9 +125,10 @@ class EditorialRankingTests(unittest.TestCase):
             "verification_required": True,
             "disclaimer_required": True,
         })
-        self.assertEqual(item["status"], "watch")
-        self.assertEqual(item["action"], "НАБЛЮДАТЬ")
-        self.assertEqual(item["publication_mode"], "verification_required")
+        self.assertEqual(item["status"], "reject")
+        self.assertEqual(item["action"], "ИСКЛЮЧИТЬ")
+        self.assertEqual(item["publication_mode"], "blocked_verification")
+        self.assertEqual(item["editorial_exclusion_reason"], "verification_required")
 
         item = {"status": "watch", "action": "НАБЛЮДАТЬ"}
         apply_editorial_action(item, {
@@ -135,17 +136,18 @@ class EditorialRankingTests(unittest.TestCase):
             "verification_required": False,
             "disclaimer_required": False,
         })
-        self.assertEqual(item["status"], "check")
-        self.assertEqual(item["action"], "ПРОВЕРИТЬ")
+        self.assertEqual(item["status"], "take_now")
+        self.assertEqual(item["action"], "БРАТЬ В РАБОТУ")
 
         item = {}
         apply_editorial_action(item, {
-            "priority_score": 75,
+            "priority_score": 30,
             "verification_required": False,
             "disclaimer_required": False,
         })
-        self.assertEqual(item["status"], "take_now")
-        self.assertEqual(item["action"], "БРАТЬ")
+        self.assertEqual(item["status"], "reject")
+        self.assertEqual(item["action"], "ИСКЛЮЧИТЬ")
+        self.assertEqual(item["editorial_exclusion_reason"], "below_priority_threshold")
 
     def test_reference_to_deceased_people_does_not_make_story_fatal_incident(self):
         topic = make_topic(
