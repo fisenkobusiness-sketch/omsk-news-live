@@ -239,6 +239,32 @@ def similar(a,b):
     )
     return j>=.23 or (anchors>=2 and j>=.12) or (len(nums)>=2 and j>=.12) or same_event or strong_event
 
+def classify_editorial_status(*, excluded_only=False, ad_only=False, help_only=False,
+                             complaint_viral_signal=False, complaint_only=False,
+                             opinion_only=False, nonlocal_only=False,
+                             confidence=100, viral=0, score=0):
+    """Return one of the only two editorial statuses: take_now or reject."""
+    if excluded_only:
+        return "reject", "ИСКЛЮЧИТЬ: ЗАПРЕЩЁННАЯ ТЕМА"
+    if ad_only:
+        return "reject", "ИСКЛЮЧИТЬ: РЕКЛАМА"
+    if help_only:
+        return "reject", "ИСКЛЮЧИТЬ: ПРОСЬБА О ПОМОЩИ"
+    if complaint_viral_signal:
+        return "take_now", "БРАТЬ В РАБОТУ: ЖАЛОБА-СИГНАЛ"
+    if complaint_only:
+        return "reject", "ИСКЛЮЧИТЬ: НЕВИРУСНАЯ ЖАЛОБА"
+    if opinion_only:
+        return "reject", "ИСКЛЮЧИТЬ: МНЕНИЕ"
+    if nonlocal_only:
+        return "reject", "ИСКЛЮЧИТЬ: НЕ ОМСК"
+    if confidence <= 25 and viral >= 60:
+        return "take_now", "БРАТЬ В РАБОТУ: СИГНАЛ"
+    if score >= 45:
+        return "take_now", "БРАТЬ В РАБОТУ"
+    return "reject", "ИСКЛЮЧИТЬ: НИЗКИЙ ПРИОРИТЕТ"
+
+
 def main():
     with INPUT.open(encoding="utf-8") as f:d=json.load(f)
     posts=d if isinstance(d,list) else next((d[k] for k in ("posts","items","data") if isinstance(d.get(k),list)),[])
@@ -346,33 +372,18 @@ def main():
             (viral >= 60 or views >= 5000 or reposts >= 10 or len(ms) >= 3)
         )
 
-        # Порядок принципиален:
-        # 1) реклама — отбрасываем;
-        # 2) помощь — никогда не считаем новостью;
-        # 3) жалоба — либо наблюдаем, либо показываем как непроверенный
-        #    вирусный сигнал;
-        # 4) обычное мнение — отбрасываем.
-        if excluded_only:
-            status,action="reject","ОТБРОСИТЬ: ИСКЛЮЧЁННАЯ ТЕМА"
-        elif ad_only:
-            status,action="reject","ОТБРОСИТЬ: РЕКЛАМА"
-        elif help_only:
-            status,action="watch","НЕ НОВОСТЬ: ПОМОЩЬ"
-        elif complaint_viral_signal:
-            status,action="unconfirmed_signals","ВИРУСНЫЙ СИГНАЛ: ЖАЛОБА"
-        elif complaint_only:
-            status,action="watch","НАБЛЮДАТЬ: ЖАЛОБА"
-        elif opinion_only:
-            status,action="reject","ОТБРОСИТЬ: МНЕНИЕ"
-        elif nonlocal_only:
-            status,action="watch","НАБЛЮДАТЬ: НЕ ОМСК"
-        elif official:
-            status,action=("take_now","БРАТЬ") if score>=62 else ("check","БЫСТРО ПРОВЕРИТЬ")
-        elif conf<=25 and viral>=60:
-            status,action="unconfirmed_signals","ВИРУСНЫЙ СИГНАЛ"
-        else:
-            status="take_now" if score>=68 else "check" if score>=55 else "watch"
-            action={"take_now":"БРАТЬ","check":"ПРОВЕРИТЬ","watch":"НАБЛЮДАТЬ"}[status]
+        status, action = classify_editorial_status(
+            excluded_only=excluded_only,
+            ad_only=ad_only,
+            help_only=help_only,
+            complaint_viral_signal=complaint_viral_signal,
+            complaint_only=complaint_only,
+            opinion_only=opinion_only,
+            nonlocal_only=nonlocal_only,
+            confidence=conf,
+            viral=viral,
+            score=score,
+        )
 
         primary_post = ms[0]["post"] if ms else {}
         primary_url = primary_post.get("url") or primary_post.get("post_url") or primary_post.get("source_url")
@@ -400,13 +411,11 @@ def main():
                "viral_complaint_can_be_signal":True,
                "viral_complaint_threshold":"viral>=60 OR views>=5000 OR reposts>=10 OR posts>=3",
                "help_request_patterns_extended":True,"opinion_patterns_extended":True,"official_signed_orders_detected":True,
-               "nonlocal_cap":"watch"},
+               "editorial_statuses":["take_now","reject"],"nonlocal_cap":"reject"},
       "take_now":[x for x in out if x["status"]=="take_now"],
-      "unconfirmed_signals":[x for x in out if x["status"]=="unconfirmed_signals"],
-      "check":[x for x in out if x["status"]=="check"],"watch":[x for x in out if x["status"]=="watch"],
       "reject":[x for x in out if x["status"]=="reject"],"topics":out}
     OUTPUT.write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding="utf-8")
     console_print(f"Готово: {len(posts)} постов -> {len(out)} тем")
-    console_print(f"БРАТЬ {len(result['take_now'])} | СИГНАЛЫ {len(result['unconfirmed_signals'])} | ПРОВЕРИТЬ {len(result['check'])} | НАБЛЮДАТЬ {len(result['watch'])} | ОТБРОСИТЬ {len(result['reject'])}")
+    console_print(f"В РАБОТУ {len(result['take_now'])} | ИСКЛЮЧИТЬ {len(result['reject'])}")
 
 if __name__=="__main__":main()
