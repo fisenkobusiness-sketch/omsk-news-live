@@ -6,7 +6,7 @@ from zoneinfo import ZoneInfo
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from predictor import predict
-from analysis import classify_editorial_status
+from analysis import classify, classify_editorial_status
 
 OMSK_TZ = ZoneInfo("Asia/Omsk")
 
@@ -184,6 +184,14 @@ class EditorialRankingTests(unittest.TestCase):
         self.assertEqual(item["action"], "ИСКЛЮЧИТЬ")
         self.assertEqual(item["editorial_exclusion_reason"], "below_priority_threshold")
 
+
+    def test_pet_adoption_listing_with_phone_is_not_news(self):
+        result = classify({
+            "text": "Пристройство кота Барсика, звоните 8 913 123-45-67",
+            "source": "Житель Омска",
+        })
+        self.assertEqual(result["content_type"], "help_request")
+        self.assertTrue(result["help_request"])
 
     def test_sports_interview_is_capped_below_priority_threshold(self):
         topic = make_topic(
