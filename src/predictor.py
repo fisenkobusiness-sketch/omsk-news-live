@@ -80,244 +80,135 @@ def stats(t):
 
 
 def predict(t):
-    # Second hard guard: the predictor must never rank yesterday/undated posts.
+    """Rank eligible local stories by audience-interest signals.
+
+    Confidence and workflow status are verification metadata, not popularity
+    bonuses. The output remains one sorted queue; hard exclusions score zero.
+    """
     members = t.get("members", []) or []
     newest_ts = newest_timestamp(members)
     today = datetime.now(OMSK_TZ).date()
-    if newest_ts is None or datetime.fromtimestamp(newest_ts, OMSK_TZ).date() != today:
+
+    def rejected(reason, label):
         return {
             "priority_score": 0,
-            "prediction": "⛔ НЕ БРАТЬ: НЕ СЕГОДНЯ / НЕТ ДАТЫ",
-            "confidence": 0,
-            "verification_required": False,
-            "disclaimer_required": False,
-            "exclusion_reason": "not_today_or_missing_timestamp"
+            "prediction": label,
+            "confidence": float(t.get("confidence", 0) or 0),
+            "verification_required": float(t.get("confidence", 0) or 0) < 50,
+            "disclaimer_required": float(t.get("confidence", 0) or 0) < 50,
+            "eligible": False,
+            "exclusion_reason": reason,
         }
 
-    text = (t.get("text") or "").lower()
+    if newest_ts is None:
+        return rejected("not_today_or_missing_timestamp", "⛔ ИСКЛЮЧЕНО: НЕТ ДАТЫ")
+    if datetime.fromtimestamp(newest_ts, OMSK_TZ).date() != today:
+        return rejected("not_today_or_missing_timestamp", "⛔ ИСКЛЮЧЕНО: НЕ СЕГОДНЯ")
+
+    text = topic_text(t)
     content_type = t.get("content_type", "")
     status = t.get("status", "")
-    viral = float(t.get("viral_score", 0) or 0)
-    editorial = float(t.get("editorial_score", 0) or 0)
     confidence = float(t.get("confidence", 0) or 0)
-    posts = int(t.get("posts", 1) or 1)
+    viral = clamp(float(t.get("viral_score", 0) or 0))
+    editorial = clamp(float(t.get("editorial_score", 0) or 0))
+    posts = int(t.get("posts", len(members) or 1) or 1)
     sources = int(t.get("social_sources", 1) or 1)
-
     views, reposts, likes, comments = stats(t)
 
-    # Жёсткие редакционные исключения.
-    # Они не должны участвовать в прогнозе вообще, даже если
-    # получили огромный охват или много репостов.
-    if has_excluded_topic(t):
-        return {
-            "priority_score": 0,
-            "prediction": "⛔ НЕ БРАТЬ: ИСКЛЮЧЁННАЯ ТЕМА",
-            "confidence": 0,
-            "verification_required": False,
-            "disclaimer_required": False,
-            "exclusion_reason": "excluded_topic"
-        }
-
+    # Apply eligibility filters before any ranking signals.
+    if has_excluded_topic(t) or t.get("excluded_topic"):
+        return rejected("excluded_topic", "⛔ ИСКЛЮЧЕНО: ЗАПРЕЩЁННАЯ ТЕМА")
     if has_promo_pattern(t):
-        return {
-            "priority_score": 0,
-            "prediction": "⛔ НЕ БРАТЬ: ПРОМО",
-            "confidence": 0,
-            "verification_required": False,
-            "disclaimer_required": False,
-            "exclusion_reason": "promotional"
-        }
-
-    # Жёсткий фильтр.
-    if t.get("advertising_detected") or status == "reject":
-        return {
-            "priority_score": 0,
-            "prediction": "⛔ НЕ БРАТЬ",
-            "confidence": 0,
-            "verification_required": False,
-            "disclaimer_required": False
-        }
-
-    # Помощь никогда не конкурирует с новостями.
+        return rejected("promotional", "⛔ ИСКЛЮЧЕНО: ПРОМО")
+    if t.get("advertising_detected") or status == "reject" or content_type == "advertising":
+        return rejected("advertising_or_rejected", "⛔ ИСКЛЮЧЕНО: РЕКЛАМА/ОТКЛОНЕНО")
     if t.get("help_request") or content_type == "help_request":
-        return {
-            "priority_score": 0,
-            "prediction": "⚪ НЕ НОВОСТЬ: ПОМОЩЬ",
-            "confidence": 0,
-            "verification_required": False,
-            "disclaimer_required": False
-        }
+        return rejected("help_request", "⛔ ИСКЛЮЧЕНО: ПРОСЬБА О ПОМОЩИ")
+    if content_type == "opinion" or t.get("opinion_detected"):
+        return rejected("opinion", "⛔ ИСКЛЮЧЕНО: МНЕНИЕ")
 
-    # Жалобы — отдельный поток.
-    if content_type == "complaint" or t.get("source_type") == "complaint":
-        signal = viral * 0.20
-        signal += min(100, views / 50) * 0.30
-        signal += min(100, comments * 5) * 0.25
-        signal += min(100, reposts * 10) * 0.25
-
-        if views >= 5000:
-            signal += 15
-        if comments >= 10:
-            signal += 10
-        if reposts >= 10:
-            signal += 10
-        if posts >= 3 or sources >= 3:
-            signal += 10
-
-        signal = clamp(signal)
-
-        return {
-            "priority_score": round(signal, 1),
-            "prediction": (
-                "🔥 ВИРУСНЫЙ СИГНАЛ: ЖАЛОБА"
-                if signal >= 55
-                else "🔵 НАБЛЮДАТЬ: ЖАЛОБА"
-            ),
-            "confidence": confidence,
-            "verification_required": confidence < 50,
-            "disclaimer_required": confidence < 50
-        }
-
-    # Базовый ранний прогноз.
-    reach = clamp(views / 50)
-    comment_signal = clamp(comments * 5)
-    repost_signal = clamp(reposts * 10)
-
-    engagement = (
-        (likes + comments * 2 + reposts * 4)
-        / max(views, 1)
-        * 1000
-    )
-    engagement = clamp(engagement)
-
-    # Small multi-source confirmation is useful, but wide coverage can mean
-    # the story has already spread. Avoid rewarding saturation as a viral signal.
-    spread = clamp(
-        max(0, posts - 1) * 8 +
-        max(0, sources - 1) * 8
-    )
-
-    # v5.5: сила события отдельно от текущего охвата.
-    text_all = text
-
-    # v5.7: более строгая проверка локальности.
-    nonlocal_words = [
-        "шереметьево", "домодедово", "внуково",
-        "москва", "москов", "санкт-петербург", "петербург",
-        "екатеринбург", "новосибирск", "иркутск", "казань",
-        "краснодар", "ростов-на-дону", "нижний новгород"
-    ]
-    omsk_words = [
-        "омск", "омской", "омич", "омичи", "тара", "таре",
-        "черлак", "маршала жукова", "лермонтова", "карла маркса",
-        "герцена", "дианова", "химиков", "пархоменко"
-    ]
-    explicit_nonlocal = (
-        any(w in text_all for w in nonlocal_words)
-        and not any(w in text_all for w in omsk_words)
-    )
-
-    # v5.7: практическая польза для жителей — даже при небольшом охвате.
-    practical_local = 0
-    practical_pairs = [
-        ("школ", "бпла"),
-        ("забирать детей", "бпла"),
-        ("забрать ребенка", "бпла"),
-        ("департамент образования", "правил"),
-        ("перекрыт", "движени"),
-        ("отоплен", "горячей воды"),
-        ("аварийн", "воды"),
-    ]
-    if any(a in text_all and b in text_all for a, b in practical_pairs):
-        practical_local = 10
-
-    event_strength = 0
-    event_rules = [
-        (["погиб", "погибла", "погибли", "смерт", "умер"], 18),
-        (["дтп", "столкновен", "сбил", "наезд", "авар"], 14),
-        (["пожар", "горит", "загорел", "возгора"], 12),
-        (["взрыв", "взорвал"], 14),
-        (["пропал", "пропала", "пропали", "разыскива"], 8),
-        (["обруш", "разруш", "крушен"], 14),
-        (["перекрыт", "перекрыли", "закрыт", "закрыли дорогу"], 8),
-        (["массов", "несколько пострадав", "много пострадав"], 8),
-    ]
-    for words, bonus in event_rules:
-        if any(w in text_all for w in words):
-            event_strength = max(event_strength, bonus)
-
-    # v5.6: свежесть и скорость распространения.
     age_minutes = max(0.0, (time.time() - newest_ts) / 60.0)
     age_hours = max(1.0 / 60.0, age_minutes / 60.0)
-    # Freshness distinguishes minute-old items instead of flooring all posts
-    # under 15 minutes to the same age. Score decays to zero after 3 hours.
-    freshness = max(0.0, min(100.0, 100.0 * (1.0 - age_minutes / 180.0)))
-    velocity_now = max(0.0, min(100.0, (views / age_hours) / 100.0))
 
+    # Smooth logarithmic reach prevents large raw view counts from swallowing
+    # all other signals. Interaction rates preserve early signals on small reach.
+    reach = clamp(100.0 * math.log1p(max(0.0, views)) /
+                  __import__("math").log1p(50000.0))
+    engagement_rate = clamp(
+        ((likes + comments * 2 + reposts * 4) / max(views, 1)) * 1000
+    )
+    comment_signal = clamp((comments / max(views, 1)) * 5000)
+    repost_signal = clamp((reposts / max(views, 1)) * 5000)
+    velocity = clamp(
+        100.0 * __import__("math").log1p(max(0.0, views) / age_hours) /
+        __import__("math").log1p(50000.0)
+    )
+    freshness = clamp(100.0 * (1.0 - age_minutes / 180.0))
+
+    # A single interpretable score: audience signals + editorial relevance.
+    # Confidence, official attribution and workflow status do not add popularity.
     score = (
-        editorial * 0.22 +
-        confidence * 0.18 +
-        viral * 0.12 +
-        reach * 0.12 +
-        comment_signal * 0.10 +
-        repost_signal * 0.10 +
-        engagement * 0.06 +
-        spread * 0.05
-        + event_strength
-        + freshness * 0.05
-        + velocity_now * 0.05
-        + (practical_local if not explicit_nonlocal else 0)
+        editorial * 0.22
+        + viral * 0.20
+        + reach * 0.12
+        + engagement_rate * 0.14
+        + comment_signal * 0.10
+        + repost_signal * 0.10
+        + velocity * 0.08
+        + freshness * 0.04
     )
 
-    if status == "take_now":
-        score += 18
-    elif status == "check":
-        score += 8
-
-    if t.get("official_attribution"):
-        score += 8
-
-    # Do not give a large automatic bonus to stories already copied widely.
-    if sources >= 5:
-        score -= 12
-    elif sources >= 3:
-        score -= 6
-    if posts >= 8:
-        score -= 3
-
-    hooks = [
-        "погиб", "погибла", "пожар", "дтп", "авар", "пропал",
-        "задерж", "снес", "запрет", "закро", "отключ",
-        "дети", "мост", "газ", "отоплен", "вода",
-        "омск", "омской", "омич", "омичи"
+    # Event importance and local usefulness provide only a small tie-breaker.
+    event_rules = [
+        (("погиб", "погибла", "погибли", "смерт", "умер"), 7),
+        (("дтп", "столкновен", "сбил", "наезд", "авар"), 5),
+        (("пожар", "горит", "загорел", "возгора"), 4),
+        (("взрыв", "взорвал", "обруш", "разруш", "крушен"), 5),
+        (("пропал", "пропала", "пропали", "разыскива"), 3),
+        (("перекрыт", "перекрыли", "закрыли дорогу"), 2),
     ]
-    score += min(10, sum(1 for x in hooks if x in text) * 2)
+    for words, bonus in event_rules:
+        if any(word in text for word in words):
+            score += bonus
+            break
 
-    if explicit_nonlocal:
-        score = min(score, 20)
-    elif t.get("nonlocal_detected"):
-        score = min(score, 35)
+    local_words = ("омск", "омской", "омич", "омичи", "тара", "черлак", "калачинск")
+    nonlocal_words = (
+        "шереметьево", "домодедово", "внуково", "москва", "москов",
+        "санкт-петербург", "петербург", "екатеринбург", "новосибирск",
+        "иркутск", "казань", "краснодар", "ростов-на-дону", "нижний новгород"
+    )
+    local = any(word in text for word in local_words)
+    explicit_nonlocal = any(word in text for word in nonlocal_words) and not local
+    if local:
+        score += 3
+    if explicit_nonlocal or t.get("nonlocal_detected"):
+        score = min(score, 20 if explicit_nonlocal else 35)
 
-    # Freshness materially affects the final ranking, but cannot replace
-    # editorial relevance, source reliability, or local importance.
-    score = score * 0.78 + freshness * 0.22
     score = round(clamp(score), 1)
-
     if score >= 65:
-        prediction = "🟢 БРАТЬ"
-    elif score >= 50:
-        prediction = "🟡 БРАТЬ ПОСЛЕ БЫСТРОЙ ПРОВЕРКИ"
-    elif score >= 35:
-        prediction = "🔵 НАБЛЮДАТЬ"
+        label = "🟢 ВЫСОКИЙ ПОТЕНЦИАЛ"
+    elif score >= 45:
+        label = "🟡 СРЕДНИЙ ПОТЕНЦИАЛ"
     else:
-        prediction = "⚪ НИЗКИЙ ПРИОРИТЕТ"
+        label = "⚪ НИЗКИЙ ПОТЕНЦИАЛ"
 
     return {
         "priority_score": score,
-        "prediction": prediction,
+        "prediction": label,
         "confidence": confidence,
         "verification_required": confidence < 50,
-        "disclaimer_required": confidence < 50
+        "disclaimer_required": confidence < 50,
+        "eligible": True,
+        "exclusion_reason": None,
+        "signals": {
+            "reach": round(reach, 1),
+            "engagement_rate": round(engagement_rate, 1),
+            "comment_rate": round(comment_signal, 1),
+            "repost_rate": round(repost_signal, 1),
+            "velocity": round(velocity, 1),
+            "freshness": round(freshness, 1),
+        },
     }
 
 
@@ -356,7 +247,7 @@ def main():
             "fresh_serious_events_get_bonus": True,
             "freshness_matters": True,
             "freshness_window_minutes": 180,
-            "freshness_weight": 0.22,
+            "freshness_weight": 0.04,\n            "confidence_is_verification_only": True,\n            "workflow_status_bonus": False,\n            "single_ranked_queue": True,
             "today_only_timezone": "Asia/Omsk",
             "wide_source_saturation_penalty": True,
             "velocity_now_matters": True,
