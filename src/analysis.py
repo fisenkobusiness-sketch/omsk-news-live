@@ -133,22 +133,11 @@ def promotional_ad(t):
 
 def classify(p):
     t=norm(text_of(p)); s=norm(source_of(p))
-    official=not rx(t,OFFICIAL_NEG) and (
-        rx(t,OFFICIAL_POS)
-        or bool(re.search(r"\bобь-иртышск\w*\s+угмс\b", t))
-        or bool(re.search(r"\bугмс\b", t))
-    )
+    # Official attribution is a source note, not a ranking bonus.
+    # A mere mention of a department/police does not make the story official:
+    # require an explicit reporting/attribution phrase from OFFICIAL_POS.
+    official = not rx(t, OFFICIAL_NEG) and rx(t, OFFICIAL_POS)
     media=any(x in s or x in t for x in REGIONAL)
-    official_source_name = bool(re.search(
-        r"\b(обь-иртышск\w*\s+угмс|угмс|прокуратур\w*|следственн\w*\s+комитет|мчс|гибдд|мвд|полици\w*)\b",
-        t, re.I
-    ))
-    # Если прямо сказано, что официального подтверждения нет,
-    # название ведомства само по себе не делает сообщение официальным.
-    if rx(t, OFFICIAL_NEG):
-        official = False
-    else:
-        official = official or official_source_name
 
     nonlocal_hit=has(t,NONLOCAL); omsk_hit=has(t,OMSK)
     explicit_omsk=omsk_hit and nonlocal_hit
@@ -331,7 +320,10 @@ def main():
         early_signal = min(100, velocity * 0.45 + engagement * 0.25 + discussion * 0.15 + spread * 0.15)
         viral = round(min(100, early_signal * 0.65 + hook * 0.35), 1)
         locality=0 if nonlocal_only else 100 if any("омск" in norm(t) for t in texts) else 30
-        editorial=locality*.45+viral*.25+conf*.30
+        # Rank early local signals by locality and audience-interest hook.
+        # Verification confidence is diagnostic only: official confirmation must
+        # neither boost nor suppress a story's editorial/viral priority.
+        editorial=locality*.60+viral*.40
         base_score=round(viral*.5+editorial*.5,1)
         # Exact age uses the newest source post; unlike topic_age_hours, it does not
         # apply a 15-minute floor, so a 5-minute-old post outranks a 20-minute-old one.
@@ -387,7 +379,7 @@ def main():
       "date_filter":"current Omsk calendar day only","clustering_version":"v10.15-freshness",
       "posts_analyzed":len(posts),"topic_count":len(out),
       "rules":{"help_requests_are_not_news":True,"social_reposts_are_not_independent_confirmation":True,
-               "official_attribution_is_high_confidence":True,"official_source_names_detected":True,
+               "official_attribution_is_source_note_only":True,"official_source_name_alone_is_not_confirmation":True,"verification_confidence_does_not_affect_ranking":True,
                "help_requests_override_official_attribution":True,
                "same_event_dedup_before_status":True,
                "complaints_are_separate_from_news":True,
