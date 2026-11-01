@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-02T01:00:02+06:00",
+  "generated_at": "2026-11-02T01:01:23+06:00",
   "version": "predictor-editorial-v2",
   "model": {
     "purpose": "единый редакционный приоритет по независимым признакам",
@@ -50,10 +50,10 @@
   },
   "topics": [
     {
-      "score": 31.5,
+      "score": 31.3,
       "base_score": 13.4,
-      "recency_score": 78.0,
-      "age_minutes": 39.5,
+      "recency_score": 77.3,
+      "age_minutes": 40.9,
       "newest_source_timestamp": 1793557232.0,
       "viral_score": 6.3,
       "editorial_score": 20.5,
@@ -98,7 +98,7 @@
         "https://vk.ru/wall-108620298_868629"
       ],
       "prediction": {
-        "priority_score": 40.7,
+        "priority_score": 40.4,
         "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
         "confidence": 25.0,
         "eligible": true,
@@ -117,7 +117,7 @@
         ],
         "coverage_ratio": 1.0,
         "signals": {
-          "freshness": 78.0,
+          "freshness": 77.3,
           "local_relevance": 30.0,
           "event_impact": 20.0,
           "reach": null,
@@ -134,7 +134,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 31.5,
+          "analyzer_score": 31.3,
           "viral_score": 6.3,
           "editorial_score": 20.5
         }
@@ -144,10 +144,109 @@
       "editorial_exclusion_reason": "below_priority_threshold"
     },
     {
-      "score": 34.6,
+      "score": 34.7,
+      "base_score": 9.6,
+      "recency_score": 99.2,
+      "age_minutes": 1.4,
+      "newest_source_timestamp": 1793559599.0,
+      "viral_score": 0.9,
+      "editorial_score": 18.4,
+      "confidence": 25.0,
+      "posts": 1,
+      "social_sources": 1,
+      "views": 2.0,
+      "reposts": 0.0,
+      "likes": 0.0,
+      "comments": 0.0,
+      "content_type": "social_story",
+      "official_attribution": false,
+      "source_type": "social",
+      "nonlocal_detected": false,
+      "help_request": false,
+      "opinion_detected": false,
+      "advertising_detected": false,
+      "excluded_topic": false,
+      "status": "reject",
+      "action": "ИСКЛЮЧИТЬ",
+      "members": [
+        {
+          "source": "fcava",
+          "id": 2453512,
+          "date": "2026-11-02 00:59:59",
+          "timestamp": 1793559599,
+          "text": "ТОП7 наш 👊",
+          "likes": 0,
+          "comments": 0,
+          "reposts": 0,
+          "views": 2,
+          "url": "https://vk.ru/wall-23766163_2453512",
+          "source_type": "social",
+          "flags": [],
+          "editor_status": "⏳ ДО ОЦЕНКИ РЕЙТИНГА"
+        }
+      ],
+      "text": "ТОП7 наш 👊",
+      "primary_source": "fcava",
+      "primary_url": "https://vk.ru/wall-23766163_2453512",
+      "source_urls": [
+        "https://vk.ru/wall-23766163_2453512"
+      ],
+      "prediction": {
+        "priority_score": 31.3,
+        "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
+        "confidence": 25.0,
+        "eligible": true,
+        "exclusion_reason": null,
+        "score_version": "editorial_v2",
+        "event_class": "general",
+        "complaint_signal": false,
+        "complaint_viral_signal": false,
+        "complaint_bonus": 0.0,
+        "cross_source_count": 1,
+        "metric_coverage": [
+          "comments",
+          "likes",
+          "reposts",
+          "views"
+        ],
+        "coverage_ratio": 1.0,
+        "signals": {
+          "freshness": 99.2,
+          "local_relevance": 30.0,
+          "event_impact": 20.0,
+          "reach": 10.2,
+          "engagement": 0,
+          "discussion": 0,
+          "reshare": 0,
+          "velocity": 41.1,
+          "cross_source_spread": 0
+        },
+        "score_weights": {
+          "freshness": 0.2,
+          "local_relevance": 0.16,
+          "event_impact": 0.16,
+          "reach": 0.1,
+          "engagement": 0.14,
+          "discussion": 0.07,
+          "reshare": 0.05,
+          "velocity": 0.06,
+          "cross_source_spread": 0.06
+        },
+        "legacy_scores": {
+          "analyzer_score": 34.7,
+          "viral_score": 0.9,
+          "editorial_score": 18.4
+        }
+      },
+      "editor_status": "⚪ ИСКЛЮЧИТЬ: НИЗКИЙ ПРИОРИТЕТ",
+      "publication_mode": "below_priority_threshold",
+      "editorial_exclusion_reason": "below_priority_threshold"
+    },
+    {
+      "score": 34.4,
       "base_score": 9.3,
-      "recency_score": 99.6,
-      "age_minutes": 0.7,
+      "recency_score": 98.8,
+      "age_minutes": 2.1,
       "newest_source_timestamp": 1793559558.0,
       "viral_score": 0.5,
       "editorial_score": 18.2,
@@ -192,7 +291,7 @@
         "https://vk.ru/wall-23766163_2453511"
       ],
       "prediction": {
-        "priority_score": 30.8,
+        "priority_score": 30.3,
         "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
         "confidence": 25.0,
         "eligible": true,
@@ -211,14 +310,14 @@
         ],
         "coverage_ratio": 1.0,
         "signals": {
-          "freshness": 99.6,
+          "freshness": 98.8,
           "local_relevance": 30.0,
           "event_impact": 20.0,
           "reach": 6.4,
           "engagement": 0,
           "discussion": 0,
           "reshare": 0,
-          "velocity": 38.0,
+          "velocity": 31.3,
           "cross_source_spread": 0
         },
         "score_weights": {
@@ -233,7 +332,7 @@
           "cross_source_spread": 0.06
         },
         "legacy_scores": {
-          "analyzer_score": 34.6,
+          "analyzer_score": 34.4,
           "viral_score": 0.5,
           "editorial_score": 18.2
         }
