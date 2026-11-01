@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-02T01:50:22+06:00",
+  "generated_at": "2026-11-02T04:03:12+06:00",
   "version": "predictor-editorial-v2",
   "model": {
     "purpose": "единый редакционный приоритет по независимым признакам",
@@ -50,10 +50,104 @@
   },
   "topics": [
     {
-      "score": 36.2,
+      "score": 47.6,
+      "base_score": 27.2,
+      "recency_score": 99.9,
+      "age_minutes": 0.2,
+      "newest_source_timestamp": 1793570578.0,
+      "viral_score": 26.0,
+      "editorial_score": 28.4,
+      "confidence": 25.0,
+      "posts": 1,
+      "social_sources": 1,
+      "views": 0.0,
+      "reposts": 0.0,
+      "likes": 0.0,
+      "comments": 1.0,
+      "content_type": "social_story",
+      "official_attribution": false,
+      "source_type": "social",
+      "nonlocal_detected": false,
+      "help_request": false,
+      "opinion_detected": false,
+      "advertising_detected": false,
+      "excluded_topic": false,
+      "status": "take_now",
+      "action": "БРАТЬ В РАБОТУ",
+      "members": [
+        {
+          "source": "omsk_group",
+          "id": 369302,
+          "date": "2026-11-02 04:02:58",
+          "timestamp": 1793570578,
+          "text": "💼 Удалённая работа с ежедневной оплатой\n\nСейчас открыты свободные места для тех, кто хочет зарабатывать онлайн.\n\n• Доход от 72 000 руб./мес\n• Выплаты каждый день\n• График можно подстроить под себя\n• Бесплатное обучение\n• Работа со смартфона или компьютера\n\nОткликнуться: https://vk.ru/yafreelance",
+          "likes": 0,
+          "comments": 1,
+          "reposts": 0,
+          "views": 0,
+          "url": "https://vk.ru/wall-84350909_369302",
+          "source_type": "social",
+          "flags": [],
+          "editor_status": "⏳ ДО ОЦЕНКИ РЕЙТИНГА"
+        }
+      ],
+      "text": "💼 Удалённая работа с ежедневной оплатой\n\nСейчас открыты свободные места для тех, кто хочет зарабатывать онлайн.\n\n• Доход от 72 000 руб./мес\n• Выплаты каждый день\n• График можно подстроить под себя\n• Бесплатное обучение\n• Работа со смартфона или компьютера\n\nОткликнуться: https://vk.ru/yafreelance",
+      "primary_source": "omsk_group",
+      "primary_url": "https://vk.ru/wall-84350909_369302",
+      "source_urls": [
+        "https://vk.ru/wall-84350909_369302"
+      ],
+      "prediction": {
+        "priority_score": 48.2,
+        "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
+        "confidence": 25.0,
+        "eligible": true,
+        "exclusion_reason": null,
+        "score_version": "editorial_v2",
+        "event_class": "general",
+        "complaint_signal": false,
+        "complaint_viral_signal": false,
+        "complaint_bonus": 0.0,
+        "cross_source_count": 1,
+        "metric_coverage": [
+          "comments",
+          "likes",
+          "reposts",
+          "views"
+        ],
+        "coverage_ratio": 1.0,
+        "signals": {
+          "freshness": 99.9,
+          "local_relevance": 30.0,
+          "event_impact": 20.0,
+          "reach": null,
+          "engagement": null,
+          "discussion": null,
+          "reshare": null,
+          "velocity": null,
+          "cross_source_spread": 0
+        },
+        "score_weights": {
+          "freshness": 0.3448,
+          "local_relevance": 0.2759,
+          "event_impact": 0.2759,
+          "cross_source_spread": 0.1034
+        },
+        "legacy_scores": {
+          "analyzer_score": 47.6,
+          "viral_score": 26.0,
+          "editorial_score": 28.4
+        }
+      },
+      "editor_status": "🟢 В РАБОТУ",
+      "publication_mode": "editorial_work",
+      "editorial_exclusion_reason": null
+    },
+    {
+      "score": 15.5,
       "base_score": 11.4,
-      "recency_score": 99.8,
-      "age_minutes": 0.3,
+      "recency_score": 26.0,
+      "age_minutes": 133.1,
       "newest_source_timestamp": 1793562604.0,
       "viral_score": 3.5,
       "editorial_score": 19.4,
@@ -72,8 +166,8 @@
       "opinion_detected": false,
       "advertising_detected": false,
       "excluded_topic": false,
-      "status": "take_now",
-      "action": "БРАТЬ В РАБОТУ",
+      "status": "reject",
+      "action": "ИСКЛЮЧИТЬ",
       "members": [
         {
           "source": "tipical_omsk",
@@ -98,8 +192,8 @@
         "https://vk.ru/wall-72346659_1531854"
       ],
       "prediction": {
-        "priority_score": 62.0,
-        "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
+        "priority_score": 36.6,
+        "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
         "confidence": 25.0,
         "eligible": true,
         "exclusion_reason": null,
@@ -117,7 +211,7 @@
         ],
         "coverage_ratio": 1.0,
         "signals": {
-          "freshness": 99.8,
+          "freshness": 26.0,
           "local_relevance": 80.0,
           "event_impact": 20.0,
           "reach": null,
@@ -134,20 +228,20 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 36.2,
+          "analyzer_score": 15.5,
           "viral_score": 3.5,
           "editorial_score": 19.4
         }
       },
-      "editor_status": "🟢 В РАБОТУ",
-      "publication_mode": "editorial_work",
-      "editorial_exclusion_reason": null
+      "editor_status": "⚪ ИСКЛЮЧИТЬ: НИЗКИЙ ПРИОРИТЕТ",
+      "publication_mode": "below_priority_threshold",
+      "editorial_exclusion_reason": "below_priority_threshold"
     },
     {
-      "score": 23.7,
+      "score": 9.6,
       "base_score": 13.4,
-      "recency_score": 50.1,
-      "age_minutes": 89.8,
+      "recency_score": 0.0,
+      "age_minutes": 222.7,
       "newest_source_timestamp": 1793557232.0,
       "viral_score": 6.3,
       "editorial_score": 20.5,
@@ -192,7 +286,7 @@
         "https://vk.ru/wall-108620298_868629"
       ],
       "prediction": {
-        "priority_score": 31.1,
+        "priority_score": 13.8,
         "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
         "confidence": 25.0,
         "eligible": true,
@@ -211,7 +305,7 @@
         ],
         "coverage_ratio": 1.0,
         "signals": {
-          "freshness": 50.1,
+          "freshness": 0,
           "local_relevance": 30.0,
           "event_impact": 20.0,
           "reach": null,
@@ -228,7 +322,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 23.7,
+          "analyzer_score": 9.6,
           "viral_score": 6.3,
           "editorial_score": 20.5
         }
@@ -238,13 +332,13 @@
       "editorial_exclusion_reason": "below_priority_threshold"
     },
     {
-      "score": 26.8,
-      "base_score": 9.2,
-      "recency_score": 72.0,
-      "age_minutes": 50.4,
+      "score": 6.6,
+      "base_score": 9.1,
+      "recency_score": 0.0,
+      "age_minutes": 183.2,
       "newest_source_timestamp": 1793559599.0,
-      "viral_score": 0.3,
-      "editorial_score": 18.1,
+      "viral_score": 0.1,
+      "editorial_score": 18.0,
       "confidence": 25.0,
       "posts": 1,
       "social_sources": 1,
@@ -286,7 +380,7 @@
         "https://vk.ru/wall-23766163_2453512"
       ],
       "prediction": {
-        "priority_score": 24.1,
+        "priority_score": 9.3,
         "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
         "confidence": 25.0,
         "eligible": true,
@@ -305,14 +399,14 @@
         ],
         "coverage_ratio": 1.0,
         "signals": {
-          "freshness": 72.0,
+          "freshness": 0,
           "local_relevance": 30.0,
           "event_impact": 20.0,
           "reach": 10.2,
           "engagement": 0,
           "discussion": 0,
           "reshare": 0,
-          "velocity": 11.3,
+          "velocity": 4.7,
           "cross_source_spread": 0
         },
         "score_weights": {
@@ -327,9 +421,9 @@
           "cross_source_spread": 0.06
         },
         "legacy_scores": {
-          "analyzer_score": 26.8,
-          "viral_score": 0.3,
-          "editorial_score": 18.1
+          "analyzer_score": 6.6,
+          "viral_score": 0.1,
+          "editorial_score": 18.0
         }
       },
       "editor_status": "⚪ ИСКЛЮЧИТЬ: НИЗКИЙ ПРИОРИТЕТ",
@@ -337,12 +431,12 @@
       "editorial_exclusion_reason": "below_priority_threshold"
     },
     {
-      "score": 26.6,
-      "base_score": 9.1,
-      "recency_score": 71.6,
-      "age_minutes": 51.1,
+      "score": 6.5,
+      "base_score": 9.0,
+      "recency_score": 0.0,
+      "age_minutes": 183.9,
       "newest_source_timestamp": 1793559558.0,
-      "viral_score": 0.1,
+      "viral_score": 0.0,
       "editorial_score": 18.0,
       "confidence": 25.0,
       "posts": 1,
@@ -385,7 +479,7 @@
         "https://vk.ru/wall-23766163_2453511"
       ],
       "prediction": {
-        "priority_score": 23.4,
+        "priority_score": 8.8,
         "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
         "confidence": 25.0,
         "eligible": true,
@@ -404,14 +498,14 @@
         ],
         "coverage_ratio": 1.0,
         "signals": {
-          "freshness": 71.6,
+          "freshness": 0,
           "local_relevance": 30.0,
           "event_impact": 20.0,
           "reach": 6.4,
           "engagement": 0,
           "discussion": 0,
           "reshare": 0,
-          "velocity": 7.2,
+          "velocity": 2.6,
           "cross_source_spread": 0
         },
         "score_weights": {
@@ -426,8 +520,8 @@
           "cross_source_spread": 0.06
         },
         "legacy_scores": {
-          "analyzer_score": 26.6,
-          "viral_score": 0.1,
+          "analyzer_score": 6.5,
+          "viral_score": 0.0,
           "editorial_score": 18.0
         }
       },
