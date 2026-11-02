@@ -45,7 +45,7 @@ LOG_FILE = RUNTIME_DIR / "live_monitor.log"
 ANALYZER = SRC_DIR / "analysis.py"
 PREDICTOR = SRC_DIR / "predictor.py"
 
-POLL_SECONDS = 30
+POLL_SECONDS = 300
 EXTERNAL_POLL_SECONDS = 300
 POSTS_PER_GROUP = 100
 MAX_VK_WORKERS = 8
@@ -436,9 +436,10 @@ def main():
 
     first_cycle = True
     cycle_no = 0
-    last_external_poll = 0.0
+    last_external_poll = time.monotonic() - EXTERNAL_POLL_SECONDS
 
     while True:
+        cycle_started = time.monotonic()
         try:
             cycle_no += 1
             log(f"Цикл #{cycle_no}: опрашиваю VK...")
@@ -483,9 +484,9 @@ def main():
                         new_posts.append(post)
                         seen.add(key)
 
-            if time.time() - last_external_poll >= EXTERNAL_POLL_SECONDS:
-                last_external_poll = time.time()
-                external_posts = fetch_external_posts()
+            if time.monotonic() - last_external_poll >= EXTERNAL_POLL_SECONDS:
+                last_external_poll = time.monotonic()
+                external_posts = fetch_external_posts(log_callback=log)
                 today_date = datetime.now(OMSK_TZ).date()
                 external_today = [
                     post for post in external_posts
@@ -544,19 +545,22 @@ def main():
 
             first_cycle = False
             cycle_status = "завершён НЕПОЛНО" if cycle_incomplete else "завершён"
+            wait_seconds = max(0, round(POLL_SECONDS - (time.monotonic() - cycle_started)))
             log(
                 f"Цикл #{cycle_no}: {cycle_status}. "
                 f"Успешно: {successful_groups}/{len(group_items)}, ошибок: {failed_groups}. "
-                f"Следующий опрос через {POLL_SECONDS} сек."
+                f"Следующий опрос через {wait_seconds} сек."
             )
-            time.sleep(POLL_SECONDS)
+            time.sleep(wait_seconds)
 
         except KeyboardInterrupt:
             log("Монитор остановлен пользователем.")
             break
         except Exception as exc:
             log(f"ОШИБКА: {exc}")
-            time.sleep(POLL_SECONDS)
+            wait_seconds = max(0, round(POLL_SECONDS - (time.monotonic() - cycle_started)))
+            log(f"Повторный цикл через {wait_seconds} сек.")
+            time.sleep(wait_seconds)
 
 
 if __name__ == "__main__":

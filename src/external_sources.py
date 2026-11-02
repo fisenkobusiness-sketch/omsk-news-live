@@ -146,8 +146,11 @@ def _media_type(message) -> str | None:
     return "media"
 
 
-def fetch_telegram_posts(channels: dict[str, str], limit: int = 100) -> list[dict[str, Any]]:
+def fetch_telegram_posts(
+    channels: dict[str, str], limit: int = 100, log_callback=None,
+) -> list[dict[str, Any]]:
     """Read recent full text posts from channels available to the logged-in user."""
+    report = log_callback or (lambda message: print(message, flush=True))
     client = _new_telegram_client()
     posts = []
     try:
@@ -159,7 +162,7 @@ def fetch_telegram_posts(channels: dict[str, str], limit: int = 100) -> list[dic
         for username, display_name in channels.items():
             username = str(username).strip().lstrip("@")
             if not re.fullmatch(r"[A-Za-z0-9_]+", username):
-                print(f"Telegram: пропущено неверное имя канала {username!r}.", flush=True)
+                report(f"Telegram: пропущено неверное имя канала {username!r}.")
                 continue
             try:
                 entity = client.get_entity(username)
@@ -186,7 +189,7 @@ def fetch_telegram_posts(channels: dict[str, str], limit: int = 100) -> list[dic
                         "views": None, "likes": None, "comments": None, "reposts": None,
                     })
             except Exception as exc:
-                print(f"Telegram @{username}: {exc}", flush=True)
+                report(f"Telegram @{username}: {exc}")
     finally:
         if client.is_connected():
             client.disconnect()
@@ -244,19 +247,20 @@ def _parse_feed_time(value: str | None) -> int | None:
         return None
 
 
-def fetch_external_posts() -> list[dict[str, Any]]:
+def fetch_external_posts(log_callback=None) -> list[dict[str, Any]]:
     """Fetch Telegram channel history and optional RSS/Atom feeds."""
+    report = log_callback or (lambda message: print(message, flush=True))
     config = _source_config()
     channels = dict(DEFAULT_TELEGRAM_CHANNELS)
     channels.update(config.get("telegram_channels", {}) if isinstance(config.get("telegram_channels"), dict) else {})
     feeds = config.get("rss_feeds", [])
     posts = []
     try:
-        telegram_posts = fetch_telegram_posts(channels)
+        telegram_posts = fetch_telegram_posts(channels, log_callback=report)
         posts.extend(telegram_posts)
-        print(f"Telegram MTProto: загружено публикаций {len(telegram_posts)}.", flush=True)
+        report(f"Telegram MTProto: загружено публикаций {len(telegram_posts)}.")
     except Exception as exc:
-        print(f"Telegram MTProto: {exc}", flush=True)
+        report(f"Telegram MTProto: {exc}")
 
     rss_jobs = [(str(feed.get("url")), str(feed.get("name") or ""),
                  lambda f=feed: fetch_rss_feed(str(f["url"]), str(f.get("name") or "") or None))
@@ -269,5 +273,5 @@ def fetch_external_posts() -> list[dict[str, Any]]:
                 try:
                     posts.extend(future.result())
                 except Exception as exc:
-                    print(f"RSS {url}: {exc}", flush=True)
+                    report(f"RSS {url}: {exc}")
     return posts
