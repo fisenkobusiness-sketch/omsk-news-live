@@ -58,14 +58,40 @@ def save_state(state: dict[str, Any]) -> None:
 
 def telegram_call(method: str, token: str, *, params=None, data=None) -> dict[str, Any]:
     url = f"{TELEGRAM_API}/bot{token}/{method}"
-    response = requests.get(url, params=params, timeout=POLL_TIMEOUT + 10) if params is not None else requests.post(
-        url, data=data, timeout=25
-    )
-    response.raise_for_status()
-    result = response.json()
-    if not result.get("ok"):
-        raise RuntimeError(f"Telegram API {method}: {result}")
+    try:
+        response = requests.get(url, params=params, timeout=POLL_TIMEOUT + 10) if params is not None else requests.post(
+            url, data=data, timeout=25
+        )
+    except requests.exceptions.RequestException as exc:
+        safe_error = str(exc).replace(token, "[token скрыт]")
+        raise RuntimeError(f"Telegram API {method}: {safe_error}") from exc
+
+    try:
+        result = response.json()
+    except ValueError:
+        result = {}
+    if not response.ok or not result.get("ok"):
+        description = result.get("description") or response.reason
+        raise RuntimeError(
+            f"Telegram API {method}: HTTP {response.status_code}: {description}"
+        )
     return result
+
+
+def telegram_text_units(value: str) -> int:
+    return len(value.encode("utf-16-le")) // 2
+
+
+def truncate_telegram_text(value: str, max_units: int) -> str:
+    chunks = []
+    used = 0
+    for char in value:
+        units = 2 if ord(char) > 0xFFFF else 1
+        if used + units > max_units:
+            break
+        chunks.append(char)
+        used += units
+    return "".join(chunks)
 
 
 def send_message(token: str, chat_id: str, message: str) -> dict[str, Any]:
@@ -189,13 +215,12 @@ def build_message(topic: dict[str, Any], rank: int) -> tuple[str, dict[str, Any]
         "\n\nСкопируй это сообщение в чат с Codex для готового поста. "
         "После публикации ответь «+» реплаем на это сообщение."
     )
-    body_limit = max(0, 4096 - len(head) - len(tail) - 40)
-    shortened = len(source_text) > body_limit
-    if shortened:
-        source_text = source_text[:max(0, body_limit - 35)].rstrip() + "\n… Текст сокращён."
+    body_limit = max(0, 3500 - telegram_text_units(head) - telegram_text_units(tail) - 40)
+    if telegram_text_units(source_text) > body_limit:
+        source_text = truncate_telegram_text(
+            source_text, max(0, body_limit - telegram_text_units("\n… Текст сокращён.")
+        ).rstrip() + "\n… Текст сокращён."
     message = head + source_text + tail
-    if len(message) > 4096:
-        message = message[:4050].rstrip() + "\n… Текст сокращён.\n" + source_url
     keys, members = topic_keys(topic)
     metadata = {
         "topic_key": keys,
