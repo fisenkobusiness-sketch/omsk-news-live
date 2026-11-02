@@ -150,10 +150,24 @@ def is_actionable(topic: Any) -> bool:
     )
 
 
+def audience_model_score(topic: dict[str, Any]) -> float | None:
+    models = (topic.get("prediction") or {}).get("audience_model_predictions") or {}
+    scores = [
+        value.get("priority_score")
+        for value in models.values()
+        if isinstance(value, dict) and isinstance(value.get("priority_score"), (int, float))
+    ]
+    return max(scores) if scores else None
+
+
 def get_ranked_topics(queue: dict[str, Any]) -> list[dict[str, Any]]:
     topics = [topic for topic in queue.get("topics", []) if is_actionable(topic)]
     topics.sort(
-        key=lambda item: float((item.get("prediction") or {}).get("priority_score") or 0),
+        key=lambda item: (
+            audience_model_score(item) is not None,
+            audience_model_score(item) or 0.0,
+            float((item.get("prediction") or {}).get("priority_score") or 0),
+        ),
         reverse=True,
     )
     return topics
