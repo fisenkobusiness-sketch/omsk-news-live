@@ -55,7 +55,7 @@ VK_REQUEST_RETRIES = 2
 OMSK_TZ = timezone(timedelta(hours=6), name="Asia/Omsk")
 
 GITHUB_REPO = "fisenkobusiness-sketch/omsk-news-live"
-GITHUB_BRANCH = "smm-newmodel-codex"
+GITHUB_BRANCH = "main"
 GITHUB_PATH = "editorial_pool.json"
 
 GROUPS = [
