@@ -124,7 +124,38 @@ def get_vk_token():
 
 def get_github_token():
     env = os.getenv("GITHUB_TOKEN", "").strip()
-    return env or read_secret(GITHUB_TOKEN_FILE, "GitHub token")
+    if env:
+        return env
+
+    # Reuse the same GitHub sign-in as `git push`. Git Credential Manager keeps
+    # the credential in Windows Credential Manager; never print or persist the
+    # returned token in the project. The local token file remains a fallback
+    # for machines that do not have Git Credential Manager configured.
+    try:
+        result = subprocess.run(
+            ["git", "credential", "fill"],
+            input="protocol=https\nhost=github.com\n\n",
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            timeout=15,
+            cwd=PROJECT_ROOT,
+            check=False,
+        )
+        if result.returncode == 0:
+            credentials = {}
+            for line in result.stdout.splitlines():
+                key, separator, value = line.partition("=")
+                if separator:
+                    credentials[key] = value
+            token = credentials.get("password", "").strip()
+            if token:
+                return token
+    except (OSError, subprocess.TimeoutExpired):
+        pass
+
+    return read_secret(GITHUB_TOKEN_FILE, "GitHub token")
 
 
 def vk_call(method, token, **params):
