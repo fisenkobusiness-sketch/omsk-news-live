@@ -238,16 +238,18 @@ def deliver_candidates(token: str, chat_id: str, state: dict[str, Any]) -> None:
         return
 
     topics = get_ranked_topics(queue)
-    sent_topics = set(state["sent_topic_keys"])
-    sent_members = set(state["sent_member_keys"])
+    seen_topics = set(state["sent_topic_keys"])
+    seen_members = set(state["sent_member_keys"])
     fresh = []
     for topic in topics:
         key, members = topic_keys(topic)
-        if not key or key in sent_topics or members.intersection(sent_members):
+        if not key or key in seen_topics or members.intersection(seen_members):
             continue
         if not source_for(topic)[2]:
             continue
         fresh.append(topic)
+        seen_topics.add(key)
+        seen_members.update(members)
 
     if not state["initialized"]:
         # Send only the top three already collected candidates on first start.
