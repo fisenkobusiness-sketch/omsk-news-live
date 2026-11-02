@@ -8,12 +8,12 @@ ROOT = Path(__file__).resolve().parent
 PROCESSES: list[subprocess.Popen] = []
 
 def main() -> int:
-    scripts = [ROOT / "src" / "live_monitor.py", ROOT / "src" / "smm_poiskovik_engagement_tracker.py"]
+    scripts = [ROOT / "src" / "live_monitor.py", ROOT / "src" / "smm_poiskovik_engagement_tracker.py", ROOT / "src" / "editorial_telegram_bot.py"]
     for path in scripts:
         if not path.exists():
             raise SystemExit(f"Не найден файл: {path}")
-    print("Запуск СММ Поисковика: монитор + контроль вовлечённости.", flush=True)
-    print("Для остановки обоих процессов нажмите Ctrl+C.", flush=True)
+    print("Запуск СММ Поисковика: монитор + контроль вовлечённости + редакционный Telegram-бот.", flush=True)
+    print("Для остановки всех процессов нажмите Ctrl+C.", flush=True)
     try:
         for path in scripts:
             PROCESSES.append(subprocess.Popen([sys.executable, str(path)], cwd=ROOT))
@@ -22,11 +22,11 @@ def main() -> int:
             for process in PROCESSES:
                 code = process.poll()
                 if code is not None:
-                    print(f"Процесс {process.args[-1]} завершился с кодом {code}. Завершился один из процессов; останавливаю оба, чтобы запуск оставался согласованным.", flush=True)
+                    print(f"Процесс {process.args[-1]} завершился с кодом {code}. Завершился один из процессов; останавливаю все процессы, чтобы запуск оставался согласованным.", flush=True)
                     return code
             time.sleep(1)
     except KeyboardInterrupt:
-        print("\nОстанавливаю монитор и трекер...", flush=True)
+        print("\nОстанавливаю монитор, трекер и Telegram-бот...", flush=True)
         return 0
     finally:
         for process in PROCESSES:
@@ -37,7 +37,7 @@ def main() -> int:
             if process.poll() is None:
                 try: process.wait(timeout=max(0.1, deadline - time.time()))
                 except subprocess.TimeoutExpired: process.kill()
-        print("Оба процесса остановлены.", flush=True)
+        print("Все процессы остановлены.", flush=True)
 
 if __name__ == "__main__":
     raise SystemExit(main())
