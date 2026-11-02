@@ -8,11 +8,11 @@ ROOT = Path(__file__).resolve().parent
 PROCESSES: list[subprocess.Popen] = []
 
 def main() -> int:
-    scripts = [ROOT / "src" / "live_monitor.py", ROOT / "src" / "smm_poiskovik_engagement_tracker.py"]
+    scripts = [ROOT / "src" / "live_monitor.py", ROOT / "src" / "smm_poiskovik_engagement_tracker.py", ROOT / "src" / "editorial_telegram_bot.py"]
     for path in scripts:
         if not path.exists():
             raise SystemExit(f"Не найден файл: {path}")
-    print("Запуск СММ Поисковика: монитор + контроль вовлечённости.", flush=True)
+    print("Запуск СММ Поисковика: монитор + контроль вовлечённости + редакционный Telegram-бот.", flush=True)
     print("Для остановки обоих процессов нажмите Ctrl+C.", flush=True)
     try:
         for path in scripts:
