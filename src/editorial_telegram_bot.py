@@ -217,9 +217,10 @@ def build_message(topic: dict[str, Any], rank: int) -> tuple[str, dict[str, Any]
     )
     body_limit = max(0, 3500 - telegram_text_units(head) - telegram_text_units(tail) - 40)
     if telegram_text_units(source_text) > body_limit:
+        marker = "\n… Текст сокращён."
         source_text = truncate_telegram_text(
-            source_text, max(0, body_limit - telegram_text_units("\n… Текст сокращён.")
-        ).rstrip() + "\n… Текст сокращён."
+            source_text, max(0, body_limit - telegram_text_units(marker))
+        ).rstrip() + marker
     message = head + source_text + tail
     keys, members = topic_keys(topic)
     metadata = {
