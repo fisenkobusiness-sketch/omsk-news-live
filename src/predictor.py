@@ -45,6 +45,7 @@ def has_promo_pattern(t):
 
 
 from metrics import aggregate_topic_stats, topic_age_hours, newest_timestamp
+from ml_model import features_for_topic, predict as ml_predict
 
 OMSK_TZ = timezone(timedelta(hours=6), name="Asia/Omsk")
 
@@ -233,6 +234,30 @@ def predict(t):
     complaint_bonus = 8.0 if complaint_is_viral else 0.0
     score = round(clamp(score + complaint_bonus), 1)
 
+    # Train on the tracker’s 3-hour engagement checkpoints. Until enough labeled
+    # examples exist, retain the established editorial score as a safe fallback.
+    model_input = dict(t)
+    model_input["prediction"] = {"priority_score": score}
+    model_features = features_for_topic(model_input)
+    predicted_engagement_3h, model_samples_3h, model_scale_3h = ml_predict(model_features, horizon=3)
+    predicted_engagement_1h, model_samples_1h, _ = ml_predict(model_features, horizon=1)
+    audience_predictions = {}
+    for audience_name in ("golos", "zhest"):
+        target_1h, target_n1h, _ = ml_predict(model_features, horizon=1, audience=audience_name)
+        target_3h, target_n3h, target_scale = ml_predict(model_features, horizon=3, audience=audience_name)
+        audience_predictions[audience_name] = {
+            "engagement_1h": round(target_1h, 6) if target_1h is not None else None,
+            "engagement_3h": round(target_3h, 6) if target_3h is not None else None,
+            "priority_score": round(clamp(100.0 * target_3h / max(target_scale, 1e-6)), 1) if target_3h is not None else None,
+            "training_samples_1h": target_n1h,
+            "training_samples_3h": target_n3h,
+        }
+    ml_score = None
+    if predicted_engagement_3h is not None:
+        ml_score = round(clamp(100.0 * predicted_engagement_3h / max(model_scale_3h, 1e-6)), 1)
+        # Shadow mode: collect model predictions for evaluation without changing
+        # editorial decisions until the holdout results are stable by audience.
+
     if score >= 70:
         label = "🟢 ВЫСОКИЙ ПРИОРИТЕТ"
     elif score >= 45:
@@ -252,6 +277,13 @@ def predict(t):
         "eligible": True,
         "exclusion_reason": None,
         "score_version": "editorial_v2",
+        "model_type": "ridge_engagement_v1_shadow" if ml_score is not None or predicted_engagement_1h is not None else "editorial_v2_fallback",
+        "ml_priority_score": ml_score,
+        "training_samples_1h": model_samples_1h,
+        "training_samples_3h": model_samples_3h,
+        "predicted_engagement_1h": round(predicted_engagement_1h, 6) if predicted_engagement_1h is not None else None,
+        "predicted_engagement_3h": round(predicted_engagement_3h, 6) if predicted_engagement_3h is not None else None,
+        "audience_model_predictions": audience_predictions,
         "event_class": event_class,
         "complaint_signal": is_complaint,
         "complaint_viral_signal": complaint_is_viral,
