@@ -308,6 +308,10 @@ def notify_new_editorial_topics():
     if not isinstance(state, dict):
         state = {}
     today = datetime.now(OMSK_TZ).date().isoformat()
+    generated_at = str(queue.get("generated_at") or "")
+    if generated_at[:10] != today:
+        log("Telegram: очередь не обновлена за сегодняшний день; уведомления пропущены.")
+        return
     if state.get("date") != today:
         state = {"date": today, "sent_topic_keys": [], "sent_member_keys": []}
     sent_topics = set(state.get("sent_topic_keys", []))
