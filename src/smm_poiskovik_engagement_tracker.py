@@ -7,6 +7,7 @@ from contextlib import closing, contextmanager
 from pathlib import Path
 from typing import Any
 import requests
+from ml_model import train as train_engagement_model
 
 ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "src"
@@ -340,6 +341,14 @@ def main() -> None:
                     added = store_observations(DB_PATH, key, topics)
                     log(f"{audience['name']}: новых постов {len(fresh)}, сохранено прогнозов {added}.")
             process_due_observations(vk_token)
+            for horizon in (1, 3):
+                model_update = train_engagement_model(horizon=horizon)
+                if model_update.get("trained"):
+                    log(f"ML-модель вовлечённости обновлена: {model_update['samples']} завершённых замеров, горизонт {horizon} ч.")
+                for audience_key in AUDIENCES:
+                    target_update = train_engagement_model(horizon=horizon, audience=audience_key)
+                    if target_update.get("trained"):
+                        log(f"ML-модель {AUDIENCES[audience_key]['name']} обновлена: {target_update['samples']} замеров, горизонт {horizon} ч.")
             current_counts = completed_counts()
             if current_counts != last_counts:
                 log(progress_message(current_counts))
