@@ -185,6 +185,16 @@ def vk_call(method, token, **params):
     return data["response"]
 
 
+def resolve_groups_with_retry(token):
+    """Retry startup lookups after temporary VK network timeouts."""
+    while True:
+        try:
+            return resolve_groups(token)
+        except (requests.exceptions.Timeout, requests.exceptions.ConnectionError) as exc:
+            log(f"VK не отвечает при загрузке списка групп: {exc}. Повтор через 30 секунд.")
+            time.sleep(30)
+
+
 def resolve_groups(token):
     response = vk_call(
         "groups.getById",
@@ -382,7 +392,7 @@ def publish_to_github():
 def main():
     RUNTIME_DIR.mkdir(parents=True, exist_ok=True)
     token = get_vk_token()
-    groups = resolve_groups(token)
+    groups = resolve_groups_with_retry(token)
 
     seen_raw = load_json(SEEN_FILE, [])
     seen = set(seen_raw if isinstance(seen_raw, list) else [])
