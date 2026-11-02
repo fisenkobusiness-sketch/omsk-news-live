@@ -370,7 +370,7 @@ def rejection_reply_title(metadata: dict[str, Any]) -> str:
     title = clean_editorial_text(str(metadata.get("title") or ""))
     if not title:
         return "Без заголовка"
-    match = re.search(r"[.!?…](?=\\s|$)", title)
+    match = re.search(r"[.!?…](?=\s|$)", title)
     if match and match.end() < len(title):
         return title[:match.end()].strip()
     return title[:240].rstrip()
