@@ -25,7 +25,7 @@ POLL_TIMEOUT = 15
 MAX_INITIAL_TOPICS = 3
 OMSK_TZ = timezone(timedelta(hours=6), name="Asia/Omsk")
 GITHUB_REPO = "fisenkobusiness-sketch/omsk-news-live"
-GITHUB_BRANCH = "smm-newmodel-codex"
+GITHUB_BRANCH = "main"
 PUBLISHED_PATH = "PUBLISHED_TOPICS.json"
 TELEGRAM_API = "https://api.telegram.org"
 
