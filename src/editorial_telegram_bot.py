@@ -142,8 +142,14 @@ def is_actionable(topic: Any) -> bool:
     if not isinstance(topic, dict):
         return False
     prediction = topic.get("prediction") or {}
+    newest = topic.get("newest_source_timestamp")
+    try:
+        age_seconds = time.time() - float(newest or 0)
+    except (TypeError, ValueError):
+        return False
     return (
-        topic.get("status") == "take_now"
+        0 <= age_seconds <= 180 * 60
+        and topic.get("status") == "take_now"
         and topic.get("publication_mode") == "editorial_work"
         and prediction.get("eligible") is True
         and float(prediction.get("priority_score") or 0) >= 45
