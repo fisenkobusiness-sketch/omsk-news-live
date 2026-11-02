@@ -366,6 +366,16 @@ def normalize_title(value: str) -> str:
     return " ".join(value.casefold().split())
 
 
+def rejection_reply_title(metadata: dict[str, Any]) -> str:
+    title = clean_editorial_text(str(metadata.get("title") or ""))
+    if not title:
+        return "Без заголовка"
+    match = re.search(r"[.!?…](?=\\s|$)", title)
+    if match and match.end() < len(title):
+        return title[:match.end()].strip()
+    return title[:240].rstrip()
+
+
 def append_topic_status(
     metadata: dict[str, Any], status: str, symbol: str
 ) -> bool:
@@ -506,7 +516,7 @@ def handle_update(update: dict[str, Any], token: str, chat_id: str, state: dict[
     send_message(
         token,
         chat_id,
-        f"🚫 Отметил как rejected и {status} в реестр:\n{metadata['title']}",
+        f"🚫 Отметил как rejected и {status} в реестр:\n{rejection_reply_title(metadata)}",
     )
     return True
 
