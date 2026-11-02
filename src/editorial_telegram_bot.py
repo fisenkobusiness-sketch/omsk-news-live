@@ -412,7 +412,7 @@ def append_topic_status(
         payload = {
             "message": f"Record {status} topic: {title[:60]}",
             "content": base64.b64encode(
-                (json.dumps(registry, ensure_ascii=False, indent=2) + "\\n").encode("utf-8")
+                (json.dumps(registry, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
             ).decode("ascii"),
             "sha": remote["sha"],
             "branch": GITHUB_BRANCH,
@@ -446,8 +446,8 @@ def handle_update(update: dict[str, Any], token: str, chat_id: str, state: dict[
             reply = "✅ Бот подключён к этому чату. Новые подходящие темы будут приходить сюда."
         else:
             reply = (
-                "✅ Бот получил команду. Числовой ID этого чата:\\n"
-                f"{incoming_chat_id}\\n\\n"
+                "✅ Бот получил команду. Числовой ID этого чата:\n"
+                f"{incoming_chat_id}\n\n"
                 "Скопируй это число в файл .secrets/telegram_chat_id.txt "
                 "в папке проекта и перезапусти комбайн."
             )
@@ -485,7 +485,7 @@ def handle_update(update: dict[str, Any], token: str, chat_id: str, state: dict[
         send_message(
             token,
             chat_id,
-            f"✅ Отметил опубликованной и {status} в реестр:\\n{metadata['title']}",
+            f"✅ Отметил опубликованной и {status} в реестр:\n{metadata['title']}",
         )
         return True
 
@@ -506,7 +506,7 @@ def handle_update(update: dict[str, Any], token: str, chat_id: str, state: dict[
     send_message(
         token,
         chat_id,
-        f"🚫 Отметил как rejected и {status} в реестр:\\n{metadata['title']}",
+        f"🚫 Отметил как rejected и {status} в реестр:\n{metadata['title']}",
     )
     return True
 
