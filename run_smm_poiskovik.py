@@ -13,7 +13,7 @@ def main() -> int:
         if not path.exists():
             raise SystemExit(f"Не найден файл: {path}")
     print("Запуск СММ Поисковика: монитор + контроль вовлечённости + редакционный Telegram-бот.", flush=True)
-    print("Для остановки обоих процессов нажмите Ctrl+C.", flush=True)
+    print("Для остановки всех процессов нажмите Ctrl+C.", flush=True)
     try:
         for path in scripts:
             PROCESSES.append(subprocess.Popen([sys.executable, str(path)], cwd=ROOT))
