@@ -27,6 +27,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 import requests
+from external_sources import fetch_external_posts
 
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -44,7 +45,8 @@ LOG_FILE = RUNTIME_DIR / "live_monitor.log"
 ANALYZER = SRC_DIR / "analysis.py"
 PREDICTOR = SRC_DIR / "predictor.py"
 
-POLL_SECONDS = 30
+POLL_SECONDS = 300
+EXTERNAL_POLL_SECONDS = 300
 POSTS_PER_GROUP = 100
 MAX_VK_WORKERS = 8
 VK_REQUEST_TIMEOUT = 15
@@ -122,7 +124,38 @@ def get_vk_token():
 
 def get_github_token():
     env = os.getenv("GITHUB_TOKEN", "").strip()
-    return env or read_secret(GITHUB_TOKEN_FILE, "GitHub token")
+    if env:
+        return env
+
+    # Reuse the same GitHub sign-in as `git push`. Git Credential Manager keeps
+    # the credential in Windows Credential Manager; never print or persist the
+    # returned token in the project. The local token file remains a fallback
+    # for machines that do not have Git Credential Manager configured.
+    try:
+        result = subprocess.run(
+            ["git", "credential", "fill"],
+            input="protocol=https\nhost=github.com\n\n",
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            timeout=15,
+            cwd=PROJECT_ROOT,
+            check=False,
+        )
+        if result.returncode == 0:
+            credentials = {}
+            for line in result.stdout.splitlines():
+                key, separator, value = line.partition("=")
+                if separator:
+                    credentials[key] = value
+            token = credentials.get("password", "").strip()
+            if token:
+                return token
+    except (OSError, subprocess.TimeoutExpired):
+        pass
+
+    return read_secret(GITHUB_TOKEN_FILE, "GitHub token")
 
 
 def vk_call(method, token, **params):
@@ -150,6 +183,16 @@ def vk_call(method, token, **params):
             f"VK API {method}: {data['error'].get('error_msg', data['error'])}"
         )
     return data["response"]
+
+
+def resolve_groups_with_retry(token):
+    """Retry startup lookups after temporary VK network timeouts."""
+    while True:
+        try:
+            return resolve_groups(token)
+        except (requests.exceptions.Timeout, requests.exceptions.ConnectionError) as exc:
+            log(f"VK не отвечает при загрузке списка групп: {exc}. Повтор через 30 секунд.")
+            time.sleep(30)
 
 
 def resolve_groups(token):
@@ -200,21 +243,18 @@ def normalize_post(group_key, item):
     post_id = int(item["id"])
     owner_id = int(item["owner_id"])
     date_ts = int(item.get("date", 0) or 0)
-    likes = int((item.get("likes") or {}).get("count", 0) or 0)
-    comments = int((item.get("comments") or {}).get("count", 0) or 0)
-    reposts = int((item.get("reposts") or {}).get("count", 0) or 0)
-    views = int((item.get("views") or {}).get("count", 0) or 0)
-
     return {
         "source": group_key,
         "id": post_id,
         "date": datetime.fromtimestamp(date_ts, OMSK_TZ).strftime("%Y-%m-%d %H:%M:%S"),
         "timestamp": date_ts,
         "text": item.get("text", "") or "",
-        "likes": likes,
-        "comments": comments,
-        "reposts": reposts,
-        "views": views,
+        # These communities are discovery sources, not our audiences. Their
+        # counters must not enter our engagement model or editorial ranking.
+        "likes": None,
+        "comments": None,
+        "reposts": None,
+        "views": None,
         "url": f"https://vk.ru/wall{owner_id}_{post_id}",
         "source_type": "social",
         "flags": [],
@@ -352,7 +392,7 @@ def publish_to_github():
 def main():
     RUNTIME_DIR.mkdir(parents=True, exist_ok=True)
     token = get_vk_token()
-    groups = resolve_groups(token)
+    groups = resolve_groups_with_retry(token)
 
     seen_raw = load_json(SEEN_FILE, [])
     seen = set(seen_raw if isinstance(seen_raw, list) else [])
@@ -406,8 +446,10 @@ def main():
 
     first_cycle = True
     cycle_no = 0
+    last_external_poll = time.monotonic() - EXTERNAL_POLL_SECONDS
 
     while True:
+        cycle_started = time.monotonic()
         try:
             cycle_no += 1
             log(f"Цикл #{cycle_no}: опрашиваю VK...")
@@ -451,6 +493,23 @@ def main():
                     if key not in seen:
                         new_posts.append(post)
                         seen.add(key)
+
+            if time.monotonic() - last_external_poll >= EXTERNAL_POLL_SECONDS:
+                last_external_poll = time.monotonic()
+                external_posts = fetch_external_posts(log_callback=log)
+                today_date = datetime.now(OMSK_TZ).date()
+                external_today = [
+                    post for post in external_posts
+                    if post.get("timestamp") and datetime.fromtimestamp(int(post["timestamp"]), OMSK_TZ).date() == today_date
+                ]
+                external_new = 0
+                for post in external_today:
+                    key = f"{post['source']}:{post['id']}"
+                    if key not in seen:
+                        new_posts.append(post)
+                        seen.add(key)
+                        external_new += 1
+                log(f"Дополнительные источники: найдено сегодня {len(external_today)}, новых {external_new}.")
 
             if new_posts:
                 today_posts.extend(new_posts)
@@ -496,19 +555,22 @@ def main():
 
             first_cycle = False
             cycle_status = "завершён НЕПОЛНО" if cycle_incomplete else "завершён"
+            wait_seconds = max(0, round(POLL_SECONDS - (time.monotonic() - cycle_started)))
             log(
                 f"Цикл #{cycle_no}: {cycle_status}. "
                 f"Успешно: {successful_groups}/{len(group_items)}, ошибок: {failed_groups}. "
-                f"Следующий опрос через {POLL_SECONDS} сек."
+                f"Следующий опрос через {wait_seconds} сек."
             )
-            time.sleep(POLL_SECONDS)
+            time.sleep(wait_seconds)
 
         except KeyboardInterrupt:
             log("Монитор остановлен пользователем.")
             break
         except Exception as exc:
             log(f"ОШИБКА: {exc}")
-            time.sleep(POLL_SECONDS)
+            wait_seconds = max(0, round(POLL_SECONDS - (time.monotonic() - cycle_started)))
+            log(f"Повторный цикл через {wait_seconds} сек.")
+            time.sleep(wait_seconds)
 
 
 if __name__ == "__main__":
