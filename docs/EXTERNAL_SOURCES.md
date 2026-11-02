@@ -14,6 +14,7 @@ Configured Telegram channels:
 - `@incident_55ru` — Инцидент Омск!
 - `-1001178109741` - Omsk Live (private channel; requires existing Telegram session access)
 - `-1001432513803` - Incident Omsk (private channel; requires existing Telegram session access)
+- `-1001587149148` - O chem govoryat v Omske (private channel; requires existing Telegram session access)
 - `@omsk360` — Омск 360°
 - `@omsktop1` — Омск с огоньком
 - `@chp_55` — ЧП Омск
