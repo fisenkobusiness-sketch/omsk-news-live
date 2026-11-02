@@ -246,9 +246,9 @@ def build_message(topic: dict[str, Any], rank: int) -> tuple[str, dict[str, Any]
     body = " ".join(" ".join(lines).split())
     source_line = f"«{display_source_name(source_name)}»"
     head = f"📰 Кандидат #{rank} · {category_label}"
-    title_block = f"\\n\\n{title}" if title else ""
-    tail = f"\\n\\n{source_line}\\n\\nСсылка: {source_url}"
-    body_prefix = f"{head}{title_block}\\n\\n"
+    title_block = f"\n\n{title}" if title else ""
+    tail = f"\n\n{source_line}\n\nСсылка: {source_url}"
+    body_prefix = f"{head}{title_block}\n\n"
     body_limit = max(
         0,
         3900 - telegram_text_units(body_prefix) - telegram_text_units(tail) - 10,
