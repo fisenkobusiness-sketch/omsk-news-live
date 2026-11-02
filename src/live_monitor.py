@@ -41,6 +41,10 @@ GITHUB_TOKEN_FILE = SECRETS_DIR / "github_token.txt"
 INPUT_FILE = RUNTIME_DIR / "vk_today.json"
 SEEN_FILE = RUNTIME_DIR / "live_seen.json"
 LOG_FILE = RUNTIME_DIR / "live_monitor.log"
+TELEGRAM_TOPIC_STATE_FILE = RUNTIME_DIR / "telegram_topic_notifications.json"
+TELEGRAM_TOKEN_FILE = SECRETS_DIR / "telegram_bot_token.txt"
+TELEGRAM_CHAT_ID_FILE = SECRETS_DIR / "telegram_chat_id.txt"
+PREDICTOR_QUEUE_FILE = RUNTIME_DIR / "predictor_queue.json"
 
 ANALYZER = SRC_DIR / "analysis.py"
 PREDICTOR = SRC_DIR / "predictor.py"
@@ -217,6 +221,142 @@ def save_json(path, data):
     tmp = path.with_suffix(path.suffix + ".tmp")
     tmp.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
     tmp.replace(path)
+
+
+def telegram_value(filename, env_name):
+    value = os.getenv(env_name, "").strip()
+    path = SECRETS_DIR / filename
+    if not value and path.exists():
+        value = path.read_text(encoding="utf-8").strip()
+    return value
+
+
+def actionable_topic(topic):
+    prediction = topic.get("prediction") or {}
+    return (
+        topic.get("status") == "take_now"
+        and topic.get("publication_mode") == "editorial_work"
+        and prediction.get("eligible") is True
+    )
+
+
+def topic_notification_keys(topic):
+    primary_url = str(topic.get("primary_url") or "").strip()
+    text = str(topic.get("text") or "").strip()
+    title = next((line.strip() for line in text.splitlines() if line.strip()), "")
+    topic_key = primary_url or title.casefold()[:240]
+    member_keys = set()
+    for member in topic.get("members", []) or []:
+        if not isinstance(member, dict):
+            continue
+        source = str(member.get("source") or "").strip()
+        post_id = str(member.get("id") or "").strip()
+        url = str(member.get("url") or "").strip()
+        if source and post_id:
+            member_keys.add(f"{source}:{post_id}")
+        elif url:
+            member_keys.add(url)
+    if primary_url:
+        member_keys.add(primary_url)
+    return topic_key, member_keys, title
+
+
+def initialize_telegram_topic_state():
+    if TELEGRAM_TOPIC_STATE_FILE.exists():
+        return
+    queue = load_json(PREDICTOR_QUEUE_FILE, {})
+    topics = queue.get("topics", []) if isinstance(queue, dict) else []
+    topic_keys, member_keys = set(), set()
+    for topic in topics:
+        if actionable_topic(topic):
+            key, members, _ = topic_notification_keys(topic)
+            if key:
+                topic_keys.add(key)
+            member_keys.update(members)
+    state = {
+        "date": datetime.now(OMSK_TZ).date().isoformat(),
+        "sent_topic_keys": sorted(topic_keys),
+        "sent_member_keys": sorted(member_keys),
+    }
+    save_json(TELEGRAM_TOPIC_STATE_FILE, state)
+    log(f"Telegram: первичная настройка уведомлений; существующих тем отмечено без отправки: {len(topic_keys)}.")
+
+
+def send_telegram_message(token, chat_id, message):
+    response = requests.post(
+        f"https://api.telegram.org/bot{token}/sendMessage",
+        data={"chat_id": chat_id, "text": message, "disable_web_page_preview": True},
+        timeout=VK_REQUEST_TIMEOUT,
+    )
+    response.raise_for_status()
+    result = response.json()
+    if not result.get("ok"):
+        raise RuntimeError(f"Telegram API: {result}")
+
+
+def notify_new_editorial_topics():
+    token = telegram_value("telegram_bot_token.txt", "TELEGRAM_BOT_TOKEN")
+    chat_id = telegram_value("telegram_chat_id.txt", "TELEGRAM_CHAT_ID")
+    if not token or not chat_id:
+        return
+
+    queue = load_json(PREDICTOR_QUEUE_FILE, {})
+    if not isinstance(queue, dict):
+        log("Telegram: очередь Predictor имеет неверный формат; уведомления пропущены.")
+        return
+    state = load_json(TELEGRAM_TOPIC_STATE_FILE, {})
+    if not isinstance(state, dict):
+        state = {}
+    today = datetime.now(OMSK_TZ).date().isoformat()
+    if state.get("date") != today:
+        state = {"date": today, "sent_topic_keys": [], "sent_member_keys": []}
+    sent_topics = set(state.get("sent_topic_keys", []))
+    sent_members = set(state.get("sent_member_keys", []))
+
+    for topic in queue.get("topics", []):
+        if not isinstance(topic, dict) or not actionable_topic(topic):
+            continue
+        key, member_keys, title = topic_notification_keys(topic)
+        if not title:
+            continue
+        source_url = str(topic.get("primary_url") or "").strip()
+        if not source_url:
+            urls = topic.get("source_urls") or []
+            source_url = str(urls[0]).strip() if urls else ""
+        if not source_url:
+            log("Telegram: пропускаю тему без прямой ссылки на источник.")
+            continue
+        if key in sent_topics or member_keys.intersection(sent_members):
+            continue
+
+        source_name = ""
+        primary_source = str(topic.get("primary_source") or "")
+        for member in topic.get("members", []) or []:
+            if isinstance(member, dict) and (
+                not primary_source or member.get("source") == primary_source
+            ):
+                source_name = str(member.get("source_name") or "").strip()
+                if source_name:
+                    break
+        message = (
+            "🆕 Новая тема для редактора\n\n"
+            f"{title[:500]}\n\n"
+            + (f"Источник: {source_name}\n" if source_name else "")
+            + source_url
+        )
+        try:
+            send_telegram_message(token, chat_id, message)
+        except Exception as exc:
+            log(f"Telegram: не удалось отправить уведомление: {exc}")
+            continue
+
+        if key:
+            sent_topics.add(key)
+        sent_members.update(member_keys)
+        state["sent_topic_keys"] = sorted(sent_topics)
+        state["sent_member_keys"] = sorted(sent_members)
+        save_json(TELEGRAM_TOPIC_STATE_FILE, state)
+        log(f"Telegram: отправлена новая редакционная тема «{title[:100]}».")
 
 
 def today_start():
@@ -434,6 +574,8 @@ def main():
             save_json(PENDING_FILE, pending)
             log("Восстановление: найдена очередь Predictor за сегодня, поставлена в публикацию.")
 
+    initialize_telegram_topic_state()
+
     first_cycle = True
     cycle_no = 0
     last_external_poll = time.monotonic() - EXTERNAL_POLL_SECONDS
@@ -542,6 +684,8 @@ def main():
                 pending = {"pipeline_pending": False, "publish_pending": False}
                 save_json(PENDING_FILE, pending)
                 log("Analysis + Predictor + GitHub завершены.")
+
+            notify_new_editorial_topics()
 
             first_cycle = False
             cycle_status = "завершён НЕПОЛНО" if cycle_incomplete else "завершён"
