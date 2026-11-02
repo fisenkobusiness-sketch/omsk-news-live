@@ -4,7 +4,7 @@ The live monitor reads public Telegram channel history through MTProto and can a
 
 ## Telegram channels
 
-Default public channels:
+Configured Telegram channels:
 
 - `@omskinform_news` — Омск-информ
 - `@kanal12omsk` — 12 Канал | Новости Омска
@@ -13,6 +13,7 @@ Default public channels:
 - `@omsk_smi` — Новости Омска и Области
 - `@incident_55ru` — Инцидент Омск!
 - `-1001178109741` - Omsk Live (private channel; requires existing Telegram session access)
+- `-1001432513803` - Incident Omsk (private channel; requires existing Telegram session access)
 - `@omsk360` — Омск 360°
 - `@omsktop1` — Омск с огоньком
 - `@chp_55` — ЧП Омск
