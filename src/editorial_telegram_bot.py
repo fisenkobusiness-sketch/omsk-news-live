@@ -356,15 +356,18 @@ def migrate_state(state: Any) -> dict[str, Any]:
     state.setdefault("offset", None)
     state.setdefault("sent_topic_keys", [])
     state.setdefault("sent_member_keys", [])
-    state.setdefault("message_topics", {})
-    state.setdefault(
-        "sent_story_texts",
-        [
+    if not isinstance(state.get("message_topics"), dict):
+        state["message_topics"] = {}
+    if not isinstance(state.get("sent_story_texts"), list):
+        state["sent_story_texts"] = [
             {"title": str(item.get("title") or ""), "story_text": str(item.get("story_text") or "")}
             for item in state["message_topics"].values()
             if isinstance(item, dict) and item.get("title")
-        ],
-    )
+        ]
+    else:
+        state["sent_story_texts"] = [
+            item for item in state["sent_story_texts"] if isinstance(item, dict)
+        ]
     if state["date"] != current_date():
         state["date"] = current_date()
         state["initialized"] = False
