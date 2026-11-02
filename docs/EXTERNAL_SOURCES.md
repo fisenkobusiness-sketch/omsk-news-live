@@ -12,10 +12,9 @@ Default public channels:
 - `@Om1_Omsk` — Om1: Новости Омска и России
 - `@omsk_smi` — Новости Омска и Области
 - `@incident_55ru` — Инцидент Омск!
-- `@omsk_live` — Омск Live
+- `-1001178109741` - Omsk Live (private channel; requires existing Telegram session access)
 - `@omsk360` — Омск 360°
 - `@omsktop1` — Омск с огоньком
-- `@spletniki55` — О чём говорят в Омске
 - `@chp_55` — ЧП Омск
 - `@zhest_omsk_55` — Жесть Омск
 - `@region_omsk55` — Омск | Регион-55
@@ -34,7 +33,7 @@ Default public channels:
 - `@forumomskcom` — Омский форум
 - `@mec_55` — Экономика | 55
 
-The monitor polls every five minutes and reads up to the latest 100 messages from each channel. The current Omsk-day filter and deduplication in `live_monitor.py` decide which messages enter the editorial pipeline.
+The monitor polls every five minutes and reads up to the latest 100 messages from each channel. A numeric `-100...` key works for a private channel available to the authorized Telegram account; message links use Telegram's `t.me/c/...` format. The current Omsk-day filter and deduplication in `live_monitor.py` decide which messages enter the editorial pipeline.
 
 ## One-time setup
 

@@ -32,10 +32,9 @@ DEFAULT_TELEGRAM_CHANNELS = {
     'Om1_Omsk': 'Om1: Новости Омска и России',
     'omsk_smi': 'Новости Омска и Области',
     'incident_55ru': 'Инцидент Омск!',
-    'omsk_live': 'Омск Live',
+    '-1001178109741': 'Омск Live',
     'omsk360': 'Омск 360°',
     'omsktop1': 'Омск с огоньком',
-    'spletniki55': 'О чём говорят в Омске',
     'chp_55': 'ЧП Омск',
     'zhest_omsk_55': 'Жесть Омск',
     'region_omsk55': 'Омск | Регион-55',
@@ -159,13 +158,22 @@ def fetch_telegram_posts(
             raise RuntimeError(
                 "Telegram-сессия ещё не авторизована. Сначала выполните tools/connect_telegram.py."
             )
-        for username, display_name in channels.items():
-            username = str(username).strip().lstrip("@")
-            if not re.fullmatch(r"[A-Za-z0-9_]+", username):
-                report(f"Telegram: пропущено неверное имя канала {username!r}.")
+        for channel_ref, display_name in channels.items():
+            channel_ref = str(channel_ref).strip().lstrip("@")
+            is_channel_id = bool(re.fullmatch(r"(?:-100)?\d+", channel_ref))
+            if not is_channel_id and not re.fullmatch(r"[A-Za-z0-9_]+", channel_ref):
+                report(f"Telegram: invalid channel address {channel_ref!r}.")
                 continue
             try:
-                entity = client.get_entity(username)
+                if is_channel_id:
+                    from telethon.tl.types import PeerChannel
+                    channel_id = int(channel_ref.removeprefix("-100"))
+                    entity = client.get_entity(PeerChannel(channel_id))
+                    source_key = str(channel_id)
+                else:
+                    channel_id = None
+                    entity = client.get_entity(channel_ref)
+                    source_key = channel_ref
                 for message in client.iter_messages(entity, limit=limit, wait_time=1):
                     text = (getattr(message, "message", None) or "").strip()
                     # Media-only posts have no text for the current classifier.
@@ -176,20 +184,24 @@ def fetch_telegram_posts(
                     timestamp = int(message.date.timestamp())
                     local_date = datetime.fromtimestamp(timestamp, OMSK_TZ)
                     posts.append({
-                        "source": f"tg_{username}",
+                        "source": f"tg_{source_key}",
                         "id": int(message.id),
-                        "source_name": str(display_name or username),
+                        "source_name": str(display_name or getattr(entity, "title", None) or channel_ref),
                         "source_type": "telegram",
                         "timestamp": timestamp,
                         "date": local_date.strftime("%Y-%m-%d %H:%M:%S"),
                         "text": text,
-                        "url": f"https://t.me/{username}/{int(message.id)}",
+                        "url": (
+                            f"https://t.me/c/{channel_id}/{int(message.id)}"
+                            if channel_id is not None
+                            else f"https://t.me/{channel_ref}/{int(message.id)}"
+                        ),
                         "media_type": _media_type(message),
                         # External audience counters are not model inputs.
                         "views": None, "likes": None, "comments": None, "reposts": None,
                     })
             except Exception as exc:
-                report(f"Telegram @{username}: {exc}")
+                report(f"Telegram {channel_ref}: {exc}")
     finally:
         if client.is_connected():
             client.disconnect()
