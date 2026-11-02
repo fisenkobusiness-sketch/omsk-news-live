@@ -392,9 +392,25 @@ def append_published_topic(metadata: dict[str, Any]) -> bool:
 def handle_update(update: dict[str, Any], token: str, chat_id: str, state: dict[str, Any]) -> bool:
     message = update.get("message") or {}
     chat = message.get("chat") or {}
-    if str(chat.get("id") or "") != chat_id or chat.get("type") != "private":
+    incoming_chat_id = str(chat.get("id") or "")
+    text = str(message.get("text") or "").strip()
+    if chat.get("type") == "private":
+        command = text.split(maxsplit=1)[0].split("@", 1)[0] if text else ""
+        if command == "/start":
+            if incoming_chat_id == chat_id:
+                reply = "✅ Бот подключён к этому чату. Новые подходящие темы будут приходить сюда."
+            else:
+                reply = (
+                    "✅ Бот получил команду. Числовой ID этого чата:\n"
+                    f"{incoming_chat_id}\n\n"
+                    "Скопируй это число в файл .secrets/telegram_chat_id.txt "
+                    "в папке проекта и перезапусти комбайн."
+                )
+            send_message(token, incoming_chat_id, reply)
+            return True
+    if incoming_chat_id != chat_id or chat.get("type") != "private":
         return True
-    if str(message.get("text") or "").strip() != "+":
+    if text != "+":
         return True
     reply = message.get("reply_to_message") or {}
     metadata = state["message_topics"].get(str(reply.get("message_id") or ""))
