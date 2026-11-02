@@ -5,6 +5,7 @@ from __future__ import annotations
 import base64
 import json
 import os
+import re
 import sys
 import time
 from datetime import datetime, timedelta, timezone
@@ -205,23 +206,60 @@ def get_ranked_topics(queue: dict[str, Any]) -> list[dict[str, Any]]:
     return topics
 
 
+def clean_editorial_text(value: str) -> str:
+    # Remove common Unicode emoji ranges while keeping ordinary punctuation and letters.
+    value = re.sub(
+        "["
+        "\\U0001F000-\\U0001FAFF"
+        "\\U00002600-\\U000027BF"
+        "\\U00002300-\\U000023FF"
+        "\\U0001F1E6-\\U0001F1FF"
+        "\\U0001F3FB-\\U0001F3FF"
+        "\\uFE0E\\uFE0F\\u200D\\u20E3"
+        "]+",
+        "",
+        value,
+    )
+    return " ".join(value.split())
+
+
+def display_source_name(value: str) -> str:
+    name = " ".join(str(value or "Источник").split())
+    if name and name.isupper():
+        # Turn all-caps source labels into readable names, retaining short acronyms.
+        name = " ".join(
+            word if len(word) <= 3 else word.capitalize()
+            for word in name.split()
+        )
+    return name or "Источник"
+
+
 def build_message(topic: dict[str, Any], rank: int) -> tuple[str, dict[str, Any]]:
     source_text, source_name, source_url = source_for(topic)
-    title = topic_title(topic)
+    title = clean_editorial_text(topic_title(topic))
     category_label = audience_label(topic)
-    head = f"📰 Кандидат #{rank} · {category_label}\nИсточник: {source_name}\n\n"
-    tail = (
-        f"\n\nСсылка на исходную публикацию:\n{source_url}"
-        "\n\nСкопируй это сообщение в чат с Codex для готового поста. "
-        "После публикации ответь «+» реплаем на это сообщение."
+
+    lines = [clean_editorial_text(line) for line in source_text.splitlines()]
+    lines = [line for line in lines if line]
+    if title and lines and lines[0].casefold() == title.casefold():
+        lines = lines[1:]
+    body = " ".join(" ".join(lines).split())
+    source_line = f"«{display_source_name(source_name)}»"
+    head = f"📰 Кандидат #{rank} · {category_label}"
+    title_block = f"\\n\\n{title}" if title else ""
+    tail = f"\\n\\n{source_line}\\n\\nСсылка: {source_url}"
+    body_prefix = f"{head}{title_block}\\n\\n"
+    body_limit = max(
+        0,
+        3900 - telegram_text_units(body_prefix) - telegram_text_units(tail) - 10,
     )
-    body_limit = max(0, 3500 - telegram_text_units(head) - telegram_text_units(tail) - 40)
-    if telegram_text_units(source_text) > body_limit:
-        marker = "\n… Текст сокращён."
-        source_text = truncate_telegram_text(
-            source_text, max(0, body_limit - telegram_text_units(marker))
+    if telegram_text_units(body) > body_limit:
+        marker = "…"
+        body = truncate_telegram_text(
+            body, max(0, body_limit - telegram_text_units(marker))
         ).rstrip() + marker
-    message = head + source_text + tail
+    message = body_prefix + body + tail
+
     keys, members = topic_keys(topic)
     metadata = {
         "topic_key": keys,
