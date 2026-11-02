@@ -366,11 +366,15 @@ def normalize_title(value: str) -> str:
     return " ".join(value.casefold().split())
 
 
-def append_published_topic(metadata: dict[str, Any]) -> bool:
+def append_topic_status(
+    metadata: dict[str, Any], status: str, symbol: str
+) -> bool:
     title = str(metadata.get("title") or "").strip()
     if not title:
         raise RuntimeError("У темы отсутствует заголовок.")
     token = get_github_token()
+    date = datetime.now(OMSK_TZ).strftime("%Y-%m-%d")
+    note = f"Пользователь ответил «{symbol}» на сообщение бота; {date}."
     for attempt in range(2):
         _, remote = github_request(
             "GET", f"/contents/{PUBLISHED_PATH}?ref={GITHUB_BRANCH}", token
@@ -388,31 +392,27 @@ def append_published_topic(metadata: dict[str, Any]) -> bool:
             None,
         )
         if existing:
-            existing["status"] = "published"
+            if status == "rejected" and existing.get("status") == "published":
+                raise RuntimeError("Эта тема уже отмечена опубликованной.")
+            existing["status"] = status
             if metadata.get("category"):
                 existing["category"] = metadata["category"]
             existing["source_url"] = url or existing.get("source_url", "")
-            existing["note"] = (
-                f"Пользователь ответил «+» на сообщение бота; "
-                f"{datetime.now(OMSK_TZ).strftime('%Y-%m-%d')}."
-            )
+            existing["note"] = note
         else:
             topics.append(
                 {
                     "title": title,
-                    "status": "published",
+                    "status": status,
                     "category": str(metadata.get("category") or ""),
                     "source_url": url,
-                    "note": (
-                        f"Пользователь ответил «+» на сообщение бота; "
-                        f"{datetime.now(OMSK_TZ).strftime('%Y-%m-%d')}."
-                    ),
+                    "note": note,
                 }
             )
         payload = {
-            "message": f"Record Telegram-published topic: {title[:60]}",
+            "message": f"Record {status} topic: {title[:60]}",
             "content": base64.b64encode(
-                (json.dumps(registry, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
+                (json.dumps(registry, ensure_ascii=False, indent=2) + "\\n").encode("utf-8")
             ).decode("ascii"),
             "sha": remote["sha"],
             "branch": GITHUB_BRANCH,
@@ -424,7 +424,15 @@ def append_published_topic(metadata: dict[str, Any]) -> bool:
             if attempt == 0 and "GitHub API 409" in str(exc):
                 continue
             raise
-    raise RuntimeError("Не удалось обновить реестр опубликованных тем.")
+    raise RuntimeError("Не удалось обновить реестр тем.")
+
+
+def append_published_topic(metadata: dict[str, Any]) -> bool:
+    return append_topic_status(metadata, "published", "+")
+
+
+def append_rejected_topic(metadata: dict[str, Any]) -> bool:
+    return append_topic_status(metadata, "rejected", "-")
 
 
 def handle_update(update: dict[str, Any], token: str, chat_id: str, state: dict[str, Any]) -> bool:
@@ -438,8 +446,8 @@ def handle_update(update: dict[str, Any], token: str, chat_id: str, state: dict[
             reply = "✅ Бот подключён к этому чату. Новые подходящие темы будут приходить сюда."
         else:
             reply = (
-                "✅ Бот получил команду. Числовой ID этого чата:\n"
-                f"{incoming_chat_id}\n\n"
+                "✅ Бот получил команду. Числовой ID этого чата:\\n"
+                f"{incoming_chat_id}\\n\\n"
                 "Скопируй это число в файл .secrets/telegram_chat_id.txt "
                 "в папке проекта и перезапусти комбайн."
             )
@@ -447,7 +455,7 @@ def handle_update(update: dict[str, Any], token: str, chat_id: str, state: dict[
         return True
     if incoming_chat_id != chat_id:
         return True
-    if text != "+":
+    if text not in {"+", "-"}:
         return True
     reply = message.get("reply_to_message") or {}
     message_key = f"{incoming_chat_id}:{reply.get('message_id') or ''}"
@@ -456,21 +464,50 @@ def handle_update(update: dict[str, Any], token: str, chat_id: str, state: dict[
         send_message(
             token,
             chat_id,
-            "Чтобы отметить публикацию, ответь «+» реплаем на сообщение редакционного бота с этой темой.",
+            "Чтобы отметить тему, ответь «+» (опубликовано) или «-» (rejected) "
+            "реплаем на сообщение бота с этой темой.",
         )
         return True
+
+    if text == "+":
+        if metadata.get("published"):
+            send_message(token, chat_id, "✅ Эта тема уже отмечена опубликованной.")
+            return True
+        try:
+            created = append_published_topic(metadata)
+        except Exception as exc:
+            send_message(token, chat_id, f"Не удалось обновить реестр: {str(exc)[:300]}")
+            return False
+        metadata["published"] = True
+        metadata.pop("rejected", None)
+        save_state(state)
+        status = "добавил" if created else "обновил"
+        send_message(
+            token,
+            chat_id,
+            f"✅ Отметил опубликованной и {status} в реестр:\\n{metadata['title']}",
+        )
+        return True
+
     if metadata.get("published"):
-        send_message(token, chat_id, "✅ Эта тема уже отмечена опубликованной.")
+        send_message(token, chat_id, "Эта тема уже отмечена опубликованной.")
+        return True
+    if metadata.get("rejected"):
+        send_message(token, chat_id, "✅ Эта тема уже отмечена как rejected.")
         return True
     try:
-        created = append_published_topic(metadata)
+        created = append_rejected_topic(metadata)
     except Exception as exc:
         send_message(token, chat_id, f"Не удалось обновить реестр: {str(exc)[:300]}")
         return False
-    metadata["published"] = True
+    metadata["rejected"] = True
     save_state(state)
     status = "добавил" if created else "обновил"
-    send_message(token, chat_id, f"✅ Отметил опубликованной и {status} в реестр:\n{metadata['title']}")
+    send_message(
+        token,
+        chat_id,
+        f"🚫 Отметил как rejected и {status} в реестр:\\n{metadata['title']}",
+    )
     return True
 
 
