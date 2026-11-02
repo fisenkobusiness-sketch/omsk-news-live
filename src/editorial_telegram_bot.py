@@ -234,6 +234,70 @@ def display_source_name(value: str) -> str:
     return name or "Источник"
 
 
+STORY_STOPWORDS = {
+    "омск", "област", "регион", "город", "район", "новост", "публикац",
+    "информац", "источник", "сообщ", "заяв", "канал", "виде", "ролик",
+    "сайт", "редакц", "сегодня", "вчера", "сейчас", "полици", "следств",
+    "данн", "автор", "человек", "мужчин", "женщин", "котор", "сам",
+}
+STORY_SUFFIXES = tuple(sorted(
+    (
+        "иями", "ями", "ами", "ирует", "ировать", "оваться",
+        "ого", "его", "ому", "ему", "ыми", "ими", "ая", "яя", "ое", "ее",
+        "ые", "ие", "ую", "юю", "ов", "ев", "ей", "ам", "ям", "ах", "ях",
+        "ом", "ем", "ой", "ий", "ый", "а", "я", "ы", "и", "е", "у", "ю",
+        "ь", "й", "ся", "сь", "ет", "ит", "ют", "ут", "ят", "ать", "ить",
+        "ять", "ешь", "ишь", "лся", "лась", "лись", "ясь",
+    ),
+    key=len,
+    reverse=True,
+))
+
+
+def story_terms(value: str) -> set[str]:
+    value = clean_editorial_text(value).casefold().replace("ё", "е")
+    terms = set()
+    for word in re.findall(r"[a-zа-я0-9]+", value):
+        if word.isdigit():
+            continue
+        term = word
+        for suffix in STORY_SUFFIXES:
+            if term.endswith(suffix) and len(term) - len(suffix) >= 4:
+                term = term[:-len(suffix)]
+                break
+        if len(term) >= 4 and term not in STORY_STOPWORDS:
+            terms.add(term)
+    return terms
+
+
+def story_record_for_topic(topic: dict[str, Any]) -> dict[str, str]:
+    source_text, _, _ = source_for(topic)
+    return {
+        "title": clean_editorial_text(topic_title(topic)),
+        "story_text": clean_editorial_text(source_text)[:900],
+    }
+
+
+def same_story(left: dict[str, Any], right: dict[str, Any]) -> bool:
+    left_title = story_terms(str(left.get("title") or ""))
+    right_title = story_terms(str(right.get("title") or ""))
+    left_text = story_terms(
+        str(left.get("title") or "") + " " + str(left.get("story_text") or "")
+    )
+    right_text = story_terms(
+        str(right.get("title") or "") + " " + str(right.get("story_text") or "")
+    )
+
+    def title_matches_story(title_terms: set[str], story_terms_set: set[str]) -> bool:
+        shared = title_terms & story_terms_set
+        return len(shared) >= 3 and len(shared) / max(1, len(title_terms)) >= 0.4
+
+    return (
+        title_matches_story(left_title, right_text)
+        or title_matches_story(right_title, left_text)
+    )
+
+
 def build_message(topic: dict[str, Any], rank: int) -> tuple[str, dict[str, Any]]:
     source_text, source_name, source_url = source_for(topic)
     title = clean_editorial_text(topic_title(topic))
@@ -267,6 +331,7 @@ def build_message(topic: dict[str, Any], rank: int) -> tuple[str, dict[str, Any]
         "title": title,
         "category": "ГОЛОС" if category_label == "Голос Омска" else "ЖЕСТЬ" if category_label == "Жесть Омска" else "",
         "source_url": source_url,
+        "story_text": clean_editorial_text(source_text)[:900],
     }
     return message, metadata
 
@@ -278,6 +343,7 @@ def initial_state() -> dict[str, Any]:
         "offset": None,
         "sent_topic_keys": [],
         "sent_member_keys": [],
+        "sent_story_texts": [],
         "message_topics": {},
     }
 
@@ -291,11 +357,20 @@ def migrate_state(state: Any) -> dict[str, Any]:
     state.setdefault("sent_topic_keys", [])
     state.setdefault("sent_member_keys", [])
     state.setdefault("message_topics", {})
+    state.setdefault(
+        "sent_story_texts",
+        [
+            {"title": str(item.get("title") or ""), "story_text": str(item.get("story_text") or "")}
+            for item in state["message_topics"].values()
+            if isinstance(item, dict) and item.get("title")
+        ],
+    )
     if state["date"] != current_date():
         state["date"] = current_date()
         state["initialized"] = False
         state["sent_topic_keys"] = []
         state["sent_member_keys"] = []
+        state["sent_story_texts"] = []
     return state
 
 
@@ -312,6 +387,9 @@ def send_candidate(token: str, chat_id: str, topic: dict[str, Any], rank: int, s
     state["message_topics"][f"{chat_id}:{sent['message_id']}"] = metadata
     state["sent_topic_keys"].append(metadata["topic_key"])
     state["sent_member_keys"].extend(metadata["member_keys"])
+    state["sent_story_texts"].append(
+        {"title": metadata["title"], "story_text": metadata["story_text"]}
+    )
     save_state(state)
     return True
 
@@ -324,6 +402,7 @@ def deliver_candidates(token: str, chat_id: str, state: dict[str, Any]) -> None:
     topics = get_ranked_topics(queue)
     seen_topics = set(state["sent_topic_keys"])
     seen_members = set(state["sent_member_keys"])
+    seen_stories = list(state["sent_story_texts"])
     fresh = []
     for topic in topics:
         key, members = topic_keys(topic)
@@ -331,7 +410,11 @@ def deliver_candidates(token: str, chat_id: str, state: dict[str, Any]) -> None:
             continue
         if not source_for(topic)[2]:
             continue
+        story = story_record_for_topic(topic)
+        if any(same_story(story, previous) for previous in seen_stories):
+            continue
         fresh.append(topic)
+        seen_stories.append(story)
         seen_topics.add(key)
         seen_members.update(members)
 
@@ -349,6 +432,7 @@ def deliver_candidates(token: str, chat_id: str, state: dict[str, Any]) -> None:
             if key:
                 state["sent_topic_keys"].append(key)
             state["sent_member_keys"].extend(members)
+            state["sent_story_texts"].append(story_record_for_topic(topic))
         state["initialized"] = True
         save_state(state)
         return
