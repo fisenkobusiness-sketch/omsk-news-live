@@ -373,6 +373,11 @@ def handle_update(update: dict[str, Any], token: str, chat_id: str, state: dict[
     reply = message.get("reply_to_message") or {}
     metadata = state["message_topics"].get(str(reply.get("message_id") or ""))
     if not metadata:
+        send_message(
+            token,
+            chat_id,
+            "Чтобы отметить публикацию, ответь «+» реплаем на сообщение редакционного бота с этой темой.",
+        )
         return True
     if metadata.get("published"):
         send_message(token, chat_id, "✅ Эта тема уже отмечена опубликованной.")
