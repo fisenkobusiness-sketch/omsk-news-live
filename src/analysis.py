@@ -137,7 +137,7 @@ def classify(p):
     # A mere mention of a department/police does not make the story official:
     # require an explicit reporting/attribution phrase from OFFICIAL_POS.
     official = not rx(t, OFFICIAL_NEG) and rx(t, OFFICIAL_POS)
-    media=any(x in s or x in t for x in REGIONAL)
+    media=p.get("source_type") in ("regional_media","telegram") or any(x in s or x in t for x in REGIONAL)
 
     nonlocal_hit=has(t,NONLOCAL); omsk_hit=has(t,OMSK)
     explicit_omsk=omsk_hit and nonlocal_hit
@@ -240,6 +240,13 @@ def main():
     with INPUT.open(encoding="utf-8") as f:d=json.load(f)
     posts=d if isinstance(d,list) else next((d[k] for k in ("posts","items","data") if isinstance(d.get(k),list)),[])
     posts = [clean_legacy_metadata(post) for post in posts if isinstance(post, dict)]
+    # These posts are discovery candidates from third-party sources. Their
+    # current counters describe somebody else's audience and must not influence
+    # either editorial scoring or the ML model. Clear them here as a second
+    # guard for old queues and imported files that still contain counters.
+    for post in posts:
+        for key in ("views", "likes", "comments", "reposts"):
+            post[key] = None
     # Hard guard: only source posts published on the current Omsk calendar day.
     today = datetime.now(OMSK_TZ).date()
     before_today_filter = len(posts)

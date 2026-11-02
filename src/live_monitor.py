@@ -27,6 +27,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 import requests
+from external_sources import fetch_external_posts
 
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -45,6 +46,7 @@ ANALYZER = SRC_DIR / "analysis.py"
 PREDICTOR = SRC_DIR / "predictor.py"
 
 POLL_SECONDS = 30
+EXTERNAL_POLL_SECONDS = 300
 POSTS_PER_GROUP = 100
 MAX_VK_WORKERS = 8
 VK_REQUEST_TIMEOUT = 15
@@ -200,21 +202,18 @@ def normalize_post(group_key, item):
     post_id = int(item["id"])
     owner_id = int(item["owner_id"])
     date_ts = int(item.get("date", 0) or 0)
-    likes = int((item.get("likes") or {}).get("count", 0) or 0)
-    comments = int((item.get("comments") or {}).get("count", 0) or 0)
-    reposts = int((item.get("reposts") or {}).get("count", 0) or 0)
-    views = int((item.get("views") or {}).get("count", 0) or 0)
-
     return {
         "source": group_key,
         "id": post_id,
         "date": datetime.fromtimestamp(date_ts, OMSK_TZ).strftime("%Y-%m-%d %H:%M:%S"),
         "timestamp": date_ts,
         "text": item.get("text", "") or "",
-        "likes": likes,
-        "comments": comments,
-        "reposts": reposts,
-        "views": views,
+        # These communities are discovery sources, not our audiences. Their
+        # counters must not enter our engagement model or editorial ranking.
+        "likes": None,
+        "comments": None,
+        "reposts": None,
+        "views": None,
         "url": f"https://vk.ru/wall{owner_id}_{post_id}",
         "source_type": "social",
         "flags": [],
@@ -406,6 +405,7 @@ def main():
 
     first_cycle = True
     cycle_no = 0
+    last_external_poll = 0.0
 
     while True:
         try:
@@ -451,6 +451,23 @@ def main():
                     if key not in seen:
                         new_posts.append(post)
                         seen.add(key)
+
+            if time.time() - last_external_poll >= EXTERNAL_POLL_SECONDS:
+                last_external_poll = time.time()
+                external_posts = fetch_external_posts()
+                today_date = datetime.now(OMSK_TZ).date()
+                external_today = [
+                    post for post in external_posts
+                    if post.get("timestamp") and datetime.fromtimestamp(int(post["timestamp"]), OMSK_TZ).date() == today_date
+                ]
+                external_new = 0
+                for post in external_today:
+                    key = f"{post['source']}:{post['id']}"
+                    if key not in seen:
+                        new_posts.append(post)
+                        seen.add(key)
+                        external_new += 1
+                log(f"Дополнительные источники: найдено сегодня {len(external_today)}, новых {external_new}.")
 
             if new_posts:
                 today_posts.extend(new_posts)
