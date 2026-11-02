@@ -34,7 +34,7 @@
 
 `VK → runtime/vk_today.json → src/analysis.py → runtime/editor_queue.json → src/predictor.py → runtime/predictor_queue.json → editorial_pool.json`
 
-`editorial_pool.json` остаётся в корне намеренно: монитор публикует этот файл как текущий пул кандидатов. `PUBLISHED_TOPICS.json` — отдельный постоянный реестр редакционной истории.
+`editorial_pool.json` остаётся в корне намеренно: монитор публикует этот файл как текущий пул кандидатов в ветку `smm-newmodel-codex`. `PUBLISHED_TOPICS.json` — отдельный постоянный реестр редакционной истории.
 
 ## Проверка после изменений
 
