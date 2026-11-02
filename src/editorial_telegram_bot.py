@@ -309,7 +309,7 @@ def send_candidate(token: str, chat_id: str, topic: dict[str, Any], rank: int, s
     except Exception as exc:
         print(f"[Telegram bot] Не удалось отправить кандидата: {exc}", flush=True)
         return False
-    state["message_topics"][str(sent["message_id"])] = metadata
+    state["message_topics"][f"{chat_id}:{sent['message_id']}"] = metadata
     state["sent_topic_keys"].append(metadata["topic_key"])
     state["sent_member_keys"].extend(metadata["member_keys"])
     save_state(state)
@@ -450,7 +450,8 @@ def handle_update(update: dict[str, Any], token: str, chat_id: str, state: dict[
     if text != "+":
         return True
     reply = message.get("reply_to_message") or {}
-    metadata = state["message_topics"].get(str(reply.get("message_id") or ""))
+    message_key = f"{incoming_chat_id}:{reply.get('message_id') or ''}"
+    metadata = state["message_topics"].get(message_key)
     if not metadata:
         send_message(
             token,
