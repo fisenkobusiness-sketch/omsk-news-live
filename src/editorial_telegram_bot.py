@@ -302,7 +302,7 @@ def first_sentence(value: str) -> str:
     text = clean_editorial_text(value)
     if not text:
         return ""
-    match = re.search(r"^(.+?[.!?…])(?:\\s|$)", text)
+    match = re.search(r"^(.+?[.!?…])(?:\s|$)", text)
     if match:
         return match.group(1).strip()
     shortened = truncate_telegram_text(text, 320).rstrip()
@@ -314,7 +314,7 @@ def build_message(topic: dict[str, Any], rank: int) -> tuple[str, dict[str, Any]
     title = clean_editorial_text(topic_title(topic)) or first_sentence(source_text)
     category_label = audience_label(topic)
 
-    message = f"{title}\\n\\nИсточник: {source_url}" if title else f"Источник: {source_url}"
+    message = f"{title}\n\nИсточник: {source_url}" if title else f"Источник: {source_url}"
 
     keys, members = topic_keys(topic)
     metadata = {
