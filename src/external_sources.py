@@ -51,7 +51,6 @@ DEFAULT_TELEGRAM_CHANNELS = {
     'omskpravda': 'Омская правда',
     'TramplinOmsk': 'Трамплин Медиа',
     'kdomsk': 'Камеры ДПС Омск',
-    'dps155': 'ДПС Омск',
     'forumomskcom': 'Омский форум',
     'mec_55': 'Экономика | 55',
 }
@@ -266,7 +265,13 @@ def fetch_external_posts(log_callback=None) -> list[dict[str, Any]]:
     report = log_callback or (lambda message: print(message, flush=True))
     config = _source_config()
     channels = dict(DEFAULT_TELEGRAM_CHANNELS)
-    channels.update(config.get("telegram_channels", {}) if isinstance(config.get("telegram_channels"), dict) else {})
+    configured_channels = config.get("telegram_channels", {})
+    channels.update(configured_channels if isinstance(configured_channels, dict) else {})
+    # Keep this channel excluded even if it remains in a local runtime config.
+    channels = {
+        channel: name for channel, name in channels.items()
+        if str(channel).strip().lstrip("@").casefold() != "dps155"
+    }
     feeds = config.get("rss_feeds", [])
     posts = []
     try:
