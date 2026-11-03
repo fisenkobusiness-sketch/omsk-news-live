@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-03T13:45:19+06:00",
+  "generated_at": "2026-11-03T13:50:26+06:00",
   "version": "predictor-editorial-v2",
   "model": {
     "purpose": "единый редакционный приоритет по независимым признакам",
@@ -50,10 +50,137 @@
   },
   "topics": [
     {
-      "score": 53.9,
+      "score": 50.6,
+      "base_score": 32.5,
+      "recency_score": 97.2,
+      "age_minutes": 5.1,
+      "newest_source_timestamp": 1793691921.0,
+      "viral_score": 3.5,
+      "editorial_score": 61.4,
+      "confidence": 65.0,
+      "posts": 2,
+      "social_sources": 2,
+      "views": 0.0,
+      "reposts": 0.0,
+      "likes": 0.0,
+      "comments": 0.0,
+      "content_type": "social_story",
+      "official_attribution": false,
+      "source_type": "regional_media",
+      "nonlocal_detected": false,
+      "help_request": false,
+      "opinion_detected": false,
+      "advertising_detected": false,
+      "excluded_topic": false,
+      "status": "take_now",
+      "action": "БРАТЬ В РАБОТУ",
+      "members": [
+        {
+          "source": "tg_zhest_omsk_55",
+          "id": 18871,
+          "source_name": "Жесть Омск",
+          "source_type": "telegram",
+          "timestamp": 1793691921,
+          "date": "2026-11-03 13:45:21",
+          "text": "🔊Студентов омского юридического колледжа эвакуировали\n\nПо словам очевидцев, их попросили отойти на безопасное расстояние. Причины эвакуации неизвестны.\n\n\nБольше ЖЕСТИ публикуем в нашем MAX 🇷🇺\n👇🏻👇🏻👇🏻\nhttps://max.ru/zhest_omsk_55",
+          "url": "https://t.me/zhest_omsk_55/18871",
+          "media_type": "photo",
+          "views": null,
+          "likes": null,
+          "comments": null,
+          "reposts": null
+        },
+        {
+          "source": "tg_gorod55ru",
+          "id": 23566,
+          "source_name": "Город55 | Новости Омска",
+          "source_type": "telegram",
+          "timestamp": 1793687628,
+          "date": "2026-11-03 12:33:48",
+          "text": "В Омске сообщили об эвакуации студентов юридического колледжа.\n\nОб эвакуации написал паблик «Инцидент Омск» со ссылкой на подписчика. По словам очевидца, студентов попросили отойти на безопасное расстояние. На момент сообщения они оставались на улице и ждали разрешения вернуться в здание.\n\nПричины эвакуации пока неизвестны.\n\nФото: «Инцидент Омск»\n\n✍️️ Мы в МАКС",
+          "url": "https://t.me/gorod55ru/23566",
+          "media_type": "photo",
+          "views": null,
+          "likes": null,
+          "comments": null,
+          "reposts": null
+        }
+      ],
+      "text": "🔊Студентов омского юридического колледжа эвакуировали\n\nПо словам очевидцев, их попросили отойти на безопасное расстояние. Причины эвакуации неизвестны.\n\n\nБольше ЖЕСТИ публикуем в нашем MAX 🇷🇺\n👇🏻👇🏻👇🏻\nhttps://max.ru/zhest_omsk_55",
+      "primary_source": "tg_zhest_omsk_55",
+      "primary_url": "https://t.me/zhest_omsk_55/18871",
+      "source_urls": [
+        "https://t.me/zhest_omsk_55/18871",
+        "https://t.me/gorod55ru/23566"
+      ],
+      "prediction": {
+        "priority_score": 83.1,
+        "prediction": "🟢 ВЫСОКИЙ ПРИОРИТЕТ",
+        "confidence": 65.0,
+        "eligible": true,
+        "exclusion_reason": null,
+        "score_version": "editorial_v2",
+        "model_type": "ridge_engagement_v1_shadow",
+        "ml_priority_score": 33.7,
+        "training_samples_1h": 174,
+        "training_samples_3h": 160,
+        "predicted_engagement_1h": 0.007697,
+        "predicted_engagement_3h": 0.005363,
+        "audience_model_predictions": {
+          "golos": {
+            "engagement_1h": 0.008193,
+            "engagement_3h": 0.006967,
+            "priority_score": 32.8,
+            "training_samples_1h": 86,
+            "training_samples_3h": 79
+          },
+          "zhest": {
+            "engagement_1h": 0.006619,
+            "engagement_3h": 0.003465,
+            "priority_score": 28.2,
+            "training_samples_1h": 88,
+            "training_samples_3h": 81
+          }
+        },
+        "event_class": "public_safety",
+        "complaint_signal": false,
+        "complaint_viral_signal": false,
+        "complaint_bonus": 0.0,
+        "cross_source_count": 2,
+        "metric_coverage": [],
+        "coverage_ratio": 0.0,
+        "signals": {
+          "freshness": 97.2,
+          "local_relevance": 80.0,
+          "event_impact": 85.0,
+          "reach": null,
+          "engagement": null,
+          "discussion": null,
+          "reshare": null,
+          "velocity": null,
+          "cross_source_spread": 39.3
+        },
+        "score_weights": {
+          "freshness": 0.3448,
+          "local_relevance": 0.2759,
+          "event_impact": 0.2759,
+          "cross_source_spread": 0.1034
+        },
+        "legacy_scores": {
+          "analyzer_score": 50.6,
+          "viral_score": 3.5,
+          "editorial_score": 61.4
+        }
+      },
+      "editor_status": "🟢 В РАБОТУ",
+      "publication_mode": "editorial_work",
+      "editorial_exclusion_reason": null
+    },
+    {
+      "score": 53.1,
       "base_score": 36.9,
-      "recency_score": 97.5,
-      "age_minutes": 4.4,
+      "recency_score": 94.7,
+      "age_minutes": 9.5,
       "newest_source_timestamp": 1793691654.0,
       "viral_score": 9.8,
       "editorial_score": 63.9,
@@ -322,7 +449,7 @@
         "https://vk.ru/wall-62731567_3706372"
       ],
       "prediction": {
-        "priority_score": 82.6,
+        "priority_score": 81.6,
         "prediction": "🟢 ВЫСОКИЙ ПРИОРИТЕТ",
         "confidence": 43.7,
         "eligible": true,
@@ -358,7 +485,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 97.5,
+          "freshness": 94.7,
           "local_relevance": 80.0,
           "event_impact": 65.0,
           "reach": null,
@@ -375,7 +502,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 53.9,
+          "analyzer_score": 53.1,
           "viral_score": 9.8,
           "editorial_score": 63.9
         }
@@ -385,10 +512,10 @@
       "editorial_exclusion_reason": null
     },
     {
-      "score": 56.5,
+      "score": 55.8,
       "base_score": 39.8,
-      "recency_score": 99.6,
-      "age_minutes": 0.6,
+      "recency_score": 96.8,
+      "age_minutes": 5.8,
       "newest_source_timestamp": 1793691880.0,
       "viral_score": 14.0,
       "editorial_score": 65.6,
@@ -449,7 +576,7 @@
         "https://t.me/chp_55/38153"
       ],
       "prediction": {
-        "priority_score": 75.7,
+        "priority_score": 74.7,
         "prediction": "🟢 ВЫСОКИЙ ПРИОРИТЕТ",
         "confidence": 45.0,
         "eligible": true,
@@ -485,7 +612,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 99.6,
+          "freshness": 96.8,
           "local_relevance": 80.0,
           "event_impact": 55.0,
           "reach": null,
@@ -502,7 +629,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 56.5,
+          "analyzer_score": 55.8,
           "viral_score": 14.0,
           "editorial_score": 65.6
         }
@@ -512,10 +639,10 @@
       "editorial_exclusion_reason": null
     },
     {
-      "score": 44.3,
+      "score": 43.5,
       "base_score": 32.5,
-      "recency_score": 74.7,
-      "age_minutes": 45.6,
+      "recency_score": 71.8,
+      "age_minutes": 50.7,
       "newest_source_timestamp": 1793689183.0,
       "viral_score": 3.5,
       "editorial_score": 61.4,
@@ -576,7 +703,7 @@
         "https://vk.ru/wall-105035379_3357506"
       ],
       "prediction": {
-        "priority_score": 75.3,
+        "priority_score": 74.4,
         "prediction": "🟢 ВЫСОКИЙ ПРИОРИТЕТ",
         "confidence": 45.0,
         "eligible": true,
@@ -612,7 +739,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 74.7,
+          "freshness": 71.8,
           "local_relevance": 80.0,
           "event_impact": 85.0,
           "reach": null,
@@ -629,7 +756,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 44.3,
+          "analyzer_score": 43.5,
           "viral_score": 3.5,
           "editorial_score": 61.4
         }
@@ -639,10 +766,10 @@
       "editorial_exclusion_reason": null
     },
     {
-      "score": 45.4,
+      "score": 44.6,
       "base_score": 36.9,
-      "recency_score": 67.3,
-      "age_minutes": 58.8,
+      "recency_score": 64.5,
+      "age_minutes": 64.0,
       "newest_source_timestamp": 1793688389.0,
       "viral_score": 9.8,
       "editorial_score": 63.9,
@@ -719,7 +846,7 @@
         "https://vk.ru/wall-62832959_3076617"
       ],
       "prediction": {
-        "priority_score": 69.7,
+        "priority_score": 68.8,
         "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
         "confidence": 51.7,
         "eligible": true,
@@ -755,7 +882,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 67.3,
+          "freshness": 64.5,
           "local_relevance": 80.0,
           "event_impact": 65.0,
           "reach": null,
@@ -772,7 +899,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 45.4,
+          "analyzer_score": 44.6,
           "viral_score": 9.8,
           "editorial_score": 63.9
         }
@@ -782,16 +909,16 @@
       "editorial_exclusion_reason": null
     },
     {
-      "score": 40.3,
-      "base_score": 32.5,
-      "recency_score": 60.3,
-      "age_minutes": 71.5,
-      "newest_source_timestamp": 1793687628.0,
-      "viral_score": 3.5,
-      "editorial_score": 61.4,
-      "confidence": 65.0,
-      "posts": 1,
-      "social_sources": 1,
+      "score": 54.5,
+      "base_score": 36.9,
+      "recency_score": 99.8,
+      "age_minutes": 0.4,
+      "newest_source_timestamp": 1793692200.0,
+      "viral_score": 9.8,
+      "editorial_score": 63.9,
+      "confidence": 37.5,
+      "posts": 2,
+      "social_sources": 2,
       "views": 0.0,
       "reposts": 0.0,
       "likes": 0.0,
@@ -808,73 +935,89 @@
       "action": "БРАТЬ В РАБОТУ",
       "members": [
         {
-          "source": "tg_gorod55ru",
-          "id": 23566,
-          "source_name": "Город55 | Новости Омска",
+          "source": "tg_aomsk",
+          "id": 77733,
+          "source_name": "Аварийный Омск",
           "source_type": "telegram",
-          "timestamp": 1793687628,
-          "date": "2026-11-03 12:33:48",
-          "text": "В Омске сообщили об эвакуации студентов юридического колледжа.\n\nОб эвакуации написал паблик «Инцидент Омск» со ссылкой на подписчика. По словам очевидца, студентов попросили отойти на безопасное расстояние. На момент сообщения они оставались на улице и ждали разрешения вернуться в здание.\n\nПричины эвакуации пока неизвестны.\n\nФото: «Инцидент Омск»\n\n✍️️ Мы в МАКС",
-          "url": "https://t.me/gorod55ru/23566",
-          "media_type": "photo",
+          "timestamp": 1793692200,
+          "date": "2026-11-03 13:50:00",
+          "text": "ФНС начала охотиться на россиян, проверяя их соцсети. В Тюменской области налоговики проверяют соцсети кондитеров, электриков и других фрилансеров, кто работает на дому, но не платит налоги. Такие люди часто используют соцсети, чтобы продать свои услуги, это и ищет ФНС.\n\n—\nАварийный Омск ТГ @aomsk и MAX.ru/aomsk",
+          "url": "https://t.me/aomsk/77733",
+          "media_type": null,
           "views": null,
           "likes": null,
           "comments": null,
           "reposts": null
+        },
+        {
+          "source": "aomsk",
+          "id": 3706591,
+          "date": "2026-11-03 13:47:18",
+          "timestamp": 1793692038,
+          "text": "ФНС начала охотиться на россиян, проверяя их соцсети. В Тюменской области налоговики проверяют соцсети кондитеров, электриков и других фрилансеров, кто работает на дому, но не платит налоги. Такие люди часто используют соцсети, чтобы продать свои услуги, это и ищет ФНС.",
+          "likes": null,
+          "comments": null,
+          "reposts": null,
+          "views": null,
+          "url": "https://vk.ru/wall-62731567_3706591",
+          "source_type": "social",
+          "flags": [],
+          "editor_status": "⏳ ДО ОЦЕНКИ РЕЙТИНГА"
         }
       ],
-      "text": "В Омске сообщили об эвакуации студентов юридического колледжа.\n\nОб эвакуации написал паблик «Инцидент Омск» со ссылкой на подписчика. По словам очевидца, студентов попросили отойти на безопасное расстояние. На момент сообщения они оставались на улице и ждали разрешения вернуться в здание.\n\nПричины эвакуации пока неизвестны.\n\nФото: «Инцидент Омск»\n\n✍️️ Мы в МАКС",
-      "primary_source": "tg_gorod55ru",
-      "primary_url": "https://t.me/gorod55ru/23566",
+      "text": "ФНС начала охотиться на россиян, проверяя их соцсети. В Тюменской области налоговики проверяют соцсети кондитеров, электриков и других фрилансеров, кто работает на дому, но не платит налоги. Такие люди часто используют соцсети, чтобы продать свои услуги, это и ищет ФНС.\n\n—\nАварийный Омск ТГ @aomsk и MAX.ru/aomsk",
+      "primary_source": "tg_aomsk",
+      "primary_url": "https://t.me/aomsk/77733",
       "source_urls": [
-        "https://t.me/gorod55ru/23566"
+        "https://t.me/aomsk/77733",
+        "https://vk.ru/wall-62731567_3706591"
       ],
       "prediction": {
-        "priority_score": 66.3,
+        "priority_score": 66.1,
         "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
-        "confidence": 65.0,
+        "confidence": 37.5,
         "eligible": true,
         "exclusion_reason": null,
         "score_version": "editorial_v2",
         "model_type": "ridge_engagement_v1_shadow",
-        "ml_priority_score": 42.3,
+        "ml_priority_score": 29.0,
         "training_samples_1h": 174,
         "training_samples_3h": 160,
-        "predicted_engagement_1h": 0.00848,
-        "predicted_engagement_3h": 0.006725,
+        "predicted_engagement_1h": 0.00542,
+        "predicted_engagement_3h": 0.004617,
         "audience_model_predictions": {
           "golos": {
-            "engagement_1h": 0.010346,
-            "engagement_3h": 0.008814,
-            "priority_score": 41.5,
+            "engagement_1h": 0.00759,
+            "engagement_3h": 0.007512,
+            "priority_score": 35.4,
             "training_samples_1h": 86,
             "training_samples_3h": 79
           },
           "zhest": {
-            "engagement_1h": 0.005639,
-            "engagement_3h": 0.003648,
-            "priority_score": 29.7,
+            "engagement_1h": 0.00471,
+            "engagement_3h": 0.003932,
+            "priority_score": 32.0,
             "training_samples_1h": 88,
             "training_samples_3h": 81
           }
         },
-        "event_class": "public_safety",
+        "event_class": "general",
         "complaint_signal": false,
         "complaint_viral_signal": false,
         "complaint_bonus": 0.0,
-        "cross_source_count": 1,
+        "cross_source_count": 2,
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 60.3,
+          "freshness": 99.8,
           "local_relevance": 80.0,
-          "event_impact": 85.0,
+          "event_impact": 20.0,
           "reach": null,
           "engagement": null,
           "discussion": null,
           "reshare": null,
           "velocity": null,
-          "cross_source_spread": 0
+          "cross_source_spread": 39.3
         },
         "score_weights": {
           "freshness": 0.3448,
@@ -883,9 +1026,9 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 40.3,
-          "viral_score": 3.5,
-          "editorial_score": 61.4
+          "analyzer_score": 54.5,
+          "viral_score": 9.8,
+          "editorial_score": 63.9
         }
       },
       "editor_status": "🟢 В РАБОТУ",
@@ -893,10 +1036,10 @@
       "editorial_exclusion_reason": null
     },
     {
-      "score": 51.1,
+      "score": 50.3,
       "base_score": 32.5,
-      "recency_score": 99.1,
-      "age_minutes": 1.6,
+      "recency_score": 96.2,
+      "age_minutes": 6.8,
       "newest_source_timestamp": 1793691820.0,
       "viral_score": 3.5,
       "editorial_score": 61.4,
@@ -957,7 +1100,7 @@
         "https://t.me/omskinform_news/19035"
       ],
       "prediction": {
-        "priority_score": 65.8,
+        "priority_score": 64.8,
         "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
         "confidence": 65.0,
         "eligible": true,
@@ -993,7 +1136,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 99.1,
+          "freshness": 96.2,
           "local_relevance": 80.0,
           "event_impact": 20.0,
           "reach": null,
@@ -1010,7 +1153,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 51.1,
+          "analyzer_score": 50.3,
           "viral_score": 3.5,
           "editorial_score": 61.4
         }
@@ -1020,10 +1163,10 @@
       "editorial_exclusion_reason": null
     },
     {
-      "score": 50.6,
+      "score": 49.8,
       "base_score": 32.5,
-      "recency_score": 97.0,
-      "age_minutes": 5.3,
+      "recency_score": 94.2,
+      "age_minutes": 10.4,
       "newest_source_timestamp": 1793691600.0,
       "viral_score": 3.5,
       "editorial_score": 61.4,
@@ -1084,7 +1227,7 @@
         "https://t.me/gorod55ru/23565"
       ],
       "prediction": {
-        "priority_score": 65.1,
+        "priority_score": 64.1,
         "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
         "confidence": 45.0,
         "eligible": true,
@@ -1120,7 +1263,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 97.0,
+          "freshness": 94.2,
           "local_relevance": 80.0,
           "event_impact": 20.0,
           "reach": null,
@@ -1137,7 +1280,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 50.6,
+          "analyzer_score": 49.8,
           "viral_score": 3.5,
           "editorial_score": 61.4
         }
@@ -1147,10 +1290,121 @@
       "editorial_exclusion_reason": null
     },
     {
-      "score": 29.6,
+      "score": 51.1,
+      "base_score": 32.5,
+      "recency_score": 99.0,
+      "age_minutes": 1.8,
+      "newest_source_timestamp": 1793692118.0,
+      "viral_score": 3.5,
+      "editorial_score": 61.4,
+      "confidence": 65.0,
+      "posts": 1,
+      "social_sources": 1,
+      "views": 0.0,
+      "reposts": 0.0,
+      "likes": 0.0,
+      "comments": 0.0,
+      "content_type": "news",
+      "official_attribution": false,
+      "source_type": "regional_media",
+      "nonlocal_detected": false,
+      "help_request": false,
+      "opinion_detected": false,
+      "advertising_detected": false,
+      "excluded_topic": false,
+      "status": "take_now",
+      "action": "БРАТЬ В РАБОТУ",
+      "members": [
+        {
+          "source": "tg_Om1_Omsk",
+          "id": 55319,
+          "source_name": "Om1: Новости Омска и России",
+          "source_type": "telegram",
+          "timestamp": 1793692118,
+          "date": "2026-11-03 13:48:38",
+          "text": "У омичей арестовали имущества почти на ₽1 млрд. \n\nЧто в списке - рассказали РБК Омск\n\nhttps://t.me/+ngX94k7YvMVmYzgy",
+          "url": "https://t.me/Om1_Omsk/55319",
+          "media_type": "photo",
+          "views": null,
+          "likes": null,
+          "comments": null,
+          "reposts": null
+        }
+      ],
+      "text": "У омичей арестовали имущества почти на ₽1 млрд. \n\nЧто в списке - рассказали РБК Омск\n\nhttps://t.me/+ngX94k7YvMVmYzgy",
+      "primary_source": "tg_Om1_Omsk",
+      "primary_url": "https://t.me/Om1_Omsk/55319",
+      "source_urls": [
+        "https://t.me/Om1_Omsk/55319"
+      ],
+      "prediction": {
+        "priority_score": 61.7,
+        "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
+        "confidence": 65.0,
+        "eligible": true,
+        "exclusion_reason": null,
+        "score_version": "editorial_v2",
+        "model_type": "ridge_engagement_v1_shadow",
+        "ml_priority_score": 46.9,
+        "training_samples_1h": 174,
+        "training_samples_3h": 160,
+        "predicted_engagement_1h": 0.008383,
+        "predicted_engagement_3h": 0.007462,
+        "audience_model_predictions": {
+          "golos": {
+            "engagement_1h": 0.010811,
+            "engagement_3h": 0.011777,
+            "priority_score": 55.5,
+            "training_samples_1h": 86,
+            "training_samples_3h": 79
+          },
+          "zhest": {
+            "engagement_1h": 0.004355,
+            "engagement_3h": 0.004259,
+            "priority_score": 34.7,
+            "training_samples_1h": 88,
+            "training_samples_3h": 81
+          }
+        },
+        "event_class": "general",
+        "complaint_signal": false,
+        "complaint_viral_signal": false,
+        "complaint_bonus": 0.0,
+        "cross_source_count": 1,
+        "metric_coverage": [],
+        "coverage_ratio": 0.0,
+        "signals": {
+          "freshness": 99.0,
+          "local_relevance": 80.0,
+          "event_impact": 20.0,
+          "reach": null,
+          "engagement": null,
+          "discussion": null,
+          "reshare": null,
+          "velocity": null,
+          "cross_source_spread": 0
+        },
+        "score_weights": {
+          "freshness": 0.3448,
+          "local_relevance": 0.2759,
+          "event_impact": 0.2759,
+          "cross_source_spread": 0.1034
+        },
+        "legacy_scores": {
+          "analyzer_score": 51.1,
+          "viral_score": 3.5,
+          "editorial_score": 61.4
+        }
+      },
+      "editor_status": "🟢 В РАБОТУ",
+      "publication_mode": "editorial_work",
+      "editorial_exclusion_reason": null
+    },
+    {
+      "score": 28.9,
       "base_score": 36.9,
-      "recency_score": 11.0,
-      "age_minutes": 160.1,
+      "recency_score": 8.2,
+      "age_minutes": 165.2,
       "newest_source_timestamp": 1793682312.0,
       "viral_score": 9.8,
       "editorial_score": 63.9,
@@ -1243,7 +1497,7 @@
         "https://t.me/omskkoroche/27455"
       ],
       "prediction": {
-        "priority_score": 60.0,
+        "priority_score": 59.0,
         "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
         "confidence": 65.0,
         "eligible": true,
@@ -1279,7 +1533,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 11.0,
+          "freshness": 8.2,
           "local_relevance": 80.0,
           "event_impact": 100.0,
           "reach": null,
@@ -1296,7 +1550,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 29.6,
+          "analyzer_score": 28.9,
           "viral_score": 9.8,
           "editorial_score": 63.9
         }
@@ -1306,10 +1560,10 @@
       "editorial_exclusion_reason": null
     },
     {
-      "score": 49.6,
+      "score": 48.8,
       "base_score": 32.5,
-      "recency_score": 93.5,
-      "age_minutes": 11.8,
+      "recency_score": 90.6,
+      "age_minutes": 16.9,
       "newest_source_timestamp": 1793691213.0,
       "viral_score": 3.5,
       "editorial_score": 61.4,
@@ -1354,7 +1608,7 @@
         "https://t.me/omsk_smi/32909"
       ],
       "prediction": {
-        "priority_score": 59.8,
+        "priority_score": 58.8,
         "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
         "confidence": 65.0,
         "eligible": true,
@@ -1390,7 +1644,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 93.5,
+          "freshness": 90.6,
           "local_relevance": 80.0,
           "event_impact": 20.0,
           "reach": null,
@@ -1407,7 +1661,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 49.6,
+          "analyzer_score": 48.8,
           "viral_score": 3.5,
           "editorial_score": 61.4
         }
@@ -1417,10 +1671,10 @@
       "editorial_exclusion_reason": null
     },
     {
-      "score": 36.8,
+      "score": 36.0,
       "base_score": 13.4,
-      "recency_score": 96.9,
-      "age_minutes": 5.7,
+      "recency_score": 94.0,
+      "age_minutes": 10.8,
       "newest_source_timestamp": 1793691579.0,
       "viral_score": 6.3,
       "editorial_score": 20.5,
@@ -1465,7 +1719,7 @@
         "https://vk.ru/wall-62731567_3706578"
       ],
       "prediction": {
-        "priority_score": 59.6,
+        "priority_score": 58.6,
         "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
         "confidence": 25.0,
         "eligible": true,
@@ -1501,7 +1755,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 96.8,
+          "freshness": 94.0,
           "local_relevance": 30.0,
           "event_impact": 65.0,
           "reach": null,
@@ -1518,7 +1772,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 36.8,
+          "analyzer_score": 36.0,
           "viral_score": 6.3,
           "editorial_score": 20.5
         }
@@ -1528,10 +1782,10 @@
       "editorial_exclusion_reason": null
     },
     {
-      "score": 49.0,
+      "score": 48.2,
       "base_score": 32.5,
-      "recency_score": 91.5,
-      "age_minutes": 15.3,
+      "recency_score": 88.6,
+      "age_minutes": 20.4,
       "newest_source_timestamp": 1793691000.0,
       "viral_score": 3.5,
       "editorial_score": 61.4,
@@ -1576,7 +1830,7 @@
         "https://vk.ru/wall-108620298_868727"
       ],
       "prediction": {
-        "priority_score": 59.1,
+        "priority_score": 58.2,
         "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
         "confidence": 25.0,
         "eligible": true,
@@ -1612,7 +1866,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 91.5,
+          "freshness": 88.6,
           "local_relevance": 80.0,
           "event_impact": 20.0,
           "reach": null,
@@ -1629,7 +1883,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 49.0,
+          "analyzer_score": 48.2,
           "viral_score": 3.5,
           "editorial_score": 61.4
         }
@@ -1639,10 +1893,10 @@
       "editorial_exclusion_reason": null
     },
     {
-      "score": 44.6,
+      "score": 43.8,
       "base_score": 32.5,
-      "recency_score": 75.7,
-      "age_minutes": 43.7,
+      "recency_score": 72.8,
+      "age_minutes": 48.9,
       "newest_source_timestamp": 1793689294.0,
       "viral_score": 3.5,
       "editorial_score": 61.4,
@@ -1703,7 +1957,7 @@
         "https://t.me/omskpravda/39057"
       ],
       "prediction": {
-        "priority_score": 57.8,
+        "priority_score": 56.8,
         "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
         "confidence": 65.0,
         "eligible": true,
@@ -1739,7 +1993,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 75.7,
+          "freshness": 72.8,
           "local_relevance": 80.0,
           "event_impact": 20.0,
           "reach": null,
@@ -1756,7 +2010,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 44.6,
+          "analyzer_score": 43.8,
           "viral_score": 3.5,
           "editorial_score": 61.4
         }
@@ -1766,10 +2020,10 @@
       "editorial_exclusion_reason": null
     },
     {
-      "score": 29.9,
+      "score": 29.1,
       "base_score": 11.4,
-      "recency_score": 77.5,
-      "age_minutes": 40.5,
+      "recency_score": 74.7,
+      "age_minutes": 45.6,
       "newest_source_timestamp": 1793689491.0,
       "viral_score": 3.5,
       "editorial_score": 19.4,
@@ -1814,7 +2068,7 @@
         "https://t.me/incident_55ru/8910"
       ],
       "prediction": {
-        "priority_score": 54.3,
+        "priority_score": 53.3,
         "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
         "confidence": 65.0,
         "eligible": true,
@@ -1850,7 +2104,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 77.5,
+          "freshness": 74.7,
           "local_relevance": 80.0,
           "event_impact": 20.0,
           "reach": null,
@@ -1867,7 +2121,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 29.9,
+          "analyzer_score": 29.1,
           "viral_score": 3.5,
           "editorial_score": 19.4
         }
@@ -1877,10 +2131,10 @@
       "editorial_exclusion_reason": null
     },
     {
-      "score": 41.4,
+      "score": 40.6,
       "base_score": 32.5,
-      "recency_score": 64.4,
-      "age_minutes": 64.0,
+      "recency_score": 61.6,
+      "age_minutes": 69.1,
       "newest_source_timestamp": 1793688078.0,
       "viral_score": 3.5,
       "editorial_score": 61.4,
@@ -1941,7 +2195,7 @@
         "https://vk.ru/wall-50738246_3987135"
       ],
       "prediction": {
-        "priority_score": 53.9,
+        "priority_score": 52.9,
         "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
         "confidence": 45.0,
         "eligible": true,
@@ -1977,7 +2231,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 64.4,
+          "freshness": 61.6,
           "local_relevance": 80.0,
           "event_impact": 20.0,
           "reach": null,
@@ -1994,7 +2248,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 41.4,
+          "analyzer_score": 40.6,
           "viral_score": 3.5,
           "editorial_score": 61.4
         }
@@ -2004,10 +2258,10 @@
       "editorial_exclusion_reason": null
     },
     {
-      "score": 44.5,
+      "score": 43.6,
       "base_score": 32.5,
-      "recency_score": 75.2,
-      "age_minutes": 44.6,
+      "recency_score": 72.3,
+      "age_minutes": 49.8,
       "newest_source_timestamp": 1793689240.0,
       "viral_score": 3.5,
       "editorial_score": 61.4,
@@ -2052,7 +2306,7 @@
         "https://t.me/newsomsk/19602"
       ],
       "prediction": {
-        "priority_score": 53.5,
+        "priority_score": 52.5,
         "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
         "confidence": 65.0,
         "eligible": true,
@@ -2088,7 +2342,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 75.2,
+          "freshness": 72.3,
           "local_relevance": 80.0,
           "event_impact": 20.0,
           "reach": null,
@@ -2105,7 +2359,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 44.5,
+          "analyzer_score": 43.6,
           "viral_score": 3.5,
           "editorial_score": 61.4
         }
@@ -2115,10 +2369,10 @@
       "editorial_exclusion_reason": null
     },
     {
-      "score": 44.0,
+      "score": 43.2,
       "base_score": 36.9,
-      "recency_score": 62.2,
-      "age_minutes": 68.1,
+      "recency_score": 59.3,
+      "age_minutes": 73.2,
       "newest_source_timestamp": 1793687833.0,
       "viral_score": 9.8,
       "editorial_score": 63.9,
@@ -2179,7 +2433,7 @@
         "https://vk.ru/wall-62731567_3706512"
       ],
       "prediction": {
-        "priority_score": 53.1,
+        "priority_score": 52.1,
         "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
         "confidence": 45.0,
         "eligible": true,
@@ -2215,7 +2469,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 62.2,
+          "freshness": 59.3,
           "local_relevance": 80.0,
           "event_impact": 20.0,
           "reach": null,
@@ -2232,247 +2486,9 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 44.0,
+          "analyzer_score": 43.2,
           "viral_score": 9.8,
           "editorial_score": 63.9
-        }
-      },
-      "editor_status": "🟢 В РАБОТУ",
-      "publication_mode": "editorial_work",
-      "editorial_exclusion_reason": null
-    },
-    {
-      "score": 43.0,
-      "base_score": 32.5,
-      "recency_score": 70.1,
-      "age_minutes": 53.8,
-      "newest_source_timestamp": 1793688691.0,
-      "viral_score": 3.5,
-      "editorial_score": 61.4,
-      "confidence": 65.0,
-      "posts": 1,
-      "social_sources": 1,
-      "views": 0.0,
-      "reposts": 0.0,
-      "likes": 0.0,
-      "comments": 0.0,
-      "content_type": "news",
-      "official_attribution": false,
-      "source_type": "regional_media",
-      "nonlocal_detected": false,
-      "help_request": false,
-      "opinion_detected": false,
-      "advertising_detected": false,
-      "excluded_topic": false,
-      "status": "take_now",
-      "action": "БРАТЬ В РАБОТУ",
-      "members": [
-        {
-          "source": "tg_omsktop1",
-          "id": 23239,
-          "source_name": "Омск с огоньком",
-          "source_type": "telegram",
-          "timestamp": 1793688691,
-          "date": "2026-11-03 12:51:31",
-          "text": "Мэр Омска пожелал избитой школьнице скорейшего выздоровления \n\nВ лицее № 64 проводится тщательная проверка. Специалисты дадут оценку действиям или бездействию руководства школы.\n\n🔴 Подписаться | Прислать нам новость",
-          "url": "https://t.me/omsktop1/23239",
-          "media_type": null,
-          "views": null,
-          "likes": null,
-          "comments": null,
-          "reposts": null
-        }
-      ],
-      "text": "Мэр Омска пожелал избитой школьнице скорейшего выздоровления \n\nВ лицее № 64 проводится тщательная проверка. Специалисты дадут оценку действиям или бездействию руководства школы.\n\n🔴 Подписаться | Прислать нам новость",
-      "primary_source": "tg_omsktop1",
-      "primary_url": "https://t.me/omsktop1/23239",
-      "source_urls": [
-        "https://t.me/omsktop1/23239"
-      ],
-      "prediction": {
-        "priority_score": 51.8,
-        "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
-        "confidence": 65.0,
-        "eligible": true,
-        "exclusion_reason": null,
-        "score_version": "editorial_v2",
-        "model_type": "ridge_engagement_v1_shadow",
-        "ml_priority_score": 44.6,
-        "training_samples_1h": 174,
-        "training_samples_3h": 160,
-        "predicted_engagement_1h": 0.007717,
-        "predicted_engagement_3h": 0.00709,
-        "audience_model_predictions": {
-          "golos": {
-            "engagement_1h": 0.011858,
-            "engagement_3h": 0.009078,
-            "priority_score": 42.8,
-            "training_samples_1h": 86,
-            "training_samples_3h": 79
-          },
-          "zhest": {
-            "engagement_1h": 0.002401,
-            "engagement_3h": 0.003798,
-            "priority_score": 30.9,
-            "training_samples_1h": 88,
-            "training_samples_3h": 81
-          }
-        },
-        "event_class": "general",
-        "complaint_signal": false,
-        "complaint_viral_signal": false,
-        "complaint_bonus": 0.0,
-        "cross_source_count": 1,
-        "metric_coverage": [],
-        "coverage_ratio": 0.0,
-        "signals": {
-          "freshness": 70.1,
-          "local_relevance": 80.0,
-          "event_impact": 20.0,
-          "reach": null,
-          "engagement": null,
-          "discussion": null,
-          "reshare": null,
-          "velocity": null,
-          "cross_source_spread": 0
-        },
-        "score_weights": {
-          "freshness": 0.3448,
-          "local_relevance": 0.2759,
-          "event_impact": 0.2759,
-          "cross_source_spread": 0.1034
-        },
-        "legacy_scores": {
-          "analyzer_score": 43.0,
-          "viral_score": 3.5,
-          "editorial_score": 61.4
-        }
-      },
-      "editor_status": "🟢 В РАБОТУ",
-      "publication_mode": "editorial_work",
-      "editorial_exclusion_reason": null
-    },
-    {
-      "score": 39.7,
-      "base_score": 32.5,
-      "recency_score": 58.2,
-      "age_minutes": 75.3,
-      "newest_source_timestamp": 1793687400.0,
-      "viral_score": 3.5,
-      "editorial_score": 61.4,
-      "confidence": 45.0,
-      "posts": 2,
-      "social_sources": 2,
-      "views": 0.0,
-      "reposts": 0.0,
-      "likes": 0.0,
-      "comments": 0.0,
-      "content_type": "social_story",
-      "official_attribution": false,
-      "source_type": "social",
-      "nonlocal_detected": false,
-      "help_request": false,
-      "opinion_detected": false,
-      "advertising_detected": false,
-      "excluded_topic": false,
-      "status": "take_now",
-      "action": "БРАТЬ В РАБОТУ",
-      "members": [
-        {
-          "source": "news_gorod55",
-          "id": 540585,
-          "date": "2026-11-03 12:30:00",
-          "timestamp": 1793687400,
-          "text": "На повышение зарплат учителям и врачам не нашли 600 млрд рублей\n\nДепутат Госдумы от Омской области Олег Смолин заявил, что для выполнения президентского указа №309 в части оплаты труда педагогов, медиков, работников культуры, науки и социальной сферы потребуется около 600 млрд рублей.\n\n💬 «Я спросил у министра финансов Антона Силуанова о том, сколько нужно денег, чтобы реализовать указ президента №309 в части оплаты труда педагогических, медицинских работников, работников культуры, науки и социальных работников. Ответ: около 600 млрд рублей, но таких денег нет», — поделился Смолин.\n\nПри этом депутат считает, что проблема не столько в деньгах, сколько в желании найти их. По его подсчётам, если добавить эту сумму к расходам федерального бюджета на 2027 год, дефицит составит около 2,5% ВВП. Это меньше, чем ожидается в 2026 году, — около 3%.\n\nСмолин также отметил, что нагрузка на работников бюджетной сферы растёт, а специалисты уходят из профессий и уезжают из регионов. По его оценке, ситуация с оплатой их труда близка к критической.",
-          "likes": null,
-          "comments": null,
-          "reposts": null,
-          "views": null,
-          "url": "https://vk.ru/wall-28815494_540585",
-          "source_type": "social",
-          "flags": [],
-          "editor_status": "⏳ ДО ОЦЕНКИ РЕЙТИНГА"
-        },
-        {
-          "source": "tg_gorod55ru",
-          "id": 23564,
-          "source_name": "Город55 | Новости Омска",
-          "source_type": "telegram",
-          "timestamp": 1793680740,
-          "date": "2026-11-03 10:39:00",
-          "text": "На повышение зарплат учителям и врачам не нашли 600 млрд рублей.\n\nОб этом рассказал депутат Госдумы от Омской области Олег Смолин. По его словам, для выполнения указа президента о повышении оплаты труда педагогов, медиков, работников культуры, науки и социальной сферы потребуется около 600 млрд рублей.\n\n«Я спросил у министра финансов Антона Силуанова о том, сколько нужно денег, чтобы реализовать указ президента No309 в части оплаты труда педагогических, медицинских работников, работников культуры, науки и социальных работников. Ответ: около 600 млрд рублей, но таких денег нет», - поделился Смолин.\n\nПри этом депутат считает, что проблема не столько в деньгах, сколько в желании найти их. По его подсчетам, если добавить эту сумму к расходам бюджета на 2027 год, дефицит составит около 2,5% ВВП. Это меньше, чем ожидается в текущем году (около 3%).\n\nДепутат также отметил, что нагрузка на работников бюджетной сферы растет, а специалисты уходят из профессий и уезжают из регионов. Ситуация с их зарплатами тем временем уже близка к критической.\n\n✍️️ Мы в МАКС",
-          "url": "https://t.me/gorod55ru/23564",
-          "media_type": null,
-          "views": null,
-          "likes": null,
-          "comments": null,
-          "reposts": null
-        }
-      ],
-      "text": "На повышение зарплат учителям и врачам не нашли 600 млрд рублей\n\nДепутат Госдумы от Омской области Олег Смолин заявил, что для выполнения президентского указа №309 в части оплаты труда педагогов, медиков, работников культуры, науки и социальной сферы потребуется около 600 млрд рублей.\n\n💬 «Я спросил у министра финансов Антона Силуанова о том, сколько нужно денег, чтобы реализовать указ президента №309 в части оплаты труда педагогических, медицинских работников, работников культуры, науки и социальных работников. Ответ: около 600 млрд рублей, но таких денег нет», — поделился Смолин.\n\nПри этом депутат считает, что проблема не столько в деньгах, сколько в желании найти их. По его подсчётам, если добавить эту сумму к расходам федерального бюджета на 2027 год, дефицит составит около 2,5% ВВП. Это меньше, чем ожидается в 2026 году, — около 3%.\n\nСмолин также отметил, что нагрузка на работников бюджетной сферы растёт, а специалисты уходят из профессий и уезжают из регионов. По его оценке, ситуация с оплатой их труда близка к критической.",
-      "primary_source": "news_gorod55",
-      "primary_url": "https://vk.ru/wall-28815494_540585",
-      "source_urls": [
-        "https://vk.ru/wall-28815494_540585",
-        "https://t.me/gorod55ru/23564"
-      ],
-      "prediction": {
-        "priority_score": 51.7,
-        "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
-        "confidence": 45.0,
-        "eligible": true,
-        "exclusion_reason": null,
-        "score_version": "editorial_v2",
-        "model_type": "ridge_engagement_v1_shadow",
-        "ml_priority_score": 0,
-        "training_samples_1h": 174,
-        "training_samples_3h": 160,
-        "predicted_engagement_1h": 0.001674,
-        "predicted_engagement_3h": 0.0,
-        "audience_model_predictions": {
-          "golos": {
-            "engagement_1h": 0.0,
-            "engagement_3h": 0.0,
-            "priority_score": 0,
-            "training_samples_1h": 86,
-            "training_samples_3h": 79
-          },
-          "zhest": {
-            "engagement_1h": 0.00682,
-            "engagement_3h": 0.0,
-            "priority_score": 0,
-            "training_samples_1h": 88,
-            "training_samples_3h": 81
-          }
-        },
-        "event_class": "general",
-        "complaint_signal": false,
-        "complaint_viral_signal": false,
-        "complaint_bonus": 0.0,
-        "cross_source_count": 2,
-        "metric_coverage": [],
-        "coverage_ratio": 0.0,
-        "signals": {
-          "freshness": 58.2,
-          "local_relevance": 80.0,
-          "event_impact": 20.0,
-          "reach": null,
-          "engagement": null,
-          "discussion": null,
-          "reshare": null,
-          "velocity": null,
-          "cross_source_spread": 39.3
-        },
-        "score_weights": {
-          "freshness": 0.3448,
-          "local_relevance": 0.2759,
-          "event_impact": 0.2759,
-          "cross_source_spread": 0.1034
-        },
-        "legacy_scores": {
-          "analyzer_score": 39.7,
-          "viral_score": 3.5,
-          "editorial_score": 61.4
         }
       },
       "editor_status": "🟢 В РАБОТУ",
@@ -2483,7 +2499,7 @@
       "score": 26.6,
       "base_score": 36.9,
       "recency_score": 0.0,
-      "age_minutes": 480.8,
+      "age_minutes": 485.9,
       "newest_source_timestamp": 1793663070.0,
       "viral_score": 9.8,
       "editorial_score": 63.9,
@@ -2639,10 +2655,248 @@
       "editorial_exclusion_reason": null
     },
     {
+      "score": 42.2,
+      "base_score": 32.5,
+      "recency_score": 67.3,
+      "age_minutes": 58.9,
+      "newest_source_timestamp": 1793688691.0,
+      "viral_score": 3.5,
+      "editorial_score": 61.4,
+      "confidence": 65.0,
+      "posts": 1,
+      "social_sources": 1,
+      "views": 0.0,
+      "reposts": 0.0,
+      "likes": 0.0,
+      "comments": 0.0,
+      "content_type": "news",
+      "official_attribution": false,
+      "source_type": "regional_media",
+      "nonlocal_detected": false,
+      "help_request": false,
+      "opinion_detected": false,
+      "advertising_detected": false,
+      "excluded_topic": false,
+      "status": "take_now",
+      "action": "БРАТЬ В РАБОТУ",
+      "members": [
+        {
+          "source": "tg_omsktop1",
+          "id": 23239,
+          "source_name": "Омск с огоньком",
+          "source_type": "telegram",
+          "timestamp": 1793688691,
+          "date": "2026-11-03 12:51:31",
+          "text": "Мэр Омска пожелал избитой школьнице скорейшего выздоровления \n\nВ лицее № 64 проводится тщательная проверка. Специалисты дадут оценку действиям или бездействию руководства школы.\n\n🔴 Подписаться | Прислать нам новость",
+          "url": "https://t.me/omsktop1/23239",
+          "media_type": null,
+          "views": null,
+          "likes": null,
+          "comments": null,
+          "reposts": null
+        }
+      ],
+      "text": "Мэр Омска пожелал избитой школьнице скорейшего выздоровления \n\nВ лицее № 64 проводится тщательная проверка. Специалисты дадут оценку действиям или бездействию руководства школы.\n\n🔴 Подписаться | Прислать нам новость",
+      "primary_source": "tg_omsktop1",
+      "primary_url": "https://t.me/omsktop1/23239",
+      "source_urls": [
+        "https://t.me/omsktop1/23239"
+      ],
+      "prediction": {
+        "priority_score": 50.8,
+        "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
+        "confidence": 65.0,
+        "eligible": true,
+        "exclusion_reason": null,
+        "score_version": "editorial_v2",
+        "model_type": "ridge_engagement_v1_shadow",
+        "ml_priority_score": 44.6,
+        "training_samples_1h": 174,
+        "training_samples_3h": 160,
+        "predicted_engagement_1h": 0.007717,
+        "predicted_engagement_3h": 0.00709,
+        "audience_model_predictions": {
+          "golos": {
+            "engagement_1h": 0.011858,
+            "engagement_3h": 0.009078,
+            "priority_score": 42.8,
+            "training_samples_1h": 86,
+            "training_samples_3h": 79
+          },
+          "zhest": {
+            "engagement_1h": 0.002401,
+            "engagement_3h": 0.003798,
+            "priority_score": 30.9,
+            "training_samples_1h": 88,
+            "training_samples_3h": 81
+          }
+        },
+        "event_class": "general",
+        "complaint_signal": false,
+        "complaint_viral_signal": false,
+        "complaint_bonus": 0.0,
+        "cross_source_count": 1,
+        "metric_coverage": [],
+        "coverage_ratio": 0.0,
+        "signals": {
+          "freshness": 67.3,
+          "local_relevance": 80.0,
+          "event_impact": 20.0,
+          "reach": null,
+          "engagement": null,
+          "discussion": null,
+          "reshare": null,
+          "velocity": null,
+          "cross_source_spread": 0
+        },
+        "score_weights": {
+          "freshness": 0.3448,
+          "local_relevance": 0.2759,
+          "event_impact": 0.2759,
+          "cross_source_spread": 0.1034
+        },
+        "legacy_scores": {
+          "analyzer_score": 42.2,
+          "viral_score": 3.5,
+          "editorial_score": 61.4
+        }
+      },
+      "editor_status": "🟢 В РАБОТУ",
+      "publication_mode": "editorial_work",
+      "editorial_exclusion_reason": null
+    },
+    {
+      "score": 38.9,
+      "base_score": 32.5,
+      "recency_score": 55.3,
+      "age_minutes": 80.4,
+      "newest_source_timestamp": 1793687400.0,
+      "viral_score": 3.5,
+      "editorial_score": 61.4,
+      "confidence": 45.0,
+      "posts": 2,
+      "social_sources": 2,
+      "views": 0.0,
+      "reposts": 0.0,
+      "likes": 0.0,
+      "comments": 0.0,
+      "content_type": "social_story",
+      "official_attribution": false,
+      "source_type": "social",
+      "nonlocal_detected": false,
+      "help_request": false,
+      "opinion_detected": false,
+      "advertising_detected": false,
+      "excluded_topic": false,
+      "status": "take_now",
+      "action": "БРАТЬ В РАБОТУ",
+      "members": [
+        {
+          "source": "news_gorod55",
+          "id": 540585,
+          "date": "2026-11-03 12:30:00",
+          "timestamp": 1793687400,
+          "text": "На повышение зарплат учителям и врачам не нашли 600 млрд рублей\n\nДепутат Госдумы от Омской области Олег Смолин заявил, что для выполнения президентского указа №309 в части оплаты труда педагогов, медиков, работников культуры, науки и социальной сферы потребуется около 600 млрд рублей.\n\n💬 «Я спросил у министра финансов Антона Силуанова о том, сколько нужно денег, чтобы реализовать указ президента №309 в части оплаты труда педагогических, медицинских работников, работников культуры, науки и социальных работников. Ответ: около 600 млрд рублей, но таких денег нет», — поделился Смолин.\n\nПри этом депутат считает, что проблема не столько в деньгах, сколько в желании найти их. По его подсчётам, если добавить эту сумму к расходам федерального бюджета на 2027 год, дефицит составит около 2,5% ВВП. Это меньше, чем ожидается в 2026 году, — около 3%.\n\nСмолин также отметил, что нагрузка на работников бюджетной сферы растёт, а специалисты уходят из профессий и уезжают из регионов. По его оценке, ситуация с оплатой их труда близка к критической.",
+          "likes": null,
+          "comments": null,
+          "reposts": null,
+          "views": null,
+          "url": "https://vk.ru/wall-28815494_540585",
+          "source_type": "social",
+          "flags": [],
+          "editor_status": "⏳ ДО ОЦЕНКИ РЕЙТИНГА"
+        },
+        {
+          "source": "tg_gorod55ru",
+          "id": 23564,
+          "source_name": "Город55 | Новости Омска",
+          "source_type": "telegram",
+          "timestamp": 1793680740,
+          "date": "2026-11-03 10:39:00",
+          "text": "На повышение зарплат учителям и врачам не нашли 600 млрд рублей.\n\nОб этом рассказал депутат Госдумы от Омской области Олег Смолин. По его словам, для выполнения указа президента о повышении оплаты труда педагогов, медиков, работников культуры, науки и социальной сферы потребуется около 600 млрд рублей.\n\n«Я спросил у министра финансов Антона Силуанова о том, сколько нужно денег, чтобы реализовать указ президента No309 в части оплаты труда педагогических, медицинских работников, работников культуры, науки и социальных работников. Ответ: около 600 млрд рублей, но таких денег нет», - поделился Смолин.\n\nПри этом депутат считает, что проблема не столько в деньгах, сколько в желании найти их. По его подсчетам, если добавить эту сумму к расходам бюджета на 2027 год, дефицит составит около 2,5% ВВП. Это меньше, чем ожидается в текущем году (около 3%).\n\nДепутат также отметил, что нагрузка на работников бюджетной сферы растет, а специалисты уходят из профессий и уезжают из регионов. Ситуация с их зарплатами тем временем уже близка к критической.\n\n✍️️ Мы в МАКС",
+          "url": "https://t.me/gorod55ru/23564",
+          "media_type": null,
+          "views": null,
+          "likes": null,
+          "comments": null,
+          "reposts": null
+        }
+      ],
+      "text": "На повышение зарплат учителям и врачам не нашли 600 млрд рублей\n\nДепутат Госдумы от Омской области Олег Смолин заявил, что для выполнения президентского указа №309 в части оплаты труда педагогов, медиков, работников культуры, науки и социальной сферы потребуется около 600 млрд рублей.\n\n💬 «Я спросил у министра финансов Антона Силуанова о том, сколько нужно денег, чтобы реализовать указ президента №309 в части оплаты труда педагогических, медицинских работников, работников культуры, науки и социальных работников. Ответ: около 600 млрд рублей, но таких денег нет», — поделился Смолин.\n\nПри этом депутат считает, что проблема не столько в деньгах, сколько в желании найти их. По его подсчётам, если добавить эту сумму к расходам федерального бюджета на 2027 год, дефицит составит около 2,5% ВВП. Это меньше, чем ожидается в 2026 году, — около 3%.\n\nСмолин также отметил, что нагрузка на работников бюджетной сферы растёт, а специалисты уходят из профессий и уезжают из регионов. По его оценке, ситуация с оплатой их труда близка к критической.",
+      "primary_source": "news_gorod55",
+      "primary_url": "https://vk.ru/wall-28815494_540585",
+      "source_urls": [
+        "https://vk.ru/wall-28815494_540585",
+        "https://t.me/gorod55ru/23564"
+      ],
+      "prediction": {
+        "priority_score": 50.7,
+        "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
+        "confidence": 45.0,
+        "eligible": true,
+        "exclusion_reason": null,
+        "score_version": "editorial_v2",
+        "model_type": "ridge_engagement_v1_shadow",
+        "ml_priority_score": 0,
+        "training_samples_1h": 174,
+        "training_samples_3h": 160,
+        "predicted_engagement_1h": 0.001674,
+        "predicted_engagement_3h": 0.0,
+        "audience_model_predictions": {
+          "golos": {
+            "engagement_1h": 0.0,
+            "engagement_3h": 0.0,
+            "priority_score": 0,
+            "training_samples_1h": 86,
+            "training_samples_3h": 79
+          },
+          "zhest": {
+            "engagement_1h": 0.00682,
+            "engagement_3h": 0.0,
+            "priority_score": 0,
+            "training_samples_1h": 88,
+            "training_samples_3h": 81
+          }
+        },
+        "event_class": "general",
+        "complaint_signal": false,
+        "complaint_viral_signal": false,
+        "complaint_bonus": 0.0,
+        "cross_source_count": 2,
+        "metric_coverage": [],
+        "coverage_ratio": 0.0,
+        "signals": {
+          "freshness": 55.3,
+          "local_relevance": 80.0,
+          "event_impact": 20.0,
+          "reach": null,
+          "engagement": null,
+          "discussion": null,
+          "reshare": null,
+          "velocity": null,
+          "cross_source_spread": 39.3
+        },
+        "score_weights": {
+          "freshness": 0.3448,
+          "local_relevance": 0.2759,
+          "event_impact": 0.2759,
+          "cross_source_spread": 0.1034
+        },
+        "legacy_scores": {
+          "analyzer_score": 38.9,
+          "viral_score": 3.5,
+          "editorial_score": 61.4
+        }
+      },
+      "editor_status": "🟢 В РАБОТУ",
+      "publication_mode": "editorial_work",
+      "editorial_exclusion_reason": null
+    },
+    {
       "score": 28.7,
       "base_score": 39.8,
       "recency_score": 0.0,
-      "age_minutes": 183.3,
+      "age_minutes": 188.4,
       "newest_source_timestamp": 1793680924.0,
       "viral_score": 14.0,
       "editorial_score": 65.6,
@@ -2766,10 +3020,10 @@
       "editorial_exclusion_reason": null
     },
     {
-      "score": 39.8,
+      "score": 39.1,
       "base_score": 32.5,
-      "recency_score": 58.7,
-      "age_minutes": 74.3,
+      "recency_score": 55.9,
+      "age_minutes": 79.4,
       "newest_source_timestamp": 1793687462.0,
       "viral_score": 3.5,
       "editorial_score": 61.4,
@@ -2814,7 +3068,7 @@
         "https://t.me/omskkoroche/27467"
       ],
       "prediction": {
-        "priority_score": 47.8,
+        "priority_score": 46.9,
         "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
         "confidence": 65.0,
         "eligible": true,
@@ -2850,7 +3104,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 58.7,
+          "freshness": 55.9,
           "local_relevance": 80.0,
           "event_impact": 20.0,
           "reach": null,
@@ -2867,7 +3121,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 39.8,
+          "analyzer_score": 39.1,
           "viral_score": 3.5,
           "editorial_score": 61.4
         }
@@ -2877,10 +3131,10 @@
       "editorial_exclusion_reason": null
     },
     {
-      "score": 29.4,
+      "score": 28.6,
       "base_score": 36.9,
-      "recency_score": 10.1,
-      "age_minutes": 161.8,
+      "recency_score": 7.3,
+      "age_minutes": 166.9,
       "newest_source_timestamp": 1793682210.0,
       "viral_score": 9.8,
       "editorial_score": 63.9,
@@ -2941,7 +3195,7 @@
         "https://vk.ru/wall-62731567_3706378"
       ],
       "prediction": {
-        "priority_score": 47.6,
+        "priority_score": 46.6,
         "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
         "confidence": 90.0,
         "eligible": true,
@@ -2977,7 +3231,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 10.1,
+          "freshness": 7.3,
           "local_relevance": 80.0,
           "event_impact": 65.0,
           "reach": null,
@@ -2994,7 +3248,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 29.4,
+          "analyzer_score": 28.6,
           "viral_score": 9.8,
           "editorial_score": 63.9
         }
@@ -3004,10 +3258,10 @@
       "editorial_exclusion_reason": null
     },
     {
-      "score": 32.4,
+      "score": 31.6,
       "base_score": 9.0,
-      "recency_score": 92.6,
-      "age_minutes": 13.4,
+      "recency_score": 89.7,
+      "age_minutes": 18.5,
       "newest_source_timestamp": 1793691117.0,
       "viral_score": 0.0,
       "editorial_score": 18.0,
@@ -3026,8 +3280,8 @@
       "opinion_detected": false,
       "advertising_detected": false,
       "excluded_topic": false,
-      "status": "take_now",
-      "action": "БРАТЬ В РАБОТУ",
+      "status": "reject",
+      "action": "ИСКЛЮЧИТЬ",
       "members": [
         {
           "source": "omsk_online",
@@ -3052,8 +3306,8 @@
         "https://vk.ru/wall-66461784_600737"
       ],
       "prediction": {
-        "priority_score": 45.7,
-        "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
+        "priority_score": 44.7,
+        "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
         "confidence": 25.0,
         "eligible": true,
         "exclusion_reason": null,
@@ -3088,7 +3342,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 92.6,
+          "freshness": 89.7,
           "local_relevance": 30.0,
           "event_impact": 20.0,
           "reach": null,
@@ -3105,353 +3359,20 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 32.4,
+          "analyzer_score": 31.6,
           "viral_score": 0.0,
           "editorial_score": 18.0
         }
       },
-      "editor_status": "🟢 В РАБОТУ",
-      "publication_mode": "editorial_work",
-      "editorial_exclusion_reason": null
-    },
-    {
-      "score": 21.4,
-      "base_score": 13.4,
-      "recency_score": 42.1,
-      "age_minutes": 104.1,
-      "newest_source_timestamp": 1793685671.0,
-      "viral_score": 6.3,
-      "editorial_score": 20.5,
-      "confidence": 65.0,
-      "posts": 1,
-      "social_sources": 1,
-      "views": 0.0,
-      "reposts": 0.0,
-      "likes": 0.0,
-      "comments": 0.0,
-      "content_type": "news",
-      "official_attribution": false,
-      "source_type": "regional_media",
-      "nonlocal_detected": false,
-      "help_request": false,
-      "opinion_detected": false,
-      "advertising_detected": false,
-      "excluded_topic": false,
-      "status": "reject",
-      "action": "ИСКЛЮЧИТЬ",
-      "members": [
-        {
-          "source": "tg_region_omsk55",
-          "id": 28785,
-          "source_name": "Омск | Регион-55",
-          "source_type": "telegram",
-          "timestamp": 1793685671,
-          "date": "2026-11-03 12:01:11",
-          "text": "Серьёзное ДТП произошло в районе пересечения ул. Барабинская и Кирова\n\n➡️ Регион-55 \n📲 Подпишись на |Регион-55|  в MAX",
-          "url": "https://t.me/region_omsk55/28785",
-          "media_type": "video",
-          "views": null,
-          "likes": null,
-          "comments": null,
-          "reposts": null
-        }
-      ],
-      "text": "Серьёзное ДТП произошло в районе пересечения ул. Барабинская и Кирова\n\n➡️ Регион-55 \n📲 Подпишись на |Регион-55|  в MAX",
-      "primary_source": "tg_region_omsk55",
-      "primary_url": "https://t.me/region_omsk55/28785",
-      "source_urls": [
-        "https://t.me/region_omsk55/28785"
-      ],
-      "prediction": {
-        "priority_score": 40.7,
-        "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
-        "confidence": 65.0,
-        "eligible": true,
-        "exclusion_reason": null,
-        "score_version": "editorial_v2",
-        "model_type": "ridge_engagement_v1_shadow",
-        "ml_priority_score": 46.0,
-        "training_samples_1h": 174,
-        "training_samples_3h": 160,
-        "predicted_engagement_1h": 0.007192,
-        "predicted_engagement_3h": 0.007317,
-        "audience_model_predictions": {
-          "golos": {
-            "engagement_1h": 0.011467,
-            "engagement_3h": 0.010823,
-            "priority_score": 51.0,
-            "training_samples_1h": 86,
-            "training_samples_3h": 79
-          },
-          "zhest": {
-            "engagement_1h": 0.003561,
-            "engagement_3h": 0.004671,
-            "priority_score": 38.1,
-            "training_samples_1h": 88,
-            "training_samples_3h": 81
-          }
-        },
-        "event_class": "transport_incident",
-        "complaint_signal": false,
-        "complaint_viral_signal": false,
-        "complaint_bonus": 0.0,
-        "cross_source_count": 1,
-        "metric_coverage": [],
-        "coverage_ratio": 0.0,
-        "signals": {
-          "freshness": 42.1,
-          "local_relevance": 30.0,
-          "event_impact": 65.0,
-          "reach": null,
-          "engagement": null,
-          "discussion": null,
-          "reshare": null,
-          "velocity": null,
-          "cross_source_spread": 0
-        },
-        "score_weights": {
-          "freshness": 0.3448,
-          "local_relevance": 0.2759,
-          "event_impact": 0.2759,
-          "cross_source_spread": 0.1034
-        },
-        "legacy_scores": {
-          "analyzer_score": 21.4,
-          "viral_score": 6.3,
-          "editorial_score": 20.5
-        }
-      },
       "editor_status": "⚪ ИСКЛЮЧИТЬ: НИЗКИЙ ПРИОРИТЕТ",
       "publication_mode": "below_priority_threshold",
       "editorial_exclusion_reason": "below_priority_threshold"
     },
     {
-      "score": 30.3,
-      "base_score": 11.9,
-      "recency_score": 77.7,
-      "age_minutes": 40.1,
-      "newest_source_timestamp": 1793689515.0,
-      "viral_score": 4.2,
-      "editorial_score": 19.7,
-      "confidence": 65.0,
-      "posts": 1,
-      "social_sources": 1,
-      "views": 0.0,
-      "reposts": 0.0,
-      "likes": 0.0,
-      "comments": 0.0,
-      "content_type": "social_story",
-      "official_attribution": false,
-      "source_type": "regional_media",
-      "nonlocal_detected": false,
-      "help_request": false,
-      "opinion_detected": false,
-      "advertising_detected": false,
-      "excluded_topic": false,
-      "status": "reject",
-      "action": "ИСКЛЮЧИТЬ",
-      "members": [
-        {
-          "source": "tg_region_omsk55",
-          "id": 28786,
-          "source_name": "Омск | Регион-55",
-          "source_type": "telegram",
-          "timestamp": 1793689515,
-          "date": "2026-11-03 13:05:15",
-          "text": "Когда впервые пришёл в кофейню с авторским дизайном.\n\nА в воздухе витает запах кофе за 1000 рублей.\n\n➡️ Регион-55 \n📲 Подпишись на |Регион-55|  в MAX",
-          "url": "https://t.me/region_omsk55/28786",
-          "media_type": "video",
-          "views": null,
-          "likes": null,
-          "comments": null,
-          "reposts": null
-        }
-      ],
-      "text": "Когда впервые пришёл в кофейню с авторским дизайном.\n\nА в воздухе витает запах кофе за 1000 рублей.\n\n➡️ Регион-55 \n📲 Подпишись на |Регион-55|  в MAX",
-      "primary_source": "tg_region_omsk55",
-      "primary_url": "https://t.me/region_omsk55/28786",
-      "source_urls": [
-        "https://t.me/region_omsk55/28786"
-      ],
-      "prediction": {
-        "priority_score": 40.6,
-        "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
-        "confidence": 65.0,
-        "eligible": true,
-        "exclusion_reason": null,
-        "score_version": "editorial_v2",
-        "model_type": "ridge_engagement_v1_shadow",
-        "ml_priority_score": 49.4,
-        "training_samples_1h": 174,
-        "training_samples_3h": 160,
-        "predicted_engagement_1h": 0.009546,
-        "predicted_engagement_3h": 0.007854,
-        "audience_model_predictions": {
-          "golos": {
-            "engagement_1h": 0.0114,
-            "engagement_3h": 0.009687,
-            "priority_score": 45.6,
-            "training_samples_1h": 86,
-            "training_samples_3h": 79
-          },
-          "zhest": {
-            "engagement_1h": 0.006299,
-            "engagement_3h": 0.004499,
-            "priority_score": 36.7,
-            "training_samples_1h": 88,
-            "training_samples_3h": 81
-          }
-        },
-        "event_class": "general",
-        "complaint_signal": false,
-        "complaint_viral_signal": false,
-        "complaint_bonus": 0.0,
-        "cross_source_count": 1,
-        "metric_coverage": [],
-        "coverage_ratio": 0.0,
-        "signals": {
-          "freshness": 77.7,
-          "local_relevance": 30.0,
-          "event_impact": 20.0,
-          "reach": null,
-          "engagement": null,
-          "discussion": null,
-          "reshare": null,
-          "velocity": null,
-          "cross_source_spread": 0
-        },
-        "score_weights": {
-          "freshness": 0.3448,
-          "local_relevance": 0.2759,
-          "event_impact": 0.2759,
-          "cross_source_spread": 0.1034
-        },
-        "legacy_scores": {
-          "analyzer_score": 30.3,
-          "viral_score": 4.2,
-          "editorial_score": 19.7
-        }
-      },
-      "editor_status": "⚪ ИСКЛЮЧИТЬ: НИЗКИЙ ПРИОРИТЕТ",
-      "publication_mode": "below_priority_threshold",
-      "editorial_exclusion_reason": "below_priority_threshold"
-    },
-    {
-      "score": 33.7,
+      "score": 34.5,
       "base_score": 32.5,
-      "recency_score": 36.9,
-      "age_minutes": 113.6,
-      "newest_source_timestamp": 1793685102.0,
-      "viral_score": 3.5,
-      "editorial_score": 61.4,
-      "confidence": 65.0,
-      "posts": 1,
-      "social_sources": 1,
-      "views": 0.0,
-      "reposts": 0.0,
-      "likes": 0.0,
-      "comments": 0.0,
-      "content_type": "news",
-      "official_attribution": false,
-      "source_type": "regional_media",
-      "nonlocal_detected": false,
-      "help_request": false,
-      "opinion_detected": false,
-      "advertising_detected": false,
-      "excluded_topic": false,
-      "status": "reject",
-      "action": "ИСКЛЮЧИТЬ",
-      "members": [
-        {
-          "source": "tg_ngs55news",
-          "id": 56800,
-          "source_name": "Новости Омска | NGS55",
-          "source_type": "telegram",
-          "timestamp": 1793685102,
-          "date": "2026-11-03 11:51:42",
-          "text": "🏫В Омске 31 октября в одной из самых престижных школ города произошел вопиющий случай: старшеклассник жестоко избил 11-классницу. Девочка получила тяжелые травмы, ей вызвали скорую — несовершеннолетней потребовалась госпитализация. Директор школы Марина Селезнева от комментариев отказалась.\n\nЛицей № 64 — один из старейших в городе. Он образован в 1937 году. В 1989 году учреждение получило специализацию — углубленное изучение физики и математики.\n\nВ 1998 году официально 64-я школа стала лицеем, а в 2004 году здесь перешли на профильную систему обучения, открыв физико-математические классы. В 2019 году лицей получил статус базовой школы Российской академии наук с упором на робототехнику, математику и моделирование.\nКак сообщается на сайте учебного заведения, ежегодно до 95 % выпускников поступают в вузы. Лицей входит в топ лучших школ.\n\nВ 2025 году лицей выпустил 44 стобалльника по ЕГЭ — больше в Омске их только в центре развития одаренности № 117.\n\nЗдесь новости грузит быстрее",
-          "url": "https://t.me/ngs55news/56800",
-          "media_type": "photo",
-          "views": null,
-          "likes": null,
-          "comments": null,
-          "reposts": null
-        }
-      ],
-      "text": "🏫В Омске 31 октября в одной из самых престижных школ города произошел вопиющий случай: старшеклассник жестоко избил 11-классницу. Девочка получила тяжелые травмы, ей вызвали скорую — несовершеннолетней потребовалась госпитализация. Директор школы Марина Селезнева от комментариев отказалась.\n\nЛицей № 64 — один из старейших в городе. Он образован в 1937 году. В 1989 году учреждение получило специализацию — углубленное изучение физики и математики.\n\nВ 1998 году официально 64-я школа стала лицеем, а в 2004 году здесь перешли на профильную систему обучения, открыв физико-математические классы. В 2019 году лицей получил статус базовой школы Российской академии наук с упором на робототехнику, математику и моделирование.\nКак сообщается на сайте учебного заведения, ежегодно до 95 % выпускников поступают в вузы. Лицей входит в топ лучших школ.\n\nВ 2025 году лицей выпустил 44 стобалльника по ЕГЭ — больше в Омске их только в центре развития одаренности № 117.\n\nЗдесь новости грузит быстрее",
-      "primary_source": "tg_ngs55news",
-      "primary_url": "https://t.me/ngs55news/56800",
-      "source_urls": [
-        "https://t.me/ngs55news/56800"
-      ],
-      "prediction": {
-        "priority_score": 40.3,
-        "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
-        "confidence": 65.0,
-        "eligible": true,
-        "exclusion_reason": null,
-        "score_version": "editorial_v2",
-        "model_type": "ridge_engagement_v1_shadow",
-        "ml_priority_score": 20.6,
-        "training_samples_1h": 174,
-        "training_samples_3h": 160,
-        "predicted_engagement_1h": 0.005609,
-        "predicted_engagement_3h": 0.00327,
-        "audience_model_predictions": {
-          "golos": {
-            "engagement_1h": 0.006183,
-            "engagement_3h": 0.005447,
-            "priority_score": 25.7,
-            "training_samples_1h": 86,
-            "training_samples_3h": 79
-          },
-          "zhest": {
-            "engagement_1h": 0.005286,
-            "engagement_3h": 0.001795,
-            "priority_score": 14.6,
-            "training_samples_1h": 88,
-            "training_samples_3h": 81
-          }
-        },
-        "event_class": "general",
-        "complaint_signal": false,
-        "complaint_viral_signal": false,
-        "complaint_bonus": 0.0,
-        "cross_source_count": 1,
-        "metric_coverage": [],
-        "coverage_ratio": 0.0,
-        "signals": {
-          "freshness": 36.9,
-          "local_relevance": 80.0,
-          "event_impact": 20.0,
-          "reach": null,
-          "engagement": null,
-          "discussion": null,
-          "reshare": null,
-          "velocity": null,
-          "cross_source_spread": 0
-        },
-        "score_weights": {
-          "freshness": 0.3448,
-          "local_relevance": 0.2759,
-          "event_impact": 0.2759,
-          "cross_source_spread": 0.1034
-        },
-        "legacy_scores": {
-          "analyzer_score": 33.7,
-          "viral_score": 3.5,
-          "editorial_score": 61.4
-        }
-      },
-      "editor_status": "⚪ ИСКЛЮЧИТЬ: НИЗКИЙ ПРИОРИТЕТ",
-      "publication_mode": "below_priority_threshold",
-      "editorial_exclusion_reason": "below_priority_threshold"
-    },
-    {
-      "score": 35.3,
-      "base_score": 32.5,
-      "recency_score": 42.4,
-      "age_minutes": 103.6,
+      "recency_score": 39.6,
+      "age_minutes": 108.7,
       "newest_source_timestamp": 1793685702.0,
       "viral_score": 3.5,
       "editorial_score": 61.4,
@@ -3548,7 +3469,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 42.4,
+          "freshness": 39.6,
           "local_relevance": 80.0,
           "event_impact": 20.0,
           "reach": null,
@@ -3565,7 +3486,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 35.3,
+          "analyzer_score": 34.5,
           "viral_score": 3.5,
           "editorial_score": 61.4
         }
@@ -3575,10 +3496,343 @@
       "editorial_exclusion_reason": "below_priority_threshold"
     },
     {
-      "score": 33.4,
+      "score": 20.7,
+      "base_score": 13.4,
+      "recency_score": 39.3,
+      "age_minutes": 109.3,
+      "newest_source_timestamp": 1793685671.0,
+      "viral_score": 6.3,
+      "editorial_score": 20.5,
+      "confidence": 65.0,
+      "posts": 1,
+      "social_sources": 1,
+      "views": 0.0,
+      "reposts": 0.0,
+      "likes": 0.0,
+      "comments": 0.0,
+      "content_type": "news",
+      "official_attribution": false,
+      "source_type": "regional_media",
+      "nonlocal_detected": false,
+      "help_request": false,
+      "opinion_detected": false,
+      "advertising_detected": false,
+      "excluded_topic": false,
+      "status": "reject",
+      "action": "ИСКЛЮЧИТЬ",
+      "members": [
+        {
+          "source": "tg_region_omsk55",
+          "id": 28785,
+          "source_name": "Омск | Регион-55",
+          "source_type": "telegram",
+          "timestamp": 1793685671,
+          "date": "2026-11-03 12:01:11",
+          "text": "Серьёзное ДТП произошло в районе пересечения ул. Барабинская и Кирова\n\n➡️ Регион-55 \n📲 Подпишись на |Регион-55|  в MAX",
+          "url": "https://t.me/region_omsk55/28785",
+          "media_type": "video",
+          "views": null,
+          "likes": null,
+          "comments": null,
+          "reposts": null
+        }
+      ],
+      "text": "Серьёзное ДТП произошло в районе пересечения ул. Барабинская и Кирова\n\n➡️ Регион-55 \n📲 Подпишись на |Регион-55|  в MAX",
+      "primary_source": "tg_region_omsk55",
+      "primary_url": "https://t.me/region_omsk55/28785",
+      "source_urls": [
+        "https://t.me/region_omsk55/28785"
+      ],
+      "prediction": {
+        "priority_score": 39.8,
+        "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
+        "confidence": 65.0,
+        "eligible": true,
+        "exclusion_reason": null,
+        "score_version": "editorial_v2",
+        "model_type": "ridge_engagement_v1_shadow",
+        "ml_priority_score": 46.0,
+        "training_samples_1h": 174,
+        "training_samples_3h": 160,
+        "predicted_engagement_1h": 0.007192,
+        "predicted_engagement_3h": 0.007317,
+        "audience_model_predictions": {
+          "golos": {
+            "engagement_1h": 0.011467,
+            "engagement_3h": 0.010823,
+            "priority_score": 51.0,
+            "training_samples_1h": 86,
+            "training_samples_3h": 79
+          },
+          "zhest": {
+            "engagement_1h": 0.003561,
+            "engagement_3h": 0.004671,
+            "priority_score": 38.1,
+            "training_samples_1h": 88,
+            "training_samples_3h": 81
+          }
+        },
+        "event_class": "transport_incident",
+        "complaint_signal": false,
+        "complaint_viral_signal": false,
+        "complaint_bonus": 0.0,
+        "cross_source_count": 1,
+        "metric_coverage": [],
+        "coverage_ratio": 0.0,
+        "signals": {
+          "freshness": 39.3,
+          "local_relevance": 30.0,
+          "event_impact": 65.0,
+          "reach": null,
+          "engagement": null,
+          "discussion": null,
+          "reshare": null,
+          "velocity": null,
+          "cross_source_spread": 0
+        },
+        "score_weights": {
+          "freshness": 0.3448,
+          "local_relevance": 0.2759,
+          "event_impact": 0.2759,
+          "cross_source_spread": 0.1034
+        },
+        "legacy_scores": {
+          "analyzer_score": 20.7,
+          "viral_score": 6.3,
+          "editorial_score": 20.5
+        }
+      },
+      "editor_status": "⚪ ИСКЛЮЧИТЬ: НИЗКИЙ ПРИОРИТЕТ",
+      "publication_mode": "below_priority_threshold",
+      "editorial_exclusion_reason": "below_priority_threshold"
+    },
+    {
+      "score": 29.5,
+      "base_score": 11.9,
+      "recency_score": 74.9,
+      "age_minutes": 45.2,
+      "newest_source_timestamp": 1793689515.0,
+      "viral_score": 4.2,
+      "editorial_score": 19.7,
+      "confidence": 65.0,
+      "posts": 1,
+      "social_sources": 1,
+      "views": 0.0,
+      "reposts": 0.0,
+      "likes": 0.0,
+      "comments": 0.0,
+      "content_type": "social_story",
+      "official_attribution": false,
+      "source_type": "regional_media",
+      "nonlocal_detected": false,
+      "help_request": false,
+      "opinion_detected": false,
+      "advertising_detected": false,
+      "excluded_topic": false,
+      "status": "reject",
+      "action": "ИСКЛЮЧИТЬ",
+      "members": [
+        {
+          "source": "tg_region_omsk55",
+          "id": 28786,
+          "source_name": "Омск | Регион-55",
+          "source_type": "telegram",
+          "timestamp": 1793689515,
+          "date": "2026-11-03 13:05:15",
+          "text": "Когда впервые пришёл в кофейню с авторским дизайном.\n\nА в воздухе витает запах кофе за 1000 рублей.\n\n➡️ Регион-55 \n📲 Подпишись на |Регион-55|  в MAX",
+          "url": "https://t.me/region_omsk55/28786",
+          "media_type": "video",
+          "views": null,
+          "likes": null,
+          "comments": null,
+          "reposts": null
+        }
+      ],
+      "text": "Когда впервые пришёл в кофейню с авторским дизайном.\n\nА в воздухе витает запах кофе за 1000 рублей.\n\n➡️ Регион-55 \n📲 Подпишись на |Регион-55|  в MAX",
+      "primary_source": "tg_region_omsk55",
+      "primary_url": "https://t.me/region_omsk55/28786",
+      "source_urls": [
+        "https://t.me/region_omsk55/28786"
+      ],
+      "prediction": {
+        "priority_score": 39.6,
+        "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
+        "confidence": 65.0,
+        "eligible": true,
+        "exclusion_reason": null,
+        "score_version": "editorial_v2",
+        "model_type": "ridge_engagement_v1_shadow",
+        "ml_priority_score": 49.4,
+        "training_samples_1h": 174,
+        "training_samples_3h": 160,
+        "predicted_engagement_1h": 0.009546,
+        "predicted_engagement_3h": 0.007854,
+        "audience_model_predictions": {
+          "golos": {
+            "engagement_1h": 0.0114,
+            "engagement_3h": 0.009687,
+            "priority_score": 45.6,
+            "training_samples_1h": 86,
+            "training_samples_3h": 79
+          },
+          "zhest": {
+            "engagement_1h": 0.006299,
+            "engagement_3h": 0.004499,
+            "priority_score": 36.7,
+            "training_samples_1h": 88,
+            "training_samples_3h": 81
+          }
+        },
+        "event_class": "general",
+        "complaint_signal": false,
+        "complaint_viral_signal": false,
+        "complaint_bonus": 0.0,
+        "cross_source_count": 1,
+        "metric_coverage": [],
+        "coverage_ratio": 0.0,
+        "signals": {
+          "freshness": 74.9,
+          "local_relevance": 30.0,
+          "event_impact": 20.0,
+          "reach": null,
+          "engagement": null,
+          "discussion": null,
+          "reshare": null,
+          "velocity": null,
+          "cross_source_spread": 0
+        },
+        "score_weights": {
+          "freshness": 0.3448,
+          "local_relevance": 0.2759,
+          "event_impact": 0.2759,
+          "cross_source_spread": 0.1034
+        },
+        "legacy_scores": {
+          "analyzer_score": 29.5,
+          "viral_score": 4.2,
+          "editorial_score": 19.7
+        }
+      },
+      "editor_status": "⚪ ИСКЛЮЧИТЬ: НИЗКИЙ ПРИОРИТЕТ",
+      "publication_mode": "below_priority_threshold",
+      "editorial_exclusion_reason": "below_priority_threshold"
+    },
+    {
+      "score": 32.9,
       "base_score": 32.5,
-      "recency_score": 35.6,
-      "age_minutes": 115.8,
+      "recency_score": 34.0,
+      "age_minutes": 118.7,
+      "newest_source_timestamp": 1793685102.0,
+      "viral_score": 3.5,
+      "editorial_score": 61.4,
+      "confidence": 65.0,
+      "posts": 1,
+      "social_sources": 1,
+      "views": 0.0,
+      "reposts": 0.0,
+      "likes": 0.0,
+      "comments": 0.0,
+      "content_type": "news",
+      "official_attribution": false,
+      "source_type": "regional_media",
+      "nonlocal_detected": false,
+      "help_request": false,
+      "opinion_detected": false,
+      "advertising_detected": false,
+      "excluded_topic": false,
+      "status": "reject",
+      "action": "ИСКЛЮЧИТЬ",
+      "members": [
+        {
+          "source": "tg_ngs55news",
+          "id": 56800,
+          "source_name": "Новости Омска | NGS55",
+          "source_type": "telegram",
+          "timestamp": 1793685102,
+          "date": "2026-11-03 11:51:42",
+          "text": "🏫В Омске 31 октября в одной из самых престижных школ города произошел вопиющий случай: старшеклассник жестоко избил 11-классницу. Девочка получила тяжелые травмы, ей вызвали скорую — несовершеннолетней потребовалась госпитализация. Директор школы Марина Селезнева от комментариев отказалась.\n\nЛицей № 64 — один из старейших в городе. Он образован в 1937 году. В 1989 году учреждение получило специализацию — углубленное изучение физики и математики.\n\nВ 1998 году официально 64-я школа стала лицеем, а в 2004 году здесь перешли на профильную систему обучения, открыв физико-математические классы. В 2019 году лицей получил статус базовой школы Российской академии наук с упором на робототехнику, математику и моделирование.\nКак сообщается на сайте учебного заведения, ежегодно до 95 % выпускников поступают в вузы. Лицей входит в топ лучших школ.\n\nВ 2025 году лицей выпустил 44 стобалльника по ЕГЭ — больше в Омске их только в центре развития одаренности № 117.\n\nЗдесь новости грузит быстрее",
+          "url": "https://t.me/ngs55news/56800",
+          "media_type": "photo",
+          "views": null,
+          "likes": null,
+          "comments": null,
+          "reposts": null
+        }
+      ],
+      "text": "🏫В Омске 31 октября в одной из самых престижных школ города произошел вопиющий случай: старшеклассник жестоко избил 11-классницу. Девочка получила тяжелые травмы, ей вызвали скорую — несовершеннолетней потребовалась госпитализация. Директор школы Марина Селезнева от комментариев отказалась.\n\nЛицей № 64 — один из старейших в городе. Он образован в 1937 году. В 1989 году учреждение получило специализацию — углубленное изучение физики и математики.\n\nВ 1998 году официально 64-я школа стала лицеем, а в 2004 году здесь перешли на профильную систему обучения, открыв физико-математические классы. В 2019 году лицей получил статус базовой школы Российской академии наук с упором на робототехнику, математику и моделирование.\nКак сообщается на сайте учебного заведения, ежегодно до 95 % выпускников поступают в вузы. Лицей входит в топ лучших школ.\n\nВ 2025 году лицей выпустил 44 стобалльника по ЕГЭ — больше в Омске их только в центре развития одаренности № 117.\n\nЗдесь новости грузит быстрее",
+      "primary_source": "tg_ngs55news",
+      "primary_url": "https://t.me/ngs55news/56800",
+      "source_urls": [
+        "https://t.me/ngs55news/56800"
+      ],
+      "prediction": {
+        "priority_score": 39.3,
+        "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
+        "confidence": 65.0,
+        "eligible": true,
+        "exclusion_reason": null,
+        "score_version": "editorial_v2",
+        "model_type": "ridge_engagement_v1_shadow",
+        "ml_priority_score": 20.6,
+        "training_samples_1h": 174,
+        "training_samples_3h": 160,
+        "predicted_engagement_1h": 0.005609,
+        "predicted_engagement_3h": 0.00327,
+        "audience_model_predictions": {
+          "golos": {
+            "engagement_1h": 0.006183,
+            "engagement_3h": 0.005447,
+            "priority_score": 25.7,
+            "training_samples_1h": 86,
+            "training_samples_3h": 79
+          },
+          "zhest": {
+            "engagement_1h": 0.005286,
+            "engagement_3h": 0.001795,
+            "priority_score": 14.6,
+            "training_samples_1h": 88,
+            "training_samples_3h": 81
+          }
+        },
+        "event_class": "general",
+        "complaint_signal": false,
+        "complaint_viral_signal": false,
+        "complaint_bonus": 0.0,
+        "cross_source_count": 1,
+        "metric_coverage": [],
+        "coverage_ratio": 0.0,
+        "signals": {
+          "freshness": 34.0,
+          "local_relevance": 80.0,
+          "event_impact": 20.0,
+          "reach": null,
+          "engagement": null,
+          "discussion": null,
+          "reshare": null,
+          "velocity": null,
+          "cross_source_spread": 0
+        },
+        "score_weights": {
+          "freshness": 0.3448,
+          "local_relevance": 0.2759,
+          "event_impact": 0.2759,
+          "cross_source_spread": 0.1034
+        },
+        "legacy_scores": {
+          "analyzer_score": 32.9,
+          "viral_score": 3.5,
+          "editorial_score": 61.4
+        }
+      },
+      "editor_status": "⚪ ИСКЛЮЧИТЬ: НИЗКИЙ ПРИОРИТЕТ",
+      "publication_mode": "below_priority_threshold",
+      "editorial_exclusion_reason": "below_priority_threshold"
+    },
+    {
+      "score": 32.6,
+      "base_score": 32.5,
+      "recency_score": 32.8,
+      "age_minutes": 121.0,
       "newest_source_timestamp": 1793684968.0,
       "viral_score": 3.5,
       "editorial_score": 61.4,
@@ -3623,7 +3877,7 @@
         "https://t.me/omsktop1/23233"
       ],
       "prediction": {
-        "priority_score": 39.9,
+        "priority_score": 38.9,
         "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
         "confidence": 65.0,
         "eligible": true,
@@ -3659,7 +3913,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 35.6,
+          "freshness": 32.8,
           "local_relevance": 80.0,
           "event_impact": 20.0,
           "reach": null,
@@ -3676,7 +3930,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 33.4,
+          "analyzer_score": 32.6,
           "viral_score": 3.5,
           "editorial_score": 61.4
         }
@@ -3686,10 +3940,10 @@
       "editorial_exclusion_reason": "below_priority_threshold"
     },
     {
-      "score": 33.3,
+      "score": 32.5,
       "base_score": 32.5,
-      "recency_score": 35.2,
-      "age_minutes": 116.6,
+      "recency_score": 32.4,
+      "age_minutes": 121.7,
       "newest_source_timestamp": 1793684923.0,
       "viral_score": 3.5,
       "editorial_score": 61.4,
@@ -3734,7 +3988,7 @@
         "https://t.me/newsomsk/19600"
       ],
       "prediction": {
-        "priority_score": 39.7,
+        "priority_score": 38.7,
         "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
         "confidence": 65.0,
         "eligible": true,
@@ -3770,7 +4024,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 35.2,
+          "freshness": 32.4,
           "local_relevance": 80.0,
           "event_impact": 20.0,
           "reach": null,
@@ -3787,7 +4041,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 33.3,
+          "analyzer_score": 32.5,
           "viral_score": 3.5,
           "editorial_score": 61.4
         }
@@ -3797,10 +4051,10 @@
       "editorial_exclusion_reason": "below_priority_threshold"
     },
     {
-      "score": 32.3,
+      "score": 31.4,
       "base_score": 36.9,
-      "recency_score": 20.3,
-      "age_minutes": 143.5,
+      "recency_score": 17.4,
+      "age_minutes": 148.7,
       "newest_source_timestamp": 1793683306.0,
       "viral_score": 9.8,
       "editorial_score": 63.9,
@@ -3861,7 +4115,7 @@
         "https://vk.ru/wall-62731567_3706402"
       ],
       "prediction": {
-        "priority_score": 38.6,
+        "priority_score": 37.7,
         "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
         "confidence": 45.0,
         "eligible": true,
@@ -3897,7 +4151,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 20.2,
+          "freshness": 17.4,
           "local_relevance": 80.0,
           "event_impact": 20.0,
           "reach": null,
@@ -3914,7 +4168,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 32.3,
+          "analyzer_score": 31.4,
           "viral_score": 9.8,
           "editorial_score": 63.9
         }
@@ -3924,10 +4178,10 @@
       "editorial_exclusion_reason": "below_priority_threshold"
     },
     {
-      "score": 26.4,
+      "score": 25.6,
       "base_score": 9.0,
-      "recency_score": 71.2,
-      "age_minutes": 51.8,
+      "recency_score": 68.4,
+      "age_minutes": 56.9,
       "newest_source_timestamp": 1793688812.0,
       "viral_score": 0.0,
       "editorial_score": 18.0,
@@ -3972,7 +4226,7 @@
         "https://t.me/dps155/123158"
       ],
       "prediction": {
-        "priority_score": 38.4,
+        "priority_score": 37.4,
         "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
         "confidence": 65.0,
         "eligible": true,
@@ -4008,7 +4262,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 71.2,
+          "freshness": 68.4,
           "local_relevance": 30.0,
           "event_impact": 20.0,
           "reach": null,
@@ -4025,7 +4279,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 26.4,
+          "analyzer_score": 25.6,
           "viral_score": 0.0,
           "editorial_score": 18.0
         }
@@ -4038,7 +4292,7 @@
       "score": 26.6,
       "base_score": 36.9,
       "recency_score": 0.0,
-      "age_minutes": 341.5,
+      "age_minutes": 346.7,
       "newest_source_timestamp": 1793671427.0,
       "viral_score": 9.8,
       "editorial_score": 63.9,
@@ -4146,502 +4400,10 @@
       "editorial_exclusion_reason": "below_priority_threshold"
     },
     {
-      "score": 30.3,
-      "base_score": 36.9,
-      "recency_score": 13.5,
-      "age_minutes": 155.7,
-      "newest_source_timestamp": 1793682575.0,
-      "viral_score": 9.8,
-      "editorial_score": 63.9,
-      "confidence": 45.0,
-      "posts": 2,
-      "social_sources": 2,
-      "views": 0.0,
-      "reposts": 0.0,
-      "likes": 0.0,
-      "comments": 0.0,
-      "content_type": "news",
-      "official_attribution": false,
-      "source_type": "regional_media",
-      "nonlocal_detected": false,
-      "help_request": false,
-      "opinion_detected": false,
-      "advertising_detected": false,
-      "excluded_topic": false,
-      "status": "reject",
-      "action": "ИСКЛЮЧИТЬ",
-      "members": [
-        {
-          "source": "tg_aomsk",
-          "id": 77722,
-          "source_name": "Аварийный Омск",
-          "source_type": "telegram",
-          "timestamp": 1793682575,
-          "date": "2026-11-03 11:09:35",
-          "text": "Здравствуйте, может кто подкурить акумы подсели завестись не могу нахожусь в нефтяниках на энтузиастов 2к1 в ленте, желательно снять акум, ибо не кого на территорию не пускают, прошу писать в личку\n\n—\nАварийный Омск ТГ @aomsk и MAX.ru/aomsk",
-          "url": "https://t.me/aomsk/77722",
-          "media_type": null,
-          "views": null,
-          "likes": null,
-          "comments": null,
-          "reposts": null
-        },
-        {
-          "source": "aomsk",
-          "id": 3706388,
-          "date": "2026-11-03 11:08:35",
-          "timestamp": 1793682515,
-          "text": "Здравствуйте, может кто подкурить акумы подсели завестись не могу нахожусь в нефтяниках на энтузиастов 2к1 в ленте, желательно снять акум, ибо не кого на территорию не пускают, прошу писать в личку",
-          "likes": null,
-          "comments": null,
-          "reposts": null,
-          "views": null,
-          "url": "https://vk.ru/wall-62731567_3706388",
-          "source_type": "social",
-          "flags": [],
-          "editor_status": "⏳ ДО ОЦЕНКИ РЕЙТИНГА"
-        }
-      ],
-      "text": "Здравствуйте, может кто подкурить акумы подсели завестись не могу нахожусь в нефтяниках на энтузиастов 2к1 в ленте, желательно снять акум, ибо не кого на территорию не пускают, прошу писать в личку\n\n—\nАварийный Омск ТГ @aomsk и MAX.ru/aomsk",
-      "primary_source": "tg_aomsk",
-      "primary_url": "https://t.me/aomsk/77722",
-      "source_urls": [
-        "https://t.me/aomsk/77722",
-        "https://vk.ru/wall-62731567_3706388"
-      ],
-      "prediction": {
-        "priority_score": 36.3,
-        "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
-        "confidence": 45.0,
-        "eligible": true,
-        "exclusion_reason": null,
-        "score_version": "editorial_v2",
-        "model_type": "ridge_engagement_v1_shadow",
-        "ml_priority_score": 35.1,
-        "training_samples_1h": 174,
-        "training_samples_3h": 160,
-        "predicted_engagement_1h": 0.0056,
-        "predicted_engagement_3h": 0.005582,
-        "audience_model_predictions": {
-          "golos": {
-            "engagement_1h": 0.009518,
-            "engagement_3h": 0.009334,
-            "priority_score": 44.0,
-            "training_samples_1h": 86,
-            "training_samples_3h": 79
-          },
-          "zhest": {
-            "engagement_1h": 0.002988,
-            "engagement_3h": 0.003533,
-            "priority_score": 28.8,
-            "training_samples_1h": 88,
-            "training_samples_3h": 81
-          }
-        },
-        "event_class": "general",
-        "complaint_signal": false,
-        "complaint_viral_signal": false,
-        "complaint_bonus": 0.0,
-        "cross_source_count": 2,
-        "metric_coverage": [],
-        "coverage_ratio": 0.0,
-        "signals": {
-          "freshness": 13.5,
-          "local_relevance": 80.0,
-          "event_impact": 20.0,
-          "reach": null,
-          "engagement": null,
-          "discussion": null,
-          "reshare": null,
-          "velocity": null,
-          "cross_source_spread": 39.3
-        },
-        "score_weights": {
-          "freshness": 0.3448,
-          "local_relevance": 0.2759,
-          "event_impact": 0.2759,
-          "cross_source_spread": 0.1034
-        },
-        "legacy_scores": {
-          "analyzer_score": 30.3,
-          "viral_score": 9.8,
-          "editorial_score": 63.9
-        }
-      },
-      "editor_status": "⚪ ИСКЛЮЧИТЬ: НИЗКИЙ ПРИОРИТЕТ",
-      "publication_mode": "below_priority_threshold",
-      "editorial_exclusion_reason": "below_priority_threshold"
-    },
-    {
-      "score": 30.3,
-      "base_score": 32.5,
-      "recency_score": 24.8,
-      "age_minutes": 135.3,
-      "newest_source_timestamp": 1793683800.0,
-      "viral_score": 3.5,
-      "editorial_score": 61.4,
-      "confidence": 25.0,
-      "posts": 1,
-      "social_sources": 1,
-      "views": 0.0,
-      "reposts": 0.0,
-      "likes": 0.0,
-      "comments": 0.0,
-      "content_type": "news",
-      "official_attribution": false,
-      "source_type": "social",
-      "nonlocal_detected": false,
-      "help_request": false,
-      "opinion_detected": false,
-      "advertising_detected": false,
-      "excluded_topic": false,
-      "status": "reject",
-      "action": "ИСКЛЮЧИТЬ",
-      "members": [
-        {
-          "source": "omsk_vk",
-          "id": 3987161,
-          "date": "2026-11-03 11:30:00",
-          "timestamp": 1793683800,
-          "text": "Без воды на целый день останутся жители двух районов Омска\nИз-за ремонта водопровода холодную воду отключат в двух округах Омска.\nкран, вода\n\nВ четверг, 5 ноября, специалисты «Росводоканала» проведут плановые работы на двух участках водопроводной сети в Кировском и Советском округах Омска. Из-за этого местным жителям придется провести без холодной воды значительную часть дня.\n\nПервый участок ремонта расположен по адресу Мельничная, 58, – здесь работы продлятся с десяти утра до десяти вечера, то есть двенадцать часов подряд. На это время подача ресурса прекратится в домах на улицах Мельничная, 2-я Кировская и Центральная, а также в частном секторе 1-й Кировской. Второй участок находится по адресу СибНИИСХоз, 10а: ремонт начнется в 10:00 и завершится к 20:00. Без воды останутся жители частных и многоквартирных домов на 9-й Дунайской, СибНИИСХоз и 8-й Дунайской, а также колонки на СибНИИСХоз, 75, и 8-й Дунайской.\n\nПодвоз воды ни по одному из адресов не предусмотрен, поэтому омичам рекомендуют заранее позаботиться о запасах, чтобы не остаться без ресурса на весь день. Полные перечни отключенных домов опубликованы в виде фотографий в анонсе «Росводоканала».\n\nОмск Информ",
-          "likes": null,
-          "comments": null,
-          "reposts": null,
-          "views": null,
-          "url": "https://vk.ru/wall-50738246_3987161",
-          "source_type": "social",
-          "flags": [],
-          "editor_status": "⏳ ДО ОЦЕНКИ РЕЙТИНГА"
-        }
-      ],
-      "text": "Без воды на целый день останутся жители двух районов Омска\nИз-за ремонта водопровода холодную воду отключат в двух округах Омска.\nкран, вода\n\nВ четверг, 5 ноября, специалисты «Росводоканала» проведут плановые работы на двух участках водопроводной сети в Кировском и Советском округах Омска. Из-за этого местным жителям придется провести без холодной воды значительную часть дня.\n\nПервый участок ремонта расположен по адресу Мельничная, 58, – здесь работы продлятся с десяти утра до десяти вечера, то есть двенадцать часов подряд. На это время подача ресурса прекратится в домах на улицах Мельничная, 2-я Кировская и Центральная, а также в частном секторе 1-й Кировской. Второй участок находится по адресу СибНИИСХоз, 10а: ремонт начнется в 10:00 и завершится к 20:00. Без воды останутся жители частных и многоквартирных домов на 9-й Дунайской, СибНИИСХоз и 8-й Дунайской, а также колонки на СибНИИСХоз, 75, и 8-й Дунайской.\n\nПодвоз воды ни по одному из адресов не предусмотрен, поэтому омичам рекомендуют заранее позаботиться о запасах, чтобы не остаться без ресурса на весь день. Полные перечни отключенных домов опубликованы в виде фотографий в анонсе «Росводоканала».\n\nОмск Информ",
-      "primary_source": "omsk_vk",
-      "primary_url": "https://vk.ru/wall-50738246_3987161",
-      "source_urls": [
-        "https://vk.ru/wall-50738246_3987161"
-      ],
-      "prediction": {
-        "priority_score": 36.1,
-        "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
-        "confidence": 25.0,
-        "eligible": true,
-        "exclusion_reason": null,
-        "score_version": "editorial_v2",
-        "model_type": "ridge_engagement_v1_shadow",
-        "ml_priority_score": 0,
-        "training_samples_1h": 174,
-        "training_samples_3h": 160,
-        "predicted_engagement_1h": 0.003186,
-        "predicted_engagement_3h": 0.0,
-        "audience_model_predictions": {
-          "golos": {
-            "engagement_1h": 0.003754,
-            "engagement_3h": 0.000429,
-            "priority_score": 2.0,
-            "training_samples_1h": 86,
-            "training_samples_3h": 79
-          },
-          "zhest": {
-            "engagement_1h": 0.001202,
-            "engagement_3h": 0.0,
-            "priority_score": 0,
-            "training_samples_1h": 88,
-            "training_samples_3h": 81
-          }
-        },
-        "event_class": "general",
-        "complaint_signal": false,
-        "complaint_viral_signal": false,
-        "complaint_bonus": 0.0,
-        "cross_source_count": 1,
-        "metric_coverage": [],
-        "coverage_ratio": 0.0,
-        "signals": {
-          "freshness": 24.8,
-          "local_relevance": 80.0,
-          "event_impact": 20.0,
-          "reach": null,
-          "engagement": null,
-          "discussion": null,
-          "reshare": null,
-          "velocity": null,
-          "cross_source_spread": 0
-        },
-        "score_weights": {
-          "freshness": 0.3448,
-          "local_relevance": 0.2759,
-          "event_impact": 0.2759,
-          "cross_source_spread": 0.1034
-        },
-        "legacy_scores": {
-          "analyzer_score": 30.3,
-          "viral_score": 3.5,
-          "editorial_score": 61.4
-        }
-      },
-      "editor_status": "⚪ ИСКЛЮЧИТЬ: НИЗКИЙ ПРИОРИТЕТ",
-      "publication_mode": "below_priority_threshold",
-      "editorial_exclusion_reason": "below_priority_threshold"
-    },
-    {
-      "score": 30.3,
-      "base_score": 32.5,
-      "recency_score": 24.8,
-      "age_minutes": 135.4,
-      "newest_source_timestamp": 1793683794.0,
-      "viral_score": 3.5,
-      "editorial_score": 61.4,
-      "confidence": 65.0,
-      "posts": 1,
-      "social_sources": 1,
-      "views": 0.0,
-      "reposts": 0.0,
-      "likes": 0.0,
-      "comments": 0.0,
-      "content_type": "social_story",
-      "official_attribution": false,
-      "source_type": "regional_media",
-      "nonlocal_detected": false,
-      "help_request": false,
-      "opinion_detected": false,
-      "advertising_detected": false,
-      "excluded_topic": false,
-      "status": "reject",
-      "action": "ИСКЛЮЧИТЬ",
-      "members": [
-        {
-          "source": "tg_newsomsk",
-          "id": 19599,
-          "source_name": "Новости Омска",
-          "source_type": "telegram",
-          "timestamp": 1793683794,
-          "date": "2026-11-03 11:29:54",
-          "text": "Рейсы из Омска в Краснодар появятся только к концу года.\n\nАвиакомпания NordStar начнет выполнять вылеты по этому направлению со второй половины декабря. Рейсов будет не много. Вылеты запланированы 21 и 28 числа, а также 4 и 11 января.",
-          "url": "https://t.me/newsomsk/19599",
-          "media_type": "photo",
-          "views": null,
-          "likes": null,
-          "comments": null,
-          "reposts": null
-        }
-      ],
-      "text": "Рейсы из Омска в Краснодар появятся только к концу года.\n\nАвиакомпания NordStar начнет выполнять вылеты по этому направлению со второй половины декабря. Рейсов будет не много. Вылеты запланированы 21 и 28 числа, а также 4 и 11 января.",
-      "primary_source": "tg_newsomsk",
-      "primary_url": "https://t.me/newsomsk/19599",
-      "source_urls": [
-        "https://t.me/newsomsk/19599"
-      ],
-      "prediction": {
-        "priority_score": 36.1,
-        "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
-        "confidence": 65.0,
-        "eligible": true,
-        "exclusion_reason": null,
-        "score_version": "editorial_v2",
-        "model_type": "ridge_engagement_v1_shadow",
-        "ml_priority_score": 47.2,
-        "training_samples_1h": 174,
-        "training_samples_3h": 160,
-        "predicted_engagement_1h": 0.008758,
-        "predicted_engagement_3h": 0.007516,
-        "audience_model_predictions": {
-          "golos": {
-            "engagement_1h": 0.011651,
-            "engagement_3h": 0.010085,
-            "priority_score": 47.5,
-            "training_samples_1h": 86,
-            "training_samples_3h": 79
-          },
-          "zhest": {
-            "engagement_1h": 0.004742,
-            "engagement_3h": 0.003558,
-            "priority_score": 29.0,
-            "training_samples_1h": 88,
-            "training_samples_3h": 81
-          }
-        },
-        "event_class": "general",
-        "complaint_signal": false,
-        "complaint_viral_signal": false,
-        "complaint_bonus": 0.0,
-        "cross_source_count": 1,
-        "metric_coverage": [],
-        "coverage_ratio": 0.0,
-        "signals": {
-          "freshness": 24.8,
-          "local_relevance": 80.0,
-          "event_impact": 20.0,
-          "reach": null,
-          "engagement": null,
-          "discussion": null,
-          "reshare": null,
-          "velocity": null,
-          "cross_source_spread": 0
-        },
-        "score_weights": {
-          "freshness": 0.3448,
-          "local_relevance": 0.2759,
-          "event_impact": 0.2759,
-          "cross_source_spread": 0.1034
-        },
-        "legacy_scores": {
-          "analyzer_score": 30.3,
-          "viral_score": 3.5,
-          "editorial_score": 61.4
-        }
-      },
-      "editor_status": "⚪ ИСКЛЮЧИТЬ: НИЗКИЙ ПРИОРИТЕТ",
-      "publication_mode": "below_priority_threshold",
-      "editorial_exclusion_reason": "below_priority_threshold"
-    },
-    {
-      "score": 24.7,
-      "base_score": 32.5,
-      "recency_score": 4.7,
-      "age_minutes": 171.5,
-      "newest_source_timestamp": 1793681632.0,
-      "viral_score": 3.5,
-      "editorial_score": 61.4,
-      "confidence": 65.0,
-      "posts": 3,
-      "social_sources": 3,
-      "views": 0.0,
-      "reposts": 0.0,
-      "likes": 0.0,
-      "comments": 0.0,
-      "content_type": "social_story",
-      "official_attribution": false,
-      "source_type": "regional_media",
-      "nonlocal_detected": false,
-      "help_request": false,
-      "opinion_detected": false,
-      "advertising_detected": false,
-      "excluded_topic": false,
-      "status": "reject",
-      "action": "ИСКЛЮЧИТЬ",
-      "members": [
-        {
-          "source": "tg_omsktop1",
-          "id": 23231,
-          "source_name": "Омск с огоньком",
-          "source_type": "telegram",
-          "timestamp": 1793681632,
-          "date": "2026-11-03 10:53:52",
-          "text": "Часть омичей останется без отопления из-за ремонта теплосетей\n\nСпециалисты «Тепловой компании» работают на 14 объектах по адресам:\n\n📍 ул. Яковлева, 10 \n📍 ул. Гусарова, 28 \n📍 ул. Съездовская, 146 \n📍 ул. 2-я Учхозная, 4/2 \n📍 ул. Масленникова, 60–62 \n📍 ул. Светлая, 9 \n📍 пр. Мира, 6 \n📍 ул. Химиков, 6а\n📍 Комсомольский проспект, 4а\n📍 ул. Б. Хмельницкого, 214\n📍 Космический пр., 53Б\n📍 ул. Мельничная, 4а \n📍 ул. Крупской, 3 \n📍 ул. Перова, 64 \n\nЗавершить работы планируют в течение дня.\n\n🔴 Подписаться | Прислать нам новость",
-          "url": "https://t.me/omsktop1/23231",
-          "media_type": "photo",
-          "views": null,
-          "likes": null,
-          "comments": null,
-          "reposts": null
-        },
-        {
-          "source": "tg_1432513803",
-          "id": 32035,
-          "source_name": "Инцидент Омск!",
-          "source_type": "telegram",
-          "timestamp": 1793681085,
-          "date": "2026-11-03 10:44:45",
-          "text": "В Омске продолжаются работы по ремонту теплосетей — из‑за этого в ряде домов временно отключают отопление\n\nПо информации «Тепловой компании», сегодня специалисты ведут работы на 14 объектах — они расположены в Центральном, Советском и Октябрьском округах:\n\nул. Яковлева, 10 \n \nул. Гусарова, 28 \n \nул. Съездовская, 146 \n \nул. 2-я Учхозная, 4/2 \n \nул. Масленникова, 60–62 \n \nул. Светлая, 9 \n \nпр. Мира, 6 \n \nул. Химиков, 6а \n \nКомсомольский проспект, 4а \n \nул. Б. Хмельницкого, 214 \n \nКосмический пр., 53Б \n \nул. Мельничная, 4а \n \nул. Крупской, 3 \n \nул. Перова, 64 \n\nНа время ремонта подача тепла по указанным адресам будет ограничена; в компании рассчитывают завершить работы в течение дня.\n\nУ вас тепло дома? \n\n📱 Телеграм Инцидент Омск | 💜 MAX\n📱 Телеграм Омск Live | 💜 MAX",
-          "url": "https://t.me/c/1432513803/32035",
-          "media_type": "photo",
-          "views": null,
-          "likes": null,
-          "comments": null,
-          "reposts": null
-        },
-        {
-          "source": "tg_omskpravda",
-          "id": 39046,
-          "source_name": "Омская правда",
-          "source_type": "telegram",
-          "timestamp": 1793679175,
-          "date": "2026-11-03 10:12:55",
-          "text": "В Омске продолжается ремонт тепловых сетей\n\nСводка работ на 3 ноября: \n\nул. Яковлева, 10\nул. Гусарова, 28\nул. Съездовская, 146\nул. 2-я Учхозная, 4/2\nул. Масленникова, 60–62\nул. Светлая, 9\nпр. Мира, 6\nул. Химиков, 6а\nКомсомольский проспект, 4а\nул. Б. Хмельницкого, 214\nКосмический пр., 53Б\nул. Мельничная, 4а\nул. Крупской, 3\nул. Перова, 64\n\nНа время проведения работ на указанных адресах будет временно ограничено теплоснабжение. Планируемый срок окончания работ — в течение этого дня.\n\nЧто делать, если в вашей квартире нет отопления?\n\nОбратитесь в вашу управляющую организацию (УК или ТСЖ). Диспетчеры проверят состояние внутридомовой системы, подскажут точную причину отсутствия тепла и сообщат ориентировочные сроки восстановления подачи ресурса.",
-          "url": "https://t.me/omskpravda/39046",
-          "media_type": "photo",
-          "views": null,
-          "likes": null,
-          "comments": null,
-          "reposts": null
-        }
-      ],
-      "text": "Часть омичей останется без отопления из-за ремонта теплосетей\n\nСпециалисты «Тепловой компании» работают на 14 объектах по адресам:\n\n📍 ул. Яковлева, 10 \n📍 ул. Гусарова, 28 \n📍 ул. Съездовская, 146 \n📍 ул. 2-я Учхозная, 4/2 \n📍 ул. Масленникова, 60–62 \n📍 ул. Светлая, 9 \n📍 пр. Мира, 6 \n📍 ул. Химиков, 6а\n📍 Комсомольский проспект, 4а\n📍 ул. Б. Хмельницкого, 214\n📍 Космический пр., 53Б\n📍 ул. Мельничная, 4а \n📍 ул. Крупской, 3 \n📍 ул. Перова, 64 \n\nЗавершить работы планируют в течение дня.\n\n🔴 Подписаться | Прислать нам новость",
-      "primary_source": "tg_omsktop1",
-      "primary_url": "https://t.me/omsktop1/23231",
-      "source_urls": [
-        "https://t.me/omsktop1/23231",
-        "https://t.me/c/1432513803/32035",
-        "https://t.me/omskpravda/39046"
-      ],
-      "prediction": {
-        "priority_score": 35.8,
-        "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
-        "confidence": 65.0,
-        "eligible": true,
-        "exclusion_reason": null,
-        "score_version": "editorial_v2",
-        "model_type": "ridge_engagement_v1_shadow",
-        "ml_priority_score": 0,
-        "training_samples_1h": 174,
-        "training_samples_3h": 160,
-        "predicted_engagement_1h": 0.005359,
-        "predicted_engagement_3h": 0.0,
-        "audience_model_predictions": {
-          "golos": {
-            "engagement_1h": 0.006676,
-            "engagement_3h": 0.0,
-            "priority_score": 0,
-            "training_samples_1h": 86,
-            "training_samples_3h": 79
-          },
-          "zhest": {
-            "engagement_1h": 0.004511,
-            "engagement_3h": 0.000672,
-            "priority_score": 5.5,
-            "training_samples_1h": 88,
-            "training_samples_3h": 81
-          }
-        },
-        "event_class": "general",
-        "complaint_signal": false,
-        "complaint_viral_signal": false,
-        "complaint_bonus": 0.0,
-        "cross_source_count": 3,
-        "metric_coverage": [],
-        "coverage_ratio": 0.0,
-        "signals": {
-          "freshness": 4.7,
-          "local_relevance": 80.0,
-          "event_impact": 20.0,
-          "reach": null,
-          "engagement": null,
-          "discussion": null,
-          "reshare": null,
-          "velocity": null,
-          "cross_source_spread": 63.2
-        },
-        "score_weights": {
-          "freshness": 0.3448,
-          "local_relevance": 0.2759,
-          "event_impact": 0.2759,
-          "cross_source_spread": 0.1034
-        },
-        "legacy_scores": {
-          "analyzer_score": 24.7,
-          "viral_score": 3.5,
-          "editorial_score": 61.4
-        }
-      },
-      "editor_status": "⚪ ИСКЛЮЧИТЬ: НИЗКИЙ ПРИОРИТЕТ",
-      "publication_mode": "below_priority_threshold",
-      "editorial_exclusion_reason": "below_priority_threshold"
-    },
-    {
       "score": 26.6,
       "base_score": 36.9,
       "recency_score": 0.0,
-      "age_minutes": 196.7,
+      "age_minutes": 201.8,
       "newest_source_timestamp": 1793680116.0,
       "viral_score": 9.8,
       "editorial_score": 63.9,
@@ -4797,13 +4559,251 @@
       "editorial_exclusion_reason": "below_priority_threshold"
     },
     {
-      "score": 23.6,
-      "base_score": 9.0,
-      "recency_score": 61.2,
-      "age_minutes": 69.9,
-      "newest_source_timestamp": 1793687727.0,
-      "viral_score": 0.0,
-      "editorial_score": 18.0,
+      "score": 29.5,
+      "base_score": 36.9,
+      "recency_score": 10.6,
+      "age_minutes": 160.9,
+      "newest_source_timestamp": 1793682575.0,
+      "viral_score": 9.8,
+      "editorial_score": 63.9,
+      "confidence": 45.0,
+      "posts": 2,
+      "social_sources": 2,
+      "views": 0.0,
+      "reposts": 0.0,
+      "likes": 0.0,
+      "comments": 0.0,
+      "content_type": "news",
+      "official_attribution": false,
+      "source_type": "regional_media",
+      "nonlocal_detected": false,
+      "help_request": false,
+      "opinion_detected": false,
+      "advertising_detected": false,
+      "excluded_topic": false,
+      "status": "reject",
+      "action": "ИСКЛЮЧИТЬ",
+      "members": [
+        {
+          "source": "tg_aomsk",
+          "id": 77722,
+          "source_name": "Аварийный Омск",
+          "source_type": "telegram",
+          "timestamp": 1793682575,
+          "date": "2026-11-03 11:09:35",
+          "text": "Здравствуйте, может кто подкурить акумы подсели завестись не могу нахожусь в нефтяниках на энтузиастов 2к1 в ленте, желательно снять акум, ибо не кого на территорию не пускают, прошу писать в личку\n\n—\nАварийный Омск ТГ @aomsk и MAX.ru/aomsk",
+          "url": "https://t.me/aomsk/77722",
+          "media_type": null,
+          "views": null,
+          "likes": null,
+          "comments": null,
+          "reposts": null
+        },
+        {
+          "source": "aomsk",
+          "id": 3706388,
+          "date": "2026-11-03 11:08:35",
+          "timestamp": 1793682515,
+          "text": "Здравствуйте, может кто подкурить акумы подсели завестись не могу нахожусь в нефтяниках на энтузиастов 2к1 в ленте, желательно снять акум, ибо не кого на территорию не пускают, прошу писать в личку",
+          "likes": null,
+          "comments": null,
+          "reposts": null,
+          "views": null,
+          "url": "https://vk.ru/wall-62731567_3706388",
+          "source_type": "social",
+          "flags": [],
+          "editor_status": "⏳ ДО ОЦЕНКИ РЕЙТИНГА"
+        }
+      ],
+      "text": "Здравствуйте, может кто подкурить акумы подсели завестись не могу нахожусь в нефтяниках на энтузиастов 2к1 в ленте, желательно снять акум, ибо не кого на территорию не пускают, прошу писать в личку\n\n—\nАварийный Омск ТГ @aomsk и MAX.ru/aomsk",
+      "primary_source": "tg_aomsk",
+      "primary_url": "https://t.me/aomsk/77722",
+      "source_urls": [
+        "https://t.me/aomsk/77722",
+        "https://vk.ru/wall-62731567_3706388"
+      ],
+      "prediction": {
+        "priority_score": 35.3,
+        "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
+        "confidence": 45.0,
+        "eligible": true,
+        "exclusion_reason": null,
+        "score_version": "editorial_v2",
+        "model_type": "ridge_engagement_v1_shadow",
+        "ml_priority_score": 35.1,
+        "training_samples_1h": 174,
+        "training_samples_3h": 160,
+        "predicted_engagement_1h": 0.0056,
+        "predicted_engagement_3h": 0.005582,
+        "audience_model_predictions": {
+          "golos": {
+            "engagement_1h": 0.009518,
+            "engagement_3h": 0.009334,
+            "priority_score": 44.0,
+            "training_samples_1h": 86,
+            "training_samples_3h": 79
+          },
+          "zhest": {
+            "engagement_1h": 0.002988,
+            "engagement_3h": 0.003533,
+            "priority_score": 28.8,
+            "training_samples_1h": 88,
+            "training_samples_3h": 81
+          }
+        },
+        "event_class": "general",
+        "complaint_signal": false,
+        "complaint_viral_signal": false,
+        "complaint_bonus": 0.0,
+        "cross_source_count": 2,
+        "metric_coverage": [],
+        "coverage_ratio": 0.0,
+        "signals": {
+          "freshness": 10.6,
+          "local_relevance": 80.0,
+          "event_impact": 20.0,
+          "reach": null,
+          "engagement": null,
+          "discussion": null,
+          "reshare": null,
+          "velocity": null,
+          "cross_source_spread": 39.3
+        },
+        "score_weights": {
+          "freshness": 0.3448,
+          "local_relevance": 0.2759,
+          "event_impact": 0.2759,
+          "cross_source_spread": 0.1034
+        },
+        "legacy_scores": {
+          "analyzer_score": 29.5,
+          "viral_score": 9.8,
+          "editorial_score": 63.9
+        }
+      },
+      "editor_status": "⚪ ИСКЛЮЧИТЬ: НИЗКИЙ ПРИОРИТЕТ",
+      "publication_mode": "below_priority_threshold",
+      "editorial_exclusion_reason": "below_priority_threshold"
+    },
+    {
+      "score": 29.6,
+      "base_score": 32.5,
+      "recency_score": 22.0,
+      "age_minutes": 140.4,
+      "newest_source_timestamp": 1793683800.0,
+      "viral_score": 3.5,
+      "editorial_score": 61.4,
+      "confidence": 25.0,
+      "posts": 1,
+      "social_sources": 1,
+      "views": 0.0,
+      "reposts": 0.0,
+      "likes": 0.0,
+      "comments": 0.0,
+      "content_type": "news",
+      "official_attribution": false,
+      "source_type": "social",
+      "nonlocal_detected": false,
+      "help_request": false,
+      "opinion_detected": false,
+      "advertising_detected": false,
+      "excluded_topic": false,
+      "status": "reject",
+      "action": "ИСКЛЮЧИТЬ",
+      "members": [
+        {
+          "source": "omsk_vk",
+          "id": 3987161,
+          "date": "2026-11-03 11:30:00",
+          "timestamp": 1793683800,
+          "text": "Без воды на целый день останутся жители двух районов Омска\nИз-за ремонта водопровода холодную воду отключат в двух округах Омска.\nкран, вода\n\nВ четверг, 5 ноября, специалисты «Росводоканала» проведут плановые работы на двух участках водопроводной сети в Кировском и Советском округах Омска. Из-за этого местным жителям придется провести без холодной воды значительную часть дня.\n\nПервый участок ремонта расположен по адресу Мельничная, 58, – здесь работы продлятся с десяти утра до десяти вечера, то есть двенадцать часов подряд. На это время подача ресурса прекратится в домах на улицах Мельничная, 2-я Кировская и Центральная, а также в частном секторе 1-й Кировской. Второй участок находится по адресу СибНИИСХоз, 10а: ремонт начнется в 10:00 и завершится к 20:00. Без воды останутся жители частных и многоквартирных домов на 9-й Дунайской, СибНИИСХоз и 8-й Дунайской, а также колонки на СибНИИСХоз, 75, и 8-й Дунайской.\n\nПодвоз воды ни по одному из адресов не предусмотрен, поэтому омичам рекомендуют заранее позаботиться о запасах, чтобы не остаться без ресурса на весь день. Полные перечни отключенных домов опубликованы в виде фотографий в анонсе «Росводоканала».\n\nОмск Информ",
+          "likes": null,
+          "comments": null,
+          "reposts": null,
+          "views": null,
+          "url": "https://vk.ru/wall-50738246_3987161",
+          "source_type": "social",
+          "flags": [],
+          "editor_status": "⏳ ДО ОЦЕНКИ РЕЙТИНГА"
+        }
+      ],
+      "text": "Без воды на целый день останутся жители двух районов Омска\nИз-за ремонта водопровода холодную воду отключат в двух округах Омска.\nкран, вода\n\nВ четверг, 5 ноября, специалисты «Росводоканала» проведут плановые работы на двух участках водопроводной сети в Кировском и Советском округах Омска. Из-за этого местным жителям придется провести без холодной воды значительную часть дня.\n\nПервый участок ремонта расположен по адресу Мельничная, 58, – здесь работы продлятся с десяти утра до десяти вечера, то есть двенадцать часов подряд. На это время подача ресурса прекратится в домах на улицах Мельничная, 2-я Кировская и Центральная, а также в частном секторе 1-й Кировской. Второй участок находится по адресу СибНИИСХоз, 10а: ремонт начнется в 10:00 и завершится к 20:00. Без воды останутся жители частных и многоквартирных домов на 9-й Дунайской, СибНИИСХоз и 8-й Дунайской, а также колонки на СибНИИСХоз, 75, и 8-й Дунайской.\n\nПодвоз воды ни по одному из адресов не предусмотрен, поэтому омичам рекомендуют заранее позаботиться о запасах, чтобы не остаться без ресурса на весь день. Полные перечни отключенных домов опубликованы в виде фотографий в анонсе «Росводоканала».\n\nОмск Информ",
+      "primary_source": "omsk_vk",
+      "primary_url": "https://vk.ru/wall-50738246_3987161",
+      "source_urls": [
+        "https://vk.ru/wall-50738246_3987161"
+      ],
+      "prediction": {
+        "priority_score": 35.2,
+        "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
+        "confidence": 25.0,
+        "eligible": true,
+        "exclusion_reason": null,
+        "score_version": "editorial_v2",
+        "model_type": "ridge_engagement_v1_shadow",
+        "ml_priority_score": 0,
+        "training_samples_1h": 174,
+        "training_samples_3h": 160,
+        "predicted_engagement_1h": 0.003186,
+        "predicted_engagement_3h": 0.0,
+        "audience_model_predictions": {
+          "golos": {
+            "engagement_1h": 0.003754,
+            "engagement_3h": 0.000429,
+            "priority_score": 2.0,
+            "training_samples_1h": 86,
+            "training_samples_3h": 79
+          },
+          "zhest": {
+            "engagement_1h": 0.001202,
+            "engagement_3h": 0.0,
+            "priority_score": 0,
+            "training_samples_1h": 88,
+            "training_samples_3h": 81
+          }
+        },
+        "event_class": "general",
+        "complaint_signal": false,
+        "complaint_viral_signal": false,
+        "complaint_bonus": 0.0,
+        "cross_source_count": 1,
+        "metric_coverage": [],
+        "coverage_ratio": 0.0,
+        "signals": {
+          "freshness": 22.0,
+          "local_relevance": 80.0,
+          "event_impact": 20.0,
+          "reach": null,
+          "engagement": null,
+          "discussion": null,
+          "reshare": null,
+          "velocity": null,
+          "cross_source_spread": 0
+        },
+        "score_weights": {
+          "freshness": 0.3448,
+          "local_relevance": 0.2759,
+          "event_impact": 0.2759,
+          "cross_source_spread": 0.1034
+        },
+        "legacy_scores": {
+          "analyzer_score": 29.6,
+          "viral_score": 3.5,
+          "editorial_score": 61.4
+        }
+      },
+      "editor_status": "⚪ ИСКЛЮЧИТЬ: НИЗКИЙ ПРИОРИТЕТ",
+      "publication_mode": "below_priority_threshold",
+      "editorial_exclusion_reason": "below_priority_threshold"
+    },
+    {
+      "score": 29.5,
+      "base_score": 32.5,
+      "recency_score": 21.9,
+      "age_minutes": 140.5,
+      "newest_source_timestamp": 1793683794.0,
+      "viral_score": 3.5,
+      "editorial_score": 61.4,
       "confidence": 65.0,
       "posts": 1,
       "social_sources": 1,
@@ -4823,52 +4823,52 @@
       "action": "ИСКЛЮЧИТЬ",
       "members": [
         {
-          "source": "tg_dps155",
-          "id": 123157,
-          "source_name": "ДПС Омск",
+          "source": "tg_newsomsk",
+          "id": 19599,
+          "source_name": "Новости Омска",
           "source_type": "telegram",
-          "timestamp": 1793687727,
-          "date": "2026-11-03 12:35:27",
-          "text": "На Лескова в сторону 10 лет багажник чей-то досматривают",
-          "url": "https://t.me/dps155/123157",
-          "media_type": null,
+          "timestamp": 1793683794,
+          "date": "2026-11-03 11:29:54",
+          "text": "Рейсы из Омска в Краснодар появятся только к концу года.\n\nАвиакомпания NordStar начнет выполнять вылеты по этому направлению со второй половины декабря. Рейсов будет не много. Вылеты запланированы 21 и 28 числа, а также 4 и 11 января.",
+          "url": "https://t.me/newsomsk/19599",
+          "media_type": "photo",
           "views": null,
           "likes": null,
           "comments": null,
           "reposts": null
         }
       ],
-      "text": "На Лескова в сторону 10 лет багажник чей-то досматривают",
-      "primary_source": "tg_dps155",
-      "primary_url": "https://t.me/dps155/123157",
+      "text": "Рейсы из Омска в Краснодар появятся только к концу года.\n\nАвиакомпания NordStar начнет выполнять вылеты по этому направлению со второй половины декабря. Рейсов будет не много. Вылеты запланированы 21 и 28 числа, а также 4 и 11 января.",
+      "primary_source": "tg_newsomsk",
+      "primary_url": "https://t.me/newsomsk/19599",
       "source_urls": [
-        "https://t.me/dps155/123157"
+        "https://t.me/newsomsk/19599"
       ],
       "prediction": {
-        "priority_score": 34.9,
+        "priority_score": 35.1,
         "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
         "confidence": 65.0,
         "eligible": true,
         "exclusion_reason": null,
         "score_version": "editorial_v2",
         "model_type": "ridge_engagement_v1_shadow",
-        "ml_priority_score": 53.1,
+        "ml_priority_score": 47.2,
         "training_samples_1h": 174,
         "training_samples_3h": 160,
-        "predicted_engagement_1h": 0.009761,
-        "predicted_engagement_3h": 0.008453,
+        "predicted_engagement_1h": 0.008758,
+        "predicted_engagement_3h": 0.007516,
         "audience_model_predictions": {
           "golos": {
-            "engagement_1h": 0.012573,
-            "engagement_3h": 0.010701,
-            "priority_score": 50.4,
+            "engagement_1h": 0.011651,
+            "engagement_3h": 0.010085,
+            "priority_score": 47.5,
             "training_samples_1h": 86,
             "training_samples_3h": 79
           },
           "zhest": {
-            "engagement_1h": 0.005418,
-            "engagement_3h": 0.004364,
-            "priority_score": 35.6,
+            "engagement_1h": 0.004742,
+            "engagement_3h": 0.003558,
+            "priority_score": 29.0,
             "training_samples_1h": 88,
             "training_samples_3h": 81
           }
@@ -4881,8 +4881,8 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 61.2,
-          "local_relevance": 30.0,
+          "freshness": 21.9,
+          "local_relevance": 80.0,
           "event_impact": 20.0,
           "reach": null,
           "engagement": null,
@@ -4898,9 +4898,152 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 23.6,
-          "viral_score": 0.0,
-          "editorial_score": 18.0
+          "analyzer_score": 29.5,
+          "viral_score": 3.5,
+          "editorial_score": 61.4
+        }
+      },
+      "editor_status": "⚪ ИСКЛЮЧИТЬ: НИЗКИЙ ПРИОРИТЕТ",
+      "publication_mode": "below_priority_threshold",
+      "editorial_exclusion_reason": "below_priority_threshold"
+    },
+    {
+      "score": 23.9,
+      "base_score": 32.5,
+      "recency_score": 1.9,
+      "age_minutes": 176.6,
+      "newest_source_timestamp": 1793681632.0,
+      "viral_score": 3.5,
+      "editorial_score": 61.4,
+      "confidence": 65.0,
+      "posts": 3,
+      "social_sources": 3,
+      "views": 0.0,
+      "reposts": 0.0,
+      "likes": 0.0,
+      "comments": 0.0,
+      "content_type": "social_story",
+      "official_attribution": false,
+      "source_type": "regional_media",
+      "nonlocal_detected": false,
+      "help_request": false,
+      "opinion_detected": false,
+      "advertising_detected": false,
+      "excluded_topic": false,
+      "status": "reject",
+      "action": "ИСКЛЮЧИТЬ",
+      "members": [
+        {
+          "source": "tg_omsktop1",
+          "id": 23231,
+          "source_name": "Омск с огоньком",
+          "source_type": "telegram",
+          "timestamp": 1793681632,
+          "date": "2026-11-03 10:53:52",
+          "text": "Часть омичей останется без отопления из-за ремонта теплосетей\n\nСпециалисты «Тепловой компании» работают на 14 объектах по адресам:\n\n📍 ул. Яковлева, 10 \n📍 ул. Гусарова, 28 \n📍 ул. Съездовская, 146 \n📍 ул. 2-я Учхозная, 4/2 \n📍 ул. Масленникова, 60–62 \n📍 ул. Светлая, 9 \n📍 пр. Мира, 6 \n📍 ул. Химиков, 6а\n📍 Комсомольский проспект, 4а\n📍 ул. Б. Хмельницкого, 214\n📍 Космический пр., 53Б\n📍 ул. Мельничная, 4а \n📍 ул. Крупской, 3 \n📍 ул. Перова, 64 \n\nЗавершить работы планируют в течение дня.\n\n🔴 Подписаться | Прислать нам новость",
+          "url": "https://t.me/omsktop1/23231",
+          "media_type": "photo",
+          "views": null,
+          "likes": null,
+          "comments": null,
+          "reposts": null
+        },
+        {
+          "source": "tg_1432513803",
+          "id": 32035,
+          "source_name": "Инцидент Омск!",
+          "source_type": "telegram",
+          "timestamp": 1793681085,
+          "date": "2026-11-03 10:44:45",
+          "text": "В Омске продолжаются работы по ремонту теплосетей — из‑за этого в ряде домов временно отключают отопление\n\nПо информации «Тепловой компании», сегодня специалисты ведут работы на 14 объектах — они расположены в Центральном, Советском и Октябрьском округах:\n\nул. Яковлева, 10 \n \nул. Гусарова, 28 \n \nул. Съездовская, 146 \n \nул. 2-я Учхозная, 4/2 \n \nул. Масленникова, 60–62 \n \nул. Светлая, 9 \n \nпр. Мира, 6 \n \nул. Химиков, 6а \n \nКомсомольский проспект, 4а \n \nул. Б. Хмельницкого, 214 \n \nКосмический пр., 53Б \n \nул. Мельничная, 4а \n \nул. Крупской, 3 \n \nул. Перова, 64 \n\nНа время ремонта подача тепла по указанным адресам будет ограничена; в компании рассчитывают завершить работы в течение дня.\n\nУ вас тепло дома? \n\n📱 Телеграм Инцидент Омск | 💜 MAX\n📱 Телеграм Омск Live | 💜 MAX",
+          "url": "https://t.me/c/1432513803/32035",
+          "media_type": "photo",
+          "views": null,
+          "likes": null,
+          "comments": null,
+          "reposts": null
+        },
+        {
+          "source": "tg_omskpravda",
+          "id": 39046,
+          "source_name": "Омская правда",
+          "source_type": "telegram",
+          "timestamp": 1793679175,
+          "date": "2026-11-03 10:12:55",
+          "text": "В Омске продолжается ремонт тепловых сетей\n\nСводка работ на 3 ноября: \n\nул. Яковлева, 10\nул. Гусарова, 28\nул. Съездовская, 146\nул. 2-я Учхозная, 4/2\nул. Масленникова, 60–62\nул. Светлая, 9\nпр. Мира, 6\nул. Химиков, 6а\nКомсомольский проспект, 4а\nул. Б. Хмельницкого, 214\nКосмический пр., 53Б\nул. Мельничная, 4а\nул. Крупской, 3\nул. Перова, 64\n\nНа время проведения работ на указанных адресах будет временно ограничено теплоснабжение. Планируемый срок окончания работ — в течение этого дня.\n\nЧто делать, если в вашей квартире нет отопления?\n\nОбратитесь в вашу управляющую организацию (УК или ТСЖ). Диспетчеры проверят состояние внутридомовой системы, подскажут точную причину отсутствия тепла и сообщат ориентировочные сроки восстановления подачи ресурса.",
+          "url": "https://t.me/omskpravda/39046",
+          "media_type": "photo",
+          "views": null,
+          "likes": null,
+          "comments": null,
+          "reposts": null
+        }
+      ],
+      "text": "Часть омичей останется без отопления из-за ремонта теплосетей\n\nСпециалисты «Тепловой компании» работают на 14 объектах по адресам:\n\n📍 ул. Яковлева, 10 \n📍 ул. Гусарова, 28 \n📍 ул. Съездовская, 146 \n📍 ул. 2-я Учхозная, 4/2 \n📍 ул. Масленникова, 60–62 \n📍 ул. Светлая, 9 \n📍 пр. Мира, 6 \n📍 ул. Химиков, 6а\n📍 Комсомольский проспект, 4а\n📍 ул. Б. Хмельницкого, 214\n📍 Космический пр., 53Б\n📍 ул. Мельничная, 4а \n📍 ул. Крупской, 3 \n📍 ул. Перова, 64 \n\nЗавершить работы планируют в течение дня.\n\n🔴 Подписаться | Прислать нам новость",
+      "primary_source": "tg_omsktop1",
+      "primary_url": "https://t.me/omsktop1/23231",
+      "source_urls": [
+        "https://t.me/omsktop1/23231",
+        "https://t.me/c/1432513803/32035",
+        "https://t.me/omskpravda/39046"
+      ],
+      "prediction": {
+        "priority_score": 34.8,
+        "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
+        "confidence": 65.0,
+        "eligible": true,
+        "exclusion_reason": null,
+        "score_version": "editorial_v2",
+        "model_type": "ridge_engagement_v1_shadow",
+        "ml_priority_score": 0,
+        "training_samples_1h": 174,
+        "training_samples_3h": 160,
+        "predicted_engagement_1h": 0.005359,
+        "predicted_engagement_3h": 0.0,
+        "audience_model_predictions": {
+          "golos": {
+            "engagement_1h": 0.006676,
+            "engagement_3h": 0.0,
+            "priority_score": 0,
+            "training_samples_1h": 86,
+            "training_samples_3h": 79
+          },
+          "zhest": {
+            "engagement_1h": 0.004511,
+            "engagement_3h": 0.000672,
+            "priority_score": 5.5,
+            "training_samples_1h": 88,
+            "training_samples_3h": 81
+          }
+        },
+        "event_class": "general",
+        "complaint_signal": false,
+        "complaint_viral_signal": false,
+        "complaint_bonus": 0.0,
+        "cross_source_count": 3,
+        "metric_coverage": [],
+        "coverage_ratio": 0.0,
+        "signals": {
+          "freshness": 1.9,
+          "local_relevance": 80.0,
+          "event_impact": 20.0,
+          "reach": null,
+          "engagement": null,
+          "discussion": null,
+          "reshare": null,
+          "velocity": null,
+          "cross_source_spread": 63.2
+        },
+        "score_weights": {
+          "freshness": 0.3448,
+          "local_relevance": 0.2759,
+          "event_impact": 0.2759,
+          "cross_source_spread": 0.1034
+        },
+        "legacy_scores": {
+          "analyzer_score": 23.9,
+          "viral_score": 3.5,
+          "editorial_score": 61.4
         }
       },
       "editor_status": "⚪ ИСКЛЮЧИТЬ: НИЗКИЙ ПРИОРИТЕТ",
@@ -4911,7 +5054,7 @@
       "score": 25.5,
       "base_score": 35.4,
       "recency_score": 0.0,
-      "age_minutes": 321.0,
+      "age_minutes": 326.1,
       "newest_source_timestamp": 1793672662.0,
       "viral_score": 7.7,
       "editorial_score": 63.1,
@@ -5053,8 +5196,119 @@
     {
       "score": 22.8,
       "base_score": 9.0,
-      "recency_score": 58.2,
-      "age_minutes": 75.3,
+      "recency_score": 58.3,
+      "age_minutes": 75.0,
+      "newest_source_timestamp": 1793687727.0,
+      "viral_score": 0.0,
+      "editorial_score": 18.0,
+      "confidence": 65.0,
+      "posts": 1,
+      "social_sources": 1,
+      "views": 0.0,
+      "reposts": 0.0,
+      "likes": 0.0,
+      "comments": 0.0,
+      "content_type": "social_story",
+      "official_attribution": false,
+      "source_type": "regional_media",
+      "nonlocal_detected": false,
+      "help_request": false,
+      "opinion_detected": false,
+      "advertising_detected": false,
+      "excluded_topic": false,
+      "status": "reject",
+      "action": "ИСКЛЮЧИТЬ",
+      "members": [
+        {
+          "source": "tg_dps155",
+          "id": 123157,
+          "source_name": "ДПС Омск",
+          "source_type": "telegram",
+          "timestamp": 1793687727,
+          "date": "2026-11-03 12:35:27",
+          "text": "На Лескова в сторону 10 лет багажник чей-то досматривают",
+          "url": "https://t.me/dps155/123157",
+          "media_type": null,
+          "views": null,
+          "likes": null,
+          "comments": null,
+          "reposts": null
+        }
+      ],
+      "text": "На Лескова в сторону 10 лет багажник чей-то досматривают",
+      "primary_source": "tg_dps155",
+      "primary_url": "https://t.me/dps155/123157",
+      "source_urls": [
+        "https://t.me/dps155/123157"
+      ],
+      "prediction": {
+        "priority_score": 33.9,
+        "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
+        "confidence": 65.0,
+        "eligible": true,
+        "exclusion_reason": null,
+        "score_version": "editorial_v2",
+        "model_type": "ridge_engagement_v1_shadow",
+        "ml_priority_score": 53.1,
+        "training_samples_1h": 174,
+        "training_samples_3h": 160,
+        "predicted_engagement_1h": 0.009761,
+        "predicted_engagement_3h": 0.008453,
+        "audience_model_predictions": {
+          "golos": {
+            "engagement_1h": 0.012573,
+            "engagement_3h": 0.010701,
+            "priority_score": 50.4,
+            "training_samples_1h": 86,
+            "training_samples_3h": 79
+          },
+          "zhest": {
+            "engagement_1h": 0.005418,
+            "engagement_3h": 0.004364,
+            "priority_score": 35.6,
+            "training_samples_1h": 88,
+            "training_samples_3h": 81
+          }
+        },
+        "event_class": "general",
+        "complaint_signal": false,
+        "complaint_viral_signal": false,
+        "complaint_bonus": 0.0,
+        "cross_source_count": 1,
+        "metric_coverage": [],
+        "coverage_ratio": 0.0,
+        "signals": {
+          "freshness": 58.3,
+          "local_relevance": 30.0,
+          "event_impact": 20.0,
+          "reach": null,
+          "engagement": null,
+          "discussion": null,
+          "reshare": null,
+          "velocity": null,
+          "cross_source_spread": 0
+        },
+        "score_weights": {
+          "freshness": 0.3448,
+          "local_relevance": 0.2759,
+          "event_impact": 0.2759,
+          "cross_source_spread": 0.1034
+        },
+        "legacy_scores": {
+          "analyzer_score": 22.8,
+          "viral_score": 0.0,
+          "editorial_score": 18.0
+        }
+      },
+      "editor_status": "⚪ ИСКЛЮЧИТЬ: НИЗКИЙ ПРИОРИТЕТ",
+      "publication_mode": "below_priority_threshold",
+      "editorial_exclusion_reason": "below_priority_threshold"
+    },
+    {
+      "score": 22.0,
+      "base_score": 9.0,
+      "recency_score": 55.3,
+      "age_minutes": 80.4,
       "newest_source_timestamp": 1793687400.0,
       "viral_score": 0.0,
       "editorial_score": 18.0,
@@ -5099,7 +5353,7 @@
         "https://vk.ru/wall-50738246_3987188"
       ],
       "prediction": {
-        "priority_score": 33.8,
+        "priority_score": 32.9,
         "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
         "confidence": 25.0,
         "eligible": true,
@@ -5135,7 +5389,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 58.2,
+          "freshness": 55.3,
           "local_relevance": 30.0,
           "event_impact": 20.0,
           "reach": null,
@@ -5152,263 +5406,9 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 22.8,
+          "analyzer_score": 22.0,
           "viral_score": 0.0,
           "editorial_score": 18.0
-        }
-      },
-      "editor_status": "⚪ ИСКЛЮЧИТЬ: НИЗКИЙ ПРИОРИТЕТ",
-      "publication_mode": "below_priority_threshold",
-      "editorial_exclusion_reason": "below_priority_threshold"
-    },
-    {
-      "score": 24.2,
-      "base_score": 32.5,
-      "recency_score": 2.7,
-      "age_minutes": 175.1,
-      "newest_source_timestamp": 1793681413.0,
-      "viral_score": 3.5,
-      "editorial_score": 61.4,
-      "confidence": 65.0,
-      "posts": 2,
-      "social_sources": 2,
-      "views": 0.0,
-      "reposts": 0.0,
-      "likes": 0.0,
-      "comments": 0.0,
-      "content_type": "news",
-      "official_attribution": false,
-      "source_type": "regional_media",
-      "nonlocal_detected": false,
-      "help_request": false,
-      "opinion_detected": false,
-      "advertising_detected": false,
-      "excluded_topic": false,
-      "status": "reject",
-      "action": "ИСКЛЮЧИТЬ",
-      "members": [
-        {
-          "source": "tg_moiiomsk",
-          "id": 10859,
-          "source_name": "Мой Омск",
-          "source_type": "telegram",
-          "timestamp": 1793681413,
-          "date": "2026-11-03 10:50:13",
-          "text": "Омичей шокировали суммы в новых платежках за коммуналку\n\nВ конце октября омичам начали приходить квитанции с новыми тарифами за ЖКХ. Судя по реакции, цифры в коммунальных квитках повергают жителей в шок.\n\n«Начали приходить квитанции с новыми тарифами. О каком предельном росте совокупного платежа в 13 % можно говорить, если только за ТКО рост составил 62,36!!! % (было 796,69, стало 1293,51), за холодную воду - рост 25,9!!! % (было 152,29, стало 191,73), за свет - рост 11,24 % (было 4,45, стало 4,95)» - пишет жительница Омска.\n\n📍Мой Омск\n💬Чат",
-          "url": "https://t.me/moiiomsk/10859",
-          "media_type": "photo",
-          "views": null,
-          "likes": null,
-          "comments": null,
-          "reposts": null
-        },
-        {
-          "source": "tg_1178109741",
-          "id": 27898,
-          "source_name": "Омск Live",
-          "source_type": "telegram",
-          "timestamp": 1793681133,
-          "date": "2026-11-03 10:45:33",
-          "text": "Омичей шокировали суммы в новых платежках за коммуналку\n\nВ конце октября омичам начали приходить квитанции с новыми тарифами за ЖКХ. Судя по реакции, цифры в коммунальных квитках повергают жителей в шок. \n\n«Начали приходить квитанции с новыми тарифами. О каком предельном росте совокупного платежа в 13 % можно говорить, если только за ТКО рост составил 62,36!!! % (было 796,69, стало 1293,51), за холодную воду - рост 25,9!!! % (было 152,29, стало 191,73), за свет - рост 11,24 % (было 4,45, стало 4,95)» - пишет жительница Омска.\n\n📱 Телеграм Инцидент Омск | 💜 MAX\n📱 Телеграм Омск Live | 💜 MAX",
-          "url": "https://t.me/c/1178109741/27898",
-          "media_type": "photo",
-          "views": null,
-          "likes": null,
-          "comments": null,
-          "reposts": null
-        }
-      ],
-      "text": "Омичей шокировали суммы в новых платежках за коммуналку\n\nВ конце октября омичам начали приходить квитанции с новыми тарифами за ЖКХ. Судя по реакции, цифры в коммунальных квитках повергают жителей в шок.\n\n«Начали приходить квитанции с новыми тарифами. О каком предельном росте совокупного платежа в 13 % можно говорить, если только за ТКО рост составил 62,36!!! % (было 796,69, стало 1293,51), за холодную воду - рост 25,9!!! % (было 152,29, стало 191,73), за свет - рост 11,24 % (было 4,45, стало 4,95)» - пишет жительница Омска.\n\n📍Мой Омск\n💬Чат",
-      "primary_source": "tg_moiiomsk",
-      "primary_url": "https://t.me/moiiomsk/10859",
-      "source_urls": [
-        "https://t.me/moiiomsk/10859",
-        "https://t.me/c/1178109741/27898"
-      ],
-      "prediction": {
-        "priority_score": 32.6,
-        "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
-        "confidence": 65.0,
-        "eligible": true,
-        "exclusion_reason": null,
-        "score_version": "editorial_v2",
-        "model_type": "ridge_engagement_v1_shadow",
-        "ml_priority_score": 0,
-        "training_samples_1h": 174,
-        "training_samples_3h": 160,
-        "predicted_engagement_1h": 0.000371,
-        "predicted_engagement_3h": 0.0,
-        "audience_model_predictions": {
-          "golos": {
-            "engagement_1h": 0.003885,
-            "engagement_3h": 0.002393,
-            "priority_score": 11.3,
-            "training_samples_1h": 86,
-            "training_samples_3h": 79
-          },
-          "zhest": {
-            "engagement_1h": 0.0,
-            "engagement_3h": 0.0,
-            "priority_score": 0,
-            "training_samples_1h": 88,
-            "training_samples_3h": 81
-          }
-        },
-        "event_class": "general",
-        "complaint_signal": false,
-        "complaint_viral_signal": false,
-        "complaint_bonus": 0.0,
-        "cross_source_count": 2,
-        "metric_coverage": [],
-        "coverage_ratio": 0.0,
-        "signals": {
-          "freshness": 2.7,
-          "local_relevance": 80.0,
-          "event_impact": 20.0,
-          "reach": null,
-          "engagement": null,
-          "discussion": null,
-          "reshare": null,
-          "velocity": null,
-          "cross_source_spread": 39.3
-        },
-        "score_weights": {
-          "freshness": 0.3448,
-          "local_relevance": 0.2759,
-          "event_impact": 0.2759,
-          "cross_source_spread": 0.1034
-        },
-        "legacy_scores": {
-          "analyzer_score": 24.2,
-          "viral_score": 3.5,
-          "editorial_score": 61.4
-        }
-      },
-      "editor_status": "⚪ ИСКЛЮЧИТЬ: НИЗКИЙ ПРИОРИТЕТ",
-      "publication_mode": "below_priority_threshold",
-      "editorial_exclusion_reason": "below_priority_threshold"
-    },
-    {
-      "score": 20.2,
-      "base_score": 11.9,
-      "recency_score": 41.5,
-      "age_minutes": 105.2,
-      "newest_source_timestamp": 1793685604.0,
-      "viral_score": 4.2,
-      "editorial_score": 19.7,
-      "confidence": 25.0,
-      "posts": 2,
-      "social_sources": 2,
-      "views": 0.0,
-      "reposts": 0.0,
-      "likes": 0.0,
-      "comments": 0.0,
-      "content_type": "social_story",
-      "official_attribution": false,
-      "source_type": "social",
-      "nonlocal_detected": false,
-      "help_request": false,
-      "opinion_detected": false,
-      "advertising_detected": false,
-      "excluded_topic": false,
-      "status": "reject",
-      "action": "ИСКЛЮЧИТЬ",
-      "members": [
-        {
-          "source": "dushalady",
-          "id": 401967,
-          "date": "2026-11-03 12:00:04",
-          "timestamp": 1793685604,
-          "text": "Всю жизнь работала 2/2, а тут впервые устроилась на пятидневку. Ребята, это ужас! В поликлинику не попасть, в паспортный стол тоже, да вообще ни в одно госучреждение. Отпроситься почти нереально: работа ответственная, я должна быть на месте постоянно, а подменить меня некому. \n \nКак вы вообще так живёте?! Поделитесь, как выкручиваетесь 🙏",
-          "likes": null,
-          "comments": null,
-          "reposts": null,
-          "views": null,
-          "url": "https://vk.ru/wall-77326222_401967",
-          "source_type": "social",
-          "flags": [],
-          "editor_status": "⏳ ДО ОЦЕНКИ РЕЙТИНГА"
-        },
-        {
-          "source": "omsk_group",
-          "id": 369310,
-          "date": "2026-11-03 12:00:02",
-          "timestamp": 1793685602,
-          "text": "Всю жизнь работала 2/2, а тут впервые устроилась на пятидневку. Ребята, это ужас! В поликлинику не попасть, в паспортный стол тоже, да вообще ни в одно госучреждение. Отпроситься почти нереально: работа ответственная, я должна быть на месте постоянно, а подменить меня некому. \n \nКак вы вообще так живёте?! Поделитесь, как выкручиваетесь 🙏",
-          "likes": null,
-          "comments": null,
-          "reposts": null,
-          "views": null,
-          "url": "https://vk.ru/wall-84350909_369310",
-          "source_type": "social",
-          "flags": [],
-          "editor_status": "⏳ ДО ОЦЕНКИ РЕЙТИНГА"
-        }
-      ],
-      "text": "Всю жизнь работала 2/2, а тут впервые устроилась на пятидневку. Ребята, это ужас! В поликлинику не попасть, в паспортный стол тоже, да вообще ни в одно госучреждение. Отпроситься почти нереально: работа ответственная, я должна быть на месте постоянно, а подменить меня некому. \n \nКак вы вообще так живёте?! Поделитесь, как выкручиваетесь 🙏",
-      "primary_source": "dushalady",
-      "primary_url": "https://vk.ru/wall-77326222_401967",
-      "source_urls": [
-        "https://vk.ru/wall-77326222_401967",
-        "https://vk.ru/wall-84350909_369310"
-      ],
-      "prediction": {
-        "priority_score": 32.2,
-        "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
-        "confidence": 25.0,
-        "eligible": true,
-        "exclusion_reason": null,
-        "score_version": "editorial_v2",
-        "model_type": "ridge_engagement_v1_shadow",
-        "ml_priority_score": 31.4,
-        "training_samples_1h": 174,
-        "training_samples_3h": 160,
-        "predicted_engagement_1h": 0.007299,
-        "predicted_engagement_3h": 0.004993,
-        "audience_model_predictions": {
-          "golos": {
-            "engagement_1h": 0.007016,
-            "engagement_3h": 0.005435,
-            "priority_score": 25.6,
-            "training_samples_1h": 86,
-            "training_samples_3h": 79
-          },
-          "zhest": {
-            "engagement_1h": 0.007034,
-            "engagement_3h": 0.003426,
-            "priority_score": 27.9,
-            "training_samples_1h": 88,
-            "training_samples_3h": 81
-          }
-        },
-        "event_class": "general",
-        "complaint_signal": false,
-        "complaint_viral_signal": false,
-        "complaint_bonus": 0.0,
-        "cross_source_count": 2,
-        "metric_coverage": [],
-        "coverage_ratio": 0.0,
-        "signals": {
-          "freshness": 41.5,
-          "local_relevance": 30.0,
-          "event_impact": 20.0,
-          "reach": null,
-          "engagement": null,
-          "discussion": null,
-          "reshare": null,
-          "velocity": null,
-          "cross_source_spread": 39.3
-        },
-        "score_weights": {
-          "freshness": 0.3448,
-          "local_relevance": 0.2759,
-          "event_impact": 0.2759,
-          "cross_source_spread": 0.1034
-        },
-        "legacy_scores": {
-          "analyzer_score": 20.2,
-          "viral_score": 4.2,
-          "editorial_score": 19.7
         }
       },
       "editor_status": "⚪ ИСКЛЮЧИТЬ: НИЗКИЙ ПРИОРИТЕТ",
@@ -5419,7 +5419,7 @@
       "score": 26.6,
       "base_score": 36.9,
       "recency_score": 0.0,
-      "age_minutes": 337.0,
+      "age_minutes": 342.2,
       "newest_source_timestamp": 1793671697.0,
       "viral_score": 9.8,
       "editorial_score": 63.9,
@@ -5546,7 +5546,7 @@
       "score": 26.6,
       "base_score": 36.9,
       "recency_score": 0.0,
-      "age_minutes": 694.5,
+      "age_minutes": 699.7,
       "newest_source_timestamp": 1793650247.0,
       "viral_score": 9.8,
       "editorial_score": 63.9,
@@ -5670,10 +5670,137 @@
       "editorial_exclusion_reason": "below_priority_threshold"
     },
     {
+      "score": 23.4,
+      "base_score": 32.5,
+      "recency_score": 0.0,
+      "age_minutes": 180.2,
+      "newest_source_timestamp": 1793681413.0,
+      "viral_score": 3.5,
+      "editorial_score": 61.4,
+      "confidence": 65.0,
+      "posts": 2,
+      "social_sources": 2,
+      "views": 0.0,
+      "reposts": 0.0,
+      "likes": 0.0,
+      "comments": 0.0,
+      "content_type": "news",
+      "official_attribution": false,
+      "source_type": "regional_media",
+      "nonlocal_detected": false,
+      "help_request": false,
+      "opinion_detected": false,
+      "advertising_detected": false,
+      "excluded_topic": false,
+      "status": "reject",
+      "action": "ИСКЛЮЧИТЬ",
+      "members": [
+        {
+          "source": "tg_moiiomsk",
+          "id": 10859,
+          "source_name": "Мой Омск",
+          "source_type": "telegram",
+          "timestamp": 1793681413,
+          "date": "2026-11-03 10:50:13",
+          "text": "Омичей шокировали суммы в новых платежках за коммуналку\n\nВ конце октября омичам начали приходить квитанции с новыми тарифами за ЖКХ. Судя по реакции, цифры в коммунальных квитках повергают жителей в шок.\n\n«Начали приходить квитанции с новыми тарифами. О каком предельном росте совокупного платежа в 13 % можно говорить, если только за ТКО рост составил 62,36!!! % (было 796,69, стало 1293,51), за холодную воду - рост 25,9!!! % (было 152,29, стало 191,73), за свет - рост 11,24 % (было 4,45, стало 4,95)» - пишет жительница Омска.\n\n📍Мой Омск\n💬Чат",
+          "url": "https://t.me/moiiomsk/10859",
+          "media_type": "photo",
+          "views": null,
+          "likes": null,
+          "comments": null,
+          "reposts": null
+        },
+        {
+          "source": "tg_1178109741",
+          "id": 27898,
+          "source_name": "Омск Live",
+          "source_type": "telegram",
+          "timestamp": 1793681133,
+          "date": "2026-11-03 10:45:33",
+          "text": "Омичей шокировали суммы в новых платежках за коммуналку\n\nВ конце октября омичам начали приходить квитанции с новыми тарифами за ЖКХ. Судя по реакции, цифры в коммунальных квитках повергают жителей в шок. \n\n«Начали приходить квитанции с новыми тарифами. О каком предельном росте совокупного платежа в 13 % можно говорить, если только за ТКО рост составил 62,36!!! % (было 796,69, стало 1293,51), за холодную воду - рост 25,9!!! % (было 152,29, стало 191,73), за свет - рост 11,24 % (было 4,45, стало 4,95)» - пишет жительница Омска.\n\n📱 Телеграм Инцидент Омск | 💜 MAX\n📱 Телеграм Омск Live | 💜 MAX",
+          "url": "https://t.me/c/1178109741/27898",
+          "media_type": "photo",
+          "views": null,
+          "likes": null,
+          "comments": null,
+          "reposts": null
+        }
+      ],
+      "text": "Омичей шокировали суммы в новых платежках за коммуналку\n\nВ конце октября омичам начали приходить квитанции с новыми тарифами за ЖКХ. Судя по реакции, цифры в коммунальных квитках повергают жителей в шок.\n\n«Начали приходить квитанции с новыми тарифами. О каком предельном росте совокупного платежа в 13 % можно говорить, если только за ТКО рост составил 62,36!!! % (было 796,69, стало 1293,51), за холодную воду - рост 25,9!!! % (было 152,29, стало 191,73), за свет - рост 11,24 % (было 4,45, стало 4,95)» - пишет жительница Омска.\n\n📍Мой Омск\n💬Чат",
+      "primary_source": "tg_moiiomsk",
+      "primary_url": "https://t.me/moiiomsk/10859",
+      "source_urls": [
+        "https://t.me/moiiomsk/10859",
+        "https://t.me/c/1178109741/27898"
+      ],
+      "prediction": {
+        "priority_score": 31.7,
+        "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
+        "confidence": 65.0,
+        "eligible": true,
+        "exclusion_reason": null,
+        "score_version": "editorial_v2",
+        "model_type": "ridge_engagement_v1_shadow",
+        "ml_priority_score": 0,
+        "training_samples_1h": 174,
+        "training_samples_3h": 160,
+        "predicted_engagement_1h": 0.000371,
+        "predicted_engagement_3h": 0.0,
+        "audience_model_predictions": {
+          "golos": {
+            "engagement_1h": 0.003885,
+            "engagement_3h": 0.002393,
+            "priority_score": 11.3,
+            "training_samples_1h": 86,
+            "training_samples_3h": 79
+          },
+          "zhest": {
+            "engagement_1h": 0.0,
+            "engagement_3h": 0.0,
+            "priority_score": 0,
+            "training_samples_1h": 88,
+            "training_samples_3h": 81
+          }
+        },
+        "event_class": "general",
+        "complaint_signal": false,
+        "complaint_viral_signal": false,
+        "complaint_bonus": 0.0,
+        "cross_source_count": 2,
+        "metric_coverage": [],
+        "coverage_ratio": 0.0,
+        "signals": {
+          "freshness": 0,
+          "local_relevance": 80.0,
+          "event_impact": 20.0,
+          "reach": null,
+          "engagement": null,
+          "discussion": null,
+          "reshare": null,
+          "velocity": null,
+          "cross_source_spread": 39.3
+        },
+        "score_weights": {
+          "freshness": 0.3448,
+          "local_relevance": 0.2759,
+          "event_impact": 0.2759,
+          "cross_source_spread": 0.1034
+        },
+        "legacy_scores": {
+          "analyzer_score": 23.4,
+          "viral_score": 3.5,
+          "editorial_score": 61.4
+        }
+      },
+      "editor_status": "⚪ ИСКЛЮЧИТЬ: НИЗКИЙ ПРИОРИТЕТ",
+      "publication_mode": "below_priority_threshold",
+      "editorial_exclusion_reason": "below_priority_threshold"
+    },
+    {
       "score": 8.2,
       "base_score": 11.4,
       "recency_score": 0.0,
-      "age_minutes": 400.3,
+      "age_minutes": 405.4,
       "newest_source_timestamp": 1793667900.0,
       "viral_score": 3.5,
       "editorial_score": 19.4,
@@ -5797,10 +5924,137 @@
       "editorial_exclusion_reason": "below_priority_threshold"
     },
     {
-      "score": 26.3,
+      "score": 19.4,
+      "base_score": 11.9,
+      "recency_score": 38.7,
+      "age_minutes": 110.4,
+      "newest_source_timestamp": 1793685604.0,
+      "viral_score": 4.2,
+      "editorial_score": 19.7,
+      "confidence": 25.0,
+      "posts": 2,
+      "social_sources": 2,
+      "views": 0.0,
+      "reposts": 0.0,
+      "likes": 0.0,
+      "comments": 0.0,
+      "content_type": "social_story",
+      "official_attribution": false,
+      "source_type": "social",
+      "nonlocal_detected": false,
+      "help_request": false,
+      "opinion_detected": false,
+      "advertising_detected": false,
+      "excluded_topic": false,
+      "status": "reject",
+      "action": "ИСКЛЮЧИТЬ",
+      "members": [
+        {
+          "source": "dushalady",
+          "id": 401967,
+          "date": "2026-11-03 12:00:04",
+          "timestamp": 1793685604,
+          "text": "Всю жизнь работала 2/2, а тут впервые устроилась на пятидневку. Ребята, это ужас! В поликлинику не попасть, в паспортный стол тоже, да вообще ни в одно госучреждение. Отпроситься почти нереально: работа ответственная, я должна быть на месте постоянно, а подменить меня некому. \n \nКак вы вообще так живёте?! Поделитесь, как выкручиваетесь 🙏",
+          "likes": null,
+          "comments": null,
+          "reposts": null,
+          "views": null,
+          "url": "https://vk.ru/wall-77326222_401967",
+          "source_type": "social",
+          "flags": [],
+          "editor_status": "⏳ ДО ОЦЕНКИ РЕЙТИНГА"
+        },
+        {
+          "source": "omsk_group",
+          "id": 369310,
+          "date": "2026-11-03 12:00:02",
+          "timestamp": 1793685602,
+          "text": "Всю жизнь работала 2/2, а тут впервые устроилась на пятидневку. Ребята, это ужас! В поликлинику не попасть, в паспортный стол тоже, да вообще ни в одно госучреждение. Отпроситься почти нереально: работа ответственная, я должна быть на месте постоянно, а подменить меня некому. \n \nКак вы вообще так живёте?! Поделитесь, как выкручиваетесь 🙏",
+          "likes": null,
+          "comments": null,
+          "reposts": null,
+          "views": null,
+          "url": "https://vk.ru/wall-84350909_369310",
+          "source_type": "social",
+          "flags": [],
+          "editor_status": "⏳ ДО ОЦЕНКИ РЕЙТИНГА"
+        }
+      ],
+      "text": "Всю жизнь работала 2/2, а тут впервые устроилась на пятидневку. Ребята, это ужас! В поликлинику не попасть, в паспортный стол тоже, да вообще ни в одно госучреждение. Отпроситься почти нереально: работа ответственная, я должна быть на месте постоянно, а подменить меня некому. \n \nКак вы вообще так живёте?! Поделитесь, как выкручиваетесь 🙏",
+      "primary_source": "dushalady",
+      "primary_url": "https://vk.ru/wall-77326222_401967",
+      "source_urls": [
+        "https://vk.ru/wall-77326222_401967",
+        "https://vk.ru/wall-84350909_369310"
+      ],
+      "prediction": {
+        "priority_score": 31.2,
+        "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
+        "confidence": 25.0,
+        "eligible": true,
+        "exclusion_reason": null,
+        "score_version": "editorial_v2",
+        "model_type": "ridge_engagement_v1_shadow",
+        "ml_priority_score": 31.4,
+        "training_samples_1h": 174,
+        "training_samples_3h": 160,
+        "predicted_engagement_1h": 0.007299,
+        "predicted_engagement_3h": 0.004993,
+        "audience_model_predictions": {
+          "golos": {
+            "engagement_1h": 0.007016,
+            "engagement_3h": 0.005435,
+            "priority_score": 25.6,
+            "training_samples_1h": 86,
+            "training_samples_3h": 79
+          },
+          "zhest": {
+            "engagement_1h": 0.007034,
+            "engagement_3h": 0.003426,
+            "priority_score": 27.9,
+            "training_samples_1h": 88,
+            "training_samples_3h": 81
+          }
+        },
+        "event_class": "general",
+        "complaint_signal": false,
+        "complaint_viral_signal": false,
+        "complaint_bonus": 0.0,
+        "cross_source_count": 2,
+        "metric_coverage": [],
+        "coverage_ratio": 0.0,
+        "signals": {
+          "freshness": 38.7,
+          "local_relevance": 30.0,
+          "event_impact": 20.0,
+          "reach": null,
+          "engagement": null,
+          "discussion": null,
+          "reshare": null,
+          "velocity": null,
+          "cross_source_spread": 39.3
+        },
+        "score_weights": {
+          "freshness": 0.3448,
+          "local_relevance": 0.2759,
+          "event_impact": 0.2759,
+          "cross_source_spread": 0.1034
+        },
+        "legacy_scores": {
+          "analyzer_score": 19.4,
+          "viral_score": 4.2,
+          "editorial_score": 19.7
+        }
+      },
+      "editor_status": "⚪ ИСКЛЮЧИТЬ: НИЗКИЙ ПРИОРИТЕТ",
+      "publication_mode": "below_priority_threshold",
+      "editorial_exclusion_reason": "below_priority_threshold"
+    },
+    {
+      "score": 25.5,
       "base_score": 32.5,
-      "recency_score": 10.2,
-      "age_minutes": 161.6,
+      "recency_score": 7.4,
+      "age_minutes": 166.7,
       "newest_source_timestamp": 1793682223.0,
       "viral_score": 3.5,
       "editorial_score": 61.4,
@@ -5845,7 +6099,7 @@
         "https://t.me/c/1587149148/27438"
       ],
       "prediction": {
-        "priority_score": 31.1,
+        "priority_score": 30.1,
         "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
         "confidence": 65.0,
         "eligible": true,
@@ -5881,7 +6135,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 10.2,
+          "freshness": 7.4,
           "local_relevance": 80.0,
           "event_impact": 20.0,
           "reach": null,
@@ -5898,7 +6152,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 26.3,
+          "analyzer_score": 25.5,
           "viral_score": 3.5,
           "editorial_score": 61.4
         }
@@ -5908,121 +6162,10 @@
       "editorial_exclusion_reason": "below_priority_threshold"
     },
     {
-      "score": 26.0,
-      "base_score": 32.5,
-      "recency_score": 9.3,
-      "age_minutes": 163.3,
-      "newest_source_timestamp": 1793682122.0,
-      "viral_score": 3.5,
-      "editorial_score": 61.4,
-      "confidence": 65.0,
-      "posts": 1,
-      "social_sources": 1,
-      "views": 0.0,
-      "reposts": 0.0,
-      "likes": 0.0,
-      "comments": 0.0,
-      "content_type": "social_story",
-      "official_attribution": false,
-      "source_type": "regional_media",
-      "nonlocal_detected": false,
-      "help_request": false,
-      "opinion_detected": false,
-      "advertising_detected": false,
-      "excluded_topic": false,
-      "status": "reject",
-      "action": "ИСКЛЮЧИТЬ",
-      "members": [
-        {
-          "source": "tg_omskkoroche",
-          "id": 27466,
-          "source_name": "Короче, Омск",
-          "source_type": "telegram",
-          "timestamp": 1793682122,
-          "date": "2026-11-03 11:02:02",
-          "text": "Для омичей подготовили культурную программу «Ночи искусств» с 3 на 4 ноября 🎭\n\nУже этим вечером музеи, театры, библиотеки, филармония и культурные центры Омска будут работать допоздна. Всероссийская акция в этом году посвящена Году единства народов России — омичей ждут концерты, иммерсивные спектакли, кинопоказы, лекции, VR‑выставки и творческие встречи.\n\nСреди ярких событий — визуальная читка «Маленьких трагедий» Пушкина в театре «Арлекин», концерт‑мастер‑класс «Этно‑Джем» в «Либеров‑центре», интерактивная программа «Мириады голосов» в Музыкальном театре и квест «Культурная охота» в Органном зале. На часть мероприятий нужны билеты или предварительная регистрация. Полную афишу смотрите здесь.\n\n#КорочеАфиша\n\n❤️ Подпишись на «Короче, Омск»",
-          "url": "https://t.me/omskkoroche/27466",
-          "media_type": "photo",
-          "views": null,
-          "likes": null,
-          "comments": null,
-          "reposts": null
-        }
-      ],
-      "text": "Для омичей подготовили культурную программу «Ночи искусств» с 3 на 4 ноября 🎭\n\nУже этим вечером музеи, театры, библиотеки, филармония и культурные центры Омска будут работать допоздна. Всероссийская акция в этом году посвящена Году единства народов России — омичей ждут концерты, иммерсивные спектакли, кинопоказы, лекции, VR‑выставки и творческие встречи.\n\nСреди ярких событий — визуальная читка «Маленьких трагедий» Пушкина в театре «Арлекин», концерт‑мастер‑класс «Этно‑Джем» в «Либеров‑центре», интерактивная программа «Мириады голосов» в Музыкальном театре и квест «Культурная охота» в Органном зале. На часть мероприятий нужны билеты или предварительная регистрация. Полную афишу смотрите здесь.\n\n#КорочеАфиша\n\n❤️ Подпишись на «Короче, Омск»",
-      "primary_source": "tg_omskkoroche",
-      "primary_url": "https://t.me/omskkoroche/27466",
-      "source_urls": [
-        "https://t.me/omskkoroche/27466"
-      ],
-      "prediction": {
-        "priority_score": 30.8,
-        "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
-        "confidence": 65.0,
-        "eligible": true,
-        "exclusion_reason": null,
-        "score_version": "editorial_v2",
-        "model_type": "ridge_engagement_v1_shadow",
-        "ml_priority_score": 80.3,
-        "training_samples_1h": 174,
-        "training_samples_3h": 160,
-        "predicted_engagement_1h": 0.012011,
-        "predicted_engagement_3h": 0.01277,
-        "audience_model_predictions": {
-          "golos": {
-            "engagement_1h": 0.012375,
-            "engagement_3h": 0.0133,
-            "priority_score": 62.6,
-            "training_samples_1h": 86,
-            "training_samples_3h": 79
-          },
-          "zhest": {
-            "engagement_1h": 0.000145,
-            "engagement_3h": 0.003359,
-            "priority_score": 27.4,
-            "training_samples_1h": 88,
-            "training_samples_3h": 81
-          }
-        },
-        "event_class": "general",
-        "complaint_signal": false,
-        "complaint_viral_signal": false,
-        "complaint_bonus": 0.0,
-        "cross_source_count": 1,
-        "metric_coverage": [],
-        "coverage_ratio": 0.0,
-        "signals": {
-          "freshness": 9.3,
-          "local_relevance": 80.0,
-          "event_impact": 20.0,
-          "reach": null,
-          "engagement": null,
-          "discussion": null,
-          "reshare": null,
-          "velocity": null,
-          "cross_source_spread": 0
-        },
-        "score_weights": {
-          "freshness": 0.3448,
-          "local_relevance": 0.2759,
-          "event_impact": 0.2759,
-          "cross_source_spread": 0.1034
-        },
-        "legacy_scores": {
-          "analyzer_score": 26.0,
-          "viral_score": 3.5,
-          "editorial_score": 61.4
-        }
-      },
-      "editor_status": "⚪ ИСКЛЮЧИТЬ: НИЗКИЙ ПРИОРИТЕТ",
-      "publication_mode": "below_priority_threshold",
-      "editorial_exclusion_reason": "below_priority_threshold"
-    },
-    {
-      "score": 20.3,
+      "score": 19.5,
       "base_score": 9.0,
-      "recency_score": 49.4,
-      "age_minutes": 91.0,
+      "recency_score": 46.6,
+      "age_minutes": 96.2,
       "newest_source_timestamp": 1793686456.0,
       "viral_score": 0.0,
       "editorial_score": 18.0,
@@ -6067,7 +6210,7 @@
         "https://t.me/dps155/123156"
       ],
       "prediction": {
-        "priority_score": 30.8,
+        "priority_score": 29.9,
         "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
         "confidence": 65.0,
         "eligible": true,
@@ -6103,7 +6246,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 49.4,
+          "freshness": 46.6,
           "local_relevance": 30.0,
           "event_impact": 20.0,
           "reach": null,
@@ -6120,7 +6263,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 20.3,
+          "analyzer_score": 19.5,
           "viral_score": 0.0,
           "editorial_score": 18.0
         }
@@ -6130,10 +6273,121 @@
       "editorial_exclusion_reason": "below_priority_threshold"
     },
     {
-      "score": 20.3,
+      "score": 25.2,
+      "base_score": 32.5,
+      "recency_score": 6.4,
+      "age_minutes": 168.4,
+      "newest_source_timestamp": 1793682122.0,
+      "viral_score": 3.5,
+      "editorial_score": 61.4,
+      "confidence": 65.0,
+      "posts": 1,
+      "social_sources": 1,
+      "views": 0.0,
+      "reposts": 0.0,
+      "likes": 0.0,
+      "comments": 0.0,
+      "content_type": "social_story",
+      "official_attribution": false,
+      "source_type": "regional_media",
+      "nonlocal_detected": false,
+      "help_request": false,
+      "opinion_detected": false,
+      "advertising_detected": false,
+      "excluded_topic": false,
+      "status": "reject",
+      "action": "ИСКЛЮЧИТЬ",
+      "members": [
+        {
+          "source": "tg_omskkoroche",
+          "id": 27466,
+          "source_name": "Короче, Омск",
+          "source_type": "telegram",
+          "timestamp": 1793682122,
+          "date": "2026-11-03 11:02:02",
+          "text": "Для омичей подготовили культурную программу «Ночи искусств» с 3 на 4 ноября 🎭\n\nУже этим вечером музеи, театры, библиотеки, филармония и культурные центры Омска будут работать допоздна. Всероссийская акция в этом году посвящена Году единства народов России — омичей ждут концерты, иммерсивные спектакли, кинопоказы, лекции, VR‑выставки и творческие встречи.\n\nСреди ярких событий — визуальная читка «Маленьких трагедий» Пушкина в театре «Арлекин», концерт‑мастер‑класс «Этно‑Джем» в «Либеров‑центре», интерактивная программа «Мириады голосов» в Музыкальном театре и квест «Культурная охота» в Органном зале. На часть мероприятий нужны билеты или предварительная регистрация. Полную афишу смотрите здесь.\n\n#КорочеАфиша\n\n❤️ Подпишись на «Короче, Омск»",
+          "url": "https://t.me/omskkoroche/27466",
+          "media_type": "photo",
+          "views": null,
+          "likes": null,
+          "comments": null,
+          "reposts": null
+        }
+      ],
+      "text": "Для омичей подготовили культурную программу «Ночи искусств» с 3 на 4 ноября 🎭\n\nУже этим вечером музеи, театры, библиотеки, филармония и культурные центры Омска будут работать допоздна. Всероссийская акция в этом году посвящена Году единства народов России — омичей ждут концерты, иммерсивные спектакли, кинопоказы, лекции, VR‑выставки и творческие встречи.\n\nСреди ярких событий — визуальная читка «Маленьких трагедий» Пушкина в театре «Арлекин», концерт‑мастер‑класс «Этно‑Джем» в «Либеров‑центре», интерактивная программа «Мириады голосов» в Музыкальном театре и квест «Культурная охота» в Органном зале. На часть мероприятий нужны билеты или предварительная регистрация. Полную афишу смотрите здесь.\n\n#КорочеАфиша\n\n❤️ Подпишись на «Короче, Омск»",
+      "primary_source": "tg_omskkoroche",
+      "primary_url": "https://t.me/omskkoroche/27466",
+      "source_urls": [
+        "https://t.me/omskkoroche/27466"
+      ],
+      "prediction": {
+        "priority_score": 29.8,
+        "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
+        "confidence": 65.0,
+        "eligible": true,
+        "exclusion_reason": null,
+        "score_version": "editorial_v2",
+        "model_type": "ridge_engagement_v1_shadow",
+        "ml_priority_score": 80.3,
+        "training_samples_1h": 174,
+        "training_samples_3h": 160,
+        "predicted_engagement_1h": 0.012011,
+        "predicted_engagement_3h": 0.01277,
+        "audience_model_predictions": {
+          "golos": {
+            "engagement_1h": 0.012375,
+            "engagement_3h": 0.0133,
+            "priority_score": 62.6,
+            "training_samples_1h": 86,
+            "training_samples_3h": 79
+          },
+          "zhest": {
+            "engagement_1h": 0.000145,
+            "engagement_3h": 0.003359,
+            "priority_score": 27.4,
+            "training_samples_1h": 88,
+            "training_samples_3h": 81
+          }
+        },
+        "event_class": "general",
+        "complaint_signal": false,
+        "complaint_viral_signal": false,
+        "complaint_bonus": 0.0,
+        "cross_source_count": 1,
+        "metric_coverage": [],
+        "coverage_ratio": 0.0,
+        "signals": {
+          "freshness": 6.4,
+          "local_relevance": 80.0,
+          "event_impact": 20.0,
+          "reach": null,
+          "engagement": null,
+          "discussion": null,
+          "reshare": null,
+          "velocity": null,
+          "cross_source_spread": 0
+        },
+        "score_weights": {
+          "freshness": 0.3448,
+          "local_relevance": 0.2759,
+          "event_impact": 0.2759,
+          "cross_source_spread": 0.1034
+        },
+        "legacy_scores": {
+          "analyzer_score": 25.2,
+          "viral_score": 3.5,
+          "editorial_score": 61.4
+        }
+      },
+      "editor_status": "⚪ ИСКЛЮЧИТЬ: НИЗКИЙ ПРИОРИТЕТ",
+      "publication_mode": "below_priority_threshold",
+      "editorial_exclusion_reason": "below_priority_threshold"
+    },
+    {
+      "score": 19.5,
       "base_score": 9.0,
-      "recency_score": 49.2,
-      "age_minutes": 91.4,
+      "recency_score": 46.4,
+      "age_minutes": 96.5,
       "newest_source_timestamp": 1793686437.0,
       "viral_score": 0.0,
       "editorial_score": 18.0,
@@ -6178,7 +6432,7 @@
         "https://t.me/dps155/123155"
       ],
       "prediction": {
-        "priority_score": 30.8,
+        "priority_score": 29.8,
         "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
         "confidence": 65.0,
         "eligible": true,
@@ -6214,7 +6468,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 49.2,
+          "freshness": 46.4,
           "local_relevance": 30.0,
           "event_impact": 20.0,
           "reach": null,
@@ -6231,7 +6485,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 20.3,
+          "analyzer_score": 19.5,
           "viral_score": 0.0,
           "editorial_score": 18.0
         }
@@ -6241,10 +6495,10 @@
       "editorial_exclusion_reason": "below_priority_threshold"
     },
     {
-      "score": 25.8,
+      "score": 25.0,
       "base_score": 32.5,
-      "recency_score": 8.7,
-      "age_minutes": 164.4,
+      "recency_score": 5.8,
+      "age_minutes": 169.5,
       "newest_source_timestamp": 1793682054.0,
       "viral_score": 3.5,
       "editorial_score": 61.4,
@@ -6289,7 +6543,7 @@
         "https://t.me/omsk_smi/32896"
       ],
       "prediction": {
-        "priority_score": 30.6,
+        "priority_score": 29.6,
         "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
         "confidence": 65.0,
         "eligible": true,
@@ -6325,7 +6579,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 8.7,
+          "freshness": 5.8,
           "local_relevance": 80.0,
           "event_impact": 20.0,
           "reach": null,
@@ -6342,7 +6596,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 25.8,
+          "analyzer_score": 25.0,
           "viral_score": 3.5,
           "editorial_score": 61.4
         }
@@ -6355,7 +6609,7 @@
       "score": 23.4,
       "base_score": 32.5,
       "recency_score": 0.0,
-      "age_minutes": 193.9,
+      "age_minutes": 199.0,
       "newest_source_timestamp": 1793680284.0,
       "viral_score": 3.5,
       "editorial_score": 61.4,
@@ -6466,7 +6720,7 @@
       "score": 23.4,
       "base_score": 32.5,
       "recency_score": 0.0,
-      "age_minutes": 215.1,
+      "age_minutes": 220.3,
       "newest_source_timestamp": 1793679011.0,
       "viral_score": 3.5,
       "editorial_score": 61.4,
@@ -6577,7 +6831,7 @@
       "score": 23.4,
       "base_score": 32.5,
       "recency_score": 0.0,
-      "age_minutes": 221.1,
+      "age_minutes": 226.2,
       "newest_source_timestamp": 1793678652.0,
       "viral_score": 3.5,
       "editorial_score": 61.4,
@@ -6688,7 +6942,7 @@
       "score": 23.4,
       "base_score": 32.5,
       "recency_score": 0.0,
-      "age_minutes": 241.1,
+      "age_minutes": 246.2,
       "newest_source_timestamp": 1793677453.0,
       "viral_score": 3.5,
       "editorial_score": 61.4,
@@ -6799,7 +7053,7 @@
       "score": 23.4,
       "base_score": 32.5,
       "recency_score": 0.0,
-      "age_minutes": 269.1,
+      "age_minutes": 274.2,
       "newest_source_timestamp": 1793675776.0,
       "viral_score": 3.5,
       "editorial_score": 61.4,
@@ -6910,7 +7164,7 @@
       "score": 23.4,
       "base_score": 32.5,
       "recency_score": 0.0,
-      "age_minutes": 279.3,
+      "age_minutes": 284.4,
       "newest_source_timestamp": 1793675162.0,
       "viral_score": 3.5,
       "editorial_score": 61.4,
@@ -7021,7 +7275,7 @@
       "score": 23.4,
       "base_score": 32.5,
       "recency_score": 0.0,
-      "age_minutes": 280.2,
+      "age_minutes": 285.3,
       "newest_source_timestamp": 1793675106.0,
       "viral_score": 3.5,
       "editorial_score": 61.4,
@@ -7132,7 +7386,7 @@
       "score": 23.4,
       "base_score": 32.5,
       "recency_score": 0.0,
-      "age_minutes": 281.7,
+      "age_minutes": 286.8,
       "newest_source_timestamp": 1793675019.0,
       "viral_score": 3.5,
       "editorial_score": 61.4,
@@ -7243,7 +7497,7 @@
       "score": 23.4,
       "base_score": 32.5,
       "recency_score": 0.0,
-      "age_minutes": 284.0,
+      "age_minutes": 289.1,
       "newest_source_timestamp": 1793674880.0,
       "viral_score": 3.5,
       "editorial_score": 61.4,
@@ -7354,7 +7608,7 @@
       "score": 23.4,
       "base_score": 32.5,
       "recency_score": 0.0,
-      "age_minutes": 284.9,
+      "age_minutes": 290.1,
       "newest_source_timestamp": 1793674823.0,
       "viral_score": 3.5,
       "editorial_score": 61.4,
@@ -7465,7 +7719,7 @@
       "score": 23.4,
       "base_score": 32.5,
       "recency_score": 0.0,
-      "age_minutes": 295.3,
+      "age_minutes": 300.4,
       "newest_source_timestamp": 1793674202.0,
       "viral_score": 3.5,
       "editorial_score": 61.4,
@@ -7576,7 +7830,7 @@
       "score": 23.4,
       "base_score": 32.5,
       "recency_score": 0.0,
-      "age_minutes": 323.4,
+      "age_minutes": 328.5,
       "newest_source_timestamp": 1793672515.0,
       "viral_score": 3.5,
       "editorial_score": 61.4,
@@ -7687,7 +7941,7 @@
       "score": 23.4,
       "base_score": 32.5,
       "recency_score": 0.0,
-      "age_minutes": 329.3,
+      "age_minutes": 334.4,
       "newest_source_timestamp": 1793672161.0,
       "viral_score": 3.5,
       "editorial_score": 61.4,
@@ -7798,7 +8052,7 @@
       "score": 23.4,
       "base_score": 32.5,
       "recency_score": 0.0,
-      "age_minutes": 336.8,
+      "age_minutes": 341.9,
       "newest_source_timestamp": 1793671711.0,
       "viral_score": 3.5,
       "editorial_score": 61.4,
@@ -7909,7 +8163,7 @@
       "score": 23.4,
       "base_score": 32.5,
       "recency_score": 0.0,
-      "age_minutes": 350.1,
+      "age_minutes": 355.2,
       "newest_source_timestamp": 1793670913.0,
       "viral_score": 3.5,
       "editorial_score": 61.4,
@@ -8020,7 +8274,7 @@
       "score": 23.4,
       "base_score": 32.5,
       "recency_score": 0.0,
-      "age_minutes": 374.3,
+      "age_minutes": 379.4,
       "newest_source_timestamp": 1793669462.0,
       "viral_score": 3.5,
       "editorial_score": 61.4,
@@ -8131,7 +8385,7 @@
       "score": 23.4,
       "base_score": 32.5,
       "recency_score": 0.0,
-      "age_minutes": 402.3,
+      "age_minutes": 407.4,
       "newest_source_timestamp": 1793667781.0,
       "viral_score": 3.5,
       "editorial_score": 61.4,
@@ -8242,7 +8496,7 @@
       "score": 23.4,
       "base_score": 32.5,
       "recency_score": 0.0,
-      "age_minutes": 405.4,
+      "age_minutes": 410.5,
       "newest_source_timestamp": 1793667598.0,
       "viral_score": 3.5,
       "editorial_score": 61.4,
@@ -8353,7 +8607,7 @@
       "score": 23.4,
       "base_score": 32.5,
       "recency_score": 0.0,
-      "age_minutes": 411.1,
+      "age_minutes": 416.2,
       "newest_source_timestamp": 1793667255.0,
       "viral_score": 3.5,
       "editorial_score": 61.4,
@@ -8464,7 +8718,7 @@
       "score": 23.4,
       "base_score": 32.5,
       "recency_score": 0.0,
-      "age_minutes": 414.3,
+      "age_minutes": 419.4,
       "newest_source_timestamp": 1793667063.0,
       "viral_score": 3.5,
       "editorial_score": 61.4,
@@ -8575,7 +8829,7 @@
       "score": 23.4,
       "base_score": 32.5,
       "recency_score": 0.0,
-      "age_minutes": 708.7,
+      "age_minutes": 713.8,
       "newest_source_timestamp": 1793649399.0,
       "viral_score": 3.5,
       "editorial_score": 61.4,
@@ -8686,7 +8940,7 @@
       "score": 23.4,
       "base_score": 32.5,
       "recency_score": 0.0,
-      "age_minutes": 823.2,
+      "age_minutes": 828.3,
       "newest_source_timestamp": 1793642530.0,
       "viral_score": 3.5,
       "editorial_score": 61.4,
@@ -8797,7 +9051,7 @@
       "score": 8.2,
       "base_score": 11.4,
       "recency_score": 0.0,
-      "age_minutes": 205.1,
+      "age_minutes": 210.3,
       "newest_source_timestamp": 1793679611.0,
       "viral_score": 3.5,
       "editorial_score": 19.4,
@@ -8908,7 +9162,7 @@
       "score": 8.2,
       "base_score": 11.4,
       "recency_score": 0.0,
-      "age_minutes": 355.1,
+      "age_minutes": 360.2,
       "newest_source_timestamp": 1793670612.0,
       "viral_score": 3.5,
       "editorial_score": 19.4,
@@ -9016,10 +9270,10 @@
       "editorial_exclusion_reason": "below_priority_threshold"
     },
     {
-      "score": 17.1,
+      "score": 16.3,
       "base_score": 9.0,
-      "recency_score": 38.0,
-      "age_minutes": 111.5,
+      "recency_score": 35.2,
+      "age_minutes": 116.7,
       "newest_source_timestamp": 1793685226.0,
       "viral_score": 0.0,
       "editorial_score": 18.0,
@@ -9064,7 +9318,7 @@
         "https://t.me/dps155/123154"
       ],
       "prediction": {
-        "priority_score": 26.9,
+        "priority_score": 25.9,
         "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
         "confidence": 65.0,
         "eligible": true,
@@ -9100,7 +9354,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 38.0,
+          "freshness": 35.2,
           "local_relevance": 30.0,
           "event_impact": 20.0,
           "reach": null,
@@ -9117,7 +9371,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 17.1,
+          "analyzer_score": 16.3,
           "viral_score": 0.0,
           "editorial_score": 18.0
         }
@@ -9127,10 +9381,10 @@
       "editorial_exclusion_reason": "below_priority_threshold"
     },
     {
-      "score": 12.1,
+      "score": 11.2,
       "base_score": 13.4,
-      "recency_score": 8.6,
-      "age_minutes": 164.5,
+      "recency_score": 5.7,
+      "age_minutes": 169.7,
       "newest_source_timestamp": 1793682047.0,
       "viral_score": 6.3,
       "editorial_score": 20.5,
@@ -9175,7 +9429,7 @@
         "https://t.me/region_omsk55/28784"
       ],
       "prediction": {
-        "priority_score": 23.7,
+        "priority_score": 22.7,
         "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
         "confidence": 65.0,
         "eligible": true,
@@ -9211,7 +9465,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 8.6,
+          "freshness": 5.7,
           "local_relevance": 30.0,
           "event_impact": 45.0,
           "reach": null,
@@ -9228,7 +9482,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 12.1,
+          "analyzer_score": 11.2,
           "viral_score": 6.3,
           "editorial_score": 20.5
         }
@@ -9238,10 +9492,10 @@
       "editorial_exclusion_reason": "below_priority_threshold"
     },
     {
-      "score": 6.6,
+      "score": 6.5,
       "base_score": 9.0,
-      "recency_score": 0.4,
-      "age_minutes": 179.3,
+      "recency_score": 0.0,
+      "age_minutes": 184.4,
       "newest_source_timestamp": 1793681162.0,
       "viral_score": 0.0,
       "editorial_score": 18.0,
@@ -9286,7 +9540,7 @@
         "https://t.me/zhest_omsk_55/18868"
       ],
       "prediction": {
-        "priority_score": 13.9,
+        "priority_score": 13.8,
         "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
         "confidence": 65.0,
         "eligible": true,
@@ -9322,7 +9576,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 0.4,
+          "freshness": 0,
           "local_relevance": 30.0,
           "event_impact": 20.0,
           "reach": null,
@@ -9339,7 +9593,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 6.6,
+          "analyzer_score": 6.5,
           "viral_score": 0.0,
           "editorial_score": 18.0
         }
@@ -9352,7 +9606,7 @@
       "score": 6.5,
       "base_score": 9.0,
       "recency_score": 0.0,
-      "age_minutes": 202.9,
+      "age_minutes": 208.1,
       "newest_source_timestamp": 1793679743.0,
       "viral_score": 0.0,
       "editorial_score": 18.0,
@@ -9463,7 +9717,7 @@
       "score": 6.5,
       "base_score": 9.0,
       "recency_score": 0.0,
-      "age_minutes": 203.0,
+      "age_minutes": 208.1,
       "newest_source_timestamp": 1793679741.0,
       "viral_score": 0.0,
       "editorial_score": 18.0,
@@ -9574,7 +9828,7 @@
       "score": 6.5,
       "base_score": 9.0,
       "recency_score": 0.0,
-      "age_minutes": 203.0,
+      "age_minutes": 208.1,
       "newest_source_timestamp": 1793679740.0,
       "viral_score": 0.0,
       "editorial_score": 18.0,
@@ -9685,7 +9939,7 @@
       "score": 6.5,
       "base_score": 9.0,
       "recency_score": 0.0,
-      "age_minutes": 209.4,
+      "age_minutes": 214.5,
       "newest_source_timestamp": 1793679355.0,
       "viral_score": 0.0,
       "editorial_score": 18.0,
@@ -9796,7 +10050,7 @@
       "score": 6.5,
       "base_score": 9.0,
       "recency_score": 0.0,
-      "age_minutes": 220.9,
+      "age_minutes": 226.0,
       "newest_source_timestamp": 1793678664.0,
       "viral_score": 0.0,
       "editorial_score": 18.0,
@@ -9907,7 +10161,7 @@
       "score": 6.5,
       "base_score": 9.0,
       "recency_score": 0.0,
-      "age_minutes": 222.7,
+      "age_minutes": 227.8,
       "newest_source_timestamp": 1793678557.0,
       "viral_score": 0.0,
       "editorial_score": 18.0,
@@ -10018,7 +10272,7 @@
       "score": 6.5,
       "base_score": 9.0,
       "recency_score": 0.0,
-      "age_minutes": 229.1,
+      "age_minutes": 234.3,
       "newest_source_timestamp": 1793678171.0,
       "viral_score": 0.0,
       "editorial_score": 18.0,
@@ -10129,7 +10383,7 @@
       "score": 6.5,
       "base_score": 9.0,
       "recency_score": 0.0,
-      "age_minutes": 278.0,
+      "age_minutes": 283.1,
       "newest_source_timestamp": 1793675242.0,
       "viral_score": 0.0,
       "editorial_score": 18.0,
@@ -10240,7 +10494,7 @@
       "score": 6.5,
       "base_score": 9.0,
       "recency_score": 0.0,
-      "age_minutes": 285.3,
+      "age_minutes": 290.4,
       "newest_source_timestamp": 1793674800.0,
       "viral_score": 0.0,
       "editorial_score": 18.0,
@@ -10351,7 +10605,7 @@
       "score": 6.5,
       "base_score": 9.0,
       "recency_score": 0.0,
-      "age_minutes": 345.3,
+      "age_minutes": 350.4,
       "newest_source_timestamp": 1793671200.0,
       "viral_score": 0.0,
       "editorial_score": 18.0,
@@ -10462,7 +10716,7 @@
       "score": 6.5,
       "base_score": 9.0,
       "recency_score": 0.0,
-      "age_minutes": 370.0,
+      "age_minutes": 375.1,
       "newest_source_timestamp": 1793669718.0,
       "viral_score": 0.0,
       "editorial_score": 18.0,
@@ -10573,7 +10827,7 @@
       "score": 6.5,
       "base_score": 9.0,
       "recency_score": 0.0,
-      "age_minutes": 375.0,
+      "age_minutes": 380.1,
       "newest_source_timestamp": 1793669419.0,
       "viral_score": 0.0,
       "editorial_score": 18.0,
@@ -10684,7 +10938,7 @@
       "score": 6.5,
       "base_score": 9.0,
       "recency_score": 0.0,
-      "age_minutes": 402.2,
+      "age_minutes": 407.3,
       "newest_source_timestamp": 1793667786.0,
       "viral_score": 0.0,
       "editorial_score": 18.0,
@@ -10795,7 +11049,7 @@
       "score": 6.5,
       "base_score": 9.0,
       "recency_score": 0.0,
-      "age_minutes": 404.9,
+      "age_minutes": 410.0,
       "newest_source_timestamp": 1793667626.0,
       "viral_score": 0.0,
       "editorial_score": 18.0,
@@ -10906,7 +11160,7 @@
       "score": 6.5,
       "base_score": 9.0,
       "recency_score": 0.0,
-      "age_minutes": 419.7,
+      "age_minutes": 424.8,
       "newest_source_timestamp": 1793666737.0,
       "viral_score": 0.0,
       "editorial_score": 18.0,
@@ -11017,7 +11271,7 @@
       "score": 6.5,
       "base_score": 9.0,
       "recency_score": 0.0,
-      "age_minutes": 465.3,
+      "age_minutes": 470.4,
       "newest_source_timestamp": 1793664000.0,
       "viral_score": 0.0,
       "editorial_score": 18.0,
@@ -11128,7 +11382,7 @@
       "score": 6.5,
       "base_score": 9.0,
       "recency_score": 0.0,
-      "age_minutes": 583.6,
+      "age_minutes": 588.7,
       "newest_source_timestamp": 1793656906.0,
       "viral_score": 0.0,
       "editorial_score": 18.0,
