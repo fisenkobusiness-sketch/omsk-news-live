@@ -298,31 +298,23 @@ def same_story(left: dict[str, Any], right: dict[str, Any]) -> bool:
     )
 
 
+def first_sentence(value: str) -> str:
+    text = clean_editorial_text(value)
+    if not text:
+        return ""
+    match = re.search(r"^(.+?[.!?…])(?:\\s|$)", text)
+    if match:
+        return match.group(1).strip()
+    shortened = truncate_telegram_text(text, 320).rstrip()
+    return shortened if shortened == text else shortened + "…"
+
+
 def build_message(topic: dict[str, Any], rank: int) -> tuple[str, dict[str, Any]]:
-    source_text, source_name, source_url = source_for(topic)
-    title = clean_editorial_text(topic_title(topic))
+    source_text, _, source_url = source_for(topic)
+    title = clean_editorial_text(topic_title(topic)) or first_sentence(source_text)
     category_label = audience_label(topic)
 
-    lines = [clean_editorial_text(line) for line in source_text.splitlines()]
-    lines = [line for line in lines if line]
-    if title and lines and lines[0].casefold() == title.casefold():
-        lines = lines[1:]
-    body = " ".join(" ".join(lines).split())
-    source_line = f"«{display_source_name(source_name)}»"
-    head = f"📰 Кандидат #{rank} · {category_label}"
-    title_block = f"\n\n{title}" if title else ""
-    tail = f"\n\n{source_line}\n\nСсылка: {source_url}"
-    body_prefix = f"{head}{title_block}\n\n"
-    body_limit = max(
-        0,
-        3900 - telegram_text_units(body_prefix) - telegram_text_units(tail) - 10,
-    )
-    if telegram_text_units(body) > body_limit:
-        marker = "…"
-        body = truncate_telegram_text(
-            body, max(0, body_limit - telegram_text_units(marker))
-        ).rstrip() + marker
-    message = body_prefix + body + tail
+    message = f"{title}\\n\\nИсточник: {source_url}" if title else f"Источник: {source_url}"
 
     keys, members = topic_keys(topic)
     metadata = {
@@ -334,7 +326,6 @@ def build_message(topic: dict[str, Any], rank: int) -> tuple[str, dict[str, Any]
         "story_text": clean_editorial_text(source_text)[:900],
     }
     return message, metadata
-
 
 def initial_state() -> dict[str, Any]:
     return {
