@@ -31,7 +31,6 @@ Configured Telegram channels:
 - `@omskpravda` — Омская правда
 - `@TramplinOmsk` — Трамплин Медиа
 - `@kdomsk` — Камеры ДПС Омск
-- `@dps155` — ДПС Омск
 - `@forumomskcom` — Омский форум
 - `@mec_55` — Экономика | 55
 
