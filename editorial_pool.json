@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-06T00:24:33+06:00",
+  "generated_at": "2026-11-06T00:29:30+06:00",
   "version": "predictor-editorial-v2",
   "model": {
     "purpose": "единый редакционный приоритет по независимым признакам",
@@ -50,10 +50,137 @@
   },
   "topics": [
     {
-      "score": 51.5,
+      "score": 54.5,
       "base_score": 36.9,
-      "recency_score": 88.9,
-      "age_minutes": 19.9,
+      "recency_score": 99.6,
+      "age_minutes": 0.7,
+      "newest_source_timestamp": 1793903329.0,
+      "viral_score": 9.8,
+      "editorial_score": 63.9,
+      "confidence": 45.0,
+      "posts": 2,
+      "social_sources": 2,
+      "views": 0.0,
+      "reposts": 0.0,
+      "likes": 0.0,
+      "comments": 0.0,
+      "content_type": "news",
+      "official_attribution": false,
+      "source_type": "regional_media",
+      "nonlocal_detected": false,
+      "help_request": false,
+      "opinion_detected": false,
+      "advertising_detected": false,
+      "excluded_topic": false,
+      "status": "take_now",
+      "action": "БРАТЬ В РАБОТУ",
+      "members": [
+        {
+          "source": "tg_aomsk",
+          "id": 77888,
+          "source_name": "Аварийный Омск",
+          "source_type": "telegram",
+          "timestamp": 1793903329,
+          "date": "2026-11-06 00:28:49",
+          "text": "В Китае выпустили гибрид дешевле Lada Vesta, который можно заправлять спиртом. Новый Geely Galaxy Star 6 EF стоит в КНР от 76,8 тысячи юаней (934 тысячи рублей). Авто оснащено 1,5-литровым безнаддувным двигателем 126-190 л. с., который можно заправлять спиртом, бензином и электричеством. Совокупный запас хода при заправке электричеством и бензином составит 1880 км, сообщили в компании.\n\n—\nАварийный Омск ТГ @aomsk и MAX.ru/aomsk",
+          "url": "https://t.me/aomsk/77888",
+          "media_type": "photo",
+          "views": null,
+          "likes": null,
+          "comments": null,
+          "reposts": null
+        },
+        {
+          "source": "aomsk",
+          "id": 3709157,
+          "date": "2026-11-06 00:26:20",
+          "timestamp": 1793903180,
+          "text": "В Китае выпустили гибрид дешевле Lada Vesta, который можно заправлять спиртом. Новый Geely Galaxy Star 6 EF стоит в КНР от 76,8 тысячи юаней (934 тысячи рублей). Авто оснащено 1,5-литровым безнаддувным двигателем 126-190 л. с., который можно заправлять спиртом, бензином и электричеством. Совокупный запас хода при заправке электричеством и бензином составит 1880 км, сообщили в компании.",
+          "likes": null,
+          "comments": null,
+          "reposts": null,
+          "views": null,
+          "url": "https://vk.ru/wall-62731567_3709157",
+          "source_type": "social",
+          "flags": [],
+          "editor_status": "⏳ ДО ОЦЕНКИ РЕЙТИНГА"
+        }
+      ],
+      "text": "В Китае выпустили гибрид дешевле Lada Vesta, который можно заправлять спиртом. Новый Geely Galaxy Star 6 EF стоит в КНР от 76,8 тысячи юаней (934 тысячи рублей). Авто оснащено 1,5-литровым безнаддувным двигателем 126-190 л. с., который можно заправлять спиртом, бензином и электричеством. Совокупный запас хода при заправке электричеством и бензином составит 1880 км, сообщили в компании.\n\n—\nАварийный Омск ТГ @aomsk и MAX.ru/aomsk",
+      "primary_source": "tg_aomsk",
+      "primary_url": "https://t.me/aomsk/77888",
+      "source_urls": [
+        "https://t.me/aomsk/77888",
+        "https://vk.ru/wall-62731567_3709157"
+      ],
+      "prediction": {
+        "priority_score": 66.0,
+        "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
+        "confidence": 45.0,
+        "eligible": true,
+        "exclusion_reason": null,
+        "score_version": "editorial_v2",
+        "model_type": "ridge_engagement_v1_shadow",
+        "ml_priority_score": 14.4,
+        "training_samples_1h": 226,
+        "training_samples_3h": 206,
+        "predicted_engagement_1h": 0.002939,
+        "predicted_engagement_3h": 0.002365,
+        "audience_model_predictions": {
+          "golos": {
+            "engagement_1h": 0.009833,
+            "engagement_3h": 0.008125,
+            "priority_score": 41.4,
+            "training_samples_1h": 113,
+            "training_samples_3h": 102
+          },
+          "zhest": {
+            "engagement_1h": 0.000177,
+            "engagement_3h": 0.0,
+            "priority_score": 0,
+            "training_samples_1h": 113,
+            "training_samples_3h": 104
+          }
+        },
+        "event_class": "general",
+        "complaint_signal": false,
+        "complaint_viral_signal": false,
+        "complaint_bonus": 0.0,
+        "cross_source_count": 2,
+        "metric_coverage": [],
+        "coverage_ratio": 0.0,
+        "signals": {
+          "freshness": 99.6,
+          "local_relevance": 80.0,
+          "event_impact": 20.0,
+          "reach": null,
+          "engagement": null,
+          "discussion": null,
+          "reshare": null,
+          "velocity": null,
+          "cross_source_spread": 39.3
+        },
+        "score_weights": {
+          "freshness": 0.3448,
+          "local_relevance": 0.2759,
+          "event_impact": 0.2759,
+          "cross_source_spread": 0.1034
+        },
+        "legacy_scores": {
+          "analyzer_score": 54.5,
+          "viral_score": 9.8,
+          "editorial_score": 63.9
+        }
+      },
+      "editor_status": "🟢 В РАБОТУ",
+      "publication_mode": "editorial_work",
+      "editorial_exclusion_reason": null
+    },
+    {
+      "score": 50.7,
+      "base_score": 36.9,
+      "recency_score": 86.2,
+      "age_minutes": 24.8,
       "newest_source_timestamp": 1793901880.0,
       "viral_score": 9.8,
       "editorial_score": 63.9,
@@ -114,7 +241,7 @@
         "https://vk.ru/wall-62731567_3709147"
       ],
       "prediction": {
-        "priority_score": 62.3,
+        "priority_score": 61.4,
         "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
         "confidence": 45.0,
         "eligible": true,
@@ -150,7 +277,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 88.9,
+          "freshness": 86.2,
           "local_relevance": 80.0,
           "event_impact": 20.0,
           "reach": null,
@@ -167,7 +294,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 51.5,
+          "analyzer_score": 50.7,
           "viral_score": 9.8,
           "editorial_score": 63.9
         }
@@ -177,10 +304,10 @@
       "editorial_exclusion_reason": null
     },
     {
-      "score": 33.7,
+      "score": 32.9,
       "base_score": 9.0,
-      "recency_score": 97.1,
-      "age_minutes": 5.2,
+      "recency_score": 94.4,
+      "age_minutes": 10.1,
       "newest_source_timestamp": 1793902762.0,
       "viral_score": 0.0,
       "editorial_score": 18.0,
@@ -225,7 +352,7 @@
         "https://vk.ru/wall-121618691_686044"
       ],
       "prediction": {
-        "priority_score": 47.3,
+        "priority_score": 46.3,
         "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
         "confidence": 25.0,
         "eligible": true,
@@ -261,7 +388,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 97.1,
+          "freshness": 94.4,
           "local_relevance": 30.0,
           "event_impact": 20.0,
           "reach": null,
@@ -278,7 +405,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 33.7,
+          "analyzer_score": 32.9,
           "viral_score": 0.0,
           "editorial_score": 18.0
         }
@@ -288,10 +415,10 @@
       "editorial_exclusion_reason": null
     },
     {
-      "score": 33.6,
+      "score": 32.9,
       "base_score": 9.0,
-      "recency_score": 97.0,
-      "age_minutes": 5.4,
+      "recency_score": 94.2,
+      "age_minutes": 10.4,
       "newest_source_timestamp": 1793902748.0,
       "viral_score": 0.0,
       "editorial_score": 18.0,
@@ -336,7 +463,7 @@
         "https://vk.ru/wall-65278212_736564"
       ],
       "prediction": {
-        "priority_score": 47.2,
+        "priority_score": 46.3,
         "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
         "confidence": 25.0,
         "eligible": true,
@@ -372,7 +499,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 97.0,
+          "freshness": 94.2,
           "local_relevance": 30.0,
           "event_impact": 20.0,
           "reach": null,
@@ -389,7 +516,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 33.6,
+          "analyzer_score": 32.9,
           "viral_score": 0.0,
           "editorial_score": 18.0
         }
@@ -399,10 +526,10 @@
       "editorial_exclusion_reason": null
     },
     {
-      "score": 33.6,
+      "score": 32.9,
       "base_score": 9.0,
-      "recency_score": 97.0,
-      "age_minutes": 5.5,
+      "recency_score": 94.2,
+      "age_minutes": 10.4,
       "newest_source_timestamp": 1793902745.0,
       "viral_score": 0.0,
       "editorial_score": 18.0,
@@ -447,7 +574,7 @@
         "https://vk.ru/wall-50386446_983781"
       ],
       "prediction": {
-        "priority_score": 47.2,
+        "priority_score": 46.3,
         "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
         "confidence": 25.0,
         "eligible": true,
@@ -483,7 +610,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 97.0,
+          "freshness": 94.2,
           "local_relevance": 30.0,
           "event_impact": 20.0,
           "reach": null,
@@ -500,7 +627,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 33.6,
+          "analyzer_score": 32.9,
           "viral_score": 0.0,
           "editorial_score": 18.0
         }
@@ -510,10 +637,10 @@
       "editorial_exclusion_reason": null
     },
     {
-      "score": 32.7,
+      "score": 31.9,
       "base_score": 9.0,
-      "recency_score": 93.6,
-      "age_minutes": 11.4,
+      "recency_score": 90.9,
+      "age_minutes": 16.4,
       "newest_source_timestamp": 1793902388.0,
       "viral_score": 0.0,
       "editorial_score": 18.0,
@@ -558,7 +685,7 @@
         "https://t.me/omsk_smi/32996"
       ],
       "prediction": {
-        "priority_score": 46.1,
+        "priority_score": 45.1,
         "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
         "confidence": 65.0,
         "eligible": true,
@@ -594,7 +721,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 93.6,
+          "freshness": 90.9,
           "local_relevance": 30.0,
           "event_impact": 20.0,
           "reach": null,
@@ -611,7 +738,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 32.7,
+          "analyzer_score": 31.9,
           "viral_score": 0.0,
           "editorial_score": 18.0
         }
@@ -621,10 +748,10 @@
       "editorial_exclusion_reason": null
     },
     {
-      "score": 32.1,
+      "score": 31.3,
       "base_score": 9.0,
-      "recency_score": 91.4,
-      "age_minutes": 15.5,
+      "recency_score": 88.6,
+      "age_minutes": 20.4,
       "newest_source_timestamp": 1793902144.0,
       "viral_score": 0.0,
       "editorial_score": 18.0,
@@ -643,8 +770,8 @@
       "opinion_detected": false,
       "advertising_detected": false,
       "excluded_topic": false,
-      "status": "take_now",
-      "action": "БРАТЬ В РАБОТУ",
+      "status": "reject",
+      "action": "ИСКЛЮЧИТЬ",
       "members": [
         {
           "source": "fcava",
@@ -669,8 +796,8 @@
         "https://vk.ru/wall-23766163_2454419"
       ],
       "prediction": {
-        "priority_score": 45.3,
-        "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
+        "priority_score": 44.4,
+        "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
         "confidence": 25.0,
         "eligible": true,
         "exclusion_reason": null,
@@ -705,7 +832,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 91.4,
+          "freshness": 88.6,
           "local_relevance": 30.0,
           "event_impact": 20.0,
           "reach": null,
@@ -722,20 +849,20 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 32.1,
+          "analyzer_score": 31.3,
           "viral_score": 0.0,
           "editorial_score": 18.0
         }
       },
-      "editor_status": "🟢 В РАБОТУ",
-      "publication_mode": "editorial_work",
-      "editorial_exclusion_reason": null
+      "editor_status": "⚪ ИСКЛЮЧИТЬ: НИЗКИЙ ПРИОРИТЕТ",
+      "publication_mode": "below_priority_threshold",
+      "editorial_exclusion_reason": "below_priority_threshold"
     },
     {
-      "score": 30.7,
+      "score": 29.9,
       "base_score": 9.0,
-      "recency_score": 86.5,
-      "age_minutes": 24.3,
+      "recency_score": 83.8,
+      "age_minutes": 29.2,
       "newest_source_timestamp": 1793901617.0,
       "viral_score": 0.0,
       "editorial_score": 18.0,
@@ -780,7 +907,7 @@
         "https://t.me/ngs55news/56940"
       ],
       "prediction": {
-        "priority_score": 43.6,
+        "priority_score": 42.7,
         "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
         "confidence": 65.0,
         "eligible": true,
@@ -816,7 +943,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 86.5,
+          "freshness": 83.8,
           "local_relevance": 30.0,
           "event_impact": 20.0,
           "reach": null,
@@ -833,7 +960,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 30.7,
+          "analyzer_score": 29.9,
           "viral_score": 0.0,
           "editorial_score": 18.0
         }
