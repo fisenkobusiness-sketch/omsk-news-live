@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-06T00:04:06+06:00",
+  "generated_at": "2026-11-06T00:09:27+06:00",
   "version": "predictor-editorial-v2",
   "model": {
     "purpose": "единый редакционный приоритет по независимым признакам",
@@ -50,13 +50,140 @@
   },
   "topics": [
     {
-      "score": 51.1,
-      "base_score": 32.5,
-      "recency_score": 99.0,
-      "age_minutes": 1.8,
-      "newest_source_timestamp": 1793901740.0,
-      "viral_score": 3.5,
-      "editorial_score": 61.4,
+      "score": 53.8,
+      "base_score": 36.9,
+      "recency_score": 97.3,
+      "age_minutes": 4.8,
+      "newest_source_timestamp": 1793901880.0,
+      "viral_score": 9.8,
+      "editorial_score": 63.9,
+      "confidence": 45.0,
+      "posts": 2,
+      "social_sources": 2,
+      "views": 0.0,
+      "reposts": 0.0,
+      "likes": 0.0,
+      "comments": 0.0,
+      "content_type": "news",
+      "official_attribution": false,
+      "source_type": "regional_media",
+      "nonlocal_detected": false,
+      "help_request": false,
+      "opinion_detected": false,
+      "advertising_detected": false,
+      "excluded_topic": false,
+      "status": "take_now",
+      "action": "БРАТЬ В РАБОТУ",
+      "members": [
+        {
+          "source": "tg_aomsk",
+          "id": 77887,
+          "source_name": "Аварийный Омск",
+          "source_type": "telegram",
+          "timestamp": 1793901880,
+          "date": "2026-11-06 00:04:40",
+          "text": "Омск предлагает одно из самых дешёвых новогодних размещений в России\n\nС 31 декабря 2026 года по 10 января 2027 года средняя стоимость аренды жилья в городе составит 5 тысяч рублей в сутки. Это значительно ниже среднего по стране показателя, который составляет 8,2 тысячи рублей за ночь, сообщает ТАСС. Самым доступным городом для новогоднего отдыха стал Туапсе — здесь суточное проживание обойдется в 4 тысячи рублей. В то же время Белокуриха лидирует по высоким ценам: ночь здесь стоит в среднем 26 тысяч рублей.\n\n—\nАварийный Омск ТГ @aomsk и MAX.ru/aomsk",
+          "url": "https://t.me/aomsk/77887",
+          "media_type": null,
+          "views": null,
+          "likes": null,
+          "comments": null,
+          "reposts": null
+        },
+        {
+          "source": "aomsk",
+          "id": 3709147,
+          "date": "2026-11-06 00:02:20",
+          "timestamp": 1793901740,
+          "text": "Омск предлагает одно из самых дешёвых новогодних размещений в России\n\nС 31 декабря 2026 года по 10 января 2027 года средняя стоимость аренды жилья в городе составит 5 тысяч рублей в сутки. Это значительно ниже среднего по стране показателя, который составляет 8,2 тысячи рублей за ночь, сообщает ТАСС. Самым доступным городом для новогоднего отдыха стал Туапсе — здесь суточное проживание обойдется в 4 тысячи рублей. В то же время Белокуриха лидирует по высоким ценам: ночь здесь стоит в среднем 26 тысяч рублей.",
+          "likes": null,
+          "comments": null,
+          "reposts": null,
+          "views": null,
+          "url": "https://vk.ru/wall-62731567_3709147",
+          "source_type": "social",
+          "flags": [],
+          "editor_status": "⏳ ДО ОЦЕНКИ РЕЙТИНГА"
+        }
+      ],
+      "text": "Омск предлагает одно из самых дешёвых новогодних размещений в России\n\nС 31 декабря 2026 года по 10 января 2027 года средняя стоимость аренды жилья в городе составит 5 тысяч рублей в сутки. Это значительно ниже среднего по стране показателя, который составляет 8,2 тысячи рублей за ночь, сообщает ТАСС. Самым доступным городом для новогоднего отдыха стал Туапсе — здесь суточное проживание обойдется в 4 тысячи рублей. В то же время Белокуриха лидирует по высоким ценам: ночь здесь стоит в среднем 26 тысяч рублей.\n\n—\nАварийный Омск ТГ @aomsk и MAX.ru/aomsk",
+      "primary_source": "tg_aomsk",
+      "primary_url": "https://t.me/aomsk/77887",
+      "source_urls": [
+        "https://t.me/aomsk/77887",
+        "https://vk.ru/wall-62731567_3709147"
+      ],
+      "prediction": {
+        "priority_score": 65.2,
+        "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
+        "confidence": 45.0,
+        "eligible": true,
+        "exclusion_reason": null,
+        "score_version": "editorial_v2",
+        "model_type": "ridge_engagement_v1_shadow",
+        "ml_priority_score": 23.3,
+        "training_samples_1h": 226,
+        "training_samples_3h": 204,
+        "predicted_engagement_1h": 0.006691,
+        "predicted_engagement_3h": 0.003832,
+        "audience_model_predictions": {
+          "golos": {
+            "engagement_1h": 0.011572,
+            "engagement_3h": 0.008915,
+            "priority_score": 45.5,
+            "training_samples_1h": 113,
+            "training_samples_3h": 101
+          },
+          "zhest": {
+            "engagement_1h": 0.007051,
+            "engagement_3h": 0.001609,
+            "priority_score": 11.7,
+            "training_samples_1h": 113,
+            "training_samples_3h": 103
+          }
+        },
+        "event_class": "general",
+        "complaint_signal": false,
+        "complaint_viral_signal": false,
+        "complaint_bonus": 0.0,
+        "cross_source_count": 2,
+        "metric_coverage": [],
+        "coverage_ratio": 0.0,
+        "signals": {
+          "freshness": 97.3,
+          "local_relevance": 80.0,
+          "event_impact": 20.0,
+          "reach": null,
+          "engagement": null,
+          "discussion": null,
+          "reshare": null,
+          "velocity": null,
+          "cross_source_spread": 39.3
+        },
+        "score_weights": {
+          "freshness": 0.3448,
+          "local_relevance": 0.2759,
+          "event_impact": 0.2759,
+          "cross_source_spread": 0.1034
+        },
+        "legacy_scores": {
+          "analyzer_score": 53.8,
+          "viral_score": 9.8,
+          "editorial_score": 63.9
+        }
+      },
+      "editor_status": "🟢 В РАБОТУ",
+      "publication_mode": "editorial_work",
+      "editorial_exclusion_reason": null
+    },
+    {
+      "score": 34.4,
+      "base_score": 9.0,
+      "recency_score": 99.8,
+      "age_minutes": 0.4,
+      "newest_source_timestamp": 1793902144.0,
+      "viral_score": 0.0,
+      "editorial_score": 18.0,
       "confidence": 25.0,
       "posts": 1,
       "social_sources": 1,
@@ -76,52 +203,52 @@
       "action": "БРАТЬ В РАБОТУ",
       "members": [
         {
-          "source": "aomsk",
-          "id": 3709147,
-          "date": "2026-11-06 00:02:20",
-          "timestamp": 1793901740,
-          "text": "Омск предлагает одно из самых дешёвых новогодних размещений в России\n\nС 31 декабря 2026 года по 10 января 2027 года средняя стоимость аренды жилья в городе составит 5 тысяч рублей в сутки. Это значительно ниже среднего по стране показателя, который составляет 8,2 тысячи рублей за ночь, сообщает ТАСС. Самым доступным городом для новогоднего отдыха стал Туапсе — здесь суточное проживание обойдется в 4 тысячи рублей. В то же время Белокуриха лидирует по высоким ценам: ночь здесь стоит в среднем 26 тысяч рублей.",
+          "source": "fcava",
+          "id": 2454419,
+          "date": "2026-11-06 00:09:04",
+          "timestamp": 1793902144,
+          "text": "Костя мы ждём твой Прайм 🔥",
           "likes": null,
           "comments": null,
           "reposts": null,
           "views": null,
-          "url": "https://vk.ru/wall-62731567_3709147",
+          "url": "https://vk.ru/wall-23766163_2454419",
           "source_type": "social",
           "flags": [],
           "editor_status": "⏳ ДО ОЦЕНКИ РЕЙТИНГА"
         }
       ],
-      "text": "Омск предлагает одно из самых дешёвых новогодних размещений в России\n\nС 31 декабря 2026 года по 10 января 2027 года средняя стоимость аренды жилья в городе составит 5 тысяч рублей в сутки. Это значительно ниже среднего по стране показателя, который составляет 8,2 тысячи рублей за ночь, сообщает ТАСС. Самым доступным городом для новогоднего отдыха стал Туапсе — здесь суточное проживание обойдется в 4 тысячи рублей. В то же время Белокуриха лидирует по высоким ценам: ночь здесь стоит в среднем 26 тысяч рублей.",
-      "primary_source": "aomsk",
-      "primary_url": "https://vk.ru/wall-62731567_3709147",
+      "text": "Костя мы ждём твой Прайм 🔥",
+      "primary_source": "fcava",
+      "primary_url": "https://vk.ru/wall-23766163_2454419",
       "source_urls": [
-        "https://vk.ru/wall-62731567_3709147"
+        "https://vk.ru/wall-23766163_2454419"
       ],
       "prediction": {
-        "priority_score": 61.7,
+        "priority_score": 48.2,
         "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
         "confidence": 25.0,
         "eligible": true,
         "exclusion_reason": null,
         "score_version": "editorial_v2",
         "model_type": "ridge_engagement_v1_shadow",
-        "ml_priority_score": 39.9,
+        "ml_priority_score": 38.0,
         "training_samples_1h": 226,
         "training_samples_3h": 204,
-        "predicted_engagement_1h": 0.009071,
-        "predicted_engagement_3h": 0.006561,
+        "predicted_engagement_1h": 0.005801,
+        "predicted_engagement_3h": 0.006243,
         "audience_model_predictions": {
           "golos": {
-            "engagement_1h": 0.009767,
-            "engagement_3h": 0.009139,
-            "priority_score": 46.6,
+            "engagement_1h": 0.009596,
+            "engagement_3h": 0.010373,
+            "priority_score": 52.9,
             "training_samples_1h": 113,
             "training_samples_3h": 101
           },
           "zhest": {
-            "engagement_1h": 0.008006,
-            "engagement_3h": 0.00279,
-            "priority_score": 20.3,
+            "engagement_1h": 0.000317,
+            "engagement_3h": 0.0,
+            "priority_score": 0,
             "training_samples_1h": 113,
             "training_samples_3h": 103
           }
@@ -134,8 +261,8 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 99.0,
-          "local_relevance": 80.0,
+          "freshness": 99.8,
+          "local_relevance": 30.0,
           "event_impact": 20.0,
           "reach": null,
           "engagement": null,
@@ -151,9 +278,120 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 51.1,
-          "viral_score": 3.5,
-          "editorial_score": 61.4
+          "analyzer_score": 34.4,
+          "viral_score": 0.0,
+          "editorial_score": 18.0
+        }
+      },
+      "editor_status": "🟢 В РАБОТУ",
+      "publication_mode": "editorial_work",
+      "editorial_exclusion_reason": null
+    },
+    {
+      "score": 33.1,
+      "base_score": 9.0,
+      "recency_score": 94.9,
+      "age_minutes": 9.2,
+      "newest_source_timestamp": 1793901617.0,
+      "viral_score": 0.0,
+      "editorial_score": 18.0,
+      "confidence": 65.0,
+      "posts": 1,
+      "social_sources": 1,
+      "views": 0.0,
+      "reposts": 0.0,
+      "likes": 0.0,
+      "comments": 0.0,
+      "content_type": "social_story",
+      "official_attribution": false,
+      "source_type": "regional_media",
+      "nonlocal_detected": false,
+      "help_request": false,
+      "opinion_detected": false,
+      "advertising_detected": false,
+      "excluded_topic": false,
+      "status": "take_now",
+      "action": "БРАТЬ В РАБОТУ",
+      "members": [
+        {
+          "source": "tg_ngs55news",
+          "id": 56940,
+          "source_name": "Новости Омска | NGS55",
+          "source_type": "telegram",
+          "timestamp": 1793901617,
+          "date": "2026-11-06 00:00:17",
+          "text": "Что изменится на прямой линии с Путиным в этом году — власти раскрыли детали\nhttps://ngs55.ru/text/politics/2026/11/05/76747010/\n\nКонференция пройдет в декабре",
+          "url": "https://t.me/ngs55news/56940",
+          "media_type": "photo",
+          "views": null,
+          "likes": null,
+          "comments": null,
+          "reposts": null
+        }
+      ],
+      "text": "Что изменится на прямой линии с Путиным в этом году — власти раскрыли детали\nhttps://ngs55.ru/text/politics/2026/11/05/76747010/\n\nКонференция пройдет в декабре",
+      "primary_source": "tg_ngs55news",
+      "primary_url": "https://t.me/ngs55news/56940",
+      "source_urls": [
+        "https://t.me/ngs55news/56940"
+      ],
+      "prediction": {
+        "priority_score": 46.5,
+        "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
+        "confidence": 65.0,
+        "eligible": true,
+        "exclusion_reason": null,
+        "score_version": "editorial_v2",
+        "model_type": "ridge_engagement_v1_shadow",
+        "ml_priority_score": 43.8,
+        "training_samples_1h": 226,
+        "training_samples_3h": 204,
+        "predicted_engagement_1h": 0.006179,
+        "predicted_engagement_3h": 0.007204,
+        "audience_model_predictions": {
+          "golos": {
+            "engagement_1h": 0.010704,
+            "engagement_3h": 0.010247,
+            "priority_score": 52.3,
+            "training_samples_1h": 113,
+            "training_samples_3h": 101
+          },
+          "zhest": {
+            "engagement_1h": 0.002587,
+            "engagement_3h": 0.003422,
+            "priority_score": 24.9,
+            "training_samples_1h": 113,
+            "training_samples_3h": 103
+          }
+        },
+        "event_class": "general",
+        "complaint_signal": false,
+        "complaint_viral_signal": false,
+        "complaint_bonus": 0.0,
+        "cross_source_count": 1,
+        "metric_coverage": [],
+        "coverage_ratio": 0.0,
+        "signals": {
+          "freshness": 94.9,
+          "local_relevance": 30.0,
+          "event_impact": 20.0,
+          "reach": null,
+          "engagement": null,
+          "discussion": null,
+          "reshare": null,
+          "velocity": null,
+          "cross_source_spread": 0
+        },
+        "score_weights": {
+          "freshness": 0.3448,
+          "local_relevance": 0.2759,
+          "event_impact": 0.2759,
+          "cross_source_spread": 0.1034
+        },
+        "legacy_scores": {
+          "analyzer_score": 33.1,
+          "viral_score": 0.0,
+          "editorial_score": 18.0
         }
       },
       "editor_status": "🟢 В РАБОТУ",
@@ -161,5 +399,5 @@
       "editorial_exclusion_reason": null
     }
   ],
-  "excluded_topics_count": 0
+  "excluded_topics_count": 1
 }
