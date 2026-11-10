@@ -18,7 +18,6 @@ LOG_PATH = RUNTIME / "smm_poiskovik_engagement.log"
 VK_VERSION = "5.199"
 POLL_SECONDS = 60
 CHECKPOINTS_HOURS = (1, 3)
-TARGET_PER_AUDIENCE = 500
 POSTS_PER_GROUP = 100
 VK_TIMEOUT = 20
 AUDIENCES = {
@@ -227,47 +226,6 @@ def fetch_post_counters(token: str, audience: str, post_ids: list[int]) -> dict[
             }
     return result
 
-def telegram_send(message: str, token: str, chat_id: str) -> None:
-    response = requests.post(f"https://api.telegram.org/bot{token}/sendMessage",
-        data={"chat_id": chat_id, "text": message, "disable_web_page_preview": True}, timeout=VK_TIMEOUT)
-    response.raise_for_status()
-    data = response.json()
-    if not data.get("ok"):
-        raise RuntimeError(f"Telegram API: {data}")
-
-def completed_counts(db_path: Path = DB_PATH) -> dict[str, int]:
-    with db_connect(db_path) as db:
-        rows = db.execute("SELECT audience,COUNT(*) AS n FROM observations WHERE completed_1h=1 AND completed_3h=1 GROUP BY audience").fetchall()
-    counts = {key: 0 for key in AUDIENCES}
-    counts.update({row["audience"]: int(row["n"]) for row in rows})
-    return counts
-
-
-def progress_message(counts: dict[str, int], threshold: int = TARGET_PER_AUDIENCE) -> str:
-    """Show remaining completed observations needed for each audience."""
-    golos_left = max(0, threshold - counts.get("golos", 0))
-    zhest_left = max(0, threshold - counts.get("zhest", 0))
-    return f"Осталось до цели: Голос — {golos_left}; Жесть — {zhest_left}."
-
-def maybe_notify_threshold(db_path: Path, send_func=telegram_send, token: str | None = None,
-                           chat_id: str | None = None, threshold: int = TARGET_PER_AUDIENCE) -> bool:
-    counts = completed_counts(db_path)
-    if not all(counts.get(key, 0) >= threshold for key in AUDIENCES):
-        return False
-    with db_connect(db_path) as db:
-        if db.execute("SELECT value FROM state WHERE key='threshold_notified'").fetchone():
-            return False
-        message = ("✅ СММ Поисковик: контрольная выборка готова\n\n" +
-                   "\n".join(f"{AUDIENCES[key]['name']}: {counts.get(key, 0)}/{threshold} наблюдений "
-                             "(есть замеры через 1 и 3 часа)" for key in AUDIENCES) +
-                   "\nМожно переходить к оценке качества прогнозов.")
-        if not token or not chat_id:
-            raise RuntimeError("Для уведомления не заданы Telegram bot token и chat_id.")
-        send_func(message, token, chat_id)
-        db.execute("INSERT INTO state(key,value) VALUES('threshold_notified',?)", (str(now_ts()),))
-        db.commit()
-    return True
-
 def process_due_observations(token: str, db_path: Path = DB_PATH, now: int | None = None) -> None:
     now = now if now is not None else now_ts()
     # A checkpoint is accepted only within a 10-minute window. If the process
@@ -325,11 +283,7 @@ def process_due_observations(token: str, db_path: Path = DB_PATH, now: int | Non
 def main() -> None:
     init_db()
     vk_token = read_secret("vk_service_key.txt", "VK_SERVICE_KEY")
-    tg_token = read_secret("telegram_bot_token.txt", "TELEGRAM_BOT_TOKEN")
-    tg_chat_id = read_secret("telegram_chat_id.txt", "TELEGRAM_CHAT_ID")
-    last_counts = completed_counts()
     log("Трекер запущен.")
-    log(progress_message(last_counts))
     while True:
         try:
             for key, audience in AUDIENCES.items():
@@ -349,12 +303,6 @@ def main() -> None:
                     target_update = train_engagement_model(horizon=horizon, audience=audience_key)
                     if target_update.get("trained"):
                         log(f"ML-модель {AUDIENCES[audience_key]['name']} обновлена: {target_update['samples']} замеров, горизонт {horizon} ч.")
-            current_counts = completed_counts()
-            if current_counts != last_counts:
-                log(progress_message(current_counts))
-                last_counts = current_counts
-            if maybe_notify_threshold(DB_PATH, token=tg_token, chat_id=tg_chat_id):
-                log("Telegram: отправлено уведомление о готовности контрольной выборки.")
         except Exception as exc:
             log(f"ОШИБКА цикла трекера: {exc}")
         time.sleep(POLL_SECONDS)
