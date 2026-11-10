@@ -329,15 +329,21 @@ def build_message(topic: dict[str, Any], rank: int) -> tuple[str, dict[str, Any]
     source_text, _, source_url = source_for(topic)
     title = clean_editorial_text(topic_title(topic)) or first_sentence(source_text)
     category_label = audience_label(topic)
+    audience_tag = {
+        "Голос Омска": "Г:",
+        "Жесть Омска": "Ж:",
+        "Подходит обоим пабликам": "Г/Ж:",
+    }.get(category_label, "")
+    display_title = f"{audience_tag} {title}".strip()
 
-    message = f"{title}\n\nИсточник: {source_url}" if title else f"Источник: {source_url}"
+    message = f"{display_title}\n\nИсточник: {source_url}" if display_title else f"Источник: {source_url}"
 
     keys, members = topic_keys(topic)
     metadata = {
         "topic_key": keys,
         "member_keys": sorted(members),
         "title": title,
-        "category": "ГОЛОС" if category_label == "Голос Омска" else "ЖЕСТЬ" if category_label == "Жесть Омска" else "",
+        "category": "ГОЛОС" if category_label == "Голос Омска" else "ЖЕСТЬ" if category_label == "Жесть Омска" else "ОБА" if category_label == "Подходит обоим пабликам" else "",
         "source_url": source_url,
         "story_text": clean_editorial_text(source_text)[:900],
     }
