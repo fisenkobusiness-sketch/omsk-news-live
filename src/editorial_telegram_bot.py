@@ -130,19 +130,40 @@ def source_for(topic: dict[str, Any]) -> tuple[str, str, str]:
     return text, source_name, url
 
 
-def audience_label(topic: dict[str, Any]) -> str:
+MIN_AUDIENCE_MODEL_SAMPLES = 30
+MIN_AUDIENCE_MODEL_SCORE = 45.0
+
+
+def audience_model_scores(topic: dict[str, Any]) -> dict[str, float]:
+    """Return usable 3-hour ML scores only for models trained on enough data."""
     models = (topic.get("prediction") or {}).get("audience_model_predictions") or {}
     scores = {}
-    for key, label in (("golos", "Голос Омска"), ("zhest", "Жесть Омска")):
-        value = (models.get(key) or {}).get("priority_score")
-        if isinstance(value, (int, float)):
-            scores[label] = float(value)
-    if len(scores) < 2:
+    for key in ("golos", "zhest"):
+        value = models.get(key)
+        if not isinstance(value, dict):
+            continue
+        score = value.get("priority_score")
+        samples = value.get("training_samples_3h")
+        if (
+            isinstance(score, (int, float))
+            and isinstance(samples, int)
+            and samples >= MIN_AUDIENCE_MODEL_SAMPLES
+        ):
+            scores[key] = float(score)
+    return scores
+
+
+def audience_label(topic: dict[str, Any]) -> str:
+    labels = {"golos": "Голос Омска", "zhest": "Жесть Омска"}
+    scores = audience_model_scores(topic)
+    if not scores:
         return "Аудиторию выбери по ситуации"
+    if len(scores) == 1:
+        return labels[next(iter(scores))]
     names = list(scores)
     if abs(scores[names[0]] - scores[names[1]]) < 0.05:
         return "Подходит обоим пабликам"
-    return max(scores, key=scores.get)
+    return labels[max(scores, key=scores.get)]
 
 
 def topic_keys(topic: dict[str, Any]) -> tuple[str, set[str]]:
@@ -174,23 +195,18 @@ def is_actionable(topic: Any) -> bool:
         age_seconds = time.time() - float(newest or 0)
     except (TypeError, ValueError):
         return False
+    scores = audience_model_scores(topic)
     return (
         0 <= age_seconds <= 180 * 60
-        and topic.get("status") == "take_now"
-        and topic.get("publication_mode") == "editorial_work"
         and prediction.get("eligible") is True
-        and float(prediction.get("priority_score") or 0) >= 45
+        and bool(scores)
+        and max(scores.values()) >= MIN_AUDIENCE_MODEL_SCORE
     )
 
 
 def audience_model_score(topic: dict[str, Any]) -> float | None:
-    models = (topic.get("prediction") or {}).get("audience_model_predictions") or {}
-    scores = [
-        value.get("priority_score")
-        for value in models.values()
-        if isinstance(value, dict) and isinstance(value.get("priority_score"), (int, float))
-    ]
-    return max(scores) if scores else None
+    scores = audience_model_scores(topic)
+    return max(scores.values()) if scores else None
 
 
 def get_ranked_topics(queue: dict[str, Any]) -> list[dict[str, Any]]:
