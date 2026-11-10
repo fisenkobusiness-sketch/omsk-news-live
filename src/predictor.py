@@ -326,6 +326,77 @@ def apply_editorial_action(item, prediction):
     return item
 
 
+MIN_CONSOLE_MODEL_SAMPLES = 30
+MIN_CONSOLE_MODEL_SCORE = 45.0
+CONSOLE_FRESHNESS_SECONDS = 180 * 60
+
+
+def audience_ml_rank(topic):
+    """Return the strongest usable 3-hour audience-model prediction."""
+    models = (topic.get("prediction") or {}).get("audience_model_predictions") or {}
+    candidates = {}
+    for key, label in (("golos", "Г"), ("zhest", "Ж")):
+        model = models.get(key)
+        if not isinstance(model, dict):
+            continue
+        score = model.get("priority_score")
+        samples = model.get("training_samples_3h")
+        if (
+            isinstance(score, (int, float))
+            and isinstance(samples, int)
+            and samples >= MIN_CONSOLE_MODEL_SAMPLES
+        ):
+            candidates[key] = {"score": float(score), "label": label, "samples": samples}
+    if not candidates:
+        return None
+    best_key = max(candidates, key=lambda key: candidates[key]["score"])
+    best = candidates[best_key]
+    if (
+        len(candidates) == 2
+        and abs(candidates["golos"]["score"] - candidates["zhest"]["score"]) < 0.05
+    ):
+        return {
+            "score": best["score"],
+            "label": "Г/Ж",
+            "samples": f'{candidates["golos"]["samples"]}/{candidates["zhest"]["samples"]}',
+        }
+    return best
+
+
+def console_ml_candidates(topics):
+    """Mirror the ML score, freshness, and source requirements used by the bot."""
+    candidates = []
+    now = time.time()
+    for topic in topics:
+        prediction = topic.get("prediction") or {}
+        if prediction.get("eligible") is not True:
+            continue
+        timestamp = newest_timestamp(topic.get("members", []))
+        if timestamp is None or not 0 <= now - timestamp <= CONSOLE_FRESHNESS_SECONDS:
+            continue
+        has_source = bool(
+            topic.get("primary_url")
+            or topic.get("source_urls")
+            or any(
+                isinstance(member, dict) and member.get("url")
+                for member in topic.get("members", [])
+            )
+        )
+        if not has_source:
+            continue
+        rank = audience_ml_rank(topic)
+        if rank and rank["score"] >= MIN_CONSOLE_MODEL_SCORE:
+            candidates.append((topic, rank))
+    candidates.sort(
+        key=lambda item: (
+            item[1]["score"],
+            float((item[0].get("prediction") or {}).get("priority_score") or 0),
+        ),
+        reverse=True,
+    )
+    return candidates
+
+
 def main():
     path = Path(INPUT)
     if not path.exists():
@@ -408,11 +479,15 @@ def main():
     )
 
     console_print(f"Готово: {OUTPUT}")
-    console_print("\nТОП-5:")
-    for i, topic in enumerate(result["topics"][:5], 1):
-        p = topic["prediction"]
+    console_print("\nТОП-5 по ML для бота (прогноз вовлечённости через 3 часа):")
+    ml_candidates = console_ml_candidates(result["topics"])
+    if not ml_candidates:
+        console_print("Нет свежих тем, прошедших ML-порог (45 баллов, от 30 замеров и прямая ссылка).")
+    for i, (topic, rank) in enumerate(ml_candidates[:5], 1):
         title = (topic.get("text") or "").replace("\n", " ")[:100]
-        console_print(f"{i}. {p['priority_score']} - {p['prediction']} - {title}")
+        console_print(
+            f"{i}. {rank['score']:.1f} — {rank['label']} — замеры: {rank['samples']} — {title}"
+        )
 
 
 if __name__ == "__main__":
