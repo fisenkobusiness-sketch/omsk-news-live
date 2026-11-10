@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-11T01:29:21+06:00",
+  "generated_at": "2026-11-11T01:36:20+06:00",
   "version": "predictor-editorial-v2",
   "model": {
     "purpose": "единый редакционный приоритет по независимым признакам",
@@ -50,10 +50,137 @@
   },
   "topics": [
     {
-      "score": 48.9,
+      "score": 54.5,
+      "base_score": 36.9,
+      "recency_score": 99.9,
+      "age_minutes": 0.2,
+      "newest_source_timestamp": 1794339370.0,
+      "viral_score": 9.8,
+      "editorial_score": 63.9,
+      "confidence": 45.0,
+      "posts": 2,
+      "social_sources": 2,
+      "views": 0.0,
+      "reposts": 0.0,
+      "likes": 0.0,
+      "comments": 0.0,
+      "content_type": "news",
+      "official_attribution": false,
+      "source_type": "regional_media",
+      "nonlocal_detected": false,
+      "help_request": false,
+      "opinion_detected": false,
+      "advertising_detected": false,
+      "excluded_topic": false,
+      "status": "take_now",
+      "action": "БРАТЬ В РАБОТУ",
+      "members": [
+        {
+          "source": "tg_aomsk",
+          "id": 78145,
+          "source_name": "Аварийный Омск",
+          "source_type": "telegram",
+          "timestamp": 1794339370,
+          "date": "2026-11-11 01:36:10",
+          "text": "В России массово закрываются алкозаводы из-за непьющих россиян. За год перестали работать 30 производителей крепкого алкоголя, пишет Коммерсантъ. Это связано с падающим спросом на спиртное, продавать бизнес или прекращать работу вынуждены небольшие компании, специализировавшиеся в первую очередь на водке.\n\n—\nАварийный Омск ТГ @aomsk и MAX.ru/aomsk",
+          "url": "https://t.me/aomsk/78145",
+          "media_type": null,
+          "views": null,
+          "likes": null,
+          "comments": null,
+          "reposts": null
+        },
+        {
+          "source": "aomsk",
+          "id": 3713090,
+          "date": "2026-11-11 01:33:40",
+          "timestamp": 1794339220,
+          "text": "В России массово закрываются алкозаводы из-за непьющих россиян. За год перестали работать 30 производителей крепкого алкоголя, пишет Коммерсантъ. Это связано с падающим спросом на спиртное, продавать бизнес или прекращать работу вынуждены небольшие компании, специализировавшиеся в первую очередь на водке.",
+          "likes": null,
+          "comments": null,
+          "reposts": null,
+          "views": null,
+          "url": "https://vk.ru/wall-62731567_3713090",
+          "source_type": "social",
+          "flags": [],
+          "editor_status": "⏳ ДО ОЦЕНКИ РЕЙТИНГА"
+        }
+      ],
+      "text": "В России массово закрываются алкозаводы из-за непьющих россиян. За год перестали работать 30 производителей крепкого алкоголя, пишет Коммерсантъ. Это связано с падающим спросом на спиртное, продавать бизнес или прекращать работу вынуждены небольшие компании, специализировавшиеся в первую очередь на водке.\n\n—\nАварийный Омск ТГ @aomsk и MAX.ru/aomsk",
+      "primary_source": "tg_aomsk",
+      "primary_url": "https://t.me/aomsk/78145",
+      "source_urls": [
+        "https://t.me/aomsk/78145",
+        "https://vk.ru/wall-62731567_3713090"
+      ],
+      "prediction": {
+        "priority_score": 85.4,
+        "prediction": "🟢 ВЫСОКИЙ ПРИОРИТЕТ",
+        "confidence": 45.0,
+        "eligible": true,
+        "exclusion_reason": null,
+        "score_version": "editorial_v2",
+        "model_type": "ridge_engagement_v1_shadow",
+        "ml_priority_score": 20.1,
+        "training_samples_1h": 288,
+        "training_samples_3h": 268,
+        "predicted_engagement_1h": 0.00341,
+        "predicted_engagement_3h": 0.003489,
+        "audience_model_predictions": {
+          "golos": {
+            "engagement_1h": 0.0086,
+            "engagement_3h": 0.00938,
+            "priority_score": 44.4,
+            "training_samples_1h": 143,
+            "training_samples_3h": 132
+          },
+          "zhest": {
+            "engagement_1h": 0.0,
+            "engagement_3h": 0.0,
+            "priority_score": 0,
+            "training_samples_1h": 145,
+            "training_samples_3h": 136
+          }
+        },
+        "event_class": "major_incident",
+        "complaint_signal": false,
+        "complaint_viral_signal": false,
+        "complaint_bonus": 0.0,
+        "cross_source_count": 2,
+        "metric_coverage": [],
+        "coverage_ratio": 0.0,
+        "signals": {
+          "freshness": 99.9,
+          "local_relevance": 80.0,
+          "event_impact": 90.0,
+          "reach": null,
+          "engagement": null,
+          "discussion": null,
+          "reshare": null,
+          "velocity": null,
+          "cross_source_spread": 39.3
+        },
+        "score_weights": {
+          "freshness": 0.3448,
+          "local_relevance": 0.2759,
+          "event_impact": 0.2759,
+          "cross_source_spread": 0.1034
+        },
+        "legacy_scores": {
+          "analyzer_score": 54.5,
+          "viral_score": 9.8,
+          "editorial_score": 63.9
+        }
+      },
+      "editor_status": "🟢 В РАБОТУ",
+      "publication_mode": "editorial_work",
+      "editorial_exclusion_reason": null
+    },
+    {
+      "score": 47.8,
       "base_score": 32.5,
-      "recency_score": 91.1,
-      "age_minutes": 16.0,
+      "recency_score": 87.2,
+      "age_minutes": 23.0,
       "newest_source_timestamp": 1794337999.0,
       "viral_score": 3.5,
       "editorial_score": 61.4,
@@ -98,7 +225,7 @@
         "https://vk.ru/wall-80052011_4981501"
       ],
       "prediction": {
-        "priority_score": 78.3,
+        "priority_score": 77.0,
         "prediction": "🟢 ВЫСОКИЙ ПРИОРИТЕТ",
         "confidence": 25.0,
         "eligible": true,
@@ -134,7 +261,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 91.1,
+          "freshness": 87.2,
           "local_relevance": 80.0,
           "event_impact": 90.0,
           "reach": null,
@@ -151,7 +278,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 48.9,
+          "analyzer_score": 47.8,
           "viral_score": 3.5,
           "editorial_score": 61.4
         }
@@ -161,10 +288,10 @@
       "editorial_exclusion_reason": null
     },
     {
-      "score": 47.4,
+      "score": 46.3,
       "base_score": 32.5,
-      "recency_score": 85.6,
-      "age_minutes": 25.8,
+      "recency_score": 81.8,
+      "age_minutes": 32.8,
       "newest_source_timestamp": 1794337411.0,
       "viral_score": 3.5,
       "editorial_score": 61.4,
@@ -257,7 +384,7 @@
         "https://t.me/kanal12omsk/53323"
       ],
       "prediction": {
-        "priority_score": 65.2,
+        "priority_score": 63.8,
         "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
         "confidence": 55.0,
         "eligible": true,
@@ -293,7 +420,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 85.6,
+          "freshness": 81.8,
           "local_relevance": 80.0,
           "event_impact": 20.0,
           "reach": null,
@@ -310,7 +437,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 47.4,
+          "analyzer_score": 46.3,
           "viral_score": 3.5,
           "editorial_score": 61.4
         }
@@ -320,10 +447,10 @@
       "editorial_exclusion_reason": null
     },
     {
-      "score": 33.2,
+      "score": 32.1,
       "base_score": 11.4,
-      "recency_score": 89.2,
-      "age_minutes": 19.4,
+      "recency_score": 85.3,
+      "age_minutes": 26.4,
       "newest_source_timestamp": 1794337796.0,
       "viral_score": 3.5,
       "editorial_score": 19.4,
@@ -368,7 +495,7 @@
         "https://vk.ru/wall-72346659_1532650"
       ],
       "prediction": {
-        "priority_score": 58.3,
+        "priority_score": 57.0,
         "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
         "confidence": 25.0,
         "eligible": true,
@@ -404,7 +531,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 89.2,
+          "freshness": 85.3,
           "local_relevance": 80.0,
           "event_impact": 20.0,
           "reach": null,
@@ -421,7 +548,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 33.2,
+          "analyzer_score": 32.1,
           "viral_score": 3.5,
           "editorial_score": 19.4
         }
@@ -431,10 +558,10 @@
       "editorial_exclusion_reason": null
     },
     {
-      "score": 22.3,
+      "score": 21.2,
       "base_score": 11.4,
-      "recency_score": 50.4,
-      "age_minutes": 89.4,
+      "recency_score": 46.5,
+      "age_minutes": 96.3,
       "newest_source_timestamp": 1794333600.0,
       "viral_score": 3.5,
       "editorial_score": 19.4,
@@ -479,7 +606,7 @@
         "https://vk.ru/wall-35207_813982"
       ],
       "prediction": {
-        "priority_score": 57.4,
+        "priority_score": 56.0,
         "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
         "confidence": 25.0,
         "eligible": true,
@@ -515,7 +642,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 50.4,
+          "freshness": 46.5,
           "local_relevance": 80.0,
           "event_impact": 65.0,
           "reach": null,
@@ -532,7 +659,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 22.3,
+          "analyzer_score": 21.2,
           "viral_score": 3.5,
           "editorial_score": 19.4
         }
@@ -542,10 +669,10 @@
       "editorial_exclusion_reason": null
     },
     {
-      "score": 42.0,
+      "score": 40.9,
       "base_score": 32.5,
-      "recency_score": 66.4,
-      "age_minutes": 60.5,
+      "recency_score": 62.5,
+      "age_minutes": 67.4,
       "newest_source_timestamp": 1794335334.0,
       "viral_score": 3.5,
       "editorial_score": 61.4,
@@ -590,7 +717,7 @@
         "https://t.me/Om1_Omsk/55513"
       ],
       "prediction": {
-        "priority_score": 50.5,
+        "priority_score": 49.1,
         "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
         "confidence": 65.0,
         "eligible": true,
@@ -626,7 +753,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 66.4,
+          "freshness": 62.5,
           "local_relevance": 80.0,
           "event_impact": 20.0,
           "reach": null,
@@ -643,7 +770,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 42.0,
+          "analyzer_score": 40.9,
           "viral_score": 3.5,
           "editorial_score": 61.4
         }
@@ -653,10 +780,10 @@
       "editorial_exclusion_reason": null
     },
     {
-      "score": 40.8,
+      "score": 39.7,
       "base_score": 32.5,
-      "recency_score": 62.0,
-      "age_minutes": 68.4,
+      "recency_score": 58.1,
+      "age_minutes": 75.3,
       "newest_source_timestamp": 1794334860.0,
       "viral_score": 3.5,
       "editorial_score": 61.4,
@@ -701,7 +828,7 @@
         "https://vk.ru/wall-105035379_3359867"
       ],
       "prediction": {
-        "priority_score": 49.0,
+        "priority_score": 47.6,
         "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
         "confidence": 25.0,
         "eligible": true,
@@ -737,7 +864,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 62.0,
+          "freshness": 58.1,
           "local_relevance": 80.0,
           "event_impact": 20.0,
           "reach": null,
@@ -754,7 +881,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 40.8,
+          "analyzer_score": 39.7,
           "viral_score": 3.5,
           "editorial_score": 61.4
         }
@@ -764,10 +891,10 @@
       "editorial_exclusion_reason": null
     },
     {
-      "score": 39.3,
+      "score": 38.2,
       "base_score": 32.5,
-      "recency_score": 56.8,
-      "age_minutes": 77.8,
+      "recency_score": 52.9,
+      "age_minutes": 84.8,
       "newest_source_timestamp": 1794334292.0,
       "viral_score": 3.5,
       "editorial_score": 61.4,
@@ -812,7 +939,7 @@
         "https://vk.ru/wall-108620298_869516"
       ],
       "prediction": {
-        "priority_score": 47.2,
+        "priority_score": 45.8,
         "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
         "confidence": 25.0,
         "eligible": true,
@@ -848,7 +975,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 56.8,
+          "freshness": 52.9,
           "local_relevance": 80.0,
           "event_impact": 20.0,
           "reach": null,
@@ -865,7 +992,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 39.3,
+          "analyzer_score": 38.2,
           "viral_score": 3.5,
           "editorial_score": 61.4
         }
@@ -875,10 +1002,10 @@
       "editorial_exclusion_reason": null
     },
     {
-      "score": 27.6,
+      "score": 26.5,
       "base_score": 9.0,
-      "recency_score": 75.3,
-      "age_minutes": 44.5,
+      "recency_score": 71.4,
+      "age_minutes": 51.5,
       "newest_source_timestamp": 1794336291.0,
       "viral_score": 0.0,
       "editorial_score": 18.0,
@@ -923,7 +1050,7 @@
         "https://t.me/kanal12omsk/53324"
       ],
       "prediction": {
-        "priority_score": 39.7,
+        "priority_score": 38.4,
         "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
         "confidence": 65.0,
         "eligible": true,
@@ -959,7 +1086,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 75.3,
+          "freshness": 71.4,
           "local_relevance": 30.0,
           "event_impact": 20.0,
           "reach": null,
@@ -976,7 +1103,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 27.6,
+          "analyzer_score": 26.5,
           "viral_score": 0.0,
           "editorial_score": 18.0
         }
@@ -986,10 +1113,10 @@
       "editorial_exclusion_reason": "below_priority_threshold"
     },
     {
-      "score": 25.7,
+      "score": 24.6,
       "base_score": 9.0,
-      "recency_score": 68.6,
-      "age_minutes": 56.5,
+      "recency_score": 64.8,
+      "age_minutes": 63.4,
       "newest_source_timestamp": 1794335574.0,
       "viral_score": 0.0,
       "editorial_score": 18.0,
@@ -1034,7 +1161,7 @@
         "https://vk.ru/wall-23766163_2455761"
       ],
       "prediction": {
-        "priority_score": 37.5,
+        "priority_score": 36.1,
         "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
         "confidence": 25.0,
         "eligible": true,
@@ -1070,7 +1197,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 68.6,
+          "freshness": 64.8,
           "local_relevance": 30.0,
           "event_impact": 20.0,
           "reach": null,
@@ -1087,7 +1214,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 25.7,
+          "analyzer_score": 24.6,
           "viral_score": 0.0,
           "editorial_score": 18.0
         }
@@ -1097,10 +1224,10 @@
       "editorial_exclusion_reason": "below_priority_threshold"
     },
     {
-      "score": 21.3,
+      "score": 20.3,
       "base_score": 9.0,
-      "recency_score": 53.1,
-      "age_minutes": 84.4,
+      "recency_score": 49.3,
+      "age_minutes": 91.3,
       "newest_source_timestamp": 1794333900.0,
       "viral_score": 0.0,
       "editorial_score": 18.0,
@@ -1145,7 +1272,7 @@
         "https://t.me/region_omsk55/28870"
       ],
       "prediction": {
-        "priority_score": 32.1,
+        "priority_score": 30.8,
         "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
         "confidence": 65.0,
         "eligible": true,
@@ -1181,7 +1308,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 53.1,
+          "freshness": 49.3,
           "local_relevance": 30.0,
           "event_impact": 20.0,
           "reach": null,
@@ -1198,7 +1325,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 21.3,
+          "analyzer_score": 20.3,
           "viral_score": 0.0,
           "editorial_score": 18.0
         }
@@ -1208,10 +1335,10 @@
       "editorial_exclusion_reason": "below_priority_threshold"
     },
     {
-      "score": 20.6,
+      "score": 19.5,
       "base_score": 9.0,
-      "recency_score": 50.4,
-      "age_minutes": 89.4,
+      "recency_score": 46.5,
+      "age_minutes": 96.3,
       "newest_source_timestamp": 1794333600.0,
       "viral_score": 0.0,
       "editorial_score": 18.0,
@@ -1256,7 +1383,7 @@
         "https://vk.ru/wall-66461784_600897"
       ],
       "prediction": {
-        "priority_score": 31.2,
+        "priority_score": 29.8,
         "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
         "confidence": 25.0,
         "eligible": true,
@@ -1292,7 +1419,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 50.4,
+          "freshness": 46.5,
           "local_relevance": 30.0,
           "event_impact": 20.0,
           "reach": null,
@@ -1309,7 +1436,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 20.6,
+          "analyzer_score": 19.5,
           "viral_score": 0.0,
           "editorial_score": 18.0
         }
