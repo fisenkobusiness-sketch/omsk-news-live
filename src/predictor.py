@@ -327,8 +327,10 @@ def apply_editorial_action(item, prediction):
 
 
 MIN_CONSOLE_MODEL_SAMPLES = 30
-MIN_CONSOLE_MODEL_SCORE = 45.0
+MAX_CONSOLE_CANDIDATES = 10
 CONSOLE_FRESHNESS_SECONDS = 180 * 60
+CONSOLE_SPREAD_WINDOW_SECONDS = 30 * 60
+CONSOLE_SPREAD_MIN_SOURCES = 3
 
 
 def audience_ml_rank(topic):
@@ -363,8 +365,29 @@ def audience_ml_rank(topic):
     return best
 
 
+def recent_source_count(topic, now=None):
+    """Count distinct monitored source accounts reporting the topic in the last 30 minutes."""
+    now = time.time() if now is None else now
+    sources = set()
+    for member in topic.get("members", []) or []:
+        if not isinstance(member, dict):
+            continue
+        try:
+            timestamp = float(member.get("timestamp") or 0)
+        except (TypeError, ValueError):
+            continue
+        if not 0 <= now - timestamp <= CONSOLE_SPREAD_WINDOW_SECONDS:
+            continue
+        source = str(
+            member.get("source_name") or member.get("source") or member.get("url") or ""
+        ).strip().casefold()
+        if source:
+            sources.add(source)
+    return len(sources)
+
+
 def console_ml_candidates(topics):
-    """Mirror the ML score, freshness, and source requirements used by the bot."""
+    """Mirror the bot's ML, freshness, link, and rapid-spread ranking."""
     candidates = []
     now = time.time()
     for topic in topics:
@@ -385,16 +408,20 @@ def console_ml_candidates(topics):
         if not has_source:
             continue
         rank = audience_ml_rank(topic)
-        if rank and rank["score"] >= MIN_CONSOLE_MODEL_SCORE:
-            candidates.append((topic, rank))
+        if rank is None:
+            continue
+        spread_count = recent_source_count(topic, now)
+        candidates.append((topic, rank, spread_count))
     candidates.sort(
         key=lambda item: (
+            item[2] >= CONSOLE_SPREAD_MIN_SOURCES,
+            item[2],
             item[1]["score"],
             float((item[0].get("prediction") or {}).get("priority_score") or 0),
         ),
         reverse=True,
     )
-    return candidates
+    return candidates[:MAX_CONSOLE_CANDIDATES]
 
 
 def main():
@@ -479,14 +506,15 @@ def main():
     )
 
     console_print(f"Готово: {OUTPUT}")
-    console_print("\nТОП-5 по ML для бота (прогноз вовлечённости через 3 часа):")
+    console_print("\nТОП-5 рекомендаций бота: ML-прогноз + быстрый рост темы")
     ml_candidates = console_ml_candidates(result["topics"])
     if not ml_candidates:
-        console_print("Нет свежих тем, прошедших ML-порог (45 баллов, от 30 замеров и прямая ссылка).")
-    for i, (topic, rank) in enumerate(ml_candidates[:5], 1):
+        console_print("Нет свежих тем с обученной моделью и прямой ссылкой.")
+    for i, (topic, rank, spread_count) in enumerate(ml_candidates[:5], 1):
         title = (topic.get("text") or "").replace("\n", " ")[:100]
+        signal = f"быстро в {spread_count} источниках" if spread_count >= CONSOLE_SPREAD_MIN_SOURCES else "ML"
         console_print(
-            f"{i}. {rank['score']:.1f} — {rank['label']} — замеры: {rank['samples']} — {title}"
+            f"{i}. {rank['score']:.1f} — {rank['label']} — {signal} — замеры: {rank['samples']} — {title}"
         )
 
 
