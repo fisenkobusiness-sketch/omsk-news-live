@@ -131,7 +131,9 @@ def source_for(topic: dict[str, Any]) -> tuple[str, str, str]:
 
 
 MIN_AUDIENCE_MODEL_SAMPLES = 30
-MIN_AUDIENCE_MODEL_SCORE = 45.0
+MAX_RANKED_CANDIDATES = 10
+RAPID_SPREAD_WINDOW_SECONDS = 30 * 60
+RAPID_SPREAD_MIN_SOURCES = 3
 
 
 def audience_model_scores(topic: dict[str, Any]) -> dict[str, float]:
@@ -186,6 +188,38 @@ def topic_keys(topic: dict[str, Any]) -> tuple[str, set[str]]:
     return primary_url or title.casefold()[:240], member_keys
 
 
+def recent_source_count(topic: dict[str, Any], now: float | None = None) -> int:
+    """Count distinct monitored source accounts reporting the topic in the last 30 minutes."""
+    now = time.time() if now is None else now
+    sources = set()
+    for member in topic.get("members", []) or []:
+        if not isinstance(member, dict):
+            continue
+        try:
+            timestamp = float(member.get("timestamp") or 0)
+        except (TypeError, ValueError):
+            continue
+        if not 0 <= now - timestamp <= RAPID_SPREAD_WINDOW_SECONDS:
+            continue
+        source = str(
+            member.get("source_name") or member.get("source") or member.get("url") or ""
+        ).strip().casefold()
+        if source:
+            sources.add(source)
+    return len(sources)
+
+
+def has_source_link(topic: dict[str, Any]) -> bool:
+    return bool(
+        topic.get("primary_url")
+        or topic.get("source_urls")
+        or any(
+            isinstance(member, dict) and member.get("url")
+            for member in topic.get("members", []) or []
+        )
+    )
+
+
 def is_actionable(topic: Any) -> bool:
     if not isinstance(topic, dict):
         return False
@@ -195,12 +229,11 @@ def is_actionable(topic: Any) -> bool:
         age_seconds = time.time() - float(newest or 0)
     except (TypeError, ValueError):
         return False
-    scores = audience_model_scores(topic)
     return (
         0 <= age_seconds <= 180 * 60
         and prediction.get("eligible") is True
-        and bool(scores)
-        and max(scores.values()) >= MIN_AUDIENCE_MODEL_SCORE
+        and bool(audience_model_scores(topic))
+        and has_source_link(topic)
     )
 
 
@@ -213,13 +246,14 @@ def get_ranked_topics(queue: dict[str, Any]) -> list[dict[str, Any]]:
     topics = [topic for topic in queue.get("topics", []) if is_actionable(topic)]
     topics.sort(
         key=lambda item: (
-            audience_model_score(item) is not None,
+            recent_source_count(item) >= RAPID_SPREAD_MIN_SOURCES,
+            recent_source_count(item),
             audience_model_score(item) or 0.0,
             float((item.get("prediction") or {}).get("priority_score") or 0),
         ),
         reverse=True,
     )
-    return topics
+    return topics[:MAX_RANKED_CANDIDATES]
 
 
 def clean_editorial_text(value: str) -> str:
