@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-13T00:08:54+06:00",
+  "generated_at": "2026-11-13T00:23:27+06:00",
   "version": "predictor-editorial-v2",
   "model": {
     "purpose": "единый редакционный приоритет по независимым признакам",
@@ -50,10 +50,10 @@
   },
   "topics": [
     {
-      "score": 36.8,
+      "score": 34.6,
       "base_score": 13.4,
-      "recency_score": 97.1,
-      "age_minutes": 5.2,
+      "recency_score": 89.0,
+      "age_minutes": 19.7,
       "newest_source_timestamp": 1794506624.0,
       "viral_score": 6.3,
       "editorial_score": 20.5,
@@ -98,7 +98,7 @@
         "https://t.me/region_omsk55/28912"
       ],
       "prediction": {
-        "priority_score": 69.4,
+        "priority_score": 66.6,
         "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
         "confidence": 65.0,
         "eligible": true,
@@ -134,7 +134,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 97.1,
+          "freshness": 89.0,
           "local_relevance": 30.0,
           "event_impact": 100.0,
           "reach": null,
@@ -151,9 +151,120 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 36.8,
+          "analyzer_score": 34.6,
           "viral_score": 6.3,
           "editorial_score": 20.5
+        }
+      },
+      "editor_status": "🟢 В РАБОТУ",
+      "publication_mode": "editorial_work",
+      "editorial_exclusion_reason": null
+    },
+    {
+      "score": 34.0,
+      "base_score": 9.0,
+      "recency_score": 98.3,
+      "age_minutes": 3.1,
+      "newest_source_timestamp": 1794507620.0,
+      "viral_score": 0.0,
+      "editorial_score": 18.0,
+      "confidence": 25.0,
+      "posts": 1,
+      "social_sources": 1,
+      "views": 0.0,
+      "reposts": 0.0,
+      "likes": 0.0,
+      "comments": 0.0,
+      "content_type": "social_story",
+      "official_attribution": false,
+      "source_type": "social",
+      "nonlocal_detected": false,
+      "help_request": false,
+      "opinion_detected": false,
+      "advertising_detected": false,
+      "excluded_topic": false,
+      "status": "take_now",
+      "action": "БРАТЬ В РАБОТУ",
+      "members": [
+        {
+          "source": "fcava",
+          "id": 2456487,
+          "date": "2026-11-13 00:20:20",
+          "timestamp": 1794507620,
+          "text": "Обзор матча «Металлург» Мг – «Авангард» | 12.11.2026 | Хайлайты КХЛ 2026/2027\n\n#обзорматча #fcavaобзорматча",
+          "likes": null,
+          "comments": null,
+          "reposts": null,
+          "views": null,
+          "url": "https://vk.ru/wall-23766163_2456487",
+          "source_type": "social",
+          "flags": [],
+          "editor_status": "⏳ ДО ОЦЕНКИ РЕЙТИНГА"
+        }
+      ],
+      "text": "Обзор матча «Металлург» Мг – «Авангард» | 12.11.2026 | Хайлайты КХЛ 2026/2027\n\n#обзорматча #fcavaобзорматча",
+      "primary_source": "fcava",
+      "primary_url": "https://vk.ru/wall-23766163_2456487",
+      "source_urls": [
+        "https://vk.ru/wall-23766163_2456487"
+      ],
+      "prediction": {
+        "priority_score": 47.7,
+        "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
+        "confidence": 25.0,
+        "eligible": true,
+        "exclusion_reason": null,
+        "score_version": "editorial_v2",
+        "model_type": "ridge_engagement_v1_shadow",
+        "ml_priority_score": 34.9,
+        "training_samples_1h": 321,
+        "training_samples_3h": 288,
+        "predicted_engagement_1h": 0.006075,
+        "predicted_engagement_3h": 0.006145,
+        "audience_model_predictions": {
+          "golos": {
+            "engagement_1h": 0.008397,
+            "engagement_3h": 0.008825,
+            "priority_score": 41.7,
+            "training_samples_1h": 160,
+            "training_samples_3h": 143
+          },
+          "zhest": {
+            "engagement_1h": 0.002546,
+            "engagement_3h": 0.000683,
+            "priority_score": 5.0,
+            "training_samples_1h": 161,
+            "training_samples_3h": 145
+          }
+        },
+        "event_class": "general",
+        "complaint_signal": false,
+        "complaint_viral_signal": false,
+        "complaint_bonus": 0.0,
+        "cross_source_count": 1,
+        "metric_coverage": [],
+        "coverage_ratio": 0.0,
+        "signals": {
+          "freshness": 98.3,
+          "local_relevance": 30.0,
+          "event_impact": 20.0,
+          "reach": null,
+          "engagement": null,
+          "discussion": null,
+          "reshare": null,
+          "velocity": null,
+          "cross_source_spread": 0
+        },
+        "score_weights": {
+          "freshness": 0.3448,
+          "local_relevance": 0.2759,
+          "event_impact": 0.2759,
+          "cross_source_spread": 0.1034
+        },
+        "legacy_scores": {
+          "analyzer_score": 34.0,
+          "viral_score": 0.0,
+          "editorial_score": 18.0
         }
       },
       "editor_status": "🟢 В РАБОТУ",
