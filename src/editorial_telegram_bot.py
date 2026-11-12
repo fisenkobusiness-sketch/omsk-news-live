@@ -248,6 +248,7 @@ def get_ranked_topics(queue: dict[str, Any]) -> list[dict[str, Any]]:
         key=lambda item: (
             recent_source_count(item) >= RAPID_SPREAD_MIN_SOURCES,
             recent_source_count(item),
+            int((item.get("prediction") or {}).get("cross_source_count") or 0),
             audience_model_score(item) or 0.0,
             float((item.get("prediction") or {}).get("priority_score") or 0),
         ),
