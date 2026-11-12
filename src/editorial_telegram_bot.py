@@ -31,6 +31,7 @@ TELEGRAM_API = "https://api.telegram.org"
 
 sys.path.insert(0, str(ROOT / "src"))
 from live_monitor import get_github_token, github_request  # noqa: E402
+from editorial_rules import is_excluded_topic, is_promotional  # noqa: E402
 
 
 def read_secret(filename: str, env_name: str) -> str:
@@ -232,6 +233,8 @@ def is_actionable(topic: Any) -> bool:
     return (
         0 <= age_seconds <= 180 * 60
         and prediction.get("eligible") is True
+        and not is_excluded_topic(topic)
+        and not is_promotional(topic)
         and bool(audience_model_scores(topic))
         and has_source_link(topic)
     )
@@ -445,17 +448,60 @@ def send_candidate(token: str, chat_id: str, topic: dict[str, Any], rank: int, s
     return True
 
 
+def load_published_records() -> list[dict[str, Any]]:
+    """Read published and rejected story history from the main-branch registry."""
+    try:
+        token = get_github_token()
+        _, remote = github_request(
+            "GET", f"/contents/{PUBLISHED_PATH}?ref={GITHUB_BRANCH}", token
+        )
+        raw = base64.b64decode(remote.get("content", "")).decode("utf-8")
+        registry = json.loads(raw)
+        return [
+            item for item in registry.get("topics", [])
+            if isinstance(item, dict) and item.get("status") in {"published", "rejected"}
+        ]
+    except Exception as exc:
+        print(f"[Telegram bot] Не удалось прочитать реестр тем: {exc}", flush=True)
+        return []
+
+
+def already_in_registry(topic: dict[str, Any], records: list[dict[str, Any]]) -> bool:
+    story = story_record_for_topic(topic)
+    _, _, source_url = source_for(topic)
+    topic_urls = {source_url} if source_url else set()
+    topic_urls.update(
+        str(member.get("url") or "").strip()
+        for member in topic.get("members", [])
+        if isinstance(member, dict) and member.get("url")
+    )
+    for record in records:
+        record_url = str(record.get("source_url") or "").strip()
+        if record_url and record_url in topic_urls:
+            return True
+        recorded_story = {
+            "title": str(record.get("title") or ""),
+            "story_text": str(record.get("story_text") or ""),
+        }
+        if same_story(story, recorded_story):
+            return True
+    return False
+
+
 def deliver_candidates(token: str, chat_id: str, state: dict[str, Any]) -> None:
     queue = load_json(QUEUE_FILE, {})
     if not isinstance(queue, dict) or str(queue.get("generated_at") or "")[:10] != current_date():
         return
 
+    published_records = load_published_records()
     topics = get_ranked_topics(queue)
     seen_topics = set(state["sent_topic_keys"])
     seen_members = set(state["sent_member_keys"])
     seen_stories = list(state["sent_story_texts"])
     fresh = []
     for topic in topics:
+        if already_in_registry(topic, published_records):
+            continue
         key, members = topic_keys(topic)
         if not key or key in seen_topics or members.intersection(seen_members):
             continue
@@ -543,6 +589,9 @@ def append_topic_status(
             if metadata.get("category"):
                 existing["category"] = metadata["category"]
             existing["source_url"] = url or existing.get("source_url", "")
+            story_text = clean_editorial_text(str(metadata.get("story_text") or ""))[:900]
+            if story_text:
+                existing["story_text"] = story_text
             existing["note"] = note
         else:
             topics.append(
@@ -551,6 +600,7 @@ def append_topic_status(
                     "status": status,
                     "category": str(metadata.get("category") or ""),
                     "source_url": url,
+                    "story_text": clean_editorial_text(str(metadata.get("story_text") or ""))[:900],
                     "note": note,
                 }
             )
