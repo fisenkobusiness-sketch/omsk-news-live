@@ -416,6 +416,7 @@ def console_ml_candidates(topics):
         key=lambda item: (
             item[2] >= CONSOLE_SPREAD_MIN_SOURCES,
             item[2],
+            int((item[0].get("prediction") or {}).get("cross_source_count") or 0),
             item[1]["score"],
             float((item[0].get("prediction") or {}).get("priority_score") or 0),
         ),
