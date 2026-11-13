@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-14T00:59:20+06:00",
+  "generated_at": "2026-11-14T01:19:24+06:00",
   "version": "predictor-editorial-v2",
   "model": {
     "purpose": "единый редакционный приоритет по независимым признакам",
@@ -50,10 +50,10 @@
   },
   "topics": [
     {
-      "score": 53.1,
+      "score": 49.9,
       "base_score": 36.9,
-      "recency_score": 94.7,
-      "age_minutes": 9.6,
+      "recency_score": 83.5,
+      "age_minutes": 29.7,
       "newest_source_timestamp": 1794595784.0,
       "viral_score": 9.8,
       "editorial_score": 63.9,
@@ -114,7 +114,7 @@
         "https://vk.ru/wall-62731567_3715780"
       ],
       "prediction": {
-        "priority_score": 64.3,
+        "priority_score": 60.5,
         "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
         "confidence": 45.0,
         "eligible": true,
@@ -150,7 +150,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 94.7,
+          "freshness": 83.5,
           "local_relevance": 80.0,
           "event_impact": 20.0,
           "reach": null,
@@ -167,9 +167,120 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 53.1,
+          "analyzer_score": 49.9,
           "viral_score": 9.8,
           "editorial_score": 63.9
+        }
+      },
+      "editor_status": "🟢 В РАБОТУ",
+      "publication_mode": "editorial_work",
+      "editorial_exclusion_reason": null
+    },
+    {
+      "score": 34.2,
+      "base_score": 9.0,
+      "recency_score": 99.0,
+      "age_minutes": 1.7,
+      "newest_source_timestamp": 1794597461.0,
+      "viral_score": 0.0,
+      "editorial_score": 18.0,
+      "confidence": 25.0,
+      "posts": 1,
+      "social_sources": 1,
+      "views": 0.0,
+      "reposts": 0.0,
+      "likes": 0.0,
+      "comments": 0.0,
+      "content_type": "social_story",
+      "official_attribution": false,
+      "source_type": "social",
+      "nonlocal_detected": false,
+      "help_request": false,
+      "opinion_detected": false,
+      "advertising_detected": false,
+      "excluded_topic": false,
+      "status": "take_now",
+      "action": "БРАТЬ В РАБОТУ",
+      "members": [
+        {
+          "source": "aomsk",
+          "id": 3715791,
+          "date": "2026-11-14 01:17:41",
+          "timestamp": 1794597461,
+          "text": "Мошенники пугают владельцев квартир фальшивыми сообщениями\n\nАферисты рассылают сообщения о якобы переоформлении недвижимости и призывают проверить данные в поддельном «личном кабинете ЕГРН». Цель — выманить личные данные. Игнорируйте такие ссылки и проверяйте информацию только через официальные сайты.",
+          "likes": null,
+          "comments": null,
+          "reposts": null,
+          "views": null,
+          "url": "https://vk.ru/wall-62731567_3715791",
+          "source_type": "social",
+          "flags": [],
+          "editor_status": "⏳ ДО ОЦЕНКИ РЕЙТИНГА"
+        }
+      ],
+      "text": "Мошенники пугают владельцев квартир фальшивыми сообщениями\n\nАферисты рассылают сообщения о якобы переоформлении недвижимости и призывают проверить данные в поддельном «личном кабинете ЕГРН». Цель — выманить личные данные. Игнорируйте такие ссылки и проверяйте информацию только через официальные сайты.",
+      "primary_source": "aomsk",
+      "primary_url": "https://vk.ru/wall-62731567_3715791",
+      "source_urls": [
+        "https://vk.ru/wall-62731567_3715791"
+      ],
+      "prediction": {
+        "priority_score": 47.9,
+        "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
+        "confidence": 25.0,
+        "eligible": true,
+        "exclusion_reason": null,
+        "score_version": "editorial_v2",
+        "model_type": "ridge_engagement_v1_shadow",
+        "ml_priority_score": 44.7,
+        "training_samples_1h": 342,
+        "training_samples_3h": 312,
+        "predicted_engagement_1h": 0.00715,
+        "predicted_engagement_3h": 0.007129,
+        "audience_model_predictions": {
+          "golos": {
+            "engagement_1h": 0.01204,
+            "engagement_3h": 0.012749,
+            "priority_score": 65.0,
+            "training_samples_1h": 169,
+            "training_samples_3h": 153
+          },
+          "zhest": {
+            "engagement_1h": 0.004387,
+            "engagement_3h": 0.0036,
+            "priority_score": 26.2,
+            "training_samples_1h": 173,
+            "training_samples_3h": 159
+          }
+        },
+        "event_class": "general",
+        "complaint_signal": false,
+        "complaint_viral_signal": false,
+        "complaint_bonus": 0.0,
+        "cross_source_count": 1,
+        "metric_coverage": [],
+        "coverage_ratio": 0.0,
+        "signals": {
+          "freshness": 99.0,
+          "local_relevance": 30.0,
+          "event_impact": 20.0,
+          "reach": null,
+          "engagement": null,
+          "discussion": null,
+          "reshare": null,
+          "velocity": null,
+          "cross_source_spread": 0
+        },
+        "score_weights": {
+          "freshness": 0.3448,
+          "local_relevance": 0.2759,
+          "event_impact": 0.2759,
+          "cross_source_spread": 0.1034
+        },
+        "legacy_scores": {
+          "analyzer_score": 34.2,
+          "viral_score": 0.0,
+          "editorial_score": 18.0
         }
       },
       "editor_status": "🟢 В РАБОТУ",
