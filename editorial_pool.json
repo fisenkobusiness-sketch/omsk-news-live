@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-14T01:24:26+06:00",
+  "generated_at": "2026-11-14T01:44:11+06:00",
   "version": "predictor-editorial-v2",
   "model": {
     "purpose": "единый редакционный приоритет по независимым признакам",
@@ -50,10 +50,10 @@
   },
   "topics": [
     {
-      "score": 53.9,
+      "score": 50.8,
       "base_score": 36.9,
-      "recency_score": 97.5,
-      "age_minutes": 4.5,
+      "recency_score": 86.5,
+      "age_minutes": 24.2,
       "newest_source_timestamp": 1794597597.0,
       "viral_score": 9.8,
       "editorial_score": 63.9,
@@ -114,7 +114,7 @@
         "https://vk.ru/wall-62731567_3715791"
       ],
       "prediction": {
-        "priority_score": 65.3,
+        "priority_score": 61.5,
         "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
         "confidence": 45.0,
         "eligible": true,
@@ -150,7 +150,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 97.5,
+          "freshness": 86.5,
           "local_relevance": 80.0,
           "event_impact": 20.0,
           "reach": null,
@@ -167,7 +167,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 53.9,
+          "analyzer_score": 50.8,
           "viral_score": 9.8,
           "editorial_score": 63.9
         }
@@ -177,10 +177,121 @@
       "editorial_exclusion_reason": null
     },
     {
-      "score": 49.2,
+      "score": 50.8,
+      "base_score": 32.5,
+      "recency_score": 97.8,
+      "age_minutes": 3.9,
+      "newest_source_timestamp": 1794598817.0,
+      "viral_score": 3.5,
+      "editorial_score": 61.4,
+      "confidence": 25.0,
+      "posts": 1,
+      "social_sources": 1,
+      "views": 0.0,
+      "reposts": 0.0,
+      "likes": 0.0,
+      "comments": 0.0,
+      "content_type": "news",
+      "official_attribution": false,
+      "source_type": "social",
+      "nonlocal_detected": false,
+      "help_request": false,
+      "opinion_detected": false,
+      "advertising_detected": false,
+      "excluded_topic": false,
+      "status": "take_now",
+      "action": "БРАТЬ В РАБОТУ",
+      "members": [
+        {
+          "source": "tipical_omsk",
+          "id": 1533219,
+          "date": "2026-11-14 01:40:17",
+          "timestamp": 1794598817,
+          "text": "Под Омском выпавшая из фуры труба пробила легковушку\n\nПроизошло это на трассе Тюмень-Омск в районе села Бекишево.\n\n\"На трассе из фуры вылетел кусок металлической трубы и как в масло вошел в машину. К счастью не в лобовое стекло\" - рассказал омский автомобилист.\n\nВидео в комментариях\n\nМы в MAX 👉 max.ru/inci55 \nМы в Telegram 👉 vk.cc/cSGG1x",
+          "likes": null,
+          "comments": null,
+          "reposts": null,
+          "views": null,
+          "url": "https://vk.ru/wall-72346659_1533219",
+          "source_type": "social",
+          "flags": [],
+          "editor_status": "⏳ ДО ОЦЕНКИ РЕЙТИНГА"
+        }
+      ],
+      "text": "Под Омском выпавшая из фуры труба пробила легковушку\n\nПроизошло это на трассе Тюмень-Омск в районе села Бекишево.\n\n\"На трассе из фуры вылетел кусок металлической трубы и как в масло вошел в машину. К счастью не в лобовое стекло\" - рассказал омский автомобилист.\n\nВидео в комментариях\n\nМы в MAX 👉 max.ru/inci55 \nМы в Telegram 👉 vk.cc/cSGG1x",
+      "primary_source": "tipical_omsk",
+      "primary_url": "https://vk.ru/wall-72346659_1533219",
+      "source_urls": [
+        "https://vk.ru/wall-72346659_1533219"
+      ],
+      "prediction": {
+        "priority_score": 61.3,
+        "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
+        "confidence": 25.0,
+        "eligible": true,
+        "exclusion_reason": null,
+        "score_version": "editorial_v2",
+        "model_type": "ridge_engagement_v1_shadow",
+        "ml_priority_score": 31.4,
+        "training_samples_1h": 342,
+        "training_samples_3h": 312,
+        "predicted_engagement_1h": 0.006229,
+        "predicted_engagement_3h": 0.005007,
+        "audience_model_predictions": {
+          "golos": {
+            "engagement_1h": 0.007729,
+            "engagement_3h": 0.007352,
+            "priority_score": 37.5,
+            "training_samples_1h": 169,
+            "training_samples_3h": 153
+          },
+          "zhest": {
+            "engagement_1h": 0.003318,
+            "engagement_3h": 0.000751,
+            "priority_score": 5.5,
+            "training_samples_1h": 173,
+            "training_samples_3h": 159
+          }
+        },
+        "event_class": "general",
+        "complaint_signal": false,
+        "complaint_viral_signal": false,
+        "complaint_bonus": 0.0,
+        "cross_source_count": 1,
+        "metric_coverage": [],
+        "coverage_ratio": 0.0,
+        "signals": {
+          "freshness": 97.8,
+          "local_relevance": 80.0,
+          "event_impact": 20.0,
+          "reach": null,
+          "engagement": null,
+          "discussion": null,
+          "reshare": null,
+          "velocity": null,
+          "cross_source_spread": 0
+        },
+        "score_weights": {
+          "freshness": 0.3448,
+          "local_relevance": 0.2759,
+          "event_impact": 0.2759,
+          "cross_source_spread": 0.1034
+        },
+        "legacy_scores": {
+          "analyzer_score": 50.8,
+          "viral_score": 3.5,
+          "editorial_score": 61.4
+        }
+      },
+      "editor_status": "🟢 В РАБОТУ",
+      "publication_mode": "editorial_work",
+      "editorial_exclusion_reason": null
+    },
+    {
+      "score": 46.1,
       "base_score": 36.9,
-      "recency_score": 80.7,
-      "age_minutes": 34.7,
+      "recency_score": 69.7,
+      "age_minutes": 54.5,
       "newest_source_timestamp": 1794595784.0,
       "viral_score": 9.8,
       "editorial_score": 63.9,
@@ -241,7 +352,7 @@
         "https://vk.ru/wall-62731567_3715780"
       ],
       "prediction": {
-        "priority_score": 59.5,
+        "priority_score": 55.7,
         "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
         "confidence": 45.0,
         "eligible": true,
@@ -277,7 +388,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 80.7,
+          "freshness": 69.7,
           "local_relevance": 80.0,
           "event_impact": 20.0,
           "reach": null,
@@ -294,7 +405,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 49.2,
+          "analyzer_score": 46.1,
           "viral_score": 9.8,
           "editorial_score": 63.9
         }
