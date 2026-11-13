@@ -66,54 +66,9 @@ def topic_text(value: Any) -> str:
     return " ".join(str(part or "").lower() for part in parts)
 
 
-def is_low_value_personal_conflict(value: Any) -> bool:
-    """Filter isolated first-person quarrels with no broader public consequence."""
-    text = topic_text(value)
-    if not isinstance(value, dict):
-        return False
-
-    # A dispute repeated by multiple monitored sources may have become a broader story.
-    sources = set()
-    for member in value.get("members", []) or []:
-        if not isinstance(member, dict):
-            continue
-        source = (
-            member.get("source_name")
-            or member.get("source")
-            or member.get("url")
-            or member.get("source_id")
-        )
-        if source:
-            sources.add(str(source).strip().casefold())
-    if len(sources) >= 2:
-        return False
-
-    first_person = re.search(
-        r"\\b(?:я|мне|меня|со мной|мой|моя|моё|мои)\\b", text, re.IGNORECASE
-    )
-    interpersonal_dispute = re.search(
-        r"(?:оскорб\\w*|поругал\\w*|ругал\\w*|накричал\\w*|"
-        r"поссорил\\w*|конфликт\\w*|не уступил\\w* место|"
-        r"сел\\w* на колен\\w*|села на колен\\w*)",
-        text,
-        re.IGNORECASE,
-    )
-    broader_consequence = re.search(
-        r"(?:госпитализир\\w*|травм\\w*|полици\\w*|следствен\\w*|"
-        r"уголовн\\w* дело|суд\\w*|прокуратур\\w*|"
-        r"провер\\w* правоохранител\\w*|закрыл\\w* маршрут)",
-        text,
-        re.IGNORECASE,
-    )
-    return bool(first_person and interpersonal_dispute and not broader_consequence)
-
-
 def is_excluded_topic(value: Any) -> bool:
     text = topic_text(value)
-    return (
-        any(pattern in text for pattern in EXCLUDED_TOPIC_PATTERNS)
-        or is_low_value_personal_conflict(value)
-    )
+    return any(pattern in text for pattern in EXCLUDED_TOPIC_PATTERNS)
 
 
 def is_promotional(value: Any) -> bool:
