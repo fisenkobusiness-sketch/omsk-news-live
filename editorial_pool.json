@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-14T00:49:28+06:00",
+  "generated_at": "2026-11-14T00:59:20+06:00",
   "version": "predictor-editorial-v2",
   "model": {
     "purpose": "единый редакционный приоритет по независимым признакам",
@@ -50,23 +50,23 @@
   },
   "topics": [
     {
-      "score": 34.1,
-      "base_score": 9.0,
-      "recency_score": 98.6,
-      "age_minutes": 2.5,
-      "newest_source_timestamp": 1794595620.0,
-      "viral_score": 0.0,
-      "editorial_score": 18.0,
-      "confidence": 25.0,
-      "posts": 1,
-      "social_sources": 1,
+      "score": 53.1,
+      "base_score": 36.9,
+      "recency_score": 94.7,
+      "age_minutes": 9.6,
+      "newest_source_timestamp": 1794595784.0,
+      "viral_score": 9.8,
+      "editorial_score": 63.9,
+      "confidence": 45.0,
+      "posts": 2,
+      "social_sources": 2,
       "views": 0.0,
       "reposts": 0.0,
       "likes": 0.0,
       "comments": 0.0,
-      "content_type": "social_story",
+      "content_type": "news",
       "official_attribution": false,
-      "source_type": "social",
+      "source_type": "regional_media",
       "nonlocal_detected": false,
       "help_request": false,
       "opinion_detected": false,
@@ -75,6 +75,21 @@
       "status": "take_now",
       "action": "БРАТЬ В РАБОТУ",
       "members": [
+        {
+          "source": "tg_aomsk",
+          "id": 78297,
+          "source_name": "Аварийный Омск",
+          "source_type": "telegram",
+          "timestamp": 1794595784,
+          "date": "2026-11-14 00:49:44",
+          "text": "Зарина Омарбекова представит наш город, выступая в полуфинале популярного шоу «Ну-ка, все вместе!» на федеральном канале. Девушка занимается вокалом и готовится выйти на сцену перед сотней экспертов, которых возглавляет Сергей Лазарев. Мы желаем Зарине удачи!\n\n—\nАварийный Омск ТГ @aomsk и MAX.ru/aomsk",
+          "url": "https://t.me/aomsk/78297",
+          "media_type": "photo",
+          "views": null,
+          "likes": null,
+          "comments": null,
+          "reposts": null
+        },
         {
           "source": "aomsk",
           "id": 3715780,
@@ -91,37 +106,38 @@
           "editor_status": "⏳ ДО ОЦЕНКИ РЕЙТИНГА"
         }
       ],
-      "text": "Зарина Омарбекова представит наш город, выступая в полуфинале популярного шоу «Ну-ка, все вместе!» на федеральном канале. Девушка занимается вокалом и готовится выйти на сцену перед сотней экспертов, которых возглавляет Сергей Лазарев. Мы желаем Зарине удачи!",
-      "primary_source": "aomsk",
-      "primary_url": "https://vk.ru/wall-62731567_3715780",
+      "text": "Зарина Омарбекова представит наш город, выступая в полуфинале популярного шоу «Ну-ка, все вместе!» на федеральном канале. Девушка занимается вокалом и готовится выйти на сцену перед сотней экспертов, которых возглавляет Сергей Лазарев. Мы желаем Зарине удачи!\n\n—\nАварийный Омск ТГ @aomsk и MAX.ru/aomsk",
+      "primary_source": "tg_aomsk",
+      "primary_url": "https://t.me/aomsk/78297",
       "source_urls": [
+        "https://t.me/aomsk/78297",
         "https://vk.ru/wall-62731567_3715780"
       ],
       "prediction": {
-        "priority_score": 47.8,
+        "priority_score": 64.3,
         "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
-        "confidence": 25.0,
+        "confidence": 45.0,
         "eligible": true,
         "exclusion_reason": null,
         "score_version": "editorial_v2",
         "model_type": "ridge_engagement_v1_shadow",
-        "ml_priority_score": 31.2,
+        "ml_priority_score": 23.8,
         "training_samples_1h": 342,
         "training_samples_3h": 312,
-        "predicted_engagement_1h": 0.006176,
-        "predicted_engagement_3h": 0.004973,
+        "predicted_engagement_1h": 0.005069,
+        "predicted_engagement_3h": 0.0038,
         "audience_model_predictions": {
           "golos": {
-            "engagement_1h": 0.007907,
-            "engagement_3h": 0.0075,
-            "priority_score": 38.3,
+            "engagement_1h": 0.009908,
+            "engagement_3h": 0.009519,
+            "priority_score": 48.5,
             "training_samples_1h": 169,
             "training_samples_3h": 153
           },
           "zhest": {
-            "engagement_1h": 0.003186,
-            "engagement_3h": 0.000764,
-            "priority_score": 5.6,
+            "engagement_1h": 0.002131,
+            "engagement_3h": 0.0,
+            "priority_score": 0,
             "training_samples_1h": 173,
             "training_samples_3h": 159
           }
@@ -130,19 +146,19 @@
         "complaint_signal": false,
         "complaint_viral_signal": false,
         "complaint_bonus": 0.0,
-        "cross_source_count": 1,
+        "cross_source_count": 2,
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 98.6,
-          "local_relevance": 30.0,
+          "freshness": 94.7,
+          "local_relevance": 80.0,
           "event_impact": 20.0,
           "reach": null,
           "engagement": null,
           "discussion": null,
           "reshare": null,
           "velocity": null,
-          "cross_source_spread": 0
+          "cross_source_spread": 39.3
         },
         "score_weights": {
           "freshness": 0.3448,
@@ -151,9 +167,9 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 34.1,
-          "viral_score": 0.0,
-          "editorial_score": 18.0
+          "analyzer_score": 53.1,
+          "viral_score": 9.8,
+          "editorial_score": 63.9
         }
       },
       "editor_status": "🟢 В РАБОТУ",
