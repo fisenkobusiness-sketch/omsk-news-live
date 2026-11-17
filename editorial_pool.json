@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-18T00:10:20+06:00",
+  "generated_at": "2026-11-18T00:24:27+06:00",
   "version": "predictor-editorial-v2",
   "model": {
     "purpose": "единый редакционный приоритет по независимым признакам",
@@ -48,6 +48,118 @@
     "strict_nonlocal_detection": true,
     "practical_local_relevance_bonus": true
   },
-  "topics": [],
+  "topics": [
+    {
+      "score": 51.3,
+      "base_score": 32.5,
+      "recency_score": 99.5,
+      "age_minutes": 1.0,
+      "newest_source_timestamp": 1794939809.0,
+      "viral_score": 3.5,
+      "editorial_score": 61.4,
+      "confidence": 25.0,
+      "posts": 1,
+      "social_sources": 1,
+      "views": 0.0,
+      "reposts": 0.0,
+      "likes": 0.0,
+      "comments": 0.0,
+      "content_type": "news",
+      "official_attribution": false,
+      "source_type": "social",
+      "nonlocal_detected": false,
+      "help_request": false,
+      "opinion_detected": false,
+      "advertising_detected": false,
+      "excluded_topic": false,
+      "status": "take_now",
+      "action": "БРАТЬ В РАБОТУ",
+      "members": [
+        {
+          "source": "1oomestomska",
+          "id": 691606,
+          "date": "2026-11-18 00:23:29",
+          "timestamp": 1794939809,
+          "text": "Очередная вонь… Стабильно канализация по адресу Энтузиастов 61 и ближайшие дома топит из канализационных люков нечистотами, ароматы стоят на весь двор… И летом и зимой [club117639365|Администрация города Омска] УК «Левобрежье» никак не отвечают на жалобы. Батареи еле теплые, в ванной - потлотенцесушитель вообще не греет и не сушит. Постоянно ссылаются на ресурсоснабжающие компании, которые видимо в свою очередь тоже не в курсе. Видео снято 17.11.2026 г.\nТо топит подъезд ранее, то машина горит УК «Левобережье» под окнами, то потоп в подъезде зимой… платим за содержание жилья а его кроме бабушек в палисадниках никто не содержит (бесплатно)",
+          "likes": null,
+          "comments": null,
+          "reposts": null,
+          "views": null,
+          "url": "https://vk.ru/wall-2890484_691606",
+          "source_type": "social",
+          "flags": [],
+          "editor_status": "⏳ ДО ОЦЕНКИ РЕЙТИНГА"
+        }
+      ],
+      "text": "Очередная вонь… Стабильно канализация по адресу Энтузиастов 61 и ближайшие дома топит из канализационных люков нечистотами, ароматы стоят на весь двор… И летом и зимой [club117639365|Администрация города Омска] УК «Левобрежье» никак не отвечают на жалобы. Батареи еле теплые, в ванной - потлотенцесушитель вообще не греет и не сушит. Постоянно ссылаются на ресурсоснабжающие компании, которые видимо в свою очередь тоже не в курсе. Видео снято 17.11.2026 г.\nТо топит подъезд ранее, то машина горит УК «Левобережье» под окнами, то потоп в подъезде зимой… платим за содержание жилья а его кроме бабушек в палисадниках никто не содержит (бесплатно)",
+      "primary_source": "1oomestomska",
+      "primary_url": "https://vk.ru/wall-2890484_691606",
+      "source_urls": [
+        "https://vk.ru/wall-2890484_691606"
+      ],
+      "prediction": {
+        "priority_score": 77.1,
+        "prediction": "🟢 ВЫСОКИЙ ПРИОРИТЕТ",
+        "confidence": 25.0,
+        "eligible": true,
+        "exclusion_reason": null,
+        "score_version": "editorial_v2",
+        "model_type": "ridge_engagement_v1_shadow",
+        "ml_priority_score": 32.6,
+        "training_samples_1h": 397,
+        "training_samples_3h": 363,
+        "predicted_engagement_1h": 0.008004,
+        "predicted_engagement_3h": 0.005747,
+        "audience_model_predictions": {
+          "golos": {
+            "engagement_1h": 0.009975,
+            "engagement_3h": 0.00624,
+            "priority_score": 29.5,
+            "training_samples_1h": 197,
+            "training_samples_3h": 179
+          },
+          "zhest": {
+            "engagement_1h": 0.002631,
+            "engagement_3h": 0.003135,
+            "priority_score": 20.8,
+            "training_samples_1h": 200,
+            "training_samples_3h": 184
+          }
+        },
+        "event_class": "fire_or_emergency",
+        "complaint_signal": false,
+        "complaint_viral_signal": false,
+        "complaint_bonus": 0.0,
+        "cross_source_count": 1,
+        "metric_coverage": [],
+        "coverage_ratio": 0.0,
+        "signals": {
+          "freshness": 99.5,
+          "local_relevance": 80.0,
+          "event_impact": 75.0,
+          "reach": null,
+          "engagement": null,
+          "discussion": null,
+          "reshare": null,
+          "velocity": null,
+          "cross_source_spread": 0
+        },
+        "score_weights": {
+          "freshness": 0.3448,
+          "local_relevance": 0.2759,
+          "event_impact": 0.2759,
+          "cross_source_spread": 0.1034
+        },
+        "legacy_scores": {
+          "analyzer_score": 51.3,
+          "viral_score": 3.5,
+          "editorial_score": 61.4
+        }
+      },
+      "editor_status": "🟢 В РАБОТУ",
+      "publication_mode": "editorial_work",
+      "editorial_exclusion_reason": null
+    }
+  ],
   "excluded_topics_count": 2
 }
