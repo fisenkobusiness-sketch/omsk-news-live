@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-18T00:59:27+06:00",
+  "generated_at": "2026-11-18T01:04:46+06:00",
   "version": "predictor-editorial-v2",
   "model": {
     "purpose": "единый редакционный приоритет по независимым признакам",
@@ -50,10 +50,137 @@
   },
   "topics": [
     {
-      "score": 45.8,
+      "score": 37.0,
+      "base_score": 13.4,
+      "recency_score": 97.7,
+      "age_minutes": 4.2,
+      "newest_source_timestamp": 1794942034.0,
+      "viral_score": 6.3,
+      "editorial_score": 20.5,
+      "confidence": 25.0,
+      "posts": 2,
+      "social_sources": 2,
+      "views": 0.0,
+      "reposts": 0.0,
+      "likes": 0.0,
+      "comments": 0.0,
+      "content_type": "news",
+      "official_attribution": false,
+      "source_type": "social",
+      "nonlocal_detected": false,
+      "help_request": false,
+      "opinion_detected": false,
+      "advertising_detected": false,
+      "excluded_topic": false,
+      "status": "take_now",
+      "action": "БРАТЬ В РАБОТУ",
+      "members": [
+        {
+          "source": "omsk_live",
+          "id": 4985012,
+          "date": "2026-11-18 01:00:34",
+          "timestamp": 1794942034,
+          "text": "При крушении военно-транспортного самолета Ан-12 в Кемеровской области погибли 19 человек, сообщили в Минобороны \n \nСамолет потерпел крушение во время планового полета. Предварительной причиной катастрофы стала техническая неисправность. \n \nНа месте работает комиссия ВКС России, устанавливаются обстоятельства крушения. \n \nПодробности и видео происшествия в Telegram 👉 vk.cc/cSzhwa и MAX 👉 max.ru/omsk_live",
+          "likes": null,
+          "comments": null,
+          "reposts": null,
+          "views": null,
+          "url": "https://vk.ru/wall-80052011_4985012",
+          "source_type": "social",
+          "flags": [],
+          "editor_status": "⏳ ДО ОЦЕНКИ РЕЙТИНГА"
+        },
+        {
+          "source": "inci55",
+          "id": 3363967,
+          "date": "2026-11-18 00:59:01",
+          "timestamp": 1794941941,
+          "text": "При крушении военно-транспортного самолета Ан-12 в Кемеровской области погибли 19 человек, сообщили в Минобороны\n \nСамолет потерпел крушение во время планового полета. Предварительной причиной катастрофы стала техническая неисправность.\n\nНа месте работает комиссия ВКС России, устанавливаются обстоятельства крушения.\n\nПодробности и видео происшествия в Telegram 👉 vk.cc/cSGG1x и MAX 👉 max.ru/inci55",
+          "likes": null,
+          "comments": null,
+          "reposts": null,
+          "views": null,
+          "url": "https://vk.ru/wall-105035379_3363967",
+          "source_type": "social",
+          "flags": [],
+          "editor_status": "⏳ ДО ОЦЕНКИ РЕЙТИНГА"
+        }
+      ],
+      "text": "При крушении военно-транспортного самолета Ан-12 в Кемеровской области погибли 19 человек, сообщили в Минобороны \n \nСамолет потерпел крушение во время планового полета. Предварительной причиной катастрофы стала техническая неисправность. \n \nНа месте работает комиссия ВКС России, устанавливаются обстоятельства крушения. \n \nПодробности и видео происшествия в Telegram 👉 vk.cc/cSzhwa и MAX 👉 max.ru/omsk_live",
+      "primary_source": "omsk_live",
+      "primary_url": "https://vk.ru/wall-80052011_4985012",
+      "source_urls": [
+        "https://vk.ru/wall-80052011_4985012",
+        "https://vk.ru/wall-105035379_3363967"
+      ],
+      "prediction": {
+        "priority_score": 73.6,
+        "prediction": "🟢 ВЫСОКИЙ ПРИОРИТЕТ",
+        "confidence": 25.0,
+        "eligible": true,
+        "exclusion_reason": null,
+        "score_version": "editorial_v2",
+        "model_type": "ridge_engagement_v1_shadow",
+        "ml_priority_score": 15.1,
+        "training_samples_1h": 397,
+        "training_samples_3h": 366,
+        "predicted_engagement_1h": 0.002785,
+        "predicted_engagement_3h": 0.002661,
+        "audience_model_predictions": {
+          "golos": {
+            "engagement_1h": 0.007874,
+            "engagement_3h": 0.007902,
+            "priority_score": 40.3,
+            "training_samples_1h": 197,
+            "training_samples_3h": 181
+          },
+          "zhest": {
+            "engagement_1h": 0.0,
+            "engagement_3h": 0.0,
+            "priority_score": 0,
+            "training_samples_1h": 200,
+            "training_samples_3h": 185
+          }
+        },
+        "event_class": "fatal_incident",
+        "complaint_signal": false,
+        "complaint_viral_signal": false,
+        "complaint_bonus": 0.0,
+        "cross_source_count": 2,
+        "metric_coverage": [],
+        "coverage_ratio": 0.0,
+        "signals": {
+          "freshness": 97.7,
+          "local_relevance": 30.0,
+          "event_impact": 100.0,
+          "reach": null,
+          "engagement": null,
+          "discussion": null,
+          "reshare": null,
+          "velocity": null,
+          "cross_source_spread": 39.3
+        },
+        "score_weights": {
+          "freshness": 0.3448,
+          "local_relevance": 0.2759,
+          "event_impact": 0.2759,
+          "cross_source_spread": 0.1034
+        },
+        "legacy_scores": {
+          "analyzer_score": 37.0,
+          "viral_score": 6.3,
+          "editorial_score": 20.5
+        }
+      },
+      "editor_status": "🟢 В РАБОТУ",
+      "publication_mode": "editorial_work",
+      "editorial_exclusion_reason": null
+    },
+    {
+      "score": 45.0,
       "base_score": 32.5,
-      "recency_score": 80.0,
-      "age_minutes": 36.0,
+      "recency_score": 77.1,
+      "age_minutes": 41.3,
       "newest_source_timestamp": 1794939809.0,
       "viral_score": 3.5,
       "editorial_score": 61.4,
@@ -98,25 +225,25 @@
         "https://vk.ru/wall-2890484_691606"
       ],
       "prediction": {
-        "priority_score": 70.4,
-        "prediction": "🟢 ВЫСОКИЙ ПРИОРИТЕТ",
+        "priority_score": 69.3,
+        "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
         "confidence": 25.0,
         "eligible": true,
         "exclusion_reason": null,
         "score_version": "editorial_v2",
         "model_type": "ridge_engagement_v1_shadow",
-        "ml_priority_score": 31.2,
+        "ml_priority_score": 30.1,
         "training_samples_1h": 397,
-        "training_samples_3h": 365,
+        "training_samples_3h": 366,
         "predicted_engagement_1h": 0.008004,
-        "predicted_engagement_3h": 0.005491,
+        "predicted_engagement_3h": 0.00531,
         "audience_model_predictions": {
           "golos": {
             "engagement_1h": 0.009975,
-            "engagement_3h": 0.005711,
-            "priority_score": 27.0,
+            "engagement_3h": 0.005549,
+            "priority_score": 28.3,
             "training_samples_1h": 197,
-            "training_samples_3h": 180
+            "training_samples_3h": 181
           },
           "zhest": {
             "engagement_1h": 0.002631,
@@ -134,7 +261,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 80.0,
+          "freshness": 77.1,
           "local_relevance": 80.0,
           "event_impact": 75.0,
           "reach": null,
@@ -151,7 +278,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 45.8,
+          "analyzer_score": 45.0,
           "viral_score": 3.5,
           "editorial_score": 61.4
         }
@@ -161,121 +288,10 @@
       "editorial_exclusion_reason": null
     },
     {
-      "score": 37.6,
-      "base_score": 13.4,
-      "recency_score": 99.8,
-      "age_minutes": 0.4,
-      "newest_source_timestamp": 1794941941.0,
-      "viral_score": 6.3,
-      "editorial_score": 20.5,
-      "confidence": 25.0,
-      "posts": 1,
-      "social_sources": 1,
-      "views": 0.0,
-      "reposts": 0.0,
-      "likes": 0.0,
-      "comments": 0.0,
-      "content_type": "news",
-      "official_attribution": false,
-      "source_type": "social",
-      "nonlocal_detected": false,
-      "help_request": false,
-      "opinion_detected": false,
-      "advertising_detected": false,
-      "excluded_topic": false,
-      "status": "take_now",
-      "action": "БРАТЬ В РАБОТУ",
-      "members": [
-        {
-          "source": "inci55",
-          "id": 3363967,
-          "date": "2026-11-18 00:59:01",
-          "timestamp": 1794941941,
-          "text": "При крушении военно-транспортного самолета Ан-12 в Кемеровской области погибли 19 человек, сообщили в Минобороны\n \nСамолет потерпел крушение во время планового полета. Предварительной причиной катастрофы стала техническая неисправность.\n\nНа месте работает комиссия ВКС России, устанавливаются обстоятельства крушения.\n\nПодробности и видео происшествия в Telegram 👉 vk.cc/cSGG1x и MAX 👉 max.ru/inci55",
-          "likes": null,
-          "comments": null,
-          "reposts": null,
-          "views": null,
-          "url": "https://vk.ru/wall-105035379_3363967",
-          "source_type": "social",
-          "flags": [],
-          "editor_status": "⏳ ДО ОЦЕНКИ РЕЙТИНГА"
-        }
-      ],
-      "text": "При крушении военно-транспортного самолета Ан-12 в Кемеровской области погибли 19 человек, сообщили в Минобороны\n \nСамолет потерпел крушение во время планового полета. Предварительной причиной катастрофы стала техническая неисправность.\n\nНа месте работает комиссия ВКС России, устанавливаются обстоятельства крушения.\n\nПодробности и видео происшествия в Telegram 👉 vk.cc/cSGG1x и MAX 👉 max.ru/inci55",
-      "primary_source": "inci55",
-      "primary_url": "https://vk.ru/wall-105035379_3363967",
-      "source_urls": [
-        "https://vk.ru/wall-105035379_3363967"
-      ],
-      "prediction": {
-        "priority_score": 70.3,
-        "prediction": "🟢 ВЫСОКИЙ ПРИОРИТЕТ",
-        "confidence": 25.0,
-        "eligible": true,
-        "exclusion_reason": null,
-        "score_version": "editorial_v2",
-        "model_type": "ridge_engagement_v1_shadow",
-        "ml_priority_score": 19.4,
-        "training_samples_1h": 397,
-        "training_samples_3h": 365,
-        "predicted_engagement_1h": 0.003274,
-        "predicted_engagement_3h": 0.003413,
-        "audience_model_predictions": {
-          "golos": {
-            "engagement_1h": 0.009473,
-            "engagement_3h": 0.009827,
-            "priority_score": 46.5,
-            "training_samples_1h": 197,
-            "training_samples_3h": 180
-          },
-          "zhest": {
-            "engagement_1h": 0.0,
-            "engagement_3h": 0.0,
-            "priority_score": 0,
-            "training_samples_1h": 200,
-            "training_samples_3h": 185
-          }
-        },
-        "event_class": "fatal_incident",
-        "complaint_signal": false,
-        "complaint_viral_signal": false,
-        "complaint_bonus": 0.0,
-        "cross_source_count": 1,
-        "metric_coverage": [],
-        "coverage_ratio": 0.0,
-        "signals": {
-          "freshness": 99.8,
-          "local_relevance": 30.0,
-          "event_impact": 100.0,
-          "reach": null,
-          "engagement": null,
-          "discussion": null,
-          "reshare": null,
-          "velocity": null,
-          "cross_source_spread": 0
-        },
-        "score_weights": {
-          "freshness": 0.3448,
-          "local_relevance": 0.2759,
-          "event_impact": 0.2759,
-          "cross_source_spread": 0.1034
-        },
-        "legacy_scores": {
-          "analyzer_score": 37.6,
-          "viral_score": 6.3,
-          "editorial_score": 20.5
-        }
-      },
-      "editor_status": "🟢 В РАБОТУ",
-      "publication_mode": "editorial_work",
-      "editorial_exclusion_reason": null
-    },
-    {
-      "score": 29.2,
+      "score": 28.3,
       "base_score": 9.0,
-      "recency_score": 81.0,
-      "age_minutes": 34.2,
+      "recency_score": 78.0,
+      "age_minutes": 39.5,
       "newest_source_timestamp": 1794939915.0,
       "viral_score": 0.0,
       "editorial_score": 18.0,
@@ -320,25 +336,25 @@
         "https://vk.ru/wall-108620298_870554"
       ],
       "prediction": {
-        "priority_score": 41.7,
+        "priority_score": 40.7,
         "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
         "confidence": 25.0,
         "eligible": true,
         "exclusion_reason": null,
         "score_version": "editorial_v2",
         "model_type": "ridge_engagement_v1_shadow",
-        "ml_priority_score": 26.4,
+        "ml_priority_score": 25.9,
         "training_samples_1h": 397,
-        "training_samples_3h": 365,
+        "training_samples_3h": 366,
         "predicted_engagement_1h": 0.005392,
-        "predicted_engagement_3h": 0.004654,
+        "predicted_engagement_3h": 0.004564,
         "audience_model_predictions": {
           "golos": {
             "engagement_1h": 0.007509,
-            "engagement_3h": 0.007147,
-            "priority_score": 33.8,
+            "engagement_3h": 0.00706,
+            "priority_score": 36.0,
             "training_samples_1h": 197,
-            "training_samples_3h": 180
+            "training_samples_3h": 181
           },
           "zhest": {
             "engagement_1h": 0.002635,
@@ -356,7 +372,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 81.0,
+          "freshness": 78.0,
           "local_relevance": 30.0,
           "event_impact": 20.0,
           "reach": null,
@@ -373,7 +389,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 29.2,
+          "analyzer_score": 28.3,
           "viral_score": 0.0,
           "editorial_score": 18.0
         }
@@ -383,5 +399,5 @@
       "editorial_exclusion_reason": "below_priority_threshold"
     }
   ],
-  "excluded_topics_count": 2
+  "excluded_topics_count": 3
 }
