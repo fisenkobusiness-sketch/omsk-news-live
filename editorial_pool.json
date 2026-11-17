@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-18T01:29:52+06:00",
+  "generated_at": "2026-11-18T03:27:36+06:00",
   "version": "predictor-editorial-v2",
   "model": {
     "purpose": "единый редакционный приоритет по независимым признакам",
@@ -50,10 +50,10 @@
   },
   "topics": [
     {
-      "score": 35.9,
+      "score": 17.6,
       "base_score": 13.4,
-      "recency_score": 93.8,
-      "age_minutes": 11.2,
+      "recency_score": 28.4,
+      "age_minutes": 128.9,
       "newest_source_timestamp": 1794943122.0,
       "viral_score": 6.3,
       "editorial_score": 20.5,
@@ -130,8 +130,8 @@
         "https://vk.ru/wall-105035379_3363972"
       ],
       "prediction": {
-        "priority_score": 74.7,
-        "prediction": "🟢 ВЫСОКИЙ ПРИОРИТЕТ",
+        "priority_score": 52.2,
+        "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
         "confidence": 25.0,
         "eligible": true,
         "exclusion_reason": null,
@@ -166,7 +166,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 93.8,
+          "freshness": 28.4,
           "local_relevance": 30.0,
           "event_impact": 100.0,
           "reach": null,
@@ -183,7 +183,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 35.9,
+          "analyzer_score": 17.6,
           "viral_score": 6.3,
           "editorial_score": 20.5
         }
@@ -193,10 +193,121 @@
       "editorial_exclusion_reason": null
     },
     {
-      "score": 53.5,
+      "score": 23.4,
+      "base_score": 32.5,
+      "recency_score": 0.0,
+      "age_minutes": 184.1,
+      "newest_source_timestamp": 1794939809.0,
+      "viral_score": 3.5,
+      "editorial_score": 61.4,
+      "confidence": 25.0,
+      "posts": 1,
+      "social_sources": 1,
+      "views": 0.0,
+      "reposts": 0.0,
+      "likes": 0.0,
+      "comments": 0.0,
+      "content_type": "news",
+      "official_attribution": false,
+      "source_type": "social",
+      "nonlocal_detected": false,
+      "help_request": false,
+      "opinion_detected": false,
+      "advertising_detected": false,
+      "excluded_topic": false,
+      "status": "reject",
+      "action": "ИСКЛЮЧИТЬ",
+      "members": [
+        {
+          "source": "1oomestomska",
+          "id": 691606,
+          "date": "2026-11-18 00:23:29",
+          "timestamp": 1794939809,
+          "text": "Очередная вонь… Стабильно канализация по адресу Энтузиастов 61 и ближайшие дома топит из канализационных люков нечистотами, ароматы стоят на весь двор… И летом и зимой [club117639365|Администрация города Омска] УК «Левобрежье» никак не отвечают на жалобы. Батареи еле теплые, в ванной - потлотенцесушитель вообще не греет и не сушит. Постоянно ссылаются на ресурсоснабжающие компании, которые видимо в свою очередь тоже не в курсе. Видео снято 17.11.2026 г.\nТо топит подъезд ранее, то машина горит УК «Левобережье» под окнами, то потоп в подъезде зимой… платим за содержание жилья а его кроме бабушек в палисадниках никто не содержит (бесплатно)",
+          "likes": null,
+          "comments": null,
+          "reposts": null,
+          "views": null,
+          "url": "https://vk.ru/wall-2890484_691606",
+          "source_type": "social",
+          "flags": [],
+          "editor_status": "⏳ ДО ОЦЕНКИ РЕЙТИНГА"
+        }
+      ],
+      "text": "Очередная вонь… Стабильно канализация по адресу Энтузиастов 61 и ближайшие дома топит из канализационных люков нечистотами, ароматы стоят на весь двор… И летом и зимой [club117639365|Администрация города Омска] УК «Левобрежье» никак не отвечают на жалобы. Батареи еле теплые, в ванной - потлотенцесушитель вообще не греет и не сушит. Постоянно ссылаются на ресурсоснабжающие компании, которые видимо в свою очередь тоже не в курсе. Видео снято 17.11.2026 г.\nТо топит подъезд ранее, то машина горит УК «Левобережье» под окнами, то потоп в подъезде зимой… платим за содержание жилья а его кроме бабушек в палисадниках никто не содержит (бесплатно)",
+      "primary_source": "1oomestomska",
+      "primary_url": "https://vk.ru/wall-2890484_691606",
+      "source_urls": [
+        "https://vk.ru/wall-2890484_691606"
+      ],
+      "prediction": {
+        "priority_score": 42.8,
+        "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
+        "confidence": 25.0,
+        "eligible": true,
+        "exclusion_reason": null,
+        "score_version": "editorial_v2",
+        "model_type": "ridge_engagement_v1_shadow",
+        "ml_priority_score": 30.1,
+        "training_samples_1h": 397,
+        "training_samples_3h": 366,
+        "predicted_engagement_1h": 0.008004,
+        "predicted_engagement_3h": 0.00531,
+        "audience_model_predictions": {
+          "golos": {
+            "engagement_1h": 0.009975,
+            "engagement_3h": 0.005549,
+            "priority_score": 28.3,
+            "training_samples_1h": 197,
+            "training_samples_3h": 181
+          },
+          "zhest": {
+            "engagement_1h": 0.002631,
+            "engagement_3h": 0.003197,
+            "priority_score": 21.2,
+            "training_samples_1h": 200,
+            "training_samples_3h": 185
+          }
+        },
+        "event_class": "fire_or_emergency",
+        "complaint_signal": false,
+        "complaint_viral_signal": false,
+        "complaint_bonus": 0.0,
+        "cross_source_count": 1,
+        "metric_coverage": [],
+        "coverage_ratio": 0.0,
+        "signals": {
+          "freshness": 0,
+          "local_relevance": 80.0,
+          "event_impact": 75.0,
+          "reach": null,
+          "engagement": null,
+          "discussion": null,
+          "reshare": null,
+          "velocity": null,
+          "cross_source_spread": 0
+        },
+        "score_weights": {
+          "freshness": 0.3448,
+          "local_relevance": 0.2759,
+          "event_impact": 0.2759,
+          "cross_source_spread": 0.1034
+        },
+        "legacy_scores": {
+          "analyzer_score": 23.4,
+          "viral_score": 3.5,
+          "editorial_score": 61.4
+        }
+      },
+      "editor_status": "⚪ ИСКЛЮЧИТЬ: НИЗКИЙ ПРИОРИТЕТ",
+      "publication_mode": "below_priority_threshold",
+      "editorial_exclusion_reason": "below_priority_threshold"
+    },
+    {
+      "score": 35.2,
       "base_score": 36.9,
-      "recency_score": 96.3,
-      "age_minutes": 6.6,
+      "recency_score": 30.9,
+      "age_minutes": 124.4,
       "newest_source_timestamp": 1794943394.0,
       "viral_score": 9.8,
       "editorial_score": 63.9,
@@ -215,8 +326,8 @@
       "opinion_detected": false,
       "advertising_detected": false,
       "excluded_topic": false,
-      "status": "take_now",
-      "action": "БРАТЬ В РАБОТУ",
+      "status": "reject",
+      "action": "ИСКЛЮЧИТЬ",
       "members": [
         {
           "source": "tg_aomsk",
@@ -257,8 +368,8 @@
         "https://vk.ru/wall-62731567_3719199"
       ],
       "prediction": {
-        "priority_score": 64.9,
-        "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
+        "priority_score": 42.3,
+        "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
         "confidence": 45.0,
         "eligible": true,
         "exclusion_reason": null,
@@ -293,7 +404,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 96.3,
+          "freshness": 30.9,
           "local_relevance": 80.0,
           "event_impact": 20.0,
           "reach": null,
@@ -310,20 +421,20 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 53.5,
+          "analyzer_score": 35.2,
           "viral_score": 9.8,
           "editorial_score": 63.9
         }
       },
-      "editor_status": "🟢 В РАБОТУ",
-      "publication_mode": "editorial_work",
-      "editorial_exclusion_reason": null
+      "editor_status": "⚪ ИСКЛЮЧИТЬ: НИЗКИЙ ПРИОРИТЕТ",
+      "publication_mode": "below_priority_threshold",
+      "editorial_exclusion_reason": "below_priority_threshold"
     },
     {
-      "score": 53.5,
+      "score": 35.2,
       "base_score": 36.9,
-      "recency_score": 96.3,
-      "age_minutes": 6.7,
+      "recency_score": 30.9,
+      "age_minutes": 124.5,
       "newest_source_timestamp": 1794943389.0,
       "viral_score": 9.8,
       "editorial_score": 63.9,
@@ -342,8 +453,8 @@
       "opinion_detected": false,
       "advertising_detected": false,
       "excluded_topic": false,
-      "status": "take_now",
-      "action": "БРАТЬ В РАБОТУ",
+      "status": "reject",
+      "action": "ИСКЛЮЧИТЬ",
       "members": [
         {
           "source": "tg_aomsk",
@@ -384,8 +495,8 @@
         "https://vk.ru/wall-62731567_3719200"
       ],
       "prediction": {
-        "priority_score": 64.9,
-        "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
+        "priority_score": 42.3,
+        "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
         "confidence": 45.0,
         "eligible": true,
         "exclusion_reason": null,
@@ -420,7 +531,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 96.3,
+          "freshness": 30.9,
           "local_relevance": 80.0,
           "event_impact": 20.0,
           "reach": null,
@@ -437,131 +548,20 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 53.5,
+          "analyzer_score": 35.2,
           "viral_score": 9.8,
           "editorial_score": 63.9
         }
       },
-      "editor_status": "🟢 В РАБОТУ",
-      "publication_mode": "editorial_work",
-      "editorial_exclusion_reason": null
+      "editor_status": "⚪ ИСКЛЮЧИТЬ: НИЗКИЙ ПРИОРИТЕТ",
+      "publication_mode": "below_priority_threshold",
+      "editorial_exclusion_reason": "below_priority_threshold"
     },
     {
-      "score": 41.1,
-      "base_score": 32.5,
-      "recency_score": 63.1,
-      "age_minutes": 66.4,
-      "newest_source_timestamp": 1794939809.0,
-      "viral_score": 3.5,
-      "editorial_score": 61.4,
-      "confidence": 25.0,
-      "posts": 1,
-      "social_sources": 1,
-      "views": 0.0,
-      "reposts": 0.0,
-      "likes": 0.0,
-      "comments": 0.0,
-      "content_type": "news",
-      "official_attribution": false,
-      "source_type": "social",
-      "nonlocal_detected": false,
-      "help_request": false,
-      "opinion_detected": false,
-      "advertising_detected": false,
-      "excluded_topic": false,
-      "status": "take_now",
-      "action": "БРАТЬ В РАБОТУ",
-      "members": [
-        {
-          "source": "1oomestomska",
-          "id": 691606,
-          "date": "2026-11-18 00:23:29",
-          "timestamp": 1794939809,
-          "text": "Очередная вонь… Стабильно канализация по адресу Энтузиастов 61 и ближайшие дома топит из канализационных люков нечистотами, ароматы стоят на весь двор… И летом и зимой [club117639365|Администрация города Омска] УК «Левобрежье» никак не отвечают на жалобы. Батареи еле теплые, в ванной - потлотенцесушитель вообще не греет и не сушит. Постоянно ссылаются на ресурсоснабжающие компании, которые видимо в свою очередь тоже не в курсе. Видео снято 17.11.2026 г.\nТо топит подъезд ранее, то машина горит УК «Левобережье» под окнами, то потоп в подъезде зимой… платим за содержание жилья а его кроме бабушек в палисадниках никто не содержит (бесплатно)",
-          "likes": null,
-          "comments": null,
-          "reposts": null,
-          "views": null,
-          "url": "https://vk.ru/wall-2890484_691606",
-          "source_type": "social",
-          "flags": [],
-          "editor_status": "⏳ ДО ОЦЕНКИ РЕЙТИНГА"
-        }
-      ],
-      "text": "Очередная вонь… Стабильно канализация по адресу Энтузиастов 61 и ближайшие дома топит из канализационных люков нечистотами, ароматы стоят на весь двор… И летом и зимой [club117639365|Администрация города Омска] УК «Левобрежье» никак не отвечают на жалобы. Батареи еле теплые, в ванной - потлотенцесушитель вообще не греет и не сушит. Постоянно ссылаются на ресурсоснабжающие компании, которые видимо в свою очередь тоже не в курсе. Видео снято 17.11.2026 г.\nТо топит подъезд ранее, то машина горит УК «Левобережье» под окнами, то потоп в подъезде зимой… платим за содержание жилья а его кроме бабушек в палисадниках никто не содержит (бесплатно)",
-      "primary_source": "1oomestomska",
-      "primary_url": "https://vk.ru/wall-2890484_691606",
-      "source_urls": [
-        "https://vk.ru/wall-2890484_691606"
-      ],
-      "prediction": {
-        "priority_score": 64.5,
-        "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
-        "confidence": 25.0,
-        "eligible": true,
-        "exclusion_reason": null,
-        "score_version": "editorial_v2",
-        "model_type": "ridge_engagement_v1_shadow",
-        "ml_priority_score": 30.1,
-        "training_samples_1h": 397,
-        "training_samples_3h": 366,
-        "predicted_engagement_1h": 0.008004,
-        "predicted_engagement_3h": 0.00531,
-        "audience_model_predictions": {
-          "golos": {
-            "engagement_1h": 0.009975,
-            "engagement_3h": 0.005549,
-            "priority_score": 28.3,
-            "training_samples_1h": 197,
-            "training_samples_3h": 181
-          },
-          "zhest": {
-            "engagement_1h": 0.002631,
-            "engagement_3h": 0.003197,
-            "priority_score": 21.2,
-            "training_samples_1h": 200,
-            "training_samples_3h": 185
-          }
-        },
-        "event_class": "fire_or_emergency",
-        "complaint_signal": false,
-        "complaint_viral_signal": false,
-        "complaint_bonus": 0.0,
-        "cross_source_count": 1,
-        "metric_coverage": [],
-        "coverage_ratio": 0.0,
-        "signals": {
-          "freshness": 63.1,
-          "local_relevance": 80.0,
-          "event_impact": 75.0,
-          "reach": null,
-          "engagement": null,
-          "discussion": null,
-          "reshare": null,
-          "velocity": null,
-          "cross_source_spread": 0
-        },
-        "score_weights": {
-          "freshness": 0.3448,
-          "local_relevance": 0.2759,
-          "event_impact": 0.2759,
-          "cross_source_spread": 0.1034
-        },
-        "legacy_scores": {
-          "analyzer_score": 41.1,
-          "viral_score": 3.5,
-          "editorial_score": 61.4
-        }
-      },
-      "editor_status": "🟢 В РАБОТУ",
-      "publication_mode": "editorial_work",
-      "editorial_exclusion_reason": null
-    },
-    {
-      "score": 54.0,
+      "score": 35.7,
       "base_score": 36.9,
-      "recency_score": 98.0,
-      "age_minutes": 3.6,
+      "recency_score": 32.6,
+      "age_minutes": 121.3,
       "newest_source_timestamp": 1794943579.0,
       "viral_score": 9.8,
       "editorial_score": 63.9,
@@ -580,8 +580,8 @@
       "opinion_detected": false,
       "advertising_detected": false,
       "excluded_topic": false,
-      "status": "take_now",
-      "action": "БРАТЬ В РАБОТУ",
+      "status": "reject",
+      "action": "ИСКЛЮЧИТЬ",
       "members": [
         {
           "source": "tg_aomsk",
@@ -606,8 +606,8 @@
         "https://t.me/aomsk/78478"
       ],
       "prediction": {
-        "priority_score": 61.4,
-        "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
+        "priority_score": 38.8,
+        "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
         "confidence": 65.0,
         "eligible": true,
         "exclusion_reason": null,
@@ -642,7 +642,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 98.0,
+          "freshness": 32.6,
           "local_relevance": 80.0,
           "event_impact": 20.0,
           "reach": null,
@@ -659,20 +659,242 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 54.0,
+          "analyzer_score": 35.7,
           "viral_score": 9.8,
           "editorial_score": 63.9
         }
       },
-      "editor_status": "🟢 В РАБОТУ",
-      "publication_mode": "editorial_work",
-      "editorial_exclusion_reason": null
+      "editor_status": "⚪ ИСКЛЮЧИТЬ: НИЗКИЙ ПРИОРИТЕТ",
+      "publication_mode": "below_priority_threshold",
+      "editorial_exclusion_reason": "below_priority_threshold"
     },
     {
-      "score": 33.6,
+      "score": 25.5,
       "base_score": 9.0,
-      "recency_score": 96.9,
-      "age_minutes": 5.5,
+      "recency_score": 67.8,
+      "age_minutes": 57.9,
+      "newest_source_timestamp": 1794947384.0,
+      "viral_score": 0.0,
+      "editorial_score": 18.0,
+      "confidence": 25.0,
+      "posts": 1,
+      "social_sources": 1,
+      "views": 0.0,
+      "reposts": 0.0,
+      "likes": 0.0,
+      "comments": 0.0,
+      "content_type": "social_story",
+      "official_attribution": false,
+      "source_type": "social",
+      "nonlocal_detected": false,
+      "help_request": false,
+      "opinion_detected": false,
+      "advertising_detected": false,
+      "excluded_topic": false,
+      "status": "reject",
+      "action": "ИСКЛЮЧИТЬ",
+      "members": [
+        {
+          "source": "aomsk",
+          "id": 3719223,
+          "date": "2026-11-18 02:29:44",
+          "timestamp": 1794947384,
+          "text": "В центре города, возле жилого дома по адресу ул. Сажинская 4а, \nпри единственном \"кармане\" для парковки\nСделали платную парковку.\nКто принимает такие решения?\nКто отвечает и согласовывает этот беспредел?\nПолучается, чтоб припарковаться у дома\nНужно быть льготником, если нет - плати!\nПрошу Администрацию обратить на это внимание!\nИ принять адекватное решение!\nИ так вся ул. Пушкина уже платная, \nВам мало? Нужно прилигающие захватить?\nРазум же должен быть!\nУ нас у дома и так не припарковаться, все стоит вплотную до ул. Пушкина, так что выехать невозможно.",
+          "likes": null,
+          "comments": null,
+          "reposts": null,
+          "views": null,
+          "url": "https://vk.ru/wall-62731567_3719223",
+          "source_type": "social",
+          "flags": [],
+          "editor_status": "⏳ ДО ОЦЕНКИ РЕЙТИНГА"
+        }
+      ],
+      "text": "В центре города, возле жилого дома по адресу ул. Сажинская 4а, \nпри единственном \"кармане\" для парковки\nСделали платную парковку.\nКто принимает такие решения?\nКто отвечает и согласовывает этот беспредел?\nПолучается, чтоб припарковаться у дома\nНужно быть льготником, если нет - плати!\nПрошу Администрацию обратить на это внимание!\nИ принять адекватное решение!\nИ так вся ул. Пушкина уже платная, \nВам мало? Нужно прилигающие захватить?\nРазум же должен быть!\nУ нас у дома и так не припарковаться, все стоит вплотную до ул. Пушкина, так что выехать невозможно.",
+      "primary_source": "aomsk",
+      "primary_url": "https://vk.ru/wall-62731567_3719223",
+      "source_urls": [
+        "https://vk.ru/wall-62731567_3719223"
+      ],
+      "prediction": {
+        "priority_score": 37.2,
+        "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
+        "confidence": 25.0,
+        "eligible": true,
+        "exclusion_reason": null,
+        "score_version": "editorial_v2",
+        "model_type": "ridge_engagement_v1_shadow",
+        "ml_priority_score": 21.9,
+        "training_samples_1h": 397,
+        "training_samples_3h": 366,
+        "predicted_engagement_1h": 0.004893,
+        "predicted_engagement_3h": 0.003865,
+        "audience_model_predictions": {
+          "golos": {
+            "engagement_1h": 0.005778,
+            "engagement_3h": 0.005004,
+            "priority_score": 25.5,
+            "training_samples_1h": 197,
+            "training_samples_3h": 181
+          },
+          "zhest": {
+            "engagement_1h": 0.003267,
+            "engagement_3h": 0.001005,
+            "priority_score": 6.7,
+            "training_samples_1h": 200,
+            "training_samples_3h": 185
+          }
+        },
+        "event_class": "general",
+        "complaint_signal": false,
+        "complaint_viral_signal": false,
+        "complaint_bonus": 0.0,
+        "cross_source_count": 1,
+        "metric_coverage": [],
+        "coverage_ratio": 0.0,
+        "signals": {
+          "freshness": 67.8,
+          "local_relevance": 30.0,
+          "event_impact": 20.0,
+          "reach": null,
+          "engagement": null,
+          "discussion": null,
+          "reshare": null,
+          "velocity": null,
+          "cross_source_spread": 0
+        },
+        "score_weights": {
+          "freshness": 0.3448,
+          "local_relevance": 0.2759,
+          "event_impact": 0.2759,
+          "cross_source_spread": 0.1034
+        },
+        "legacy_scores": {
+          "analyzer_score": 25.5,
+          "viral_score": 0.0,
+          "editorial_score": 18.0
+        }
+      },
+      "editor_status": "⚪ ИСКЛЮЧИТЬ: НИЗКИЙ ПРИОРИТЕТ",
+      "publication_mode": "below_priority_threshold",
+      "editorial_exclusion_reason": "below_priority_threshold"
+    },
+    {
+      "score": 25.4,
+      "base_score": 9.0,
+      "recency_score": 67.6,
+      "age_minutes": 58.4,
+      "newest_source_timestamp": 1794947355.0,
+      "viral_score": 0.0,
+      "editorial_score": 18.0,
+      "confidence": 25.0,
+      "posts": 1,
+      "social_sources": 1,
+      "views": 0.0,
+      "reposts": 0.0,
+      "likes": 0.0,
+      "comments": 0.0,
+      "content_type": "social_story",
+      "official_attribution": false,
+      "source_type": "social",
+      "nonlocal_detected": false,
+      "help_request": false,
+      "opinion_detected": false,
+      "advertising_detected": false,
+      "excluded_topic": false,
+      "status": "reject",
+      "action": "ИСКЛЮЧИТЬ",
+      "members": [
+        {
+          "source": "aomsk",
+          "id": 3719222,
+          "date": "2026-11-18 02:29:15",
+          "timestamp": 1794947355,
+          "text": "Хотелось бы обратить ОСОБОЕ внимание водителей, которые двигаются по Заозёрной со стороны Нефтяников на Левый берег… Господа, там немного поменялись приоритеты по полосам, теперь крайняя левая не имеет преимущества в движении, главнее центральная полоса. Будьте, пожалуйста, взаимовежливы, включайте поворотники. Ну реально бесит, каждый первый пытается качать права… научитесь уже читать знаки.",
+          "likes": null,
+          "comments": null,
+          "reposts": null,
+          "views": null,
+          "url": "https://vk.ru/wall-62731567_3719222",
+          "source_type": "social",
+          "flags": [],
+          "editor_status": "⏳ ДО ОЦЕНКИ РЕЙТИНГА"
+        }
+      ],
+      "text": "Хотелось бы обратить ОСОБОЕ внимание водителей, которые двигаются по Заозёрной со стороны Нефтяников на Левый берег… Господа, там немного поменялись приоритеты по полосам, теперь крайняя левая не имеет преимущества в движении, главнее центральная полоса. Будьте, пожалуйста, взаимовежливы, включайте поворотники. Ну реально бесит, каждый первый пытается качать права… научитесь уже читать знаки.",
+      "primary_source": "aomsk",
+      "primary_url": "https://vk.ru/wall-62731567_3719222",
+      "source_urls": [
+        "https://vk.ru/wall-62731567_3719222"
+      ],
+      "prediction": {
+        "priority_score": 37.1,
+        "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
+        "confidence": 25.0,
+        "eligible": true,
+        "exclusion_reason": null,
+        "score_version": "editorial_v2",
+        "model_type": "ridge_engagement_v1_shadow",
+        "ml_priority_score": 30.1,
+        "training_samples_1h": 397,
+        "training_samples_3h": 366,
+        "predicted_engagement_1h": 0.007082,
+        "predicted_engagement_3h": 0.005301,
+        "audience_model_predictions": {
+          "golos": {
+            "engagement_1h": 0.008351,
+            "engagement_3h": 0.007072,
+            "priority_score": 36.1,
+            "training_samples_1h": 197,
+            "training_samples_3h": 181
+          },
+          "zhest": {
+            "engagement_1h": 0.006073,
+            "engagement_3h": 0.002667,
+            "priority_score": 17.7,
+            "training_samples_1h": 200,
+            "training_samples_3h": 185
+          }
+        },
+        "event_class": "general",
+        "complaint_signal": false,
+        "complaint_viral_signal": false,
+        "complaint_bonus": 0.0,
+        "cross_source_count": 1,
+        "metric_coverage": [],
+        "coverage_ratio": 0.0,
+        "signals": {
+          "freshness": 67.6,
+          "local_relevance": 30.0,
+          "event_impact": 20.0,
+          "reach": null,
+          "engagement": null,
+          "discussion": null,
+          "reshare": null,
+          "velocity": null,
+          "cross_source_spread": 0
+        },
+        "score_weights": {
+          "freshness": 0.3448,
+          "local_relevance": 0.2759,
+          "event_impact": 0.2759,
+          "cross_source_spread": 0.1034
+        },
+        "legacy_scores": {
+          "analyzer_score": 25.4,
+          "viral_score": 0.0,
+          "editorial_score": 18.0
+        }
+      },
+      "editor_status": "⚪ ИСКЛЮЧИТЬ: НИЗКИЙ ПРИОРИТЕТ",
+      "publication_mode": "below_priority_threshold",
+      "editorial_exclusion_reason": "below_priority_threshold"
+    },
+    {
+      "score": 15.3,
+      "base_score": 9.0,
+      "recency_score": 31.5,
+      "age_minutes": 123.2,
       "newest_source_timestamp": 1794943462.0,
       "viral_score": 0.0,
       "editorial_score": 18.0,
@@ -691,8 +913,8 @@
       "opinion_detected": false,
       "advertising_detected": false,
       "excluded_topic": false,
-      "status": "take_now",
-      "action": "БРАТЬ В РАБОТУ",
+      "status": "reject",
+      "action": "ИСКЛЮЧИТЬ",
       "members": [
         {
           "source": "aomsk",
@@ -717,8 +939,8 @@
         "https://vk.ru/wall-62731567_3719202"
       ],
       "prediction": {
-        "priority_score": 47.2,
-        "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
+        "priority_score": 24.7,
+        "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
         "confidence": 25.0,
         "eligible": true,
         "exclusion_reason": null,
@@ -753,7 +975,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 96.9,
+          "freshness": 31.5,
           "local_relevance": 30.0,
           "event_impact": 20.0,
           "reach": null,
@@ -770,20 +992,20 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 33.6,
+          "analyzer_score": 15.3,
           "viral_score": 0.0,
           "editorial_score": 18.0
         }
       },
-      "editor_status": "🟢 В РАБОТУ",
-      "publication_mode": "editorial_work",
-      "editorial_exclusion_reason": null
+      "editor_status": "⚪ ИСКЛЮЧИТЬ: НИЗКИЙ ПРИОРИТЕТ",
+      "publication_mode": "below_priority_threshold",
+      "editorial_exclusion_reason": "below_priority_threshold"
     },
     {
-      "score": 24.4,
+      "score": 6.5,
       "base_score": 9.0,
-      "recency_score": 64.1,
-      "age_minutes": 64.6,
+      "recency_score": 0.0,
+      "age_minutes": 182.4,
       "newest_source_timestamp": 1794939915.0,
       "viral_score": 0.0,
       "editorial_score": 18.0,
@@ -828,7 +1050,7 @@
         "https://vk.ru/wall-108620298_870554"
       ],
       "prediction": {
-        "priority_score": 35.9,
+        "priority_score": 13.8,
         "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
         "confidence": 25.0,
         "eligible": true,
@@ -864,7 +1086,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 64.1,
+          "freshness": 0,
           "local_relevance": 30.0,
           "event_impact": 20.0,
           "reach": null,
@@ -881,7 +1103,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 24.4,
+          "analyzer_score": 6.5,
           "viral_score": 0.0,
           "editorial_score": 18.0
         }
