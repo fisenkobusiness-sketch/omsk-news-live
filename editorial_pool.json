@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-20T00:07:40+06:00",
+  "generated_at": "2026-11-20T00:17:37+06:00",
   "version": "predictor-editorial-v2",
   "model": {
     "purpose": "единый редакционный приоритет по независимым признакам",
@@ -50,10 +50,10 @@
   },
   "topics": [
     {
-      "score": 36.8,
+      "score": 35.3,
       "base_score": 13.4,
-      "recency_score": 97.1,
-      "age_minutes": 5.2,
+      "recency_score": 91.6,
+      "age_minutes": 15.2,
       "newest_source_timestamp": 1795111346.0,
       "viral_score": 6.3,
       "editorial_score": 20.5,
@@ -130,25 +130,25 @@
         "https://vk.ru/wall-50386446_984558"
       ],
       "prediction": {
-        "priority_score": 53.8,
+        "priority_score": 51.9,
         "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
         "confidence": 25.0,
         "eligible": true,
         "exclusion_reason": null,
         "score_version": "editorial_v2",
         "model_type": "ridge_engagement_v1_shadow",
-        "ml_priority_score": 25.8,
+        "ml_priority_score": 25.4,
         "training_samples_1h": 428,
-        "training_samples_3h": 389,
+        "training_samples_3h": 390,
         "predicted_engagement_1h": 0.004966,
-        "predicted_engagement_3h": 0.004554,
+        "predicted_engagement_3h": 0.004467,
         "audience_model_predictions": {
           "golos": {
             "engagement_1h": 0.01105,
-            "engagement_3h": 0.010306,
-            "priority_score": 52.8,
+            "engagement_3h": 0.01012,
+            "priority_score": 51.9,
             "training_samples_1h": 211,
-            "training_samples_3h": 191
+            "training_samples_3h": 192
           },
           "zhest": {
             "engagement_1h": 0.001348,
@@ -166,7 +166,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 97.1,
+          "freshness": 91.6,
           "local_relevance": 30.0,
           "event_impact": 20.0,
           "reach": null,
@@ -183,7 +183,118 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 36.8,
+          "analyzer_score": 35.3,
+          "viral_score": 6.3,
+          "editorial_score": 20.5
+        }
+      },
+      "editor_status": "🟢 В РАБОТУ",
+      "publication_mode": "editorial_work",
+      "editorial_exclusion_reason": null
+    },
+    {
+      "score": 37.5,
+      "base_score": 13.4,
+      "recency_score": 99.6,
+      "age_minutes": 0.7,
+      "newest_source_timestamp": 1795112218.0,
+      "viral_score": 6.3,
+      "editorial_score": 20.5,
+      "confidence": 65.0,
+      "posts": 1,
+      "social_sources": 1,
+      "views": 0.0,
+      "reposts": 0.0,
+      "likes": 0.0,
+      "comments": 0.0,
+      "content_type": "news",
+      "official_attribution": false,
+      "source_type": "regional_media",
+      "nonlocal_detected": false,
+      "help_request": false,
+      "opinion_detected": false,
+      "advertising_detected": false,
+      "excluded_topic": false,
+      "status": "take_now",
+      "action": "БРАТЬ В РАБОТУ",
+      "members": [
+        {
+          "source": "tg_omsk_smi",
+          "id": 33492,
+          "source_name": "Новости Омска и Области",
+          "source_type": "telegram",
+          "timestamp": 1795112218,
+          "date": "2026-11-20 00:16:58",
+          "text": "Вчерашняя авария у Ленинградской площади попала на видео\n\n📲 Читайте нас в МАКС\n😊 Подписаться | Прислать новость",
+          "url": "https://t.me/omsk_smi/33492",
+          "media_type": "video",
+          "views": null,
+          "likes": null,
+          "comments": null,
+          "reposts": null
+        }
+      ],
+      "text": "Вчерашняя авария у Ленинградской площади попала на видео\n\n📲 Читайте нас в МАКС\n😊 Подписаться | Прислать новость",
+      "primary_source": "tg_omsk_smi",
+      "primary_url": "https://t.me/omsk_smi/33492",
+      "source_urls": [
+        "https://t.me/omsk_smi/33492"
+      ],
+      "prediction": {
+        "priority_score": 48.1,
+        "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
+        "confidence": 65.0,
+        "eligible": true,
+        "exclusion_reason": null,
+        "score_version": "editorial_v2",
+        "model_type": "ridge_engagement_v1_shadow",
+        "ml_priority_score": 26.5,
+        "training_samples_1h": 428,
+        "training_samples_3h": 390,
+        "predicted_engagement_1h": 0.005048,
+        "predicted_engagement_3h": 0.004668,
+        "audience_model_predictions": {
+          "golos": {
+            "engagement_1h": 0.011411,
+            "engagement_3h": 0.010636,
+            "priority_score": 54.5,
+            "training_samples_1h": 211,
+            "training_samples_3h": 192
+          },
+          "zhest": {
+            "engagement_1h": 0.001206,
+            "engagement_3h": 0.000368,
+            "priority_score": 2.4,
+            "training_samples_1h": 217,
+            "training_samples_3h": 198
+          }
+        },
+        "event_class": "general",
+        "complaint_signal": false,
+        "complaint_viral_signal": false,
+        "complaint_bonus": 0.0,
+        "cross_source_count": 1,
+        "metric_coverage": [],
+        "coverage_ratio": 0.0,
+        "signals": {
+          "freshness": 99.6,
+          "local_relevance": 30.0,
+          "event_impact": 20.0,
+          "reach": null,
+          "engagement": null,
+          "discussion": null,
+          "reshare": null,
+          "velocity": null,
+          "cross_source_spread": 0
+        },
+        "score_weights": {
+          "freshness": 0.3448,
+          "local_relevance": 0.2759,
+          "event_impact": 0.2759,
+          "cross_source_spread": 0.1034
+        },
+        "legacy_scores": {
+          "analyzer_score": 37.5,
           "viral_score": 6.3,
           "editorial_score": 20.5
         }
