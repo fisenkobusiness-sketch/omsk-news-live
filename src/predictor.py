@@ -423,6 +423,10 @@ def console_ml_candidates(topics):
         prediction = topic.get("prediction") or {}
         if prediction.get("eligible") is not True:
             continue
+        signals = prediction.get("signals") or {}
+        local_relevance = signals.get("local_relevance")
+        if not isinstance(local_relevance, (int, float)) or local_relevance < 50:
+            continue
         timestamp = newest_timestamp(topic.get("members", []))
         if timestamp is None or not 0 <= now - timestamp <= CONSOLE_FRESHNESS_SECONDS:
             continue
@@ -440,6 +444,11 @@ def console_ml_candidates(topics):
         if rank is None:
             continue
         spread_count = recent_source_count(topic, now)
+        strong_viral_signal = (
+            spread_count >= CONSOLE_SPREAD_MIN_SOURCES or rank["score"] >= 60.0
+        )
+        if topic.get("status") == "reject" and not strong_viral_signal:
+            continue
         candidates.append((topic, rank, spread_count))
     candidates.sort(
         key=lambda item: (
