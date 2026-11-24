@@ -30,7 +30,7 @@ def console_print(message):
 INPUT = "runtime/editor_queue.json"
 OUTPUT = "runtime/predictor_queue.json"
 
-from editorial_rules import is_excluded_topic, is_promotional, clean_legacy_metadata, topic_text
+from editorial_rules import is_excluded_topic, is_promotional, is_low_priority_lifestyle, clean_legacy_metadata, topic_text
 
 def clamp(x, a=0, b=100):
     return max(a, min(b, x))
@@ -100,9 +100,20 @@ def _event_profile(text):
     if any(re.search(pattern, text, re.I) for pattern in fatal_patterns):
         return "fatal_incident", 100.0
 
+    major_incident_patterns = (
+        r"\bвзрыв(?:а|е|ом|ы|ов)?\b",
+        r"\bвзорвал\w*\b",
+        r"\bобруш\w*\b",
+        r"\bкрушен\w*\b",
+        r"\bкрупн\w*\s+авари\w*\b",
+        r"\bмассов\w+\s+(?:отравлен\w*|эваку\w*|драк\w*|гибел\w*|погиб\w*|столкновен\w*|авари\w*)",
+        r"\bразрушен\w*\b",
+    )
+    if any(re.search(pattern,text,re.I) for pattern in major_incident_patterns):
+        return "major_incident", 90.0
+
     profiles = (
         ("public_safety", ("эвакуир", "эвакуац", "угроз", "минирован", "подозрительн предмет", "закрыли здание"), 85),
-        ("major_incident", ("взрыв", "обруш", "крушен", "крупн авар", "массов", "разрушен"), 90),
         ("fire_or_emergency", ("пожар", "горит", "загорел", "возгора", "спасател"), 75),
         ("transport_incident", ("дтп", "столкновен", "сбил", "наезд", "перекрыт", "закрыли дорогу"), 65),
         ("missing_person", ("пропал", "пропала", "пропали", "разыскива"), 55),
@@ -112,6 +123,18 @@ def _event_profile(text):
         if any(pattern in text for pattern in patterns):
             return event_class, float(impact)
     return "general", 20.0
+
+
+
+def _has_local_transit_context(text):
+    """Recognize named city bus routes even when an outlet omits 'Omsk'."""
+    route = re.search(
+        r"\b(?:\d{1,3}[-‑–]?(?:й|ый|го)?\s+маршрут|маршрут(?:а|е|у)?\s*(?:№\s*)?\d{1,3})\b",
+        text,
+        re.I,
+    )
+    transit = re.search(r"\b(?:автобус\w*|трамва\w*|троллейбус\w*)\b", text, re.I)
+    return bool(route and transit)
 
 
 def predict(t):
@@ -178,6 +201,8 @@ def predict(t):
         local_relevance = 0.0
     elif t.get("explicit_omsk_relevance"):
         local_relevance = 100.0
+    elif _has_local_transit_context(text):
+        local_relevance = 80.0
     elif any(word in text for word in ("омск", "омской", "омич", "омичи", "тара", "черлак", "калачинск", "исилькуль")):
         local_relevance = 80.0
     else:
@@ -233,6 +258,9 @@ def predict(t):
     )
     complaint_bonus = 8.0 if complaint_is_viral else 0.0
     score = round(clamp(score + complaint_bonus), 1)
+    lifestyle_signal = is_low_priority_lifestyle(t)
+    if lifestyle_signal:
+        score = min(score, 42.0)
 
     # Train on the tracker’s 3-hour engagement checkpoints. Until enough labeled
     # examples exist, retain the established editorial score as a safe fallback.
@@ -288,6 +316,7 @@ def predict(t):
         "complaint_signal": is_complaint,
         "complaint_viral_signal": complaint_is_viral,
         "complaint_bonus": complaint_bonus,
+        "low_priority_lifestyle": lifestyle_signal,
         "cross_source_count": source_count,
         "metric_coverage": sorted(available),
         "coverage_ratio": round(len(available) / 4.0, 2),
