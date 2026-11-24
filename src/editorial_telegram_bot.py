@@ -230,9 +230,29 @@ def is_actionable(topic: Any) -> bool:
         age_seconds = time.time() - float(newest or 0)
     except (TypeError, ValueError):
         return False
+
+    # Only locally relevant stories enter this regional feed. A named city
+    # route is recognized by Predictor even when the source omits "Omsk".
+    signals = prediction.get("signals") or {}
+    local_relevance = signals.get("local_relevance")
+    if not isinstance(local_relevance, (int, float)) or local_relevance < 50:
+        return False
+
+    # A "reject" from the editorial score is not absolute: allow a strong
+    # audience-model prediction or rapid spread across independent sources.
+    strong_viral_signal = (
+        recent_source_count(topic) >= RAPID_SPREAD_MIN_SOURCES
+        or (audience_model_score(topic) or 0.0) >= 60.0
+    )
+    below_editorial_threshold = (
+        topic.get("status") == "reject"
+        or prediction.get("editorial_exclusion_reason") == "below_priority_threshold"
+    )
+
     return (
         0 <= age_seconds <= 180 * 60
         and prediction.get("eligible") is True
+        and (not below_editorial_threshold or strong_viral_signal)
         and not is_excluded_topic(topic)
         and not is_promotional(topic)
         and bool(audience_model_scores(topic))
