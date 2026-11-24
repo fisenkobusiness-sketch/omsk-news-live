@@ -210,6 +210,17 @@ def similar(a,b):
     )
     return j>=.23 or (anchors>=2 and j>=.12) or (len(nums)>=2 and j>=.12) or same_event or strong_event
 
+
+def similar_same_source(a,b):
+    """Require stronger evidence before merging two posts from the same account."""
+    na,A,nums_a,anchors_a=text_signature(a)
+    nb,B,nums_b,anchors_b=text_signature(b)
+    if not A or not B:return False
+    j=len(A&B)/len(A|B)
+    nums=nums_a&nums_b
+    anchors=len(anchors_a&anchors_b)
+    return j>=.55 or (anchors>=2 and j>=.30) or (len(nums)>=2 and j>=.30)
+
 def classify_editorial_status(*, excluded_only=False, ad_only=False, help_only=False,
                              complaint_viral_signal=False, complaint_only=False,
                              opinion_only=False, nonlocal_only=False,
@@ -273,7 +284,14 @@ def main():
         matched=False
         for idx in sorted(candidate_ids):
             q=topics[idx]
-            if any(similar(t,m["text"]) for m in q["members"]):
+            if any(
+                (
+                    similar_same_source(t,m["text"])
+                    if source_of(p) and source_of(p).casefold()==source_of(m["post"]).casefold()
+                    else similar(t,m["text"])
+                )
+                for m in q["members"]
+            ):
                 q["members"].append({"text":t,"post":p})
                 for word in post_words:
                     token_index.setdefault(word,set()).add(idx)
