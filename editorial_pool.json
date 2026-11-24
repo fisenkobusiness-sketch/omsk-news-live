@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-25T00:12:03+06:00",
+  "generated_at": "2026-11-25T00:57:17+06:00",
   "version": "predictor-editorial-v2",
   "model": {
     "purpose": "единый редакционный приоритет по независимым признакам",
@@ -50,10 +50,138 @@
   },
   "topics": [
     {
-      "score": 50.5,
+      "score": 54.5,
+      "base_score": 36.9,
+      "recency_score": 99.7,
+      "age_minutes": 0.6,
+      "newest_source_timestamp": 1795546600.0,
+      "viral_score": 9.8,
+      "editorial_score": 63.9,
+      "confidence": 45.0,
+      "posts": 2,
+      "social_sources": 2,
+      "views": 0.0,
+      "reposts": 0.0,
+      "likes": 0.0,
+      "comments": 0.0,
+      "content_type": "news",
+      "official_attribution": false,
+      "source_type": "social",
+      "nonlocal_detected": false,
+      "help_request": false,
+      "opinion_detected": false,
+      "advertising_detected": false,
+      "excluded_topic": false,
+      "status": "take_now",
+      "action": "БРАТЬ В РАБОТУ",
+      "members": [
+        {
+          "source": "omsk_glavniy",
+          "id": 984634,
+          "date": "2026-11-25 00:56:40",
+          "timestamp": 1795546600,
+          "text": "🚨 Один человек погиб и четверо пострадали в ДТП на трассе Челябинск — Новосибирск под Омском \n \nАвария произошла 24 ноября около 12:50 в Исилькульском районе. Столкнулись Toyota и Mercedes Sprinter. По предварительным данным, водитель Toyota при обгоне выехал на встречную полосу. После столкновения обе машины загорелись. \n \nЧетверых пострадавших доставили в больницу. Пассажир Toyota погиб на месте, его личность устанавливается. \n \n⚡Мы в МАХ vk.cc/d3DyB7",
+          "likes": null,
+          "comments": null,
+          "reposts": null,
+          "views": null,
+          "url": "https://vk.ru/wall-50386446_984634",
+          "source_type": "social",
+          "flags": [],
+          "editor_status": "⏳ ДО ОЦЕНКИ РЕЙТИНГА"
+        },
+        {
+          "source": "tg_1587149148",
+          "id": 27856,
+          "source_name": "О чём говорят в Омске",
+          "source_type": "telegram",
+          "timestamp": 1795546563,
+          "date": "2026-11-25 00:56:03",
+          "text": "🚨 Один человек погиб и четверо пострадали в ДТП на трассе Челябинск — Новосибирск под Омском\n\nАвария произошла 24 ноября около 12:50 в Исилькульском районе. Столкнулись Toyota и Mercedes Sprinter. По предварительным данным, водитель Toyota при обгоне выехал на встречную полосу. После столкновения обе машины загорелись.\n\nЧетверых пострадавших доставили в больницу. Пассажир Toyota погиб на месте, его личность устанавливается.",
+          "url": "https://t.me/c/1587149148/27856",
+          "media_type": "video",
+          "views": null,
+          "likes": null,
+          "comments": null,
+          "reposts": null
+        }
+      ],
+      "text": "🚨 Один человек погиб и четверо пострадали в ДТП на трассе Челябинск — Новосибирск под Омском \n \nАвария произошла 24 ноября около 12:50 в Исилькульском районе. Столкнулись Toyota и Mercedes Sprinter. По предварительным данным, водитель Toyota при обгоне выехал на встречную полосу. После столкновения обе машины загорелись. \n \nЧетверых пострадавших доставили в больницу. Пассажир Toyota погиб на месте, его личность устанавливается. \n \n⚡Мы в МАХ vk.cc/d3DyB7",
+      "primary_source": "omsk_glavniy",
+      "primary_url": "https://vk.ru/wall-50386446_984634",
+      "source_urls": [
+        "https://vk.ru/wall-50386446_984634",
+        "https://t.me/c/1587149148/27856"
+      ],
+      "prediction": {
+        "priority_score": 88.1,
+        "prediction": "🟢 ВЫСОКИЙ ПРИОРИТЕТ",
+        "confidence": 45.0,
+        "eligible": true,
+        "exclusion_reason": null,
+        "score_version": "editorial_v2",
+        "model_type": "ridge_engagement_v1_shadow",
+        "ml_priority_score": 24.5,
+        "training_samples_1h": 501,
+        "training_samples_3h": 452,
+        "predicted_engagement_1h": 0.005859,
+        "predicted_engagement_3h": 0.004397,
+        "audience_model_predictions": {
+          "golos": {
+            "engagement_1h": 0.013657,
+            "engagement_3h": 0.009227,
+            "priority_score": 47.1,
+            "training_samples_1h": 247,
+            "training_samples_3h": 224
+          },
+          "zhest": {
+            "engagement_1h": 0.001667,
+            "engagement_3h": 0.001169,
+            "priority_score": 7.3,
+            "training_samples_1h": 254,
+            "training_samples_3h": 228
+          }
+        },
+        "event_class": "fatal_incident",
+        "complaint_signal": false,
+        "complaint_viral_signal": false,
+        "complaint_bonus": 0.0,
+        "low_priority_lifestyle": false,
+        "cross_source_count": 2,
+        "metric_coverage": [],
+        "coverage_ratio": 0.0,
+        "signals": {
+          "freshness": 99.7,
+          "local_relevance": 80.0,
+          "event_impact": 100.0,
+          "reach": null,
+          "engagement": null,
+          "discussion": null,
+          "reshare": null,
+          "velocity": null,
+          "cross_source_spread": 39.3
+        },
+        "score_weights": {
+          "freshness": 0.3448,
+          "local_relevance": 0.2759,
+          "event_impact": 0.2759,
+          "cross_source_spread": 0.1034
+        },
+        "legacy_scores": {
+          "analyzer_score": 54.5,
+          "viral_score": 9.8,
+          "editorial_score": 63.9
+        }
+      },
+      "editor_status": "🟢 В РАБОТУ",
+      "publication_mode": "editorial_work",
+      "editorial_exclusion_reason": null
+    },
+    {
+      "score": 43.4,
       "base_score": 32.5,
-      "recency_score": 96.7,
-      "age_minutes": 5.9,
+      "recency_score": 71.6,
+      "age_minutes": 51.1,
       "newest_source_timestamp": 1795543571.0,
       "viral_score": 3.5,
       "editorial_score": 61.4,
@@ -98,18 +226,18 @@
         "https://t.me/omsk_smi/33703"
       ],
       "prediction": {
-        "priority_score": 60.9,
+        "priority_score": 52.3,
         "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
         "confidence": 65.0,
         "eligible": true,
         "exclusion_reason": null,
         "score_version": "editorial_v2",
         "model_type": "ridge_engagement_v1_shadow",
-        "ml_priority_score": 27.9,
+        "ml_priority_score": 27.8,
         "training_samples_1h": 501,
-        "training_samples_3h": 450,
+        "training_samples_3h": 452,
         "predicted_engagement_1h": 0.004459,
-        "predicted_engagement_3h": 0.005075,
+        "predicted_engagement_3h": 0.004984,
         "audience_model_predictions": {
           "golos": {
             "engagement_1h": 0.009424,
@@ -120,10 +248,10 @@
           },
           "zhest": {
             "engagement_1h": 0.000546,
-            "engagement_3h": 2.4e-05,
-            "priority_score": 0.2,
+            "engagement_3h": 0.0,
+            "priority_score": 0,
             "training_samples_1h": 254,
-            "training_samples_3h": 226
+            "training_samples_3h": 228
           }
         },
         "event_class": "general",
@@ -135,7 +263,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 96.7,
+          "freshness": 71.6,
           "local_relevance": 80.0,
           "event_impact": 20.0,
           "reach": null,
@@ -152,7 +280,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 50.5,
+          "analyzer_score": 43.4,
           "viral_score": 3.5,
           "editorial_score": 61.4
         }
