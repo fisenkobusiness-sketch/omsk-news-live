@@ -39,6 +39,12 @@ PROMO_REGEXES = (
     r"\b(?:бесплатно )?перейдите? со своим номером\b",
     r"\bперейти от любого оператора\b",
     r"\b(?:опция|предложение)\s+[«\"]?копирован\w*\s+тариф\w*",
+    r"\\b(?:дарим|разыгрываем|вручаем)\\b.{0,80}\\bсертификат\\w*\\b",
+    r"\\bуспей\\w*\\s+(?:принять\\s+)?участи\\w*\\b",
+    r"\\bтема\\s+нового\\s+выпуска\\s+программ\\w*\\b",
+    r"\\bсмотрите\\s+(?:эфир|выпуск|программу)\\b",
+    r"\\bприсоединяйтесь\\s+к\\s+трансляции\\b",
+
 )
 
 LEGACY_FIELDS = frozenset({
@@ -76,6 +82,21 @@ def is_promotional(value: Any) -> bool:
     if any(phrase in text for phrase in PROMO_PHRASES):
         return True
     return any(re.search(pattern, text, re.IGNORECASE) for pattern in PROMO_REGEXES)
+
+
+def is_low_priority_lifestyle(value: Any) -> bool:
+    """Identify generic lifestyle/gossip pieces for a soft score cap, not hard rejection."""
+    text = topic_text(value)
+    patterns = (
+        r"\\bинтерес к моде падает\\b",
+        r"\\bшопинг перестал быть событием\\b",
+        r"\\бушедш\\w+ бренд\\w+ забрал\\w+ с собой трафик\\b",
+        r"\\bсыночк\\w*[-‑– ]корзиночк\\w*\\b",
+        r"\\bзавидн\\w+ жених\\w*\\b",
+        r"\\bобвенчал\\w*\\b.{0,100}\\bпосле нескольких лет брака\\b",
+        r"\\bпсихолог\\w*\\b.{0,140}\\b(?:жених\\w*|муж\\w*|мам\\w*)\\b",
+    )
+    return any(re.search(pattern, text, re.IGNORECASE) for pattern in patterns)
 
 
 def clean_legacy_metadata(value: Any) -> Any:
