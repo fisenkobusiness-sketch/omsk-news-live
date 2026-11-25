@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-26T00:38:43+06:00",
+  "generated_at": "2026-11-26T01:28:43+06:00",
   "version": "predictor-editorial-v2",
   "model": {
     "purpose": "единый редакционный приоритет по независимым признакам",
@@ -50,10 +50,10 @@
   },
   "topics": [
     {
-      "score": 34.4,
+      "score": 26.6,
       "base_score": 9.0,
-      "recency_score": 99.8,
-      "age_minutes": 0.4,
+      "recency_score": 72.0,
+      "age_minutes": 50.4,
       "newest_source_timestamp": 1795631898.0,
       "viral_score": 0.0,
       "editorial_score": 18.0,
@@ -72,8 +72,8 @@
       "opinion_detected": false,
       "advertising_detected": false,
       "excluded_topic": false,
-      "status": "take_now",
-      "action": "БРАТЬ В РАБОТУ",
+      "status": "reject",
+      "action": "ИСКЛЮЧИТЬ",
       "members": [
         {
           "source": "1oomestomska",
@@ -98,18 +98,18 @@
         "https://vk.ru/wall-2890484_692092"
       ],
       "prediction": {
-        "priority_score": 48.2,
-        "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
+        "priority_score": 38.6,
+        "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
         "confidence": 25.0,
         "eligible": true,
         "exclusion_reason": null,
         "score_version": "editorial_v2",
         "model_type": "ridge_engagement_v1_shadow",
-        "ml_priority_score": 45.3,
+        "ml_priority_score": 45.2,
         "training_samples_1h": 520,
-        "training_samples_3h": 472,
+        "training_samples_3h": 473,
         "predicted_engagement_1h": 0.009519,
-        "predicted_engagement_3h": 0.008473,
+        "predicted_engagement_3h": 0.008459,
         "audience_model_predictions": {
           "golos": {
             "engagement_1h": 0.011059,
@@ -120,10 +120,10 @@
           },
           "zhest": {
             "engagement_1h": 0.007706,
-            "engagement_3h": 0.005423,
-            "priority_score": 30.8,
+            "engagement_3h": 0.005375,
+            "priority_score": 30.5,
             "training_samples_1h": 265,
-            "training_samples_3h": 239
+            "training_samples_3h": 240
           }
         },
         "event_class": "general",
@@ -135,7 +135,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 99.8,
+          "freshness": 72.0,
           "local_relevance": 30.0,
           "event_impact": 20.0,
           "reach": null,
@@ -152,20 +152,20 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 34.4,
+          "analyzer_score": 26.6,
           "viral_score": 0.0,
           "editorial_score": 18.0
         }
       },
-      "editor_status": "🟢 В РАБОТУ",
-      "publication_mode": "editorial_work",
-      "editorial_exclusion_reason": null
+      "editor_status": "⚪ ИСКЛЮЧИТЬ: НИЗКИЙ ПРИОРИТЕТ",
+      "publication_mode": "below_priority_threshold",
+      "editorial_exclusion_reason": "below_priority_threshold"
     },
     {
-      "score": 29.2,
+      "score": 21.5,
       "base_score": 9.0,
-      "recency_score": 81.3,
-      "age_minutes": 33.6,
+      "recency_score": 53.6,
+      "age_minutes": 83.6,
       "newest_source_timestamp": 1795629907.0,
       "viral_score": 0.0,
       "editorial_score": 18.0,
@@ -210,18 +210,18 @@
         "https://t.me/region_omsk55/29143"
       ],
       "prediction": {
-        "priority_score": 41.8,
+        "priority_score": 32.3,
         "prediction": "⚪ НИЗКИЙ ПРИОРИТЕТ",
         "confidence": 65.0,
         "eligible": true,
         "exclusion_reason": null,
         "score_version": "editorial_v2",
         "model_type": "ridge_engagement_v1_shadow",
-        "ml_priority_score": 41.4,
+        "ml_priority_score": 41.2,
         "training_samples_1h": 520,
-        "training_samples_3h": 472,
+        "training_samples_3h": 473,
         "predicted_engagement_1h": 0.009447,
-        "predicted_engagement_3h": 0.007751,
+        "predicted_engagement_3h": 0.007713,
         "audience_model_predictions": {
           "golos": {
             "engagement_1h": 0.010668,
@@ -232,10 +232,10 @@
           },
           "zhest": {
             "engagement_1h": 0.007948,
-            "engagement_3h": 0.005261,
-            "priority_score": 29.9,
+            "engagement_3h": 0.005179,
+            "priority_score": 29.4,
             "training_samples_1h": 265,
-            "training_samples_3h": 239
+            "training_samples_3h": 240
           }
         },
         "event_class": "general",
@@ -247,7 +247,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 81.3,
+          "freshness": 53.6,
           "local_relevance": 30.0,
           "event_impact": 20.0,
           "reach": null,
@@ -264,7 +264,7 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 29.2,
+          "analyzer_score": 21.5,
           "viral_score": 0.0,
           "editorial_score": 18.0
         }
@@ -274,5 +274,5 @@
       "editorial_exclusion_reason": "below_priority_threshold"
     }
   ],
-  "excluded_topics_count": 0
+  "excluded_topics_count": 1
 }
