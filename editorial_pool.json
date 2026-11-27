@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-28T00:04:18+06:00",
+  "generated_at": "2026-11-28T00:09:47+06:00",
   "version": "predictor-editorial-v2",
   "model": {
     "purpose": "единый редакционный приоритет по независимым признакам",
@@ -50,10 +50,10 @@
   },
   "topics": [
     {
-      "score": 51.3,
+      "score": 50.5,
       "base_score": 32.5,
-      "recency_score": 99.8,
-      "age_minutes": 0.3,
+      "recency_score": 96.8,
+      "age_minutes": 5.8,
       "newest_source_timestamp": 1795802640.0,
       "viral_score": 3.5,
       "editorial_score": 61.4,
@@ -98,7 +98,7 @@
         "https://vk.ru/wall-65458321_512531"
       ],
       "prediction": {
-        "priority_score": 62.0,
+        "priority_score": 61.0,
         "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
         "confidence": 25.0,
         "eligible": true,
@@ -135,7 +135,7 @@
         "metric_coverage": [],
         "coverage_ratio": 0.0,
         "signals": {
-          "freshness": 99.8,
+          "freshness": 96.8,
           "local_relevance": 80.0,
           "event_impact": 20.0,
           "reach": null,
@@ -152,9 +152,121 @@
           "cross_source_spread": 0.1034
         },
         "legacy_scores": {
-          "analyzer_score": 51.3,
+          "analyzer_score": 50.5,
           "viral_score": 3.5,
           "editorial_score": 61.4
+        }
+      },
+      "editor_status": "🟢 В РАБОТУ",
+      "publication_mode": "editorial_work",
+      "editorial_exclusion_reason": null
+    },
+    {
+      "score": 33.7,
+      "base_score": 9.0,
+      "recency_score": 97.3,
+      "age_minutes": 4.8,
+      "newest_source_timestamp": 1795802699.0,
+      "viral_score": 0.0,
+      "editorial_score": 18.0,
+      "confidence": 65.0,
+      "posts": 1,
+      "social_sources": 1,
+      "views": 0.0,
+      "reposts": 0.0,
+      "likes": 0.0,
+      "comments": 0.0,
+      "content_type": "news",
+      "official_attribution": false,
+      "source_type": "regional_media",
+      "nonlocal_detected": false,
+      "help_request": false,
+      "opinion_detected": false,
+      "advertising_detected": false,
+      "excluded_topic": false,
+      "status": "take_now",
+      "action": "БРАТЬ В РАБОТУ",
+      "members": [
+        {
+          "source": "tg_omsk_smi",
+          "id": 33816,
+          "source_name": "Новости Омска и Области",
+          "source_type": "telegram",
+          "timestamp": 1795802699,
+          "date": "2026-11-28 00:04:59",
+          "text": "Задержанные выплаты по суду проиндексируют после вступления решения в силу\n⠀\nСовфед одобрил порядок индексации страховых пенсий, которые взыскали через суд из-за задержки выплат, например при назначении пенсии или пересмотре её размера. Это вернёт пенсионерам часть денег, обесцененных инфляцией за время ожидания выплаты.\n⠀\nИндексация коснётся случаев, когда пенсионному органу не нужно устанавливать дополнительные обстоятельства, которые он не может получить сам или запросить у других ведомств. Гражданский процессуальный и Бюджетный кодексы менять не придётся.\n\n📲 Читайте нас в МАКС\n😊 Подписаться | Прислать новость",
+          "url": "https://t.me/omsk_smi/33816",
+          "media_type": null,
+          "views": null,
+          "likes": null,
+          "comments": null,
+          "reposts": null
+        }
+      ],
+      "text": "Задержанные выплаты по суду проиндексируют после вступления решения в силу\n⠀\nСовфед одобрил порядок индексации страховых пенсий, которые взыскали через суд из-за задержки выплат, например при назначении пенсии или пересмотре её размера. Это вернёт пенсионерам часть денег, обесцененных инфляцией за время ожидания выплаты.\n⠀\nИндексация коснётся случаев, когда пенсионному органу не нужно устанавливать дополнительные обстоятельства, которые он не может получить сам или запросить у других ведомств. Гражданский процессуальный и Бюджетный кодексы менять не придётся.\n\n📲 Читайте нас в МАКС\n😊 Подписаться | Прислать новость",
+      "primary_source": "tg_omsk_smi",
+      "primary_url": "https://t.me/omsk_smi/33816",
+      "source_urls": [
+        "https://t.me/omsk_smi/33816"
+      ],
+      "prediction": {
+        "priority_score": 47.4,
+        "prediction": "🟡 СРЕДНИЙ ПРИОРИТЕТ",
+        "confidence": 65.0,
+        "eligible": true,
+        "exclusion_reason": null,
+        "score_version": "editorial_v2",
+        "model_type": "ridge_engagement_v1_shadow",
+        "ml_priority_score": 32.0,
+        "training_samples_1h": 568,
+        "training_samples_3h": 518,
+        "predicted_engagement_1h": 0.006524,
+        "predicted_engagement_3h": 0.006043,
+        "audience_model_predictions": {
+          "golos": {
+            "engagement_1h": 0.011401,
+            "engagement_3h": 0.010452,
+            "priority_score": 49.4,
+            "training_samples_1h": 279,
+            "training_samples_3h": 256
+          },
+          "zhest": {
+            "engagement_1h": 0.003358,
+            "engagement_3h": 0.003005,
+            "priority_score": 17.3,
+            "training_samples_1h": 289,
+            "training_samples_3h": 262
+          }
+        },
+        "event_class": "general",
+        "complaint_signal": false,
+        "complaint_viral_signal": false,
+        "complaint_bonus": 0.0,
+        "low_priority_lifestyle": false,
+        "cross_source_count": 1,
+        "metric_coverage": [],
+        "coverage_ratio": 0.0,
+        "signals": {
+          "freshness": 97.3,
+          "local_relevance": 30.0,
+          "event_impact": 20.0,
+          "reach": null,
+          "engagement": null,
+          "discussion": null,
+          "reshare": null,
+          "velocity": null,
+          "cross_source_spread": 0
+        },
+        "score_weights": {
+          "freshness": 0.3448,
+          "local_relevance": 0.2759,
+          "event_impact": 0.2759,
+          "cross_source_spread": 0.1034
+        },
+        "legacy_scores": {
+          "analyzer_score": 33.7,
+          "viral_score": 0.0,
+          "editorial_score": 18.0
         }
       },
       "editor_status": "🟢 В РАБОТУ",
